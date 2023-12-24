@@ -6,6 +6,7 @@ namespace App;
 
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
@@ -20,8 +21,7 @@ class Kernel extends BaseKernel
     {
         return [
             new FrameworkBundle(),
-            //new TwigBundle(),
-            //new MonologBundle()
+            new MonologBundle()
         ];
     }
 }

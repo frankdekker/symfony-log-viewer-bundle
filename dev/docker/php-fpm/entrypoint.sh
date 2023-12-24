@@ -7,8 +7,8 @@ mkdir -p /app/var/cache/prod
 chmod -R a+rw /app/var/cache
 chown www-data:www-data -R /app/var/cache
 
-php bin/console cache:clear
-php bin/console assets:install
+#php bin/console cache:clear
+#php bin/console assets:install
 
 printenv > /etc/environment
 mkdir -p /app/var/log

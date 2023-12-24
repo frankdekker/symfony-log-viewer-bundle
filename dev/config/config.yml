@@ -19,3 +19,13 @@ twig:
   strict_variables: "%kernel.debug%"
   paths:
     "%kernel.project_dir%/templates": templates
+
+monolog:
+  channels:
+    - deprecation
+  handlers:
+    main:
+      type: stream
+      path: "%kernel.logs_dir%/%kernel.environment%.log"
+      level: debug
+      channels: ["!event"]

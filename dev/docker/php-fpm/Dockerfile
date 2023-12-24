@@ -11,9 +11,7 @@ RUN apt-get update \
     zip \
     && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install \
-    opcache \
-    zip
+RUN docker-php-ext-install opcache zip
 
 ## Copy php default configuration
 COPY ./docker/php-fpm/default.ini /usr/local/etc/php/conf.d/default.ini
