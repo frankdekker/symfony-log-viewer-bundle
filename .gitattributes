@@ -55,6 +55,8 @@
 *.woff2   -text diff
 
 # Exclude directories/files from composer vendor package
+/dev export-ignore
+/frontend export-ignore
 /tests export-ignore
 /.* export-ignore
 /php*.json export-ignore
