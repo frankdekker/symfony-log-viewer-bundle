@@ -1,5 +1,1 @@
-main:
-    path: /
-    defaults:
-        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-        template: "@templates/index.html.twig"
+
