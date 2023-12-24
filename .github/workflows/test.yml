@@ -1,0 +1,84 @@
+name: Run checks
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php-versions }} - Symfony ${{ matrix.symfony }} - Test ${{ matrix.composer-flags }}
+    env:
+      SYMFONY_REQUIRE: ${{ matrix.symfony }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: [ '8.1', '8.2', '8.3' ]
+        symfony: [ '^6.2', '^7.0' ]
+        composer-flags: [ '', '--prefer-lowest' ]
+        exclude:
+          - php-versions: 8.1
+            symfony: '^7.0'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: none
+
+      - name: Add symfony flex
+        run: composer global config --no-interaction allow-plugins.symfony/flex true && composer global require symfony/flex
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-progress --no-suggest --prefer-stable ${{ matrix.composer-flags }}
+
+      - name: Run test suite
+        run: composer test
+
+  coverage:
+    name: PHP coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          coverage: pcov
+
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-progress --no-suggest --prefer-stable
+
+      - name: Run test suite
+        run: php -dpcov.enabled=1 -dpcov.exclude="~vendor~" vendor/bin/phpunit --testsuite unit --coverage-clover ./.coverage/coverage.xml
+
+      - name: Check coverage
+        run: test ! -f ./.coverage/coverage.xml || php vendor/bin/phpfci inspect ./.coverage/coverage.xml --exit-code-on-failure --reportText
+
+  quality:
+    name: Quality checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: run checks
+        run: composer check

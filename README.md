@@ -1,2 +1,7 @@
-# symfony-log-viewer-bundle
-A log viewer for Symfony
+# Log viewer for Symfony
+
+## Installation
+
+```bash
+composer require fdekker/symfony-log-viewer-bundle
+```
