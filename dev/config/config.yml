@@ -7,16 +7,16 @@ framework:
   secret: "%secret%"
   router:
     resource: "%kernel.project_dir%/config/routing.yml"
-    strict_requirements: "%kernel.debug%"
+    strict_requirements: true
     utf8: true
   http_method_override: false
   php_errors:
     log: true
   handle_all_throwables: true
-  default_locale: "%locale%"
+  default_locale: en
 
 twig:
-  strict_variables: "%kernel.debug%"
+  strict_variables: true
   paths:
     "%kernel.project_dir%/templates": templates
 

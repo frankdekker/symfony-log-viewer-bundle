@@ -12,6 +12,7 @@
         "symfony/framework-bundle": "6.4.*",
         "symfony/monolog-bundle": "v3.10",
         "symfony/runtime": "6.4.*",
+        "symfony/twig-bundle": "6.4.*",
         "symfony/yaml": "6.4.*",
         "twig/twig": "^3.8"
     },
