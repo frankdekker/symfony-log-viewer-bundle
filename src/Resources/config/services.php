@@ -14,6 +14,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(IndexController::class)
         ->arg('$twig', service('twig'))
+        ->arg('$router', service('router.default'))
         ->tag('controller.service_arguments');
 
     $services->set(RouteLoader::class)
