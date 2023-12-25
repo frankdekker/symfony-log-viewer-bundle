@@ -5,7 +5,7 @@
     <link rel="icon" href="{{ base_uri }}favicon.ico">
     <meta name="base-uri" content="{{ base_uri }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="folders" content=" folders|json_encode ">
+    <meta name="folders" content="{{ folders|json_encode }}">
     <title>Log Viewer for Symfony</title>
     <link href="{{ asset('style.css', 'fd_symfony_log_viewer') }}" rel="stylesheet"/>
     {# Toggle dark mode based on system settings #}
