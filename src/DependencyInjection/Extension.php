@@ -35,7 +35,6 @@ final class Extension extends \Symfony\Component\DependencyInjection\Extension\E
             [
                 'assets' => [
                     'enabled'            => true,
-                    'json_manifest_path' => '%kernel.project_dir%/public/log-viewer/manifest.json',
                     'packages'           => [
                         'fd_symfony_log_viewer' => [
                             'version_strategy' => JsonManifestVersionStrategy::class
