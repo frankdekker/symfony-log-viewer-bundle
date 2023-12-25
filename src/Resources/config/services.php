@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use FD\SymfonyLogViewerBundle\Controller\FoldersController;
 use FD\SymfonyLogViewerBundle\Controller\IndexController;
+use FD\SymfonyLogViewerBundle\Controller\LogController;
 use FD\SymfonyLogViewerBundle\Routing\RouteLoader;
 use FD\SymfonyLogViewerBundle\Service\FinderService;
 use FD\SymfonyLogViewerBundle\Service\JsonManifestVersionStrategy;
@@ -11,7 +13,12 @@ use FD\SymfonyLogViewerBundle\Service\LogFolderFactory;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputFactory;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputProvider;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputSorter;
+use FD\SymfonyLogViewerBundle\Service\LogLineOutputFactory;
+use FD\SymfonyLogViewerBundle\Service\LogParser;
+use FD\SymfonyLogViewerBundle\Service\StreamReaderFactory;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -20,7 +27,10 @@ return static function (ContainerConfigurator $container): void {
         ->autowire()
         ->autoconfigure();
 
-    $services->set(IndexController::class)
+    $services->set(IndexController::class)->tag('controller.service_arguments');
+    $services->set(FoldersController::class)->tag('controller.service_arguments');
+    $services->set(LogController::class)
+        ->arg('$loggerLocator', tagged_iterator('fd.symfony.log.viewer.logger'))
         ->tag('controller.service_arguments');
 
     $services->set(RouteLoader::class)
@@ -35,4 +45,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogFolderOutputFactory::class);
     $services->set(LogFolderOutputProvider::class);
     $services->set(LogFolderOutputSorter::class);
+    $services->set(LogLineOutputFactory::class);
+    $services->set(LogParser::class);
+    $services->set(StreamReaderFactory::class);
 };
