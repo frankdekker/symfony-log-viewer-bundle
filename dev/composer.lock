@@ -12,13 +12,14 @@
             "dist": {
                 "type": "path",
                 "url": "..",
-                "reference": "20a6b9fd69b49af812ccd5e7e9486fd82e2d06b9"
+                "reference": "a5f67071e0d0aaff8f57889392e804ae25f2967a"
             },
             "require": {
                 "php": ">=8.1",
                 "symfony/asset": " ^6.3||^7.0",
                 "symfony/config": " ^6.3||^7.0",
                 "symfony/dependency-injection": " ^6.3||^7.0",
+                "symfony/finder": "^6.4",
                 "symfony/framework-bundle": "^6.3||^7.0",
                 "symfony/http-foundation": " ^6.3||^7.0",
                 "symfony/http-kernel": " ^6.3||^7.0"
