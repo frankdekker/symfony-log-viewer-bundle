@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use Exception;
+use FD\SymfonyLogViewerBundle\SymfonyLogViewerBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\MonologBundle\MonologBundle;
@@ -25,7 +26,8 @@ class Kernel extends BaseKernel
         return [
             new FrameworkBundle(),
             new MonologBundle(),
-            new TwigBundle()
+            new TwigBundle(),
+            new SymfonyLogViewerBundle(),
         ];
     }
 

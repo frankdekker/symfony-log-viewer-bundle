@@ -9,7 +9,7 @@ services:
         ports:
             - ${NGINX_PORT:-8888}:80
         volumes:
-            - ./public:/app/public
+            - ./public:/app/dev/public
 
     php-fpm:
         container_name: log-viewer-php
@@ -22,7 +22,7 @@ services:
             XDEBUG_CONFIG: client_host=host.docker.internal discover_client_host=true start_with_request=trigger
             PHP_IDE_CONFIG: serverName=localhost
         volumes:
-            - .:/app:rw
+            - ../.:/app:rw
 
     nodejs:
         container_name: log-viewer-nodejs
