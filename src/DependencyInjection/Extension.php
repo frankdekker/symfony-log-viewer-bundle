@@ -3,17 +3,46 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\DependencyInjection;
 
-use FD\SymfonyLogViewerBundle\Routing\RouteLoader;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
-final class Extension extends ConfigurableExtension
+use FD\SymfonyLogViewerBundle\Service\JsonManifestVersionStrategy;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Throwable;
+
+final class Extension extends \Symfony\Component\DependencyInjection\Extension\Extension implements PrependExtensionInterface
 {
-    protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
+    /**
+     * @inheritDoc
+     * @throws Throwable
+     */
+    public function load(array $configs, ContainerBuilder $container): void
     {
-        $container->register(RouteLoader::class)
-            ->setArguments([new Reference('kernel')])
-            ->addTag('routing.loader');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.php');
+
+        $this->processConfiguration(new Configuration(), $configs);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function prepend(ContainerBuilder $container): void
+    {
+        $container->prependExtensionConfig(
+            'framework',
+            [
+                'assets' => [
+                    'enabled'            => true,
+                    'json_manifest_path' => '%kernel.project_dir%/public/log-viewer/manifest.json',
+                    'packages'           => [
+                        'fd_symfony_log_viewer' => [
+                            'version_strategy' => JsonManifestVersionStrategy::class
+                        ],
+                    ],
+                ],
+            ]
+        );
     }
 }

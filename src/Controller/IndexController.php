@@ -4,17 +4,20 @@ declare(strict_types=1);
 namespace FD\SymfonyLogViewerBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
+use Twig\Environment;
 
 class IndexController
 {
-    public function __construct()
+    public function __construct(private readonly Environment $twig)
     {
     }
 
-//    #[Route(['log-viewer', '/log-viewer/{slug}'], name: self::class, methods: 'GET')]
-    //  #[Template('/log/vue/index.html.twig')]
+    /**
+     * @throws Throwable
+     */
     public function __invoke(): Response
     {
-        return new Response('success');
+        return new Response($this->twig->render('@SymfonyLogViewer/index.html.twig'));
     }
 }

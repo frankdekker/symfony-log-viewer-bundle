@@ -7,4 +7,4 @@ main:
 fd_symfony_log_viewer:
   resource: .
   type: fd_symfony_log_viewer
-  prefix: /logs
+  prefix: /log-viewer

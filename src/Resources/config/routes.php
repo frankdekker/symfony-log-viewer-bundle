@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes) {
     $routes
-        ->add(IndexController::class, ['log-viewer', '/log-viewer/{slug}'])
+        ->add(IndexController::class, ['/', '/{slug}'])
         ->methods(['GET'])
         ->controller([IndexController::class, '__invoke']);
 };
