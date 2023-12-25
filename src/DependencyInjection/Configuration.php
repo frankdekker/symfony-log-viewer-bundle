@@ -14,7 +14,7 @@ final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $tree = new TreeBuilder('symfony_log_viewer');
+        $tree = new TreeBuilder('fd_symfony_log_viewer');
 
         return $tree;
     }
