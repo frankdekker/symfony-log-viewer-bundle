@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import {useRoute} from 'vue-router';
 import FileTree from '@/components/FileTree.vue'
+import axios from 'axios';
+import {useRoute} from 'vue-router';
 
 const route = useRoute();
+
+// set axios base url
+const baseUri = document.head.querySelector<HTMLMetaElement>('[name=base-uri]')?.content ?? '/log-viewer/';
+axios.defaults.baseURL = baseUri;
 </script>
 
 <template>

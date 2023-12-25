@@ -10,7 +10,7 @@ export const useFolderStore = defineStore('folders', () => {
 
     async function update() {
         loading.value  = true;
-        const response = await axios.get<LogFolder[]>('/logs/api/folders', {params: {direction: direction.value}});
+        const response = await axios.get<LogFolder[]>('/api/folders', {params: {direction: direction.value}});
         folders.value  = response.data;
         loading.value  = false;
     }

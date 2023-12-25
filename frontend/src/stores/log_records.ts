@@ -28,7 +28,7 @@ export const useLogRecordStore = defineStore('log_records', () => {
         }
         loading.value = true;
         try {
-            const response = await axios.get<LogRecords>('/logs/api/logs', {params: params});
+            const response = await axios.get<LogRecords>('/api/logs', {params: params});
             records.value = response.data;
         } catch (e) {
             console.error(e);
