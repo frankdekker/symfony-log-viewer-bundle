@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Iterator;
 
-use FD\SymfonyLogViewerBundle\Iterator\StreamReader\MaxRuntimeException;
 use IteratorAggregate;
 use Traversable;
 

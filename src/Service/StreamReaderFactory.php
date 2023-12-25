@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace FD\SymfonyLogViewerBundle\Service;
 
 use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Iterator\StreamReader\AbstractStreamReader;
-use FD\SymfonyLogViewerBundle\Iterator\StreamReader\ForwardStreamReader;
-use FD\SymfonyLogViewerBundle\Iterator\StreamReader\ReverseStreamReader;
+use FD\SymfonyLogViewerBundle\StreamReader\AbstractStreamReader;
+use FD\SymfonyLogViewerBundle\StreamReader\ForwardStreamReader;
+use FD\SymfonyLogViewerBundle\StreamReader\ReverseStreamReader;
 use RuntimeException;
 use SplFileInfo;
 

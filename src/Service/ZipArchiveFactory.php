@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace FD\SymfonyLogViewerBundle\Service;
 
 use FD\SymfonyLogViewerBundle\Entity\LogFolder;
-use FD\SymfonyLogViewerBundle\Iterator\StreamReader\TempFile;
+use FD\SymfonyLogViewerBundle\Entity\TempFile;
 use RuntimeException;
 use SplFileInfo;
 use ZipArchive;
