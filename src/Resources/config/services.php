@@ -17,7 +17,8 @@ return static function (ContainerConfigurator $container): void {
     $services = $container->services();
     $services
         ->defaults()
-        ->autowire();
+        ->autowire()
+        ->autoconfigure();
 
     $services->set(IndexController::class)
         ->tag('controller.service_arguments');

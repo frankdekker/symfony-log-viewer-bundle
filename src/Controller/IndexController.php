@@ -5,17 +5,16 @@ namespace FD\SymfonyLogViewerBundle\Controller;
 
 use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputProvider;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Throwable;
-use Twig\Environment;
 
-class IndexController
+class IndexController extends AbstractController
 {
     public function __construct(
         private readonly LogFolderOutputProvider $folderOutputProvider,
-        private readonly Environment $twig,
         private readonly RouterInterface $router
     ) {
     }
@@ -32,6 +31,6 @@ class IndexController
         // retrieve all log files and folders
         $folders = $this->folderOutputProvider->provide(DirectionEnum::Desc);
 
-        return new Response($this->twig->render('@SymfonyLogViewer/index.html.twig', ['base_uri' => $baseUri, 'folders' => $folders]));
+        return $this->render('@SymfonyLogViewer/index.html.twig', ['base_uri' => $baseUri, 'folders' => $folders]);
     }
 }
