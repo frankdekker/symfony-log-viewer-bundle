@@ -2,19 +2,21 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './assets/main.scss'
 import axios from 'axios';
-
-import {createApp} from 'vue'
 import {createPinia} from 'pinia'
 
-import App from './App.vue'
+import {createApp} from 'vue'
+
+import LogViewer from './LogViewer.vue'
 import router from './router'
 
+const baseUri = document.head.querySelector<HTMLMetaElement>('[name=base-uri]')!.content;
+
 // set axios base url
-axios.defaults.baseURL = document.head.querySelector<HTMLMetaElement>('[name=base-uri]')!.content;
+axios.defaults.baseURL = baseUri;
 
-const app = createApp(App)
+const app = createApp(LogViewer);
 
-app.use(createPinia())
-app.use(router)
+app.use(createPinia());
+app.use(router(baseUri));
 
-app.mount('#app')
+app.mount('#log-viewer');
