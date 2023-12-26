@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service;
+namespace FD\SymfonyLogViewerBundle\Service\File;
 
 use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
 use FD\SymfonyLogViewerBundle\StreamReader\AbstractStreamReader;

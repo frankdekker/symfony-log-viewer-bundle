@@ -11,7 +11,6 @@ use FD\SymfonyLogViewerBundle\Iterator\LogMessageIterator;
 use FD\SymfonyLogViewerBundle\Iterator\LogRecordFilterIterator;
 use FD\SymfonyLogViewerBundle\Iterator\LogRecordIterator;
 use FD\SymfonyLogViewerBundle\Iterator\MaxRuntimeIterator;
-use FD\SymfonyLogViewerBundle\Service\StreamReaderFactory;
 use SplFileInfo;
 
 class LogParser
