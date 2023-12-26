@@ -12,6 +12,7 @@ use FD\SymfonyLogViewerBundle\Service\LogFolderOutputProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Throwable;
 
 /**
  * @extends AbstractControllerTestCase<IndexController>
@@ -29,6 +30,9 @@ class IndexControllerTest extends AbstractControllerTestCase
         parent::setUp();
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testInvoke(): void
     {
         $folder = new LogFolderOutput('identifier', 'path', 'url', true, 123456, []);
