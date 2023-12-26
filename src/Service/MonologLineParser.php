@@ -5,7 +5,7 @@ namespace FD\SymfonyLogViewerBundle\Service;
 
 use JsonException;
 
-class MonoLogLineParser implements LogLineParserInterface
+class MonologLineParser implements LogLineParserInterface
 {
     /* [YYYY-MM-DDTHH:MM:SS.UUUUUU+TZ] channel.level */
     private const MATCH_PATTERN = '/^\[\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}(?:\.\d+(?:[+-]\d{2}:\d{2})?)?]\s+\S+\.\S+:/';

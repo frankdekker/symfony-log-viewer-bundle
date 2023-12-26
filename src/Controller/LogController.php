@@ -8,7 +8,7 @@ use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
 use FD\SymfonyLogViewerBundle\Service\LogFileService;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputFactory;
 use FD\SymfonyLogViewerBundle\Service\LogParser;
-use FD\SymfonyLogViewerBundle\Service\MonoLogLineParser;
+use FD\SymfonyLogViewerBundle\Service\MonologLineParser;
 use FD\SymfonyLogViewerBundle\Service\PerformanceService;
 use Monolog\Logger;
 use SplFileInfo;
@@ -40,14 +40,14 @@ class LogController extends AbstractController
         ksort($channels);
 
         $logLevels = [
-            "emergency" => "Emergency",
-            "alert"     => "Alert",
-            "critical"  => "Critical",
-            "error"     => "Error",
-            "warning"   => "Warning",
-            "notice"    => "Notice",
-            "info"      => "Info",
-            "debug"     => "Debug"
+            'emergency' => 'Emergency',
+            'alert'     => 'Alert',
+            'critical'  => 'Critical',
+            'error'     => 'Error',
+            'warning'   => 'Warning',
+            'notice'    => 'Notice',
+            'info'      => 'Info',
+            'debug'     => 'Debug'
         ];
 
         $fileIdentifier   = $request->query->get('file', '');
@@ -73,18 +73,18 @@ class LogController extends AbstractController
 
         $filter = new LogFilter($selectedLevels, $selectedChannels, $query);
 
-        $logIndex = $this->logParser->parse(new SplFileInfo($file->path), new MonoLogLineParser(), $direction, $perPage, $offset, $filter);
+        $logIndex = $this->logParser->parse(new SplFileInfo($file->path), new MonologLineParser(), $direction, $perPage, $offset, $filter);
 
         return $this->json(
             [
                 'file'        => $this->folderOutputFactory->createFromFile($file),
-                "levels"      => [
-                    "choices"  => $logLevels,
-                    "selected" => count($selectedLevels) === 0 ? array_keys($logLevels) : $selectedLevels
+                'levels'      => [
+                    'choices'  => $logLevels,
+                    'selected' => count($selectedLevels) === 0 ? array_keys($logLevels) : $selectedLevels
                 ],
-                "channels"    => [
-                    "choices"  => $channels,
-                    "selected" => count($selectedChannels) === 0 ? array_keys($channels) : $selectedChannels
+                'channels'    => [
+                    'choices'  => $channels,
+                    'selected' => count($selectedChannels) === 0 ? array_keys($channels) : $selectedChannels
                 ],
                 'logs'        => $logIndex->getLines(),
                 'paginator'   => $logIndex->getPaginator(),
