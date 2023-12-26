@@ -7,12 +7,14 @@ use FD\SymfonyLogViewerBundle\Entity\LogFile;
 use FD\SymfonyLogViewerBundle\Entity\LogFolder;
 use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
 use FD\SymfonyLogViewerBundle\Util\Utils;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 class LogFolderFactory
 {
-    public function createFromFiles(Finder $files): LogFolderCollection
+    /**
+     * @param iterable<int, SplFileInfo> $files
+     */
+    public function createFromFiles(iterable $files): LogFolderCollection
     {
         $folders = new LogFolderCollection();
 
