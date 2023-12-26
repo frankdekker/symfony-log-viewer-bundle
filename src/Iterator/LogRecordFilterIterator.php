@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace FD\SymfonyLogViewerBundle\Iterator;
 
 use FD\SymfonyLogViewerBundle\Entity\Index\LogRecord;
-use FD\SymfonyLogViewerBundle\Entity\LogFilter;
 use IteratorAggregate;
 use Traversable;
 
@@ -13,19 +12,13 @@ use Traversable;
  */
 class LogRecordFilterIterator implements IteratorAggregate
 {
-    /** @var array<string, int> */
-    private readonly array $levels;
-
-    /** @var array<string, int> */
-    private readonly array $channels;
-
     /**
      * @param Traversable<int, LogRecord> $iterator
+     * @param array<string, int>               $levels
+     * @param array<string, int>               $channels
      */
-    public function __construct(private readonly Traversable $iterator, LogFilter $filter)
+    public function __construct(private readonly Traversable $iterator, private readonly array $levels, private readonly array $channels)
     {
-        $this->levels   = array_flip($filter->levels);
-        $this->channels = array_flip($filter->channels);
     }
 
     public function getIterator(): Traversable

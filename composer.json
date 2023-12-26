@@ -20,7 +20,8 @@
         "symfony/framework-bundle": "^6.3||^7.0",
         "symfony/http-foundation": "^6.3||^7.0",
         "symfony/http-kernel": "^6.3||^7.0",
-        "symfony/routing": "^6.3||^7.0"
+        "symfony/routing": "^6.3||^7.0",
+        "symfony/validator": "^6.3||^7.0"
     },
     "require-dev": {
         "digitalrevolution/phpunit-extensions": "^1.3",

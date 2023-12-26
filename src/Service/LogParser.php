@@ -5,8 +5,7 @@ namespace FD\SymfonyLogViewerBundle\Service;
 
 use FD\SymfonyLogViewerBundle\Entity\Index\LogIndex;
 use FD\SymfonyLogViewerBundle\Entity\Index\Paginator;
-use FD\SymfonyLogViewerBundle\Entity\LogFilter;
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
+use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
 use FD\SymfonyLogViewerBundle\Iterator\LimitIterator;
 use FD\SymfonyLogViewerBundle\Iterator\LogMessageIterator;
 use FD\SymfonyLogViewerBundle\Iterator\LogRecordFilterIterator;
@@ -22,23 +21,17 @@ class LogParser
     {
     }
 
-    public function parse(
-        SplFileInfo $file,
-        LogLineParserInterface $lineParser,
-        DirectionEnum $direction,
-        int $perPage,
-        ?int $offset,
-        LogFilter $filter
-    ): LogIndex {
+    public function parse(SplFileInfo $file, LogLineParserInterface $lineParser, LogQueryDto $logQuery): LogIndex
+    {
         // create iterators
-        $lineIterator = $this->streamReaderFactory->createForFile($file, $direction, $offset);
-        $iterator     = new LogMessageIterator($lineIterator, $lineParser, $direction);
+        $lineIterator = $this->streamReaderFactory->createForFile($file, $logQuery->direction, $logQuery->offset);
+        $iterator     = new LogMessageIterator($lineIterator, $lineParser, $logQuery->direction);
         $iterator     = new MaxRuntimeIterator($iterator, self::MAX_RUNTIME_IN_SECONDS, false);
-        $iterator     = new LogRecordIterator($iterator, $lineParser, $filter->searchQuery);
-        if ($filter->hasFilter()) {
-            $iterator = new LogRecordFilterIterator($iterator, $filter);
+        $iterator     = new LogRecordIterator($iterator, $lineParser, $logQuery->query);
+        if (count($logQuery->levels) > 0 || count($logQuery->channels) > 0) {
+            $iterator = new LogRecordFilterIterator($iterator, array_flip($logQuery->levels), array_flip($logQuery->channels));
         }
-        $iterator = new LimitIterator($iterator, $perPage);
+        $iterator = new LimitIterator($iterator, $logQuery->perPage);
 
         // loop over all lines and create index
         $index = new LogIndex();
@@ -48,7 +41,7 @@ class LogParser
 
         // stream reader didn't reach the end
         if ($lineIterator->isEOF() === false) {
-            $index->setPaginator(new Paginator($direction, $offset === null, true, $lineIterator->getPosition()));
+            $index->setPaginator(new Paginator($logQuery->direction, $logQuery->offset === null, true, $lineIterator->getPosition()));
         }
 
         return $index;

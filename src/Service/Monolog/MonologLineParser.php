@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service;
+namespace FD\SymfonyLogViewerBundle\Service\Monolog;
 
+use FD\SymfonyLogViewerBundle\Service\LogLineParserInterface;
 use JsonException;
 
 class MonologLineParser implements LogLineParserInterface
