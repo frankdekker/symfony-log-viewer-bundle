@@ -8,14 +8,9 @@ use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
 use FD\SymfonyLogViewerBundle\Entity\Output\LogFileOutput;
 use FD\SymfonyLogViewerBundle\Entity\Output\LogFolderOutput;
 use FD\SymfonyLogViewerBundle\Util\Utils;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LogFolderOutputFactory
 {
-    public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
-    {
-    }
-
     /**
      * @return LogFolderOutput[]
      */
@@ -45,12 +40,12 @@ class LogFolderOutputFactory
         assert($folder !== null);
 
         return new LogFileOutput(
-            $file->getIdentifier(),
-            basename($file->getPath()),
-            Utils::bytesForHumans($file->getSize()),
+            $file->identifier,
+            basename($file->path),
+            Utils::bytesForHumans($file->size),
             '', // TODO $this->urlGenerator->generate(DownloadFileController::class, ['fileIdentifier' => $file->getIdentifier()]),
-            $file->getCreateTimestamp(),
-            $file->getUpdateTimestamp(),
+            $file->createTimestamp,
+            $file->updateTimestamp,
             true, // TODO add grants
         );
     }

@@ -6,7 +6,6 @@ namespace FD\SymfonyLogViewerBundle\Controller;
 use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Throwable;
@@ -22,7 +21,7 @@ class IndexController extends AbstractController
     /**
      * @throws Throwable
      */
-    public function __invoke(Request $request): Response
+    public function __invoke(): Response
     {
         // retrieve base uri from route
         $baseUri = $this->router->getRouteCollection()->get(self::class . '.base')?->getPath();

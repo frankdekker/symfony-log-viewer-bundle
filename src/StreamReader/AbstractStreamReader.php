@@ -23,10 +23,9 @@ abstract class AbstractStreamReader implements IteratorAggregate
     abstract public function isEOF(): bool;
 
     /**
-     * @param resource          $handle
-     * @param self::DIRECTION_* $direction
+     * @param resource $handle
      */
-    public function __construct(protected $handle, private readonly int $direction, private readonly bool $autoClose = true)
+    public function __construct(protected $handle, private readonly bool $autoClose = true)
     {
     }
 
@@ -37,10 +36,13 @@ abstract class AbstractStreamReader implements IteratorAggregate
         }
     }
 
-    public function getDirection(): int
-    {
-        return $this->direction;
-    }
-
     abstract public function getPosition(): int;
+
+    protected function ftell(): int
+    {
+        $position = ftell($this->handle);
+        assert($position !== false);
+
+        return $position;
+    }
 }

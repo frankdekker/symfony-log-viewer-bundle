@@ -58,6 +58,9 @@
             "FD\\SymfonyLogViewerBundle\\Tests\\": "tests/"
         }
     },
+    "suggest": {
+        "ext-zip": "To use the zip download feature"
+    },
     "scripts": {
         "check": ["@check:phpstan", "@check:phpmd", "@check:phpcs"],
         "check:phpstan": "phpstan analyse",

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\DependencyInjection;
 
-
 use FD\SymfonyLogViewerBundle\Service\JsonManifestVersionStrategy;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Throwable;
 
-final class Extension extends \Symfony\Component\DependencyInjection\Extension\Extension implements PrependExtensionInterface
+final class Extension extends BaseExtension implements PrependExtensionInterface
 {
     /**
      * @inheritDoc
@@ -34,8 +34,8 @@ final class Extension extends \Symfony\Component\DependencyInjection\Extension\E
             'framework',
             [
                 'assets' => [
-                    'enabled'            => true,
-                    'packages'           => [
+                    'enabled' => true,
+                    'packages' => [
                         'fd_symfony_log_viewer' => [
                             'version_strategy' => JsonManifestVersionStrategy::class
                         ],

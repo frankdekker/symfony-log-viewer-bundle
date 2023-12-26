@@ -14,13 +14,13 @@ class ReverseStreamReader extends AbstractStreamReader
      */
     public function __construct($handle, ?int $offset = null, private readonly int $bufferSize = 50000, bool $autoClose = true)
     {
-        parent::__construct($handle, self::DIRECTION_REVERSE, $autoClose);
+        parent::__construct($handle, $autoClose);
         if ($offset !== null) {
             fseek($handle, $offset);
         } else {
-            fseek($this->handle, 0, SEEK_END);
+            fseek($handle, 0, SEEK_END);
         }
-        $this->position = ftell($this->handle);
+        $this->position = $this->ftell();
     }
 
     /**
@@ -28,8 +28,7 @@ class ReverseStreamReader extends AbstractStreamReader
      */
     public function getIterator(): Generator
     {
-        $this->position = $end = ftell($this->handle);
-        assert($end !== false);
+        $this->position = $end = $this->ftell();
 
         while ($end > 0) {
             fseek($this->handle, max(0, $end - $this->bufferSize));

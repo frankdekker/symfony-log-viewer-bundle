@@ -19,18 +19,18 @@ class LogFolderOutputSorter
         // sort folders
         usort(
             $folders,
-            static fn(LogFolderOutput $a, LogFolderOutput $b) => $direction === DirectionEnum::Asc
-                ? $a->latestTimestamp <=> $b->latestTimestamp
-                : $b->latestTimestamp <=> $a->latestTimestamp
+            static fn(LogFolderOutput $left, LogFolderOutput $right) => $direction === DirectionEnum::Asc
+                ? $left->latestTimestamp <=> $right->latestTimestamp
+                : $right->latestTimestamp <=> $left->latestTimestamp
         );
 
         foreach ($folders as $folder) {
             // sort files
             usort(
                 $folder->files,
-                static fn(LogFileOutput $a, LogFileOutput $b) => $direction === DirectionEnum::Asc
-                    ? $a->latestTimestamp <=> $b->latestTimestamp
-                    : $b->latestTimestamp <=> $a->latestTimestamp
+                static fn(LogFileOutput $left, LogFileOutput $right) => $direction === DirectionEnum::Asc
+                    ? $left->latestTimestamp <=> $right->latestTimestamp
+                    : $right->latestTimestamp <=> $left->latestTimestamp
             );
         }
 

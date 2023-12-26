@@ -20,7 +20,7 @@ class LogFileService
 
     public function findFileByIdentifier(string $fileIdentifier): ?LogFile
     {
-        return $this->getFilesAndFolders()->firstFile(static fn($file) => $file->getIdentifier() === $fileIdentifier);
+        return $this->getFilesAndFolders()->firstFile(static fn(LogFile $file) => $file->identifier === $fileIdentifier);
     }
 
     public function findFolderByIdentifier(string $folderIdentifier): ?LogFolder

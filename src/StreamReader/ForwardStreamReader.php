@@ -14,7 +14,7 @@ class ForwardStreamReader extends AbstractStreamReader
      */
     public function __construct($handle, private readonly int $offset, bool $autoClose = true)
     {
-        parent::__construct($handle, self::DIRECTION_FORWARD, $autoClose);
+        parent::__construct($handle, $autoClose);
         $this->position = $this->offset;
     }
 

@@ -13,9 +13,10 @@ use FD\SymfonyLogViewerBundle\Service\LogFolderFactory;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputFactory;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputProvider;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputSorter;
-use FD\SymfonyLogViewerBundle\Service\LogLineOutputFactory;
 use FD\SymfonyLogViewerBundle\Service\LogParser;
+use FD\SymfonyLogViewerBundle\Service\PerformanceService;
 use FD\SymfonyLogViewerBundle\Service\StreamReaderFactory;
+use FD\SymfonyLogViewerBundle\Service\VersionService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
@@ -45,7 +46,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogFolderOutputFactory::class);
     $services->set(LogFolderOutputProvider::class);
     $services->set(LogFolderOutputSorter::class);
-    $services->set(LogLineOutputFactory::class);
     $services->set(LogParser::class);
     $services->set(StreamReaderFactory::class);
+    $services->set(PerformanceService::class);
+    $services->set(VersionService::class);
 };

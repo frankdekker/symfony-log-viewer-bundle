@@ -17,7 +17,7 @@ class Paginator implements JsonSerializable
     }
 
     /**
-     * @inheritdoc
+     * @return array<string, string|int|bool>
      */
     public function jsonSerialize(): array
     {

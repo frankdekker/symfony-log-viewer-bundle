@@ -7,10 +7,10 @@ use FD\SymfonyLogViewerBundle\Entity\LogFilter;
 use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
 use FD\SymfonyLogViewerBundle\Service\LogFileService;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputFactory;
-use FD\SymfonyLogViewerBundle\Service\LogLineOutputFactory;
 use FD\SymfonyLogViewerBundle\Service\LogParser;
 use FD\SymfonyLogViewerBundle\Service\MonoLogLineParser;
-use FD\SymfonyLogViewerBundle\Util\Utils;
+use FD\SymfonyLogViewerBundle\Service\PerformanceService;
+use Monolog\Logger;
 use SplFileInfo;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +19,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LogController extends AbstractController
 {
+    /**
+     * @param iterable<int, Logger> $loggerLocator
+     */
     public function __construct(
         private readonly LogFileService $fileService,
         private readonly LogParser $logParser,
         private readonly LogFolderOutputFactory $folderOutputFactory,
+        private readonly PerformanceService $performanceService,
         private readonly iterable $loggerLocator,
     ) {
     }
@@ -69,8 +73,7 @@ class LogController extends AbstractController
 
         $filter = new LogFilter($selectedLevels, $selectedChannels, $query);
 
-        $logIndex  = $this->logParser->parse(new SplFileInfo($file->getPath()), new MonoLogLineParser(), $direction, $perPage, $offset, $filter);
-        $startTime = (float)$request->server->get('REQUEST_TIME_FLOAT');
+        $logIndex = $this->logParser->parse(new SplFileInfo($file->path), new MonoLogLineParser(), $direction, $perPage, $offset, $filter);
 
         return $this->json(
             [
@@ -85,11 +88,7 @@ class LogController extends AbstractController
                 ],
                 'logs'        => $logIndex->getLines(),
                 'paginator'   => $logIndex->getPaginator(),
-                'performance' => [
-                    'memoryUsage' => Utils::bytesForHumans(memory_get_usage()),
-                    'requestTime' => round((microtime(true) - $startTime) * 1000) . 'ms',
-                    'version'     => '1.0.0', // TODO version
-                ]
+                'performance' => $this->performanceService->getPerformanceStats($request)
             ]
         );
     }

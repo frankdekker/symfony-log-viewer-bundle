@@ -21,6 +21,9 @@ class RouteLoader extends Loader
         $this->fileLoader = new PhpFileLoader(new FileLocator($paths));
     }
 
+    /**
+     * @inheritDoc
+     */
     public function load(mixed $resource, string $type = null): RouteCollection
     {
         $routeCollection = new RouteCollection();
@@ -29,6 +32,9 @@ class RouteLoader extends Loader
         return $routeCollection;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function supports(mixed $resource, string $type = null): bool
     {
         return $type === 'fd_symfony_log_viewer';

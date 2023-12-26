@@ -9,9 +9,9 @@ class LogFolder
     private array $files;
 
     public function __construct(
-        private string $identifier,
-        private string $path,
-        private string $relativePath,
+        public readonly string $identifier,
+        public readonly string $path,
+        public readonly string $relativePath,
         private int $earliestTimestamp,
         private int $latestTimestamp,
     ) {

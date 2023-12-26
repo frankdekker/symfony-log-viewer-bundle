@@ -19,7 +19,7 @@ class LogFileOutput implements JsonSerializable
     }
 
     /**
-     * @inheritdoc
+     * @return array<string, string|int|bool>
      */
     public function jsonSerialize(): array
     {

@@ -8,33 +8,13 @@ class LogFile
     private ?LogFolder $folder;
 
     public function __construct(
-        private string $identifier,
-        private string $path,
-        private string $relativePath,
-        private int $size,
-        private int $createTimestamp,
-        private int $updateTimestamp
+        public readonly string $identifier,
+        public readonly string $path,
+        public readonly string $relativePath,
+        public readonly int $size,
+        public readonly int $createTimestamp,
+        public readonly int $updateTimestamp
     ) {
-    }
-
-    public function getIdentifier(): string
-    {
-        return $this->identifier;
-    }
-
-    public function getPath(): string
-    {
-        return $this->path;
-    }
-
-    public function getRelativePath(): string
-    {
-        return $this->relativePath;
-    }
-
-    public function getSize(): int
-    {
-        return $this->size;
     }
 
     public function setFolder(LogFolder $folder): void
@@ -45,15 +25,5 @@ class LogFile
     public function getFolder(): ?LogFolder
     {
         return $this->folder;
-    }
-
-    public function getCreateTimestamp(): int
-    {
-        return $this->createTimestamp;
-    }
-
-    public function getUpdateTimestamp(): int
-    {
-        return $this->updateTimestamp;
     }
 }

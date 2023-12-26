@@ -22,7 +22,7 @@ class ZipArchiveFactory
         }
 
         foreach ($folder->getFiles() as $file) {
-            $archive->addFile($file->getPath());
+            $archive->addFile($file->path);
         }
 
         if ($archive->close() === false) {
