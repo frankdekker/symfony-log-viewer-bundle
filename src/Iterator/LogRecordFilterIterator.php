@@ -12,24 +12,30 @@ use Traversable;
  */
 class LogRecordFilterIterator implements IteratorAggregate
 {
+    /** @var array<string, int>|null */
+    private readonly ?array $levels;
+    /** @var array<string, int>|null */
+    private readonly ?array $channels;
+
     /**
      * @param Traversable<int, LogRecord> $iterator
-     * @param array<string, int>               $levels
-     * @param array<string, int>               $channels
+     * @param string[]|null               $levels
+     * @param string[]|null               $channels
      */
-    public function __construct(private readonly Traversable $iterator, private readonly array $levels, private readonly array $channels)
+    public function __construct(private readonly Traversable $iterator, ?array $levels, ?array $channels)
     {
+        $this->levels   = $levels === null ? null : array_flip($levels);
+        $this->channels = $channels === null ? null : array_flip($channels);
     }
 
     public function getIterator(): Traversable
     {
-        /** @var LogRecord $record */
         foreach ($this->iterator as $key => $record) {
-            if (count($this->levels) > 0 && isset($this->levels[$record->severity]) === false) {
+            if ($this->levels !== null && isset($this->levels[$record->severity]) === false) {
                 continue;
             }
 
-            if (count($this->channels) > 0 && isset($this->channels[$record->channel]) === false) {
+            if ($this->channels !== null && isset($this->channels[$record->channel]) === false) {
                 continue;
             }
 

@@ -28,8 +28,8 @@ class LogParser
         $iterator     = new LogMessageIterator($lineIterator, $lineParser, $logQuery->direction);
         $iterator     = new MaxRuntimeIterator($iterator, self::MAX_RUNTIME_IN_SECONDS, false);
         $iterator     = new LogRecordIterator($iterator, $lineParser, $logQuery->query);
-        if (count($logQuery->levels) > 0 || count($logQuery->channels) > 0) {
-            $iterator = new LogRecordFilterIterator($iterator, array_flip($logQuery->levels), array_flip($logQuery->channels));
+        if ($logQuery->levels !== null || $logQuery->channels !== null) {
+            $iterator = new LogRecordFilterIterator($iterator, $logQuery->levels, $logQuery->channels);
         }
         $iterator = new LimitIterator($iterator, $logQuery->perPage);
 

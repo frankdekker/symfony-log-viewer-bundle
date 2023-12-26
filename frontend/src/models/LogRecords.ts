@@ -2,7 +2,6 @@ import type LogRecord from '@/models/LogRecord';
 import type Paginator from '@/models/Paginator';
 
 export default interface LogRecords {
-    file: string;
     levels: {
         choices: {[key: string]: string};
         selected: string[];

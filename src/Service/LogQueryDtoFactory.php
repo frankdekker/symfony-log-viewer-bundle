@@ -9,7 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class LogQueryDtoFactory
 {
-    public function create(Request $request): LogQueryDto
+    /**
+     * @param array<string, string> $levels
+     * @param array<string, string> $channels
+     */
+    public function create(Request $request, array $levels, array $channels): LogQueryDto
     {
         $fileIdentifier   = $request->query->get('file', '');
         $offset           = $request->query->get('offset');
@@ -19,6 +23,13 @@ class LogQueryDtoFactory
         $selectedLevels   = array_filter(explode(',', $request->query->get('levels', '')), static fn($level) => $level !== '');
         $selectedChannels = array_filter(explode(',', $request->query->get('channels', '')), static fn($channel) => $channel !== '');
         $perPage          = $request->query->getInt('per_page', 25);
+
+        if (count($levels) === count($selectedLevels)) {
+            $selectedLevels = null;
+        }
+        if (count($channels) === count($selectedChannels)) {
+            $selectedChannels = null;
+        }
 
         return new LogQueryDto(
             $fileIdentifier,

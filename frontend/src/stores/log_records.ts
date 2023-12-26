@@ -5,7 +5,6 @@ import {ref} from 'vue'
 
 export const useLogRecordStore = defineStore('log_records', () => {
     const defaultData: LogRecords = {
-        file: '',
         levels: {choices: {}, selected: []},
         channels: {choices: {}, selected: []},
         logs: [],

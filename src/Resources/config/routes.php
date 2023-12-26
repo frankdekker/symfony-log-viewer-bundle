@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use FD\SymfonyLogViewerBundle\Controller\FoldersController;
 use FD\SymfonyLogViewerBundle\Controller\IndexController;
-use FD\SymfonyLogViewerBundle\Controller\LogController;
+use FD\SymfonyLogViewerBundle\Controller\LogRecordsController;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes) {
@@ -19,7 +19,7 @@ return function (RoutingConfigurator $routes) {
         ->controller([FoldersController::class, '__invoke']);
 
     $routes
-        ->add(LogController::class, '/api/logs')
+        ->add(LogRecordsController::class, '/api/logs')
         ->methods(['GET'])
-        ->controller([LogController::class, '__invoke']);
+        ->controller([LogRecordsController::class, '__invoke']);
 };
