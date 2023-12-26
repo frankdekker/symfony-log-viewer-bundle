@@ -4,17 +4,17 @@ declare(strict_types=1);
 namespace FD\SymfonyLogViewerBundle\Controller;
 
 use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
+use FD\SymfonyLogViewerBundle\Routing\RouteService;
 use FD\SymfonyLogViewerBundle\Service\LogFolderOutputProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
 use Throwable;
 
 class IndexController extends AbstractController
 {
     public function __construct(
-        private readonly LogFolderOutputProvider $folderOutputProvider,
-        private readonly RouterInterface $router
+        private readonly RouteService $routeService,
+        private readonly LogFolderOutputProvider $folderOutputProvider
     ) {
     }
 
@@ -24,8 +24,7 @@ class IndexController extends AbstractController
     public function __invoke(): Response
     {
         // retrieve base uri from route
-        $baseUri = $this->router->getRouteCollection()->get(self::class . '.base')?->getPath();
-        assert($baseUri !== null);
+        $baseUri = $this->routeService->getBaseUri();
 
         // retrieve all log files and folders
         $folders = $this->folderOutputProvider->provide(DirectionEnum::Desc);
