@@ -11,7 +11,6 @@ use FD\SymfonyLogViewerBundle\Service\File\LogFileService;
 use FD\SymfonyLogViewerBundle\Service\File\LogParser;
 use FD\SymfonyLogViewerBundle\Service\File\LogQueryDtoFactory;
 use FD\SymfonyLogViewerBundle\Service\File\Monolog\MonologFileParser;
-use FD\SymfonyLogViewerBundle\Service\File\StreamReaderFactory;
 use FD\SymfonyLogViewerBundle\Service\FinderService;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderFactory;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputFactory;
@@ -20,6 +19,7 @@ use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputSorter;
 use FD\SymfonyLogViewerBundle\Service\JsonManifestVersionStrategy;
 use FD\SymfonyLogViewerBundle\Service\PerformanceService;
 use FD\SymfonyLogViewerBundle\Service\VersionService;
+use FD\SymfonyLogViewerBundle\StreamReader\StreamReaderFactory;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
