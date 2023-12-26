@@ -38,7 +38,7 @@ return static function (ContainerConfigurator $container): void {
         ->tag('routing.loader');
 
     $services->set(JsonManifestVersionStrategy::class)
-        ->arg('$manifestPath', '%kernel.project_dir%/public/log-viewer/manifest.json');
+        ->arg('$manifestPath', '%kernel.project_dir%/public/bundles/symfonylogviewer/manifest.json');
 
     $services->set(FinderService::class)->arg('$logPath', '%kernel.logs_dir%');
     $services->set(LogFileService::class);

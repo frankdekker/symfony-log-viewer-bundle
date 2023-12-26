@@ -15,7 +15,7 @@ export default defineConfig(({command, mode}) => {
             sourcemap: mode === 'development',
             emptyOutDir: true,
             cssCodeSplit: false,
-            outDir: '../dev/public/log-viewer',
+            outDir: '../src/Resources/public',
             manifest: true,
             rollupOptions: {
                 input: 'src/main.ts'

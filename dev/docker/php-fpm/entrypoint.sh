@@ -1,7 +1,11 @@
 #!/bin/bash
 set -e
 
+rm -rf /app/dev/var
+
 composer install --no-interaction --optimize-autoloader
+php bin/console cache:clear
+php bin/console assets:install --symlink
 
 mkdir -p /app/dev/var/cache/dev
 mkdir -p /app/dev/var/log

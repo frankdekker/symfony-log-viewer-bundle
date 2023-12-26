@@ -9,7 +9,7 @@ services:
         ports:
             - ${NGINX_PORT:-8888}:80
         volumes:
-            - ./public:/app/dev/public
+            - ../.:/app:rw
 
     php-fpm:
         container_name: log-viewer-php
