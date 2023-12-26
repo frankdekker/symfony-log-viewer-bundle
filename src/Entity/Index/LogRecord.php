@@ -3,8 +3,15 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Entity\Index;
 
-class LogRecord
+use FD\SymfonyLogViewerBundle\Service\LogLevelOutputFactory;
+use JsonSerializable;
+
+class LogRecord implements JsonSerializable
 {
+    /**
+     * @param string|array<int|string, mixed> $context
+     * @param string|array<int|string, mixed> $extra
+     */
     public function __construct(
         public int $date,
         public string $severity,
@@ -16,30 +23,18 @@ class LogRecord
     }
 
     /**
-     * @return array<string, int|string>
+     * @return array<string, mixed>
      */
-    public function __serialize(): array
+    public function jsonSerialize(): array
     {
         return [
-            'date'     => $this->date,
-            'severity' => $this->severity,
-            'channel'  => $this->channel,
-            'message'  => $this->message,
-            'context'  => $this->context,
-            'extra'    => $this->extra,
+            'datetime'    => date('Y-m-d H:i:s', $this->date),
+            'level_name'  => ucfirst($this->severity),
+            'level_class' => LogLevelOutputFactory::LEVEL_CLASSES[$this->severity] ?? 'text-info',
+            'channel'     => $this->channel,
+            'text'        => $this->message,
+            'context'     => $this->context,
+            'extra'       => $this->extra,
         ];
-    }
-
-    /**
-     * @param array<string, int|string> $data
-     */
-    public function __unserialize(array $data): void
-    {
-        $this->date     = (int)$data['date'];
-        $this->severity = (string)$data['severity'];
-        $this->channel  = (string)$data['channel'];
-        $this->message  = (string)$data['message'];
-        $this->context  = $data['context'];
-        $this->extra    = $data['extra'];
     }
 }

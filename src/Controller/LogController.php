@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
 
 class LogController extends AbstractController
 {
@@ -24,12 +23,10 @@ class LogController extends AbstractController
         private readonly LogFileService $fileService,
         private readonly LogParser $logParser,
         private readonly LogFolderOutputFactory $folderOutputFactory,
-        private readonly LogLineOutputFactory $lineOutputFactory,
         private readonly iterable $loggerLocator,
     ) {
     }
 
-    #[Route('/logs/api/logs', name: self::class, methods: 'GET')]
     public function __invoke(Request $request): Response
     {
         $channels = [];
@@ -86,7 +83,7 @@ class LogController extends AbstractController
                     "choices"  => $channels,
                     "selected" => count($selectedChannels) === 0 ? array_keys($channels) : $selectedChannels
                 ],
-                'logs'        => $this->lineOutputFactory->createFromLines($logIndex->getLines()),
+                'logs'        => $logIndex->getLines(),
                 'paginator'   => $logIndex->getPaginator(),
                 'performance' => [
                     'memoryUsage' => Utils::bytesForHumans(memory_get_usage()),

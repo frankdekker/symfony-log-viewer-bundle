@@ -41,7 +41,7 @@ class LogParser
         $iterator = new LimitIterator($iterator, $perPage);
 
         // loop over all lines and create index
-        $index = new LogIndex($file->getInode(), 0, $file->getSize());
+        $index = new LogIndex();
         foreach ($iterator as $logLine) {
             $index->addLine($logLine);
         }
