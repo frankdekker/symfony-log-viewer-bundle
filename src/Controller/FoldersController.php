@@ -17,8 +17,8 @@ class FoldersController extends AbstractController
 
     public function __invoke(Request $request): Response
     {
-        $sortDirection = DirectionEnum::tryFrom((string)$request->query->get('direction')) ?? DirectionEnum::Desc;
+        $direction = DirectionEnum::tryFrom($request->query->get('direction', DirectionEnum::Desc->value)) ?? DirectionEnum::Desc;
 
-        return $this->json($this->folderOutputProvider->provide($sortDirection));
+        return $this->json($this->folderOutputProvider->provide($direction));
     }
 }
