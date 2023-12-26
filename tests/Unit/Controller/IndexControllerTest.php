@@ -13,6 +13,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @extends AbstractControllerTestCase<IndexController>
+ */
 #[CoversClass(IndexController::class)]
 class IndexControllerTest extends AbstractControllerTestCase
 {
