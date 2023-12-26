@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service;
+namespace FD\SymfonyLogViewerBundle\Service\Folder;
 
 use FD\SymfonyLogViewerBundle\Entity\LogFile;
 use FD\SymfonyLogViewerBundle\Entity\LogFolder;

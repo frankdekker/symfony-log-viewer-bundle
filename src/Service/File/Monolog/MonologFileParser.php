@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service\Monolog;
+namespace FD\SymfonyLogViewerBundle\Service\File\Monolog;
 
 use FD\SymfonyLogViewerBundle\Entity\Index\LogIndex;
 use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
-use FD\SymfonyLogViewerBundle\Service\LogFileParserInterface;
-use FD\SymfonyLogViewerBundle\Service\LogFileService;
-use FD\SymfonyLogViewerBundle\Service\LogParser;
+use FD\SymfonyLogViewerBundle\Service\File\LogFileParserInterface;
+use FD\SymfonyLogViewerBundle\Service\File\LogFileService;
+use FD\SymfonyLogViewerBundle\Service\File\LogParser;
 use Monolog\Logger;
 use SplFileInfo;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

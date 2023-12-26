@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service;
+namespace FD\SymfonyLogViewerBundle\Service\File;
 
 use FD\SymfonyLogViewerBundle\Entity\Index\LogIndex;
 use FD\SymfonyLogViewerBundle\Entity\Index\Paginator;
@@ -11,6 +11,7 @@ use FD\SymfonyLogViewerBundle\Iterator\LogMessageIterator;
 use FD\SymfonyLogViewerBundle\Iterator\LogRecordFilterIterator;
 use FD\SymfonyLogViewerBundle\Iterator\LogRecordIterator;
 use FD\SymfonyLogViewerBundle\Iterator\MaxRuntimeIterator;
+use FD\SymfonyLogViewerBundle\Service\StreamReaderFactory;
 use SplFileInfo;
 
 class LogParser

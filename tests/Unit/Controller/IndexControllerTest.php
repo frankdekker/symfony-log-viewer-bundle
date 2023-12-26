@@ -8,7 +8,7 @@ use FD\SymfonyLogViewerBundle\Controller\IndexController;
 use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
 use FD\SymfonyLogViewerBundle\Entity\Output\LogFolderOutput;
 use FD\SymfonyLogViewerBundle\Routing\RouteService;
-use FD\SymfonyLogViewerBundle\Service\LogFolderOutputProvider;
+use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace FD\SymfonyLogViewerBundle\Controller;
 
 use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Service\LogFolderOutputProvider;
+use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

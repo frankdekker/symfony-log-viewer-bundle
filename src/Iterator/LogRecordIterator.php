@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace FD\SymfonyLogViewerBundle\Iterator;
 
 use FD\SymfonyLogViewerBundle\Entity\Index\LogRecord;
-use FD\SymfonyLogViewerBundle\Service\LogLineParserInterface;
+use FD\SymfonyLogViewerBundle\Service\File\LogLineParserInterface;
 use IteratorAggregate;
 use Traversable;
 

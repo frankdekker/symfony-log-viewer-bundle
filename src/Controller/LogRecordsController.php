@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Controller;
 
-use FD\SymfonyLogViewerBundle\Service\LogQueryDtoFactory;
-use FD\SymfonyLogViewerBundle\Service\Monolog\MonologFileParser;
+use FD\SymfonyLogViewerBundle\Service\File\LogQueryDtoFactory;
+use FD\SymfonyLogViewerBundle\Service\File\Monolog\MonologFileParser;
 use FD\SymfonyLogViewerBundle\Service\PerformanceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

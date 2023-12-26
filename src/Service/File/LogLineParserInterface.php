@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service;
+namespace FD\SymfonyLogViewerBundle\Service\File;
 
 interface LogLineParserInterface
 {
