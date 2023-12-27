@@ -17,7 +17,7 @@ class LogFile
     ) {
     }
 
-    public function setFolder(LogFolder $folder): void
+    public function setFolder(?LogFolder $folder): void
     {
         $this->folder = $folder;
     }
