@@ -14,9 +14,9 @@ use Traversable;
 class LimitIterator implements IteratorAggregate
 {
     /**
-     * @param Traversable<K, V> $iterator
+     * @param iterable<K, V> $iterator
      */
-    public function __construct(private readonly Traversable $iterator, private readonly int $limit)
+    public function __construct(private readonly iterable $iterator, private readonly int $limit)
     {
     }
 
