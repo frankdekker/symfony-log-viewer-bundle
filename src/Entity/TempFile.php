@@ -20,8 +20,8 @@ class TempFile extends SplFileInfo
         $this->resource = $resource;
         parent::__construct(stream_get_meta_data($resource)['uri']);
 
-        // a tmpfile is automatically removed when it is closed, the handle is garbage collected or the script ends
-        // this temp file remains available till script ends.
+        // By default a tmpfile is automatically removed when it is closed, the handle is garbage collected or the script ends.
+        // This temp file specifically remains available till script ends.
         register_shutdown_function(fn() => $this->cleanUp());
     }
 
