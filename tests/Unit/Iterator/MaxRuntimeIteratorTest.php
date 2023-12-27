@@ -24,7 +24,7 @@ class MaxRuntimeIteratorTest extends TestCase
     public function testGetIteratorShouldNotThrow(): void
     {
         $iterator = new MaxRuntimeIterator(new ArrayIterator([1, 2, 3]), 1, false);
-        $this->assertSame([1, 2, 3], iterator_to_array($iterator));
+        static::assertSame([1, 2, 3], iterator_to_array($iterator));
     }
 
     public function testGetIteratorShouldStopSilently(): void
