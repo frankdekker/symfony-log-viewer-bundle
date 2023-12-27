@@ -7,7 +7,7 @@ use FD\SymfonyLogViewerBundle\Entity\Index\LogIndex;
 use FD\SymfonyLogViewerBundle\Entity\Index\Paginator;
 use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
 use FD\SymfonyLogViewerBundle\Iterator\LimitIterator;
-use FD\SymfonyLogViewerBundle\Iterator\LogMessageIterator;
+use FD\SymfonyLogViewerBundle\Iterator\LogLineParserIterator;
 use FD\SymfonyLogViewerBundle\Iterator\LogRecordFilterIterator;
 use FD\SymfonyLogViewerBundle\Iterator\LogRecordIterator;
 use FD\SymfonyLogViewerBundle\Iterator\MaxRuntimeIterator;
@@ -26,7 +26,7 @@ class LogParser
     {
         // create iterators
         $lineIterator = $this->streamReaderFactory->createForFile($file, $logQuery->direction, $logQuery->offset);
-        $iterator     = new LogMessageIterator($lineIterator, $lineParser, $logQuery->direction);
+        $iterator     = new LogLineParserIterator($lineIterator, $lineParser, $logQuery->direction);
         $iterator     = new MaxRuntimeIterator($iterator, self::MAX_RUNTIME_IN_SECONDS, false);
         $iterator     = new LogRecordIterator($iterator, $lineParser, $logQuery->query);
         if ($logQuery->levels !== null || $logQuery->channels !== null) {

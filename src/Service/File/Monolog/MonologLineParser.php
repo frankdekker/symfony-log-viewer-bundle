@@ -8,10 +8,11 @@ use JsonException;
 
 class MonologLineParser implements LogLineParserInterface
 {
-    /* [YYYY-MM-DDTHH:MM:SS.UUUUUU+TZ] channel.level */
-    private const MATCH_PATTERN = '/^\[\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}(?:\.\d+(?:[+-]\d{2}:\d{2})?)?]\s+\S+\.\S+:/';
+    /* [YYYY-MM-DD*] channel.level: */
+    private const START_OF_MESSAGE_PATTERN = '/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/';
 
-    private const PARSE_PATTERN =
+    /* [date] channel.level: message {context} {extra} */
+    private const LOG_LINE_PATTERN =
         '/^\[(?P<date>[^\]]+)\]\s+' .
         '(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+' .
         '(?P<message>.*?)\s+' .
@@ -23,7 +24,7 @@ class MonologLineParser implements LogLineParserInterface
      */
     public function matches(string $line): int
     {
-        return preg_match(self::MATCH_PATTERN, $line) === 1 ? self::MATCH_START : self::MATCH_APPEND;
+        return preg_match(self::START_OF_MESSAGE_PATTERN, $line) === 1 ? self::MATCH_START : self::MATCH_APPEND;
     }
 
     /**
@@ -31,7 +32,7 @@ class MonologLineParser implements LogLineParserInterface
      */
     public function parse(string $message): ?array
     {
-        if (preg_match(self::PARSE_PATTERN, $message, $matches) !== 1) {
+        if (preg_match(self::LOG_LINE_PATTERN, $message, $matches) !== 1) {
             return null;
         }
 
@@ -46,7 +47,7 @@ class MonologLineParser implements LogLineParserInterface
     }
 
     /**
-     * @return array<int|string, mixed>
+     * @return string|array<int|string, mixed>
      */
     private function toJsonOrString(string $data): string|array
     {

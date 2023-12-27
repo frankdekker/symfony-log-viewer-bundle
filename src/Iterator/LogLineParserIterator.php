@@ -9,9 +9,10 @@ use IteratorAggregate;
 use Traversable;
 
 /**
+ * Iterate over a set of strings. If the string matches the log line either add or append a log line.
  * @implements IteratorAggregate<int, string>
  */
-class LogMessageIterator implements IteratorAggregate
+class LogLineParserIterator implements IteratorAggregate
 {
     /**
      * @param Traversable<int, string> $iterator
