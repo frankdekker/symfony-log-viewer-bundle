@@ -20,7 +20,6 @@ class LogLineParserIteratorTest extends TestCase
     {
         parent::setUp();
         $this->lineParser = $this->createMock(LogLineParserInterface::class);
-        $this->service    = new ($this->lineParser)();
     }
 
     public function testGetIteratorAscending(): void
