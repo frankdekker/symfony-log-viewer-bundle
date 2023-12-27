@@ -18,11 +18,11 @@ class LogRecordFilterIterator implements IteratorAggregate
     private readonly ?array $channels;
 
     /**
-     * @param Traversable<int, LogRecord> $iterator
-     * @param string[]|null               $levels
-     * @param string[]|null               $channels
+     * @param iterable<int, LogRecord> $iterator
+     * @param string[]|null            $levels
+     * @param string[]|null            $channels
      */
-    public function __construct(private readonly Traversable $iterator, ?array $levels, ?array $channels)
+    public function __construct(private readonly iterable $iterator, ?array $levels, ?array $channels)
     {
         $this->levels   = $levels === null ? null : array_flip($levels);
         $this->channels = $channels === null ? null : array_flip($channels);

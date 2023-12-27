@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Entity\Index;
 
-use FD\SymfonyLogViewerBundle\Service\LogLevelOutputFactory;
 use JsonSerializable;
 use Psr\Log\LogLevel;
 
