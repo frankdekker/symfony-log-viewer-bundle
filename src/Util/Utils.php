@@ -20,14 +20,14 @@ class Utils
     public static function bytesForHumans(int $bytes): string
     {
         if ($bytes >= self::GIGABYTE) {
-            return number_format($bytes / self::GIGABYTE, 2) . ' GB';
+            return number_format($bytes / self::GIGABYTE, 2, thousands_separator: '') . ' GB';
         }
         if ($bytes >= self::MEGABYTE) {
-            return number_format($bytes / self::MEGABYTE, 2) . ' MB';
+            return number_format($bytes / self::MEGABYTE, 2, thousands_separator: '') . ' MB';
         }
         if ($bytes > self::KILOBYTE) {
             // https://en.wiktionary.org/wiki/kB
-            return number_format($bytes / self::KILOBYTE, 2) . ' kB';
+            return number_format($bytes / self::KILOBYTE, 2, thousands_separator: '') . ' kB';
         }
 
         return $bytes . ' bytes';
