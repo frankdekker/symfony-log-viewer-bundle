@@ -26,8 +26,8 @@ class ForwardStreamReader extends AbstractStreamReader
         fseek($this->handle, $this->offset);
 
         while (($line = fgets($this->handle)) !== false) {
-            yield $line;
             $this->position += strlen($line);
+            yield $line;
         }
     }
 
