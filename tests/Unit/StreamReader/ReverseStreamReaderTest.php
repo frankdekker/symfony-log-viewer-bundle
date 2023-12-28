@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace FD\SymfonyLogViewerBundle\Tests\Unit\StreamReader;
 
 use FD\SymfonyLogViewerBundle\StreamReader\AbstractStreamReader;
-use FD\SymfonyLogViewerBundle\StreamReader\ForwardStreamReader;
+use FD\SymfonyLogViewerBundle\StreamReader\ReverseStreamReader;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(ForwardStreamReader::class)]
+#[CoversClass(ReverseStreamReader::class)]
 #[CoversClass(AbstractStreamReader::class)]
-class ForwardStreamReaderTest extends TestCase
+class ReverseStreamReaderTest extends TestCase
 {
     private string $path;
 
@@ -27,8 +27,8 @@ class ForwardStreamReaderTest extends TestCase
 
         $lines = iterator_to_array($reader);
         static::assertCount(5, $lines);
-        static::assertSame("line1\n", $lines[0]);
-        static::assertSame("line5\n", $lines[4]);
+        static::assertSame("line5\n", $lines[0]);
+        static::assertSame("line1\n", $lines[4]);
         static::assertTrue($reader->isEOF());
     }
 
@@ -55,11 +55,22 @@ class ForwardStreamReaderTest extends TestCase
         static::assertTrue($reader->isEOF());
     }
 
-    private function createReader(int $offset = 0): ForwardStreamReader
+    public function testReaderWithBuffer(): void
+    {
+        $reader = $this->createReader(bufferSize: 13);
+
+        $lines = iterator_to_array($reader);
+        static::assertCount(5, $lines);
+        static::assertSame("line5\n", $lines[0]);
+        static::assertSame("line1\n", $lines[4]);
+        static::assertTrue($reader->isEOF());
+    }
+
+    private function createReader(?int $offset = null, int $bufferSize = 50000): ReverseStreamReader
     {
         $handle = fopen($this->path . '/test.log', 'rb');
         static::assertNotFalse($handle);
 
-        return new ForwardStreamReader($handle, $offset);
+        return new ReverseStreamReader($handle, $offset, $bufferSize);
     }
 }

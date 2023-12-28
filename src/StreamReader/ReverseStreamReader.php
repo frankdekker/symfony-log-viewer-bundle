@@ -51,8 +51,8 @@ class ReverseStreamReader extends AbstractStreamReader
             // loop over lines in reverse order
             $len = count($lines);
             for ($j = $len; $j > 0; $j--) {
-                yield $lines[$j - 1];
                 $this->position -= strlen($lines[$j - 1]);
+                yield $lines[$j - 1];
             }
 
             // move cursor
