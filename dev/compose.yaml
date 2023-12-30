@@ -10,7 +10,7 @@ services:
             - ${NGINX_PORT:-8888}:80
         volumes:
             - ../.:/app:rw
-            - ./log/.:/var/log/nginx:r
+            - log-viewer-log:/var/log/nginx:rw
 
     php-fpm:
         container_name: log-viewer-php
@@ -24,6 +24,7 @@ services:
             PHP_IDE_CONFIG: serverName=localhost
         volumes:
             - ../.:/app:rw
+            - log-viewer-log:/var/log/nginx:rw
 
     nodejs:
         container_name: log-viewer-nodejs
@@ -32,6 +33,8 @@ services:
             dockerfile: ./docker/nodejs/Dockerfile
         volumes:
             - ../.:/app:rw
+volumes:
+    log-viewer-log:
 
 networks:
     default:
