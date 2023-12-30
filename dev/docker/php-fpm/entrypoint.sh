@@ -3,7 +3,6 @@ set -e
 
 rm -rf /app/dev/var
 
-composer install --no-interaction --optimize-autoloader
 php bin/console cache:clear
 php bin/console assets:install --symlink
 

@@ -17,7 +17,7 @@ framework:
 twig:
   strict_variables: true
   paths:
-    "%kernel.project_dir%/templates": templates
+    "%kernel.project_dir%": templates
 
 monolog:
   channels:
