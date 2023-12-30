@@ -10,6 +10,7 @@ services:
             - ${NGINX_PORT:-8888}:80
         volumes:
             - ../.:/app:rw
+            - ./log/.:/var/log/nginx:r
 
     php-fpm:
         container_name: log-viewer-php
