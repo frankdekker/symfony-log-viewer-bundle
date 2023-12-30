@@ -7,9 +7,10 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "phpstan/extension-installer": true
-        },
-        "lock": false
+            "symfony/runtime": true,
+            "phpstan/extension-installer": true,
+            "symfony/flex": false
+        }
     },
     "require": {
         "php": ">=8.1",
@@ -38,10 +39,12 @@
         "roave/security-advisories": "dev-latest",
         "squizlabs/php_codesniffer": "^3.6",
         "symfony/browser-kit": "^6.3||^7.0",
+        "symfony/console": "^6.3||^7.0",
         "symfony/css-selector": "^6.3||^7.0",
         "symfony/monolog-bridge": "^6.3||^7.0",
         "symfony/monolog-bundle": "^3.10",
         "symfony/phpunit-bridge": "^6.3||^7.0",
+        "symfony/runtime": "^6.3||^7.0",
         "symfony/templating": "^6.3||^7.0",
         "symfony/twig-bundle": "^6.3||^7.0",
         "symfony/yaml": "^6.3||^7.0",
@@ -54,6 +57,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "FD\\SymfonyLogViewerBundle\\Dev\\": "dev/",
             "FD\\SymfonyLogViewerBundle\\Tests\\Functional\\": "tests/Functional/",
             "FD\\SymfonyLogViewerBundle\\Tests\\Unit\\": "tests/Unit/",
             "FD\\SymfonyLogViewerBundle\\Tests\\": "tests/"
@@ -71,6 +75,10 @@
         "fix:phpcbf": "phpcbf src tests",
         "test": "phpunit",
         "test:integration": "phpunit --testsuite integration",
-        "test:unit": "phpunit --testsuite unit"
+        "test:unit": "phpunit --testsuite unit",
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        }
     }
 }

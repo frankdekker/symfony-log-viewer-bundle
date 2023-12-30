@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace FD\SymfonyLogViewerBundle\Dev;
 
 use Exception;
 use FD\SymfonyLogViewerBundle\SymfonyLogViewerBundle;
