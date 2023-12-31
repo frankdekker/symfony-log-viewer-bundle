@@ -15,7 +15,7 @@ class MonologLineParser implements LogLineParserInterface
     private const LOG_LINE_PATTERN =
         '/^\[(?P<date>[^\]]+)\]\s+' .
         '(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+' .
-        '(?P<message>.*?)\s+' .
+        '(?P<message>.*)\s+' .
         '(?P<context>[[{].*?[\]}])\s+' .
         '(?P<extra>[[{].*?[\]}])\s+$/s';
 
