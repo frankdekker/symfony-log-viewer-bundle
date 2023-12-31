@@ -60,8 +60,8 @@
         "psr-4": {
             "FD\\SymfonyLogViewerBundle\\Dev\\": "dev/",
             "FD\\SymfonyLogViewerBundle\\Tests\\Functional\\": "tests/Functional/",
-            "FD\\SymfonyLogViewerBundle\\Tests\\Unit\\": "tests/Unit/",
-            "FD\\SymfonyLogViewerBundle\\Tests\\": "tests/"
+            "FD\\SymfonyLogViewerBundle\\Tests\\Integration\\": "tests/Integration/",
+            "FD\\SymfonyLogViewerBundle\\Tests\\Unit\\": "tests/Unit/"
         }
     },
     "suggest": {
@@ -75,6 +75,7 @@
         "fix": "@fix:phpcbf",
         "fix:phpcbf": "phpcbf src tests",
         "test": "phpunit",
+        "test:functional": "phpunit --testsuite functional",
         "test:integration": "phpunit --testsuite integration",
         "test:unit": "phpunit --testsuite unit",
         "auto-scripts": {

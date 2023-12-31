@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Routing;
+namespace FD\SymfonyLogViewerBundle\Tests\Integration\Routing;
 
 use Exception;
 use FD\SymfonyLogViewerBundle\Routing\RouteLoader;
