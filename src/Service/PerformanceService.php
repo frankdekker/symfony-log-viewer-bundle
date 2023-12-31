@@ -7,6 +7,11 @@ use FD\SymfonyLogViewerBundle\Entity\Index\PerformanceStats;
 use FD\SymfonyLogViewerBundle\Util\Utils;
 use Symfony\Component\HttpFoundation\Request;
 
+use function assert;
+use function is_float;
+use function memory_get_usage;
+use function round;
+
 class PerformanceService
 {
     public function __construct(private readonly VersionService $versionService)
