@@ -6,6 +6,11 @@ namespace FD\SymfonyLogViewerBundle\Entity;
 use RuntimeException;
 use SplFileInfo;
 
+use function fclose;
+use function register_shutdown_function;
+use function stream_get_meta_data;
+use function tmpfile;
+
 class TempFile extends SplFileInfo
 {
     /** @var resource|null */
@@ -14,11 +19,11 @@ class TempFile extends SplFileInfo
     public function __construct(?callable $registerShutdownFn = null)
     {
         $resource = tmpfile();
-        // @codingStandardsIgnoreStart
         if ($resource === false) {
+            // @codeCoverageIgnoreStart
             throw new RuntimeException('Unable to create new temp file');
+            // @codeCoverageIgnoreEnd
         }
-        // @codingStandardsIgnoreEnd
         $this->resource = $resource;
         parent::__construct(stream_get_meta_data($resource)['uri']);
 
