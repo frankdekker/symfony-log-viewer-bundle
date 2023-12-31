@@ -39,7 +39,7 @@ class LogFolderFactoryTest extends TestCase
         $fileB->method('getCTime')->willReturn(333333);
         $fileB->method('getMTime')->willReturn(444444);
 
-        $collection = $this->factory->createFromFiles([$fileA, $fileB]);
+        $collection = $this->factory->createFromFiles(['fileA' => $fileA, 'fileB' => $fileB]);
 
         $expectedFolder = new LogFolder('29c04485', 'path', 'relative-path', 222222, 444444);
         $expectedFolder->addFile(new LogFile('f218b241', 'pathname A', 'relative-path', 111111, 222222, 333333));

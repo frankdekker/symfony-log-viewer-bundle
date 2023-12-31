@@ -15,4 +15,6 @@
             <property name="absoluteLineLimit" value="250"/>
         </properties>
     </rule>
+
+    <exclude-pattern>*/src/Resources/*</exclude-pattern>
 </ruleset>

@@ -67,6 +67,4 @@ class LogRecordIteratorTest extends TestCase
 
         static::assertEquals([$expectedRecord], iterator_to_array($recordIterator));
     }
-
-
 }
