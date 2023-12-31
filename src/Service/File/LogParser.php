@@ -25,9 +25,9 @@ class LogParser
     public function parse(SplFileInfo $file, LogLineParserInterface $lineParser, LogQueryDto $logQuery): LogIndex
     {
         // create iterators
-        $lineIterator = $this->streamReaderFactory->createForFile($file, $logQuery->direction, $logQuery->offset);
-        $iterator     = new LogLineParserIterator($lineIterator, $lineParser, $logQuery->direction);
-        $iterator     = new MaxRuntimeIterator($iterator, self::MAX_RUNTIME_IN_SECONDS, false);
+        $streamReader = $this->streamReaderFactory->createForFile($file, $logQuery->direction, $logQuery->offset);
+        $lineIterator = new LogLineParserIterator($streamReader, $lineParser, $logQuery->direction);
+        $iterator     = new MaxRuntimeIterator($lineIterator, self::MAX_RUNTIME_IN_SECONDS, false);
         $iterator     = new LogRecordIterator($iterator, $lineParser, $logQuery->query);
         if ($logQuery->levels !== null || $logQuery->channels !== null) {
             $iterator = new LogRecordFilterIterator($iterator, $logQuery->levels, $logQuery->channels);

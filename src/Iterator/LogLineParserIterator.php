@@ -5,6 +5,7 @@ namespace FD\SymfonyLogViewerBundle\Iterator;
 
 use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
 use FD\SymfonyLogViewerBundle\Service\File\LogLineParserInterface;
+use FD\SymfonyLogViewerBundle\StreamReader\AbstractStreamReader;
 use IteratorAggregate;
 use Traversable;
 
@@ -14,48 +15,63 @@ use Traversable;
  */
 class LogLineParserIterator implements IteratorAggregate
 {
-    /**
-     * @param Traversable<int, string> $iterator
-     */
+    /** @var string[] */
+    private array $lines = [];
+    private int $position;
+
     public function __construct(
-        private readonly Traversable $iterator,
+        private readonly AbstractStreamReader $streamReader,
         private readonly LogLineParserInterface $lineParser,
         private readonly DirectionEnum $direction
     ) {
+        $this->position = $this->streamReader->getPosition();
     }
 
     public function getIterator(): Traversable
     {
-        $lines = [];
-        foreach ($this->iterator as $line) {
+        foreach ($this->streamReader as $line) {
             // sniff log line
             $match = $this->lineParser->matches($line);
             if ($match === LogLineParserInterface::MATCH_SKIP) {
                 continue;
             }
             if ($match === LogLineParserInterface::MATCH_APPEND) {
-                $lines[] = $line;
+                $this->lines[] = $line;
                 continue;
             }
 
             if ($this->direction === DirectionEnum::Asc) {
                 // if forward, gather lines till we see the next start of the log line
-                if (count($lines) === 0) {
-                    $lines[] = $line;
+                if (count($this->lines) === 0) {
+                    $this->lines[] = $line;
                     continue;
                 }
-                yield implode('', $lines);
-                $lines = [$line];
+                $this->position = $this->streamReader->getPosition() - strlen($line);
+                yield implode('', $this->lines);
+                $this->lines = [$line];
             } else {
-                $lines[] = $line;
-                yield implode('', array_reverse($lines));
-                $lines = [];
+                $this->lines[]  = $line;
+                $this->position = $this->streamReader->getPosition();
+                yield implode('', array_reverse($this->lines));
+                $this->lines = [];
             }
         }
 
         // if lines remaining we should also yield
-        if ($this->direction === DirectionEnum::Asc && count($lines) > 0) {
-            yield implode('', $lines);
+        if ($this->direction === DirectionEnum::Asc && count($this->lines) > 0) {
+            $this->position = $this->streamReader->getPosition();
+            yield implode('', $this->lines);
+            $this->lines = [];
         }
+    }
+
+    public function isEOF(): bool
+    {
+        return $this->streamReader->isEOF() && count($this->lines) === 0;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
     }
 }

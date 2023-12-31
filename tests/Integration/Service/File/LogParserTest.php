@@ -27,27 +27,47 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithPaginator(): void
     {
-        $query = new LogQueryDto('identifier', 0, '', DirectionEnum::Asc, null, null, 25);
+        $query = new LogQueryDto('identifier', 0, '', DirectionEnum::Asc, null, null, 5);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
-        static::assertCount(25, $index->getLines());
+        static::assertCount(5, $index->getLines());
         static::assertNotNull($index->getPaginator());
-        static::assertSame(1768, $index->getPaginator()->offset);
+        static::assertSame(335, $index->getPaginator()->offset);
         static::assertSame('Message for line 1', $index->getLines()[0]->message);
-        static::assertSame('Message for line 25', $index->getLines()[24]->message);
+        static::assertSame('Message for line 5', $index->getLines()[4]->message);
     }
 
     public function testParseWithOffset(): void
     {
-        $query = new LogQueryDto('identifier', 1768, '', DirectionEnum::Asc, null, null, 25);
+        $query = new LogQueryDto('identifier', 335, '', DirectionEnum::Asc, null, null, 5);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
-        static::assertCount(25, $index->getLines());
+        static::assertCount(5, $index->getLines());
         static::assertNotNull($index->getPaginator());
-        static::assertSame(3550, $index->getPaginator()->offset);
-        static::assertSame('Message for line 26', $index->getLines()[0]->message);
-        static::assertSame('Message for line 50', $index->getLines()[24]->message);
+        static::assertSame(671, $index->getPaginator()->offset);
+        static::assertSame('Message for line 6', $index->getLines()[0]->message);
+        static::assertSame('Message for line 10', $index->getLines()[4]->message);
+    }
+
+    public function testParseAlmostEof(): void
+    {
+        $query = new LogQueryDto('identifier', 0, '', DirectionEnum::Asc, null, null, 99);
+        $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
+        $index = $this->parser->parse($file, $this->lineParser, $query);
+
+        static::assertCount(99, $index->getLines());
+        static::assertNotNull($index->getPaginator());
+    }
+
+    public function testParseEof(): void
+    {
+        $query = new LogQueryDto('identifier', 0, '', DirectionEnum::Asc, null, null, 500);
+        $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
+        $index = $this->parser->parse($file, $this->lineParser, $query);
+
+        static::assertCount(100, $index->getLines());
+        static::assertNull($index->getPaginator());
     }
 }

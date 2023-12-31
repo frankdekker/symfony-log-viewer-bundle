@@ -12,9 +12,6 @@ use Traversable;
  */
 abstract class AbstractStreamReader implements IteratorAggregate
 {
-    public const DIRECTION_FORWARD = 1;
-    public const DIRECTION_REVERSE = 2;
-
     /**
      * @return Generator<int, string>
      */
