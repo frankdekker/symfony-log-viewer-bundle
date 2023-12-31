@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(LogRecord::class)]
 class LogRecordTest extends TestCase
 {
-
     public function testJsonSerialize(): void
     {
         $record = new LogRecord(946684800, 'debug', 'request', 'message', ['context' => 'context'], ['extra' => 'extra']);
