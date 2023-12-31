@@ -8,7 +8,9 @@ const route = useRoute();
 <template>
     <div class="lsv-sidebar h-100 overflow-hidden">
         <header class="lsv-header-height bg-body">
-            <h3 class="d-block text-center lsv-app-title">Log viewer</h3>
+            <h3 class="d-block text-center lsv-app-title">
+                <i class="bi bi-substack lsv-icon-color"></i>
+                Log viewer </h3>
         </header>
 
         <FileTree/>
@@ -20,5 +22,9 @@ const route = useRoute();
 .lsv-sidebar {
     display: grid;
     grid-template-rows: auto 1fr;
+}
+
+.lsv-icon-color {
+    color: #fff;
 }
 </style>
