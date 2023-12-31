@@ -14,9 +14,11 @@ export default defineConfig(({command, mode}) => {
         build: {
             sourcemap: mode === 'development',
             emptyOutDir: true,
+            copyPublicDir: false,
             cssCodeSplit: false,
             outDir: '../src/Resources/public',
             manifest: true,
+            minify: mode === 'production',
             rollupOptions: {
                 input: 'src/main.ts'
             }
