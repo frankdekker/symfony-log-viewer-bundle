@@ -1,8 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Entity;
+namespace Entity;
 
+use FD\SymfonyLogViewerBundle\Entity\LogFile;
+use FD\SymfonyLogViewerBundle\Entity\LogFolder;
+use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Entity\Output;
+namespace Entity\Output;
 
+use FD\SymfonyLogViewerBundle\Entity\Output\LogFileOutput;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
