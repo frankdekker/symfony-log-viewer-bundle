@@ -27,7 +27,7 @@ class LogIndex
         return $this->paginator;
     }
 
-    public function setPaginator(Paginator $paginator): self
+    public function setPaginator(?Paginator $paginator): self
     {
         $this->paginator = $paginator;
 
