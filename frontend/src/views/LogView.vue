@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DropdownChecklist from '@/components/DropdownChecklist.vue';
 import LogRecord from '@/components/LogRecord.vue';
+import Performance from '@/components/Performance.vue';
 import type Checklist from '@/models/Checklist';
 import {filter} from '@/services/Objects';
 import {nullify} from '@/services/Optional';
@@ -100,27 +101,21 @@ onMounted(() => {
             </div>
         </main>
 
-        <footer class="pt-1 pb-1 d-flex" v-if="logRecordStore.records.paginator !== null">
+        <footer class="pt-1 pb-1 d-flex">
             <button class="btn btn-sm btn-outline-secondary"
                     @click="offset = 0; navigate()"
-                    v-bind:disabled="logRecordStore.records.paginator?.first === true">
+                    v-bind:disabled="logRecordStore.records.paginator?.first !== false">
                 First
             </button>
             <button class="ms-2 btn btn-sm btn-outline-secondary"
                     @click="offset = logRecordStore.records.paginator?.offset ?? 0; navigate()"
-                    v-bind:disabled="logRecordStore.records.paginator?.more === false">
+                    v-bind:disabled="logRecordStore.records.paginator?.more !== true">
                 Next {{ perPage }}
             </button>
 
             <div class="lsv-spacer"></div>
 
-            <div class="me-4 d-inline-block small" v-if="logRecordStore.records.performance !== undefined">
-                <span class="small">Memory: {{ logRecordStore.records.performance.memoryUsage }}</span>
-                &centerdot;
-                <span class="small">Duration: {{ logRecordStore.records.performance.requestTime }}</span>
-                &centerdot;
-                <span class="small">Version: {{ logRecordStore.records.performance.version }}</span>
-            </div>
+            <Performance :performance="logRecordStore.records.performance"></Performance>
         </footer>
     </div>
 </template>

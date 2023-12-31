@@ -1,5 +1,6 @@
 import type LogRecord from '@/models/LogRecord';
 import type Paginator from '@/models/Paginator';
+import type Performance from '@/models/Performance';
 
 export default interface LogRecords {
     levels: {
@@ -12,9 +13,5 @@ export default interface LogRecords {
     };
     logs: LogRecord[];
     paginator: Paginator | null;
-    performance?: {
-        memoryUsage: string;
-        requestTime: string;
-        version: string;
-    }
+    performance?: Performance;
 }
