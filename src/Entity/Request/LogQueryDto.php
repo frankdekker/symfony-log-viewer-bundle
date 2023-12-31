@@ -8,6 +8,7 @@ use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
 class LogQueryDto
 {
     /**
+     * @codeCoverageIgnore - Simple DTO
      * @param string[]|null $levels
      * @param string[]|null $channels
      */
