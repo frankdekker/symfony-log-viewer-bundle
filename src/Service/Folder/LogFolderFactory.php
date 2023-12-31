@@ -12,7 +12,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class LogFolderFactory
 {
     /**
-     * @param iterable<int, SplFileInfo> $files
+     * @param iterable<string, SplFileInfo> $files
      */
     public function createFromFiles(iterable $files): LogFolderCollection
     {
