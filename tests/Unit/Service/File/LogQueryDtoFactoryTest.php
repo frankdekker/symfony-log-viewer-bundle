@@ -35,6 +35,6 @@ class LogQueryDtoFactoryTest extends TestCase
     {
         $request  = new Request(['file' => 'file']);
         $expected = new LogQueryDto('file', null, '', DirectionEnum::Desc, null, null, 25);
-        static::assertEquals($expected, (new LogQueryDtoFactory())->create($request, ['debug', 'info'], ['app', 'request']));
+        static::assertEquals($expected, (new LogQueryDtoFactory())->create($request, ['debug' => 'debug'], ['app' => 'app']));
     }
 }
