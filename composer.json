@@ -8,8 +8,7 @@
         "sort-packages": true,
         "allow-plugins": {
             "symfony/runtime": true,
-            "phpstan/extension-installer": true,
-            "symfony/flex": false
+            "phpstan/extension-installer": true
         }
     },
     "require": {
