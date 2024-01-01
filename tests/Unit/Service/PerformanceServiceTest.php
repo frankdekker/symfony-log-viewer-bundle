@@ -10,11 +10,13 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ClockMock;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 #[CoversClass(PerformanceService::class)]
 class PerformanceServiceTest extends TestCase
 {
     private VersionService&MockObject $versionService;
+    private RequestStack $requestStack;
     private PerformanceService $service;
 
     protected function setUp(): void
@@ -23,13 +25,15 @@ class PerformanceServiceTest extends TestCase
         ClockMock::register(self::class);
         ClockMock::register(PerformanceService::class);
         ClockMock::withClockMock(true);
+        $this->requestStack   = new RequestStack();
         $this->versionService = $this->createMock(VersionService::class);
-        $this->service        = new PerformanceService($this->versionService);
+        $this->service        = new PerformanceService($this->requestStack, $this->versionService);
     }
 
     public function testGetPerformanceStats(): void
     {
         $request = new Request(server: ['REQUEST_TIME_FLOAT' => microtime(true) - 300]);
+        $this->requestStack->push($request);
 
         $this->versionService->expects(self::once())->method('getVersion')->willReturn('1.2.3');
 
