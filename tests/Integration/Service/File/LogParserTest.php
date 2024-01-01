@@ -21,7 +21,7 @@ class LogParserTest extends AbstractIntegrationTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->lineParser = new MonologLineParser();
+        $this->lineParser = new MonologLineParser(MonologLineParser::START_OF_MESSAGE_PATTERN, MonologLineParser::LOG_LINE_PATTERN);
         $this->parser     = new LogParser(new StreamReaderFactory());
     }
 
