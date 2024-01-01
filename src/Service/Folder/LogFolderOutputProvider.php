@@ -22,11 +22,17 @@ class LogFolderOutputProvider
     public function provide(DirectionEnum $direction): array
     {
         // get all file and folders
-        $folders = $this->folderService->getFilesAndFolders();
+        $folderCollections = $this->folderService->getFilesAndFolders();
+
         // create output
-        $folderOutputs = $this->folderOutputFactory->createFromFolders($folders);
+        $folders = [];
+        foreach ($folderCollections as $folderCollection) {
+            $folders[] = $this->folderOutputFactory->createFromFolders($folderCollection);
+        }
+
+        $folders = array_merge(...$folders);
 
         // sort based on latest timestamp
-        return $this->sorter->sort($folderOutputs, $direction);
+        return $this->sorter->sort($folders, $direction);
     }
 }

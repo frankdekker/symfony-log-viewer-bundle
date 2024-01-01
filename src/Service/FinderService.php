@@ -3,16 +3,31 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Service;
 
+use FD\SymfonyLogViewerBundle\Entity\Config\FinderConfig;
 use Symfony\Component\Finder\Finder;
 
 class FinderService
 {
-    public function __construct(private readonly string $logPath)
+    public function findFiles(FinderConfig $config): Finder
     {
-    }
+        $finder = (new Finder());
 
-    public function findFiles(): Finder
-    {
-        return (new Finder())->ignoreUnreadableDirs()->files()->in($this->logPath)->sortByName();
+        if ($config->ignoreUnreadableDirs) {
+            $finder->ignoreUnreadableDirs();
+        }
+
+        if ($config->followLinks) {
+            $finder->followLinks();
+        }
+
+        $finder->files()->in(explode(',', $config->inDirectories));
+
+        if ($config->fileName !== null) {
+            $finder->name(explode(',', $config->fileName));
+        }
+
+        $finder->sortByName();
+
+        return $finder;
     }
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Service\Folder;
 
+use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
 use FD\SymfonyLogViewerBundle\Entity\LogFile;
 use FD\SymfonyLogViewerBundle\Entity\LogFolder;
 use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
@@ -14,9 +15,9 @@ class LogFolderFactory
     /**
      * @param iterable<string, SplFileInfo> $files
      */
-    public function createFromFiles(iterable $files): LogFolderCollection
+    public function createFromFiles(LogFilesConfig $config, iterable $files): LogFolderCollection
     {
-        $folders = new LogFolderCollection();
+        $folders = new LogFolderCollection($config);
 
         foreach ($files as $file) {
             $folder = $folders->getOrAdd($file->getPath(), static fn() => self::createFolder($file));

@@ -3,10 +3,16 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Entity;
 
+use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
+
 class LogFolderCollection
 {
     /** @var array<string, LogFolder> */
     private array $folders;
+
+    public function __construct(public readonly LogFilesConfig $config)
+    {
+    }
 
     /**
      * @param (callable(LogFolder):bool)|null $callback

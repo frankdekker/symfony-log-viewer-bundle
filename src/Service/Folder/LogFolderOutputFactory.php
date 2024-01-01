@@ -23,18 +23,18 @@ class LogFolderOutputFactory
 
             $result[] = new LogFolderOutput(
                 $folder->getIdentifier(),
-                $path === '' ? 'Root' : $path, // TODO show name of root folder
+                $folders->config->name . '/' . $path,
                 '', // TODO $this->urlGenerator->generate(DownloadFolderController::class, ['folderIdentifier' => $folder->getIdentifier()]),
-                extension_loaded('zip'), // TODO add grants
+                $folders->config->downloadable && extension_loaded('zip'),
                 $folder->getLatestTimestamp(),
-                array_map(fn($file) => $this->createFromFile($file), $folder->getFiles()),
+                array_map(fn($file) => $this->createFromFile($file, $folders->config->downloadable), $folder->getFiles()),
             );
         }
 
         return $result;
     }
 
-    public function createFromFile(LogFile $file): LogFileOutput
+    public function createFromFile(LogFile $file, bool $downloadable): LogFileOutput
     {
         $folder = $file->getFolder();
         assert($folder !== null);
@@ -46,7 +46,7 @@ class LogFolderOutputFactory
             '', // TODO $this->urlGenerator->generate(DownloadFileController::class, ['fileIdentifier' => $file->getIdentifier()]),
             $file->createTimestamp,
             $file->updateTimestamp,
-            true, // TODO add grants
+            $downloadable,
         );
     }
 }

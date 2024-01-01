@@ -3,24 +3,49 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Service\File;
 
+use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
 use FD\SymfonyLogViewerBundle\Entity\LogFile;
 use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
 use FD\SymfonyLogViewerBundle\Service\FinderService;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderFactory;
+use Traversable;
 
 class LogFileService
 {
-    public function __construct(private readonly FinderService $folderService, private readonly LogFolderFactory $logFolderFactory)
-    {
+    /**
+     * @param Traversable<int, LogFilesConfig> $logFileConfigs
+     */
+    public function __construct(
+        private readonly Traversable $logFileConfigs,
+        private readonly FinderService $folderService,
+        private readonly LogFolderFactory $logFolderFactory
+    ) {
     }
 
-    public function getFilesAndFolders(): LogFolderCollection
+    /**
+     * @return LogFolderCollection[]
+     */
+    public function getFilesAndFolders(): array
     {
-        return $this->logFolderFactory->createFromFiles($this->folderService->findFiles());
+        $collections = [];
+        foreach ($this->logFileConfigs as $config) {
+            $finder        = $this->folderService->findFiles($config->finderConfig);
+            $collections[] = $this->logFolderFactory->createFromFiles($config, $finder);
+        }
+
+        return $collections;
     }
 
     public function findFileByIdentifier(string $fileIdentifier): ?LogFile
     {
-        return $this->getFilesAndFolders()->firstFile(static fn(LogFile $file) => $file->identifier === $fileIdentifier);
+        $collections = $this->getFilesAndFolders();
+        foreach ($collections as $collection) {
+            $file = $collection->firstFile(static fn(LogFile $file) => $file->identifier === $fileIdentifier);
+            if ($file !== null) {
+                return $file;
+            }
+        }
+
+        return null;
     }
 }
