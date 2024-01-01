@@ -23,7 +23,7 @@ class LogFolderOutputFactory
 
             $result[] = new LogFolderOutput(
                 $folder->getIdentifier(),
-                $folders->config->name . '/' . $path,
+                rtrim($folders->config->name . '/' . $path, '/'),
                 '', // TODO $this->urlGenerator->generate(DownloadFolderController::class, ['folderIdentifier' => $folder->getIdentifier()]),
                 $folders->config->downloadable && extension_loaded('zip'),
                 $folder->getLatestTimestamp(),
@@ -36,9 +36,6 @@ class LogFolderOutputFactory
 
     public function createFromFile(LogFile $file, bool $downloadable): LogFileOutput
     {
-        $folder = $file->getFolder();
-        assert($folder !== null);
-
         return new LogFileOutput(
             $file->identifier,
             basename($file->path),

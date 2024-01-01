@@ -14,6 +14,7 @@ class LogFolder
         public readonly string $relativePath,
         private int $earliestTimestamp,
         private int $latestTimestamp,
+        public readonly LogFolderCollection $collection
     ) {
     }
 
@@ -58,7 +59,6 @@ class LogFolder
 
     public function addFile(LogFile $file): self
     {
-        $file->setFolder($this);
         $this->files[] = $file;
 
         return $this;

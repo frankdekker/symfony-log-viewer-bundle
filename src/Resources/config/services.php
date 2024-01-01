@@ -7,6 +7,7 @@ use FD\SymfonyLogViewerBundle\Controller\IndexController;
 use FD\SymfonyLogViewerBundle\Controller\LogRecordsController;
 use FD\SymfonyLogViewerBundle\Routing\RouteLoader;
 use FD\SymfonyLogViewerBundle\Routing\RouteService;
+use FD\SymfonyLogViewerBundle\Service\File\LogFileParserProvider;
 use FD\SymfonyLogViewerBundle\Service\File\LogFileService;
 use FD\SymfonyLogViewerBundle\Service\File\LogParser;
 use FD\SymfonyLogViewerBundle\Service\File\LogQueryDtoFactory;
@@ -49,8 +50,12 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogFolderOutputProvider::class);
     $services->set(LogFolderOutputSorter::class);
     $services->set(LogParser::class);
+    $services->set(LogFileParserProvider::class)
+        ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.monolog_file_parser', 'name'));
     $services->set(LogQueryDtoFactory::class);
-    $services->set(MonologFileParser::class)->arg('$loggerLocator', tagged_iterator('fd.symfony.log.viewer.logger'));
+    $services->set(MonologFileParser::class)
+        ->tag('fd.symfony.log.viewer.monolog_file_parser', ['name' => 'monolog'])
+        ->arg('$loggerLocator', tagged_iterator('fd.symfony.log.viewer.logger'));
     $services->set(PerformanceService::class);
     $services->set(StreamReaderFactory::class);
     $services->set(VersionService::class);

@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Service\File;
 
+use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
 use FD\SymfonyLogViewerBundle\Entity\Index\LogIndex;
+use FD\SymfonyLogViewerBundle\Entity\LogFile;
 use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
 
 interface LogFileParserInterface
@@ -21,5 +23,5 @@ interface LogFileParserInterface
     /**
      * Return the LogIndex for the given LogQuery.
      */
-    public function getLogIndex(LogQueryDto $logQuery): LogIndex;
+    public function getLogIndex(LogFilesConfig $config, LogFile $file, LogQueryDto $logQuery): LogIndex;
 }
