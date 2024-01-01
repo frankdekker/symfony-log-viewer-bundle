@@ -12,7 +12,7 @@ use FD\SymfonyLogViewerBundle\Service\File\LogFileService;
 use FD\SymfonyLogViewerBundle\Service\File\LogParser;
 use FD\SymfonyLogViewerBundle\Service\File\LogQueryDtoFactory;
 use FD\SymfonyLogViewerBundle\Service\File\Monolog\MonologFileParser;
-use FD\SymfonyLogViewerBundle\Service\FinderService;
+use FD\SymfonyLogViewerBundle\Service\FinderFactory;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderFactory;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputFactory;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputProvider;
@@ -43,7 +43,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(JsonManifestVersionStrategy::class)
         ->arg('$manifestPath', '%kernel.project_dir%/public/bundles/symfonylogviewer/.vite/manifest.json');
 
-    $services->set(FinderService::class);
+    $services->set(FinderFactory::class);
     $services->set(LogFileService::class)->arg('$logFileConfigs', tagged_iterator('fd.symfony.log.viewer.log_files_config'));
     $services->set(LogFolderFactory::class);
     $services->set(LogFolderOutputFactory::class);

@@ -6,9 +6,9 @@ namespace FD\SymfonyLogViewerBundle\Service;
 use FD\SymfonyLogViewerBundle\Entity\Config\FinderConfig;
 use Symfony\Component\Finder\Finder;
 
-class FinderService
+class FinderFactory
 {
-    public function findFiles(FinderConfig $config): Finder
+    public function createForConfig(FinderConfig $config): Finder
     {
         $finder = (new Finder());
 

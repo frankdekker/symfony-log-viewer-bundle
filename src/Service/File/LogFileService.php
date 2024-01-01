@@ -6,7 +6,7 @@ namespace FD\SymfonyLogViewerBundle\Service\File;
 use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
 use FD\SymfonyLogViewerBundle\Entity\LogFile;
 use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
-use FD\SymfonyLogViewerBundle\Service\FinderService;
+use FD\SymfonyLogViewerBundle\Service\FinderFactory;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderFactory;
 use Traversable;
 
@@ -17,7 +17,7 @@ class LogFileService
      */
     public function __construct(
         private readonly Traversable $logFileConfigs,
-        private readonly FinderService $folderService,
+        private readonly FinderFactory $folderService,
         private readonly LogFolderFactory $logFolderFactory
     ) {
     }
@@ -29,7 +29,7 @@ class LogFileService
     {
         $collections = [];
         foreach ($this->logFileConfigs as $config) {
-            $finder        = $this->folderService->findFiles($config->finderConfig);
+            $finder        = $this->folderService->createForConfig($config->finderConfig);
             $collections[] = $this->logFolderFactory->createFromFiles($config, $finder);
         }
 
