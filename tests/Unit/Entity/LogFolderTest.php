@@ -5,6 +5,7 @@ namespace FD\SymfonyLogViewerBundle\Tests\Unit\Entity;
 
 use DigitalRevolution\AccessorPairConstraint\AccessorPairAsserter;
 use FD\SymfonyLogViewerBundle\Entity\LogFolder;
+use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +21,7 @@ class LogFolderTest extends TestCase
 
     public function testUpdateEarliestTimestamp(): void
     {
-        $folder = new LogFolder('identifier', 'path', 'relative-path', 555555, 666666);
+        $folder = new LogFolder('identifier', 'path', 'relative-path', 555555, 666666, $this->createMock(LogFolderCollection::class));
         $folder->updateEarliestTimestamp(666666);
         static::assertSame(555555, $folder->getEarliestTimestamp());
 
@@ -30,7 +31,7 @@ class LogFolderTest extends TestCase
 
     public function testUpdateLatestTimestamp(): void
     {
-        $folder = new LogFolder('identifier', 'path', 'relative-path', 555555, 666666);
+        $folder = new LogFolder('identifier', 'path', 'relative-path', 555555, 666666, $this->createMock(LogFolderCollection::class));
         $folder->updateLatestTimestamp(444444);
         static::assertSame(666666, $folder->getLatestTimestamp());
 
