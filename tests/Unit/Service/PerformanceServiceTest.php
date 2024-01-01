@@ -37,7 +37,7 @@ class PerformanceServiceTest extends TestCase
 
         $this->versionService->expects(self::once())->method('getVersion')->willReturn('1.2.3');
 
-        $stats = $this->service->getPerformanceStats($request);
+        $stats = $this->service->getPerformanceStats();
         $json  = $stats->jsonSerialize();
         static::assertNotEmpty($json['memoryUsage']);
         static::assertSame('300000ms', $json['requestTime']);
