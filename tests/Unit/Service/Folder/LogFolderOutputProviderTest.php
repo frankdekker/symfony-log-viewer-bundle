@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service\Folder;
 
+use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
 use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
 use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
 use FD\SymfonyLogViewerBundle\Entity\Output\LogFolderOutput;
@@ -33,10 +34,10 @@ class LogFolderOutputProviderTest extends TestCase
 
     public function testProvide(): void
     {
-        $folders      = new LogFolderCollection();
+        $folders      = new LogFolderCollection($this->createMock(LogFilesConfig::class));
         $folderOutput = new LogFolderOutput('identifier', 'path', 'url', true, 123456, []);
 
-        $this->folderService->expects(self::once())->method('getFilesAndFolders')->willReturn($folders);
+        $this->folderService->expects(self::once())->method('getFilesAndFolders')->willReturn([$folders]);
         $this->folderOutputFactory->expects(self::once())->method('createFromFolders')->with($folders)->willReturn([$folderOutput]);
         $this->sorter->expects(self::once())->method('sort')->with([$folderOutput], DirectionEnum::Desc)->willReturn([$folderOutput]);
 
