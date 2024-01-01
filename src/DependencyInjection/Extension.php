@@ -22,7 +22,13 @@ final class Extension extends BaseExtension implements PrependExtensionInterface
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.php');
 
-        $this->processConfiguration(new Configuration(), $configs);
+        $mergedConfigs = $this->processConfiguration(new Configuration(), $configs);
+        $test = true;
+    }
+
+    public function getAlias(): string
+    {
+        return 'fd_log_viewer';
     }
 
     /**
