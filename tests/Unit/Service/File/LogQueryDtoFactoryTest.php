@@ -28,13 +28,13 @@ class LogQueryDtoFactoryTest extends TestCase
         );
 
         $expected = new LogQueryDto('file', 54321, 'search', DirectionEnum::Asc, ['debug', 'info'], ['app', 'request'], 50);
-        static::assertEquals($expected, (new LogQueryDtoFactory())->create($request, [], []));
+        static::assertEquals($expected, (new LogQueryDtoFactory())->create($request));
     }
 
     public function testCreateWithDefaults(): void
     {
         $request  = new Request(['file' => 'file']);
         $expected = new LogQueryDto('file', null, '', DirectionEnum::Desc, null, null, 25);
-        static::assertEquals($expected, (new LogQueryDtoFactory())->create($request, ['debug' => 'debug'], ['app' => 'app']));
+        static::assertEquals($expected, (new LogQueryDtoFactory())->create($request));
     }
 }
