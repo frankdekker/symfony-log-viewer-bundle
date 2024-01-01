@@ -20,10 +20,10 @@ class FinderFactory
             $finder->followLinks();
         }
 
-        $finder->files()->in(explode(',', $config->inDirectories));
+        $finder->files()->in(array_map('trim', explode(',', $config->inDirectories)));
 
         if ($config->fileName !== null) {
-            $finder->name(explode(',', $config->fileName));
+            $finder->name(array_map('trim', explode(',', $config->fileName)));
         }
 
         $finder->sortByName();
