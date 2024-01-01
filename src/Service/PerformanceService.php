@@ -5,7 +5,7 @@ namespace FD\SymfonyLogViewerBundle\Service;
 
 use FD\SymfonyLogViewerBundle\Entity\Index\PerformanceStats;
 use FD\SymfonyLogViewerBundle\Util\Utils;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 use function assert;
 use function is_float;
@@ -14,15 +14,15 @@ use function round;
 
 class PerformanceService
 {
-    public function __construct(private readonly VersionService $versionService)
+    public function __construct(private readonly RequestStack $requestStack, private readonly VersionService $versionService)
     {
     }
 
-    public function getPerformanceStats(Request $request): PerformanceStats
+    public function getPerformanceStats(): PerformanceStats
     {
         $memoryUsage = Utils::bytesForHumans(memory_get_usage());
 
-        $startTime = $request->server->get('REQUEST_TIME_FLOAT');
+        $startTime = $this->requestStack->getCurrentRequest()?->server?->get('REQUEST_TIME_FLOAT');
         assert(is_float($startTime));
         $requestTime = round((microtime(true) - $startTime) * 1000) . 'ms';
 
