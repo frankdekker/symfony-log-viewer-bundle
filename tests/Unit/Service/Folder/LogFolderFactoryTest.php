@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service\Folder;
 
+use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
 use FD\SymfonyLogViewerBundle\Entity\LogFile;
 use FD\SymfonyLogViewerBundle\Entity\LogFolder;
+use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -23,6 +25,8 @@ class LogFolderFactoryTest extends TestCase
 
     public function testCreateFromFiles(): void
     {
+        $config = $this->createMock(LogFilesConfig::class);
+
         $fileA = $this->createMock(SplFileInfo::class);
         $fileA->method('getPathname')->willReturn('pathname A');
         $fileA->method('getPath')->willReturn('path');
@@ -39,13 +43,14 @@ class LogFolderFactoryTest extends TestCase
         $fileB->method('getCTime')->willReturn(333333);
         $fileB->method('getMTime')->willReturn(444444);
 
-        $collection = $this->factory->createFromFiles(['fileA' => $fileA, 'fileB' => $fileB]);
+        $collection = $this->factory->createFromFiles($config, ['fileA' => $fileA, 'fileB' => $fileB]);
 
-        $expectedFolder = new LogFolder('29c04485', 'path', 'relative-path', 222222, 444444);
-        $expectedFolder->addFile(new LogFile('f218b241', 'pathname A', 'relative-path', 111111, 222222, 333333));
-        $expectedFolder->addFile(new LogFile('9d0ad7b0', 'pathname B', 'relative-path', 111111, 333333, 444444));
+        $expectedCollection = new LogFolderCollection($config);
+        $expectedFolder = new LogFolder('29c04485', 'path', 'relative-path', 222222, 444444, $expectedCollection);
+        $expectedFolder->addFile(new LogFile('f218b241', 'pathname A', 'relative-path', 111111, 222222, 333333, $expectedFolder));
+        $expectedFolder->addFile(new LogFile('9d0ad7b0', 'pathname B', 'relative-path', 111111, 333333, 444444, $expectedFolder));
+        $expectedCollection->getOrAdd('path', static fn() => $expectedFolder);
 
-        $folders = $collection->toArray();
-        static::assertEquals([$expectedFolder], $folders);
+        static::assertEquals([$expectedFolder], $collection->toArray());
     }
 }

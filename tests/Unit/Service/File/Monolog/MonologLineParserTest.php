@@ -17,7 +17,7 @@ class MonologLineParserTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->parser = new MonologLineParser();
+        $this->parser = new MonologLineParser(MonologLineParser::START_OF_MESSAGE_PATTERN, MonologLineParser::LOG_LINE_PATTERN);
     }
 
     #[TestWith(['[2000-01-01T00:00:00.000000+00:00] app.DEBUG: message', LogLineParserInterface::MATCH_START])]
@@ -26,6 +26,13 @@ class MonologLineParserTest extends TestCase
     public function testMatches(string $line, int $expected): void
     {
         static::assertSame($expected, $this->parser->matches($line));
+    }
+
+    public function testMatchesWithoutPattern(): void
+    {
+        $parser = new MonologLineParser(null, MonologLineParser::LOG_LINE_PATTERN);
+
+        static::assertSame(LogLineParserInterface::MATCH_START, $parser->matches('foobar'));
     }
 
     public function testParseWithContextAndExtra(): void

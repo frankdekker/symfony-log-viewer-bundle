@@ -9,17 +9,18 @@ use JsonException;
 class MonologLineParser implements LogLineParserInterface
 {
     /* [YYYY-MM-DD*] channel.level: */
-    private const START_OF_MESSAGE_PATTERN = '/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/';
+    public const START_OF_MESSAGE_PATTERN = '/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/';
 
     /* [date] channel.level: message {context} {extra} */
-    private const LOG_LINE_PATTERN =
+    public const LOG_LINE_PATTERN =
         '/^\[(?P<date>[^\]]+)\]\s+' .
         '(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+' .
         '(?P<message>.*)\s+' .
         '(?P<context>[[{].*?[\]}])\s+' .
         '(?P<extra>[[{].*?[\]}])\s+$/s';
 
-    public function __construct(private readonly ?string $startOfLinePattern, private readonly string $logLinePattern) {
+    public function __construct(private readonly ?string $startOfLinePattern, private readonly string $logLinePattern)
+    {
     }
 
     /**
