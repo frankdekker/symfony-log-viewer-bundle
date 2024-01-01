@@ -5,6 +5,9 @@ namespace FD\SymfonyLogViewerBundle\Entity\Config;
 
 class FinderConfig
 {
+    /**
+     * @codeCoverageIgnore Simple DTO
+     */
     public function __construct(
         public readonly string $inDirectories,
         public readonly ?string $fileName,

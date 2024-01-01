@@ -5,6 +5,9 @@ namespace FD\SymfonyLogViewerBundle\Entity\Config;
 
 class LogFilesConfig
 {
+    /**
+     * @codeCoverageIgnore Simple DTO
+     */
     public function __construct(
         public readonly string $logName,
         public readonly string $type,
