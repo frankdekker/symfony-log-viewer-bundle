@@ -11,6 +11,7 @@ use FD\SymfonyLogViewerBundle\Service\File\LogFileParserProvider;
 use FD\SymfonyLogViewerBundle\Service\File\LogFileService;
 use FD\SymfonyLogViewerBundle\Service\File\LogParser;
 use FD\SymfonyLogViewerBundle\Service\File\LogQueryDtoFactory;
+use FD\SymfonyLogViewerBundle\Service\File\LogRecordsOutputProvider;
 use FD\SymfonyLogViewerBundle\Service\File\Monolog\MonologFileParser;
 use FD\SymfonyLogViewerBundle\Service\FinderFactory;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderFactory;
@@ -49,6 +50,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogFolderOutputFactory::class);
     $services->set(LogFolderOutputProvider::class);
     $services->set(LogFolderOutputSorter::class);
+    $services->set(LogRecordsOutputProvider::class);
     $services->set(LogParser::class);
     $services->set(LogFileParserProvider::class)
         ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.monolog_file_parser', 'name'));
