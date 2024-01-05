@@ -10,7 +10,8 @@ const route = useRoute();
         <header class="lsv-header-height bg-body">
             <h3 class="d-block text-center lsv-app-title">
                 <i class="bi bi-substack lsv-icon-color"></i>
-                Log viewer </h3>
+                Log viewer
+            </h3>
         </header>
 
         <FileTree/>

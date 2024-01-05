@@ -26,6 +26,7 @@ const folderStore    = useFolderStore()
         <div class="lsv-loadable" v-bind:class="{ 'lsv-loading': folderStore.loading }">
             <LogFolder :folder="folder"
                        :expanded="index === selectedFolder"
+                       :key="index"
                        v-for="(folder, index) in folderStore.folders"
                        @expand="selectedFolder = index"/>
         </div>
