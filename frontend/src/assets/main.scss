@@ -51,6 +51,21 @@
     transform: rotate(90deg);
 }
 
+.lsv-btn-group {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+}
+
+.lsv-toggle-btn {
+    flex-grow: 0 !important;
+    width: 32px;
+
+    &::after {
+        display: none;
+    }
+}
+
 .lsv-loadable {
     position: relative;
 

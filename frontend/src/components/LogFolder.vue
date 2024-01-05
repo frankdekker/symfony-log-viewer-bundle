@@ -11,14 +11,21 @@ defineProps<{
 <template>
     <!-- LogFolder -->
     <div class="folder-group mt-1" :aria-expanded="expanded">
-        <div class="btn-group lsv-btn-folder-group">
+        <div class="lsv-btn-group btn-group">
             <button type="button" class="btn btn-outline-primary text-start" @click="$emit('expand')">
                 <i class="lvs-indicator bi bi-chevron-right me-2"></i>
                 <span class="text-nowrap">{{ folder.path }}</span>
             </button>
-            <button class="lsv-btn-options btn btn-outline-primary p-0 text-center" v-if="folder.can_download">
+            <button type="button" class="lsv-toggle-btn btn btn-outline-primary dropdown-toggle dropdown-toggle-split" v-if="folder.can_download">
                 <i class="bi bi-three-dots-vertical"></i>
             </button>
+            <ul class="dropdown-menu" v-if="folder.can_download">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
         </div>
 
         <div class="ms-2 mt-1" v-show="expanded">
@@ -26,16 +33,3 @@ defineProps<{
         </div>
     </div>
 </template>
-
-<style scoped>
-.lsv-btn-folder-group {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: stretch;
-}
-
-.lsv-btn-options {
-    flex-grow: 0;
-    width: 32px;
-}
-</style>
