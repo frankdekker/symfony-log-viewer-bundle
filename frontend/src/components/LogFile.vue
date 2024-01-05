@@ -9,7 +9,7 @@ defineProps<{
 
 const selectedFile = ref<string|null>(null);
 const route        = useRoute();
-watch(() => route.query.file, () => selectedFile.value = <string>route.query.file);
+watch(() => route.query.file, () => selectedFile.value = String(route.query.file));
 </script>
 
 <template>
