@@ -6,37 +6,27 @@ namespace FD\SymfonyLogViewerBundle\Entity;
 use RuntimeException;
 use SplFileInfo;
 
-use function fclose;
-use function register_shutdown_function;
-use function stream_get_meta_data;
-use function tmpfile;
+use function sys_get_temp_dir;
+use function tempnam;
+use function unlink;
 
 class TempFile extends SplFileInfo
 {
-    /** @var resource|null */
-    private $resource;
-
-    public function __construct(?callable $registerShutdownFn = null)
+    public function __construct()
     {
-        $resource = tmpfile();
-        if ($resource === false) {
+        $path = tempnam(sys_get_temp_dir(), 'log_viewer_zip_archive');
+        if ($path === false) {
             // @codeCoverageIgnoreStart
             throw new RuntimeException('Unable to create new temp file');
             // @codeCoverageIgnoreEnd
         }
-        $this->resource = $resource;
-        parent::__construct(stream_get_meta_data($resource)['uri']);
-
-        // By default, a tmp-file is automatically removed when it is closed, the handle is garbage collected or the script ends.
-        // This temp file specifically remains available till script ends.
-        ($registerShutdownFn ?? fn($callback) => register_shutdown_function($callback))(fn() => $this->cleanUp());
+        parent::__construct($path);
     }
 
-    private function cleanUp(): void
+    public function __destruct()
     {
-        if ($this->resource !== null) {
-            @fclose($this->resource);
-            $this->resource = null;
+        if (file_exists($this->getPathname())) {
+            @unlink($this->getPathname());
         }
     }
 }

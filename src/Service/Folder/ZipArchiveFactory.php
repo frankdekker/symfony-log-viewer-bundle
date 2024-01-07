@@ -13,11 +13,11 @@ class ZipArchiveFactory
 {
     public function createFromFolder(LogFolder $folder): SplFileInfo
     {
-        $archive  = new ZipArchive();
-        $tempFile = new TempFile();
-        $zipPath  = $tempFile->getPathname();
+        $tmpFile = new TempFile();
+        $zipPath = $tmpFile->getPathname();
+        $archive = new ZipArchive();
 
-        if ($archive->open($tempFile->getPathname(), ZipArchive::CREATE) !== true) {
+        if ($archive->open($zipPath, ZipArchive::CREATE) !== true) {
             throw new RuntimeException('Could not open zip file ' . $zipPath . ' for writing');
         }
 
@@ -29,6 +29,6 @@ class ZipArchiveFactory
             throw new RuntimeException('Could not save zip file: ' . $zipPath);
         }
 
-        return $tempFile;
+        return $tmpFile;
     }
 }
