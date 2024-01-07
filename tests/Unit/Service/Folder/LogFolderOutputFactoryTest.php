@@ -48,7 +48,7 @@ class LogFolderOutputFactoryTest extends TestCase
             ->with(
                 ...consecutive(
                        [DownloadFolderController::class, ['identifier' => 'folderId']],
-                       [DownloadFileController::class, ['identifier' => 'fileId']],
+                       [DownloadFileController::class, ['identifier' => 'fileId']]
                    )
             )
             ->willReturn('folder-url', 'file-url');
