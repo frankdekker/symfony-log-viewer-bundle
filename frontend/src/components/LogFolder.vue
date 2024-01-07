@@ -4,7 +4,7 @@ import SplitButtonGroup from '@/components/SplitButtonGroup.vue';
 import type LogFolder from '@/models/LogFolder';
 import {ref} from 'vue';
 
-const toggleRef = ref()
+const toggleRef = ref();
 
 defineProps<{
     expanded: boolean,
@@ -31,13 +31,7 @@ defineProps<{
                 </button>
             </template>
             <template v-slot:dropdown>
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                <li><a class="dropdown-item" :href="folder.download_url">Download</a></li>
             </template>
         </split-button-group>
 

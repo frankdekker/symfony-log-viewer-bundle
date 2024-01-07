@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ClickOutside from '@/services/ClickOutside';
 import {setRelativeTo} from '@/services/Positioner';
-import {onUpdated, ref} from 'vue';
+import {watch, onUpdated, ref} from 'vue';
 
 const active       = ref<boolean>(false);
 const dropdownRef  = ref();
@@ -9,8 +9,9 @@ const clickOutside = new ClickOutside([], () => toggle(false));
 
 const toggle = (forceActive: boolean | null = null): void => {
     active.value = forceActive ?? !active.value;
-    setTimeout(() => clickOutside.enable(active.value), 1);
 }
+
+watch(active, () => setTimeout(() => clickOutside.enable(active.value), 1));
 
 onUpdated(() => {
     if (active.value === false) {
