@@ -18,7 +18,9 @@ class ZipArchiveFactory
         $archive = new ZipArchive();
 
         if ($archive->open($zipPath, ZipArchive::CREATE) !== true) {
+            // @codeCoverageIgnoreStart
             throw new RuntimeException('Could not open zip file ' . $zipPath . ' for writing');
+            // @codeCoverageIgnoreEnd
         }
 
         foreach ($folder->getFiles() as $file) {
@@ -26,7 +28,9 @@ class ZipArchiveFactory
         }
 
         if ($archive->close() === false) {
+            // @codeCoverageIgnoreStart
             throw new RuntimeException('Could not save zip file: ' . $zipPath);
+            // @codeCoverageIgnoreEnd
         }
 
         return $tmpFile;
