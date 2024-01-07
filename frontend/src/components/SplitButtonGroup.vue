@@ -1,32 +1,23 @@
 <script setup lang="ts">
+import ClickOutside from '@/services/ClickOutside';
+import {setRelativeTo} from '@/services/Positioner';
 import {onUpdated, ref} from 'vue';
 
-const active      = ref<boolean>(false);
-const dropdownRef = ref();
+const active       = ref<boolean>(false);
+const dropdownRef  = ref();
+const clickOutside = new ClickOutside([], () => toggle(false));
 
-const toggle = () => {
-    active.value = !active.value;
+const toggle = (forceActive: boolean | null = null): void => {
+    active.value = forceActive ?? !active.value;
+    setTimeout(() => clickOutside.enable(active.value), 1);
 }
 
-const setDropdownPosition = () => {
+onUpdated(() => {
     if (active.value === false) {
         return;
     }
-
-    const dropdownEl = dropdownRef.value;
-    const parentEl   = dropdownEl.parentElement;
-
-    dropdownEl.style.left = (parentEl.offsetWidth - dropdownEl.offsetWidth) + 'px';
-    dropdownEl.style.top  = parentEl.offsetHeight + 'px';
-
-    // check if dropdown is outside of viewport
-    if (dropdownEl.getBoundingClientRect().bottom > window.innerHeight) {
-        // move dropdown above
-        dropdownEl.style.top = (-dropdownEl.offsetHeight) + 'px';
-    }
-}
-
-onUpdated(() => setDropdownPosition());
+    setRelativeTo(dropdownRef.value.parentElement, dropdownRef.value);
+});
 defineExpose({toggle});
 </script>
 
