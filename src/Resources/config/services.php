@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use FD\SymfonyLogViewerBundle\Controller\DownloadFileController;
+use FD\SymfonyLogViewerBundle\Controller\DownloadFolderController;
 use FD\SymfonyLogViewerBundle\Controller\FoldersController;
 use FD\SymfonyLogViewerBundle\Controller\IndexController;
 use FD\SymfonyLogViewerBundle\Controller\LogRecordsController;
@@ -18,6 +20,7 @@ use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderFactory;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputFactory;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputProvider;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputSorter;
+use FD\SymfonyLogViewerBundle\Service\Folder\ZipArchiveFactory;
 use FD\SymfonyLogViewerBundle\Service\JsonManifestVersionStrategy;
 use FD\SymfonyLogViewerBundle\Service\PerformanceService;
 use FD\SymfonyLogViewerBundle\Service\VersionService;
@@ -36,6 +39,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set(IndexController::class)->tag('controller.service_arguments');
     $services->set(FoldersController::class)->tag('controller.service_arguments');
     $services->set(LogRecordsController::class)->tag('controller.service_arguments');
+    $services->set(DownloadFileController::class)->tag('controller.service_arguments');
+    $services->set(DownloadFolderController::class)->tag('controller.service_arguments');
 
     $services->set(RouteService::class);
     $services->set(RouteLoader::class)
@@ -61,4 +66,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(PerformanceService::class);
     $services->set(StreamReaderFactory::class);
     $services->set(VersionService::class);
+    $services->set(ZipArchiveFactory::class);
 };

@@ -3,14 +3,21 @@ declare(strict_types=1);
 
 namespace FD\SymfonyLogViewerBundle\Service\Folder;
 
+use FD\SymfonyLogViewerBundle\Controller\DownloadFileController;
+use FD\SymfonyLogViewerBundle\Controller\DownloadFolderController;
 use FD\SymfonyLogViewerBundle\Entity\LogFile;
 use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
 use FD\SymfonyLogViewerBundle\Entity\Output\LogFileOutput;
 use FD\SymfonyLogViewerBundle\Entity\Output\LogFolderOutput;
 use FD\SymfonyLogViewerBundle\Util\Utils;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LogFolderOutputFactory
 {
+    public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
+    {
+    }
+
     /**
      * @return LogFolderOutput[]
      */
@@ -19,12 +26,12 @@ class LogFolderOutputFactory
         $result = [];
 
         foreach ($folders->toArray() as $folder) {
-            $path = $folder->getRelativePath();
+            $path = $folder->relativePath;
 
             $result[] = new LogFolderOutput(
-                $folder->getIdentifier(),
+                $folder->identifier,
                 rtrim($folders->config->name . '/' . $path, '/'),
-                '', // TODO $this->urlGenerator->generate(DownloadFolderController::class, ['folderIdentifier' => $folder->getIdentifier()]),
+                $this->urlGenerator->generate(DownloadFolderController::class, ['identifier' => $folder->identifier]),
                 $folders->config->downloadable && extension_loaded('zip'),
                 $folder->getLatestTimestamp(),
                 array_map(fn($file) => $this->createFromFile($file, $folders->config->downloadable), $folder->getFiles()),
@@ -40,7 +47,7 @@ class LogFolderOutputFactory
             $file->identifier,
             basename($file->path),
             Utils::bytesForHumans($file->size),
-            '', // TODO $this->urlGenerator->generate(DownloadFileController::class, ['fileIdentifier' => $file->getIdentifier()]),
+            $this->urlGenerator->generate(DownloadFileController::class, ['identifier' => $file->identifier]),
             $file->createTimestamp,
             $file->updateTimestamp,
             $downloadable,

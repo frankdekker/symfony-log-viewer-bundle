@@ -18,21 +18,6 @@ class LogFolder
     ) {
     }
 
-    public function getIdentifier(): string
-    {
-        return $this->identifier;
-    }
-
-    public function getPath(): string
-    {
-        return $this->path;
-    }
-
-    public function getRelativePath(): string
-    {
-        return $this->relativePath;
-    }
-
     public function getEarliestTimestamp(): int
     {
         return $this->earliestTimestamp;

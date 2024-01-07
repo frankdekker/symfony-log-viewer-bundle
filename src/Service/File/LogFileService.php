@@ -5,6 +5,7 @@ namespace FD\SymfonyLogViewerBundle\Service\File;
 
 use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
 use FD\SymfonyLogViewerBundle\Entity\LogFile;
+use FD\SymfonyLogViewerBundle\Entity\LogFolder;
 use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
 use FD\SymfonyLogViewerBundle\Service\FinderFactory;
 use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderFactory;
@@ -43,6 +44,19 @@ class LogFileService
             $file = $collection->firstFile(static fn(LogFile $file) => $file->identifier === $fileIdentifier);
             if ($file !== null) {
                 return $file;
+            }
+        }
+
+        return null;
+    }
+
+    public function findFolderByIdentifier(string $folderIdentifier): ?LogFolder
+    {
+        $collections = $this->getFilesAndFolders();
+        foreach ($collections as $collection) {
+            $folder = $collection->first(static fn(LogFolder $folder) => $folder->identifier === $folderIdentifier);
+            if ($folder !== null) {
+                return $folder;
             }
         }
 

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use FD\SymfonyLogViewerBundle\Controller\DownloadFileController;
+use FD\SymfonyLogViewerBundle\Controller\DownloadFolderController;
 use FD\SymfonyLogViewerBundle\Controller\FoldersController;
 use FD\SymfonyLogViewerBundle\Controller\IndexController;
 use FD\SymfonyLogViewerBundle\Controller\LogRecordsController;
@@ -22,4 +24,14 @@ return function (RoutingConfigurator $routes) {
         ->add(LogRecordsController::class, '/api/logs')
         ->methods(['GET'])
         ->controller([LogRecordsController::class, '__invoke']);
+
+    $routes
+        ->add(DownloadFolderController::class, '/api/download/folder/{identifier}')
+        ->methods(['GET'])
+        ->controller([DownloadFolderController::class, '__invoke']);
+
+    $routes
+        ->add(DownloadFileController::class, '/api/download/file/{identifier}')
+        ->methods(['GET'])
+        ->controller([DownloadFileController::class, '__invoke']);
 };
