@@ -29,6 +29,7 @@ watch(() => route.query.file, () => selectedFile.value = String(route.query.file
         <template v-slot:btn-right>
             <button type="button"
                     class="lsv-toggle-btn btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                    v-bind:class="{'btn-outline-primary-active': selectedFile === file.identifier }"
                     @click="toggleRef.toggle"
                     v-if="file.can_download">
                 <i class="bi bi-three-dots-vertical"></i>
