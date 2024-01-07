@@ -25,7 +25,7 @@ class RouteLoaderTest extends TestCase
     public function testLoad(): void
     {
         $collection = $this->loader->load(null);
-        static::assertCount(4, $collection);
+        static::assertCount(6, $collection);
     }
 
     public function testSupports(): void
