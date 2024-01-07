@@ -54,6 +54,39 @@ class LogParserTest extends AbstractIntegrationTestCase
         static::assertSame('Message for line 10', $index->getLines()[4]->message);
     }
 
+    public function testParseWithLevelFilter(): void
+    {
+        $query = new LogQueryDto('identifier', 0, '', DirectionEnum::Asc, ['info'], null, 100);
+        $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
+        $index = $this->parser->parse($file, $this->lineParser, $query);
+
+        static::assertCount(25, $index->getLines());
+        static::assertSame('Message for line 2', $index->getLines()[0]->message);
+        static::assertSame('Message for line 98', $index->getLines()[24]->message);
+    }
+
+    public function testParseWithChannelFilter(): void
+    {
+        $query = new LogQueryDto('identifier', 0, '', DirectionEnum::Asc, null, ['app'], 100);
+        $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
+        $index = $this->parser->parse($file, $this->lineParser, $query);
+
+        static::assertCount(34, $index->getLines());
+        static::assertSame('Message for line 1', $index->getLines()[0]->message);
+        static::assertSame('Message for line 100', $index->getLines()[33]->message);
+    }
+
+    public function testParseWithLevelAndChannelFilter(): void
+    {
+        $query = new LogQueryDto('identifier', 0, '', DirectionEnum::Asc, ['info'], ['app'], 100);
+        $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
+        $index = $this->parser->parse($file, $this->lineParser, $query);
+
+        static::assertCount(8, $index->getLines());
+        static::assertSame('Message for line 10', $index->getLines()[0]->message);
+        static::assertSame('Message for line 94', $index->getLines()[7]->message);
+    }
+
     public function testParseAlmostEof(): void
     {
         $query = new LogQueryDto('identifier', 0, '', DirectionEnum::Asc, null, null, 99);
