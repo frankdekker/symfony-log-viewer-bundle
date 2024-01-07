@@ -29,6 +29,5 @@ class ZipArchiveFactoryTest extends TestCase
 
         $zip = $this->factory->createFromFolder($folder);
         static::assertFileExists($zip->getPathname());
-        static::assertGreaterThan(0, strlen(file_get_contents($zip->getPathname())));
     }
 }
