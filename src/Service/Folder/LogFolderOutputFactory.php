@@ -41,7 +41,7 @@ class LogFolderOutputFactory
         return $result;
     }
 
-    public function createFromFile(LogFile $file, bool $downloadable): LogFileOutput
+    private function createFromFile(LogFile $file, bool $downloadable): LogFileOutput
     {
         return new LogFileOutput(
             $file->identifier,
