@@ -11,7 +11,7 @@ class StreamReaderFactory
 {
     public function createForFile(SplFileInfo $file, DirectionEnum $direction, ?int $offset): AbstractStreamReader
     {
-        $fileHandle = fopen($file->getPathname(), 'rb');
+        $fileHandle = @fopen($file->getPathname(), 'rb');
         if ($fileHandle === false) {
             throw new RuntimeException(sprintf('Could not open file "%s".', $file->getPathname()));
         }
