@@ -63,4 +63,40 @@ class LogFileServiceTest extends TestCase
 
         static::assertSame($file, $this->service->findFileByIdentifier('identifier'));
     }
+
+    public function testFindFileByIdentifierUnknownFile(): void
+    {
+        $folders = new LogFolderCollection($this->config);
+        $finder  = $this->createMock(Finder::class);
+
+        $this->folderService->expects(self::once())->method('createForConfig')->with($this->finderConfig)->willReturn($finder);
+        $this->logFolderFactory->expects(self::once())->method('createFromFiles')->with($this->config, $finder)->willReturn($folders);
+
+        static::assertNull($this->service->findFileByIdentifier('identifier'));
+    }
+
+    public function testFindFolderByIdentifier(): void
+    {
+        $folder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $this->createMock(LogFolderCollection::class));
+        $folders = new LogFolderCollection($this->config);
+        $folders->getOrAdd('folderA', static fn() => $folder);
+
+        $finder = $this->createMock(Finder::class);
+
+        $this->folderService->expects(self::once())->method('createForConfig')->with($this->finderConfig)->willReturn($finder);
+        $this->logFolderFactory->expects(self::once())->method('createFromFiles')->with($this->config, $finder)->willReturn($folders);
+
+        static::assertSame($folder, $this->service->findFolderByIdentifier('identifier'));
+    }
+
+    public function testFindFolderByIdentifierUnknownFolder(): void
+    {
+        $folders = new LogFolderCollection($this->config);
+        $finder  = $this->createMock(Finder::class);
+
+        $this->folderService->expects(self::once())->method('createForConfig')->with($this->finderConfig)->willReturn($finder);
+        $this->logFolderFactory->expects(self::once())->method('createFromFiles')->with($this->config, $finder)->willReturn($folders);
+
+        static::assertNull($this->service->findFolderByIdentifier('identifier'));
+    }
 }

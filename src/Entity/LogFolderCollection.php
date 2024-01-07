@@ -8,7 +8,7 @@ use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
 class LogFolderCollection
 {
     /** @var array<string, LogFolder> */
-    private array $folders;
+    private array $folders = [];
 
     public function __construct(public readonly LogFilesConfig $config)
     {
