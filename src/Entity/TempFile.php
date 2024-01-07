@@ -25,7 +25,7 @@ class TempFile extends SplFileInfo
 
     public function __destruct()
     {
-        if (file_exists($this->getPathname())) {
+        if ($this->isFile()) {
             @unlink($this->getPathname());
         }
     }

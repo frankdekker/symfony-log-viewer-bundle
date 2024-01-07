@@ -12,10 +12,14 @@ class TempFileTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $file = new TempFile(static fn($callback) => $callback());
-        static::assertSame('tmp', $file->getExtension());
+        $file = new TempFile();
+        $path = $file->getPathname();
 
-        // should be immediately deleted
-        static::assertFalse($file->isFile());
+        static::assertSame('tmp', $file->getExtension());
+        static::assertFileExists($path);
+
+        // should be deleted on destruct
+        unset($file);
+        static::assertFileDoesNotExist($path);
     }
 }
