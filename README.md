@@ -3,5 +3,5 @@
 ## Installation
 
 ```bash
-composer require fdekker/symfony-log-viewer-bundle
+composer require fdekker/log-viewer-bundle
 ```
