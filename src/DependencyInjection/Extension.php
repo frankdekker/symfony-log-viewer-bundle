@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\DependencyInjection;
+namespace FD\LogViewer\DependencyInjection;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\FinderConfig;
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Service\JsonManifestVersionStrategy;
+use FD\LogViewer\Entity\Config\FinderConfig;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Service\JsonManifestVersionStrategy;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;

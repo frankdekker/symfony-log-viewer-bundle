@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Controller;
+namespace FD\LogViewer\Controller;
 
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputProvider;
+use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

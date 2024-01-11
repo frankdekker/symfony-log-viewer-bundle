@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use FD\SymfonyLogViewerBundle\Controller\DownloadFileController;
-use FD\SymfonyLogViewerBundle\Controller\DownloadFolderController;
-use FD\SymfonyLogViewerBundle\Controller\FoldersController;
-use FD\SymfonyLogViewerBundle\Controller\IndexController;
-use FD\SymfonyLogViewerBundle\Controller\LogRecordsController;
+use FD\LogViewer\Controller\DownloadFileController;
+use FD\LogViewer\Controller\DownloadFolderController;
+use FD\LogViewer\Controller\FoldersController;
+use FD\LogViewer\Controller\IndexController;
+use FD\LogViewer\Controller\LogRecordsController;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes) {

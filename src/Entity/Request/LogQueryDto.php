@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Entity\Request;
+namespace FD\LogViewer\Entity\Request;
 
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
+use FD\LogViewer\Entity\Output\DirectionEnum;
 
 class LogQueryDto
 {

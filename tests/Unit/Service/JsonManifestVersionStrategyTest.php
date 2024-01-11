@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service;
+namespace FD\LogViewer\Tests\Unit\Service;
 
-use FD\SymfonyLogViewerBundle\Service\JsonManifestVersionStrategy;
+use FD\LogViewer\Service\JsonManifestVersionStrategy;
 use JsonException;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;

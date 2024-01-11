@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Controller;
+namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
-use FD\SymfonyLogViewerBundle\Controller\DownloadFolderController;
-use FD\SymfonyLogViewerBundle\Entity\Config\FinderConfig;
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Entity\LogFolder;
-use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
-use FD\SymfonyLogViewerBundle\Service\File\LogFileService;
-use FD\SymfonyLogViewerBundle\Service\Folder\ZipArchiveFactory;
+use FD\LogViewer\Controller\DownloadFolderController;
+use FD\LogViewer\Entity\Config\FinderConfig;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\LogFolder;
+use FD\LogViewer\Entity\LogFolderCollection;
+use FD\LogViewer\Service\File\LogFileService;
+use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use SplFileInfo;

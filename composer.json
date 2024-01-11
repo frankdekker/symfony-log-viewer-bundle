@@ -1,5 +1,5 @@
 {
-    "name": "fdekker/symfony-log-viewer-bundle",
+    "name": "fdekker/log-viewer-bundle",
     "description": "A log viewer bundle for Symfony 6 and up",
     "type": "symfony-bundle",
     "license": "MIT",
@@ -52,15 +52,15 @@
     },
     "autoload": {
         "psr-4": {
-            "FD\\SymfonyLogViewerBundle\\": "src/"
+            "FD\\LogViewer\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "FD\\SymfonyLogViewerBundle\\Dev\\": "dev/",
-            "FD\\SymfonyLogViewerBundle\\Tests\\Functional\\": "tests/Functional/",
-            "FD\\SymfonyLogViewerBundle\\Tests\\Integration\\": "tests/Integration/",
-            "FD\\SymfonyLogViewerBundle\\Tests\\Unit\\": "tests/Unit/"
+            "FD\\LogViewer\\Dev\\": "dev/",
+            "FD\\LogViewer\\Tests\\Functional\\": "tests/Functional/",
+            "FD\\LogViewer\\Tests\\Integration\\": "tests/Integration/",
+            "FD\\LogViewer\\Tests\\Unit\\": "tests/Unit/"
         }
     },
     "suggest": {

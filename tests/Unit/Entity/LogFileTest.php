@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Entity;
+namespace FD\LogViewer\Tests\Unit\Entity;
 
 use DigitalRevolution\AccessorPairConstraint\AccessorPairAsserter;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
+use FD\LogViewer\Entity\LogFile;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

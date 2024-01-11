@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\StreamReader;
+namespace FD\LogViewer\StreamReader;
 
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
+use FD\LogViewer\Entity\Output\DirectionEnum;
 use RuntimeException;
 use SplFileInfo;
 

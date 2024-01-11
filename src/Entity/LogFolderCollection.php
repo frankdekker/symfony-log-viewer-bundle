@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Entity;
+namespace FD\LogViewer\Entity;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
 
 class LogFolderCollection
 {

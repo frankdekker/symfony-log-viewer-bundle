@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Routing;
+namespace FD\LogViewer\Tests\Unit\Routing;
 
-use FD\SymfonyLogViewerBundle\Controller\IndexController;
-use FD\SymfonyLogViewerBundle\Routing\RouteService;
+use FD\LogViewer\Controller\IndexController;
+use FD\LogViewer\Routing\RouteService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

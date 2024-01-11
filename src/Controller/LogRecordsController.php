@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Controller;
+namespace FD\LogViewer\Controller;
 
-use FD\SymfonyLogViewerBundle\Service\File\LogFileService;
-use FD\SymfonyLogViewerBundle\Service\File\LogQueryDtoFactory;
-use FD\SymfonyLogViewerBundle\Service\File\LogRecordsOutputProvider;
+use FD\LogViewer\Service\File\LogFileService;
+use FD\LogViewer\Service\File\LogQueryDtoFactory;
+use FD\LogViewer\Service\File\LogRecordsOutputProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

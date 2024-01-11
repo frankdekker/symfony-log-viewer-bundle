@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Functional\App;
+namespace FD\LogViewer\Tests\Functional\App;
 
 use Exception;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Util;
+namespace FD\LogViewer\Tests\Unit\Util;
 
-use FD\SymfonyLogViewerBundle\Util\Utils;
+use FD\LogViewer\Util\Utils;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;

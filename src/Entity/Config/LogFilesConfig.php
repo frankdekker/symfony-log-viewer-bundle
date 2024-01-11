@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Entity\Config;
+namespace FD\LogViewer\Entity\Config;
 
 class LogFilesConfig
 {

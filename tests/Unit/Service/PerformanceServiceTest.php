@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service;
+namespace FD\LogViewer\Tests\Unit\Service;
 
-use FD\SymfonyLogViewerBundle\Service\PerformanceService;
-use FD\SymfonyLogViewerBundle\Service\VersionService;
+use FD\LogViewer\Service\PerformanceService;
+use FD\LogViewer\Service\VersionService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

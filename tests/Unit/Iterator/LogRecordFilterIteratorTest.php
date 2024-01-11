@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Iterator;
+namespace FD\LogViewer\Tests\Unit\Iterator;
 
 use ArrayIterator;
-use FD\SymfonyLogViewerBundle\Entity\Index\LogRecord;
-use FD\SymfonyLogViewerBundle\Iterator\LogRecordFilterIterator;
+use FD\LogViewer\Entity\Index\LogRecord;
+use FD\LogViewer\Iterator\LogRecordFilterIterator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

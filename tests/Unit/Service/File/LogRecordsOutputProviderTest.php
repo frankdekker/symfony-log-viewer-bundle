@@ -1,19 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service\File;
+namespace FD\LogViewer\Tests\Unit\Service\File;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\FinderConfig;
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Entity\Index\LogIndex;
-use FD\SymfonyLogViewerBundle\Entity\Index\PerformanceStats;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogRecordsOutput;
-use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
-use FD\SymfonyLogViewerBundle\Service\File\LogFileParserInterface;
-use FD\SymfonyLogViewerBundle\Service\File\LogFileParserProvider;
-use FD\SymfonyLogViewerBundle\Service\File\LogRecordsOutputProvider;
-use FD\SymfonyLogViewerBundle\Service\PerformanceService;
+use FD\LogViewer\Entity\Config\FinderConfig;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\Index\PerformanceStats;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\Output\LogRecordsOutput;
+use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Service\File\LogFileParserInterface;
+use FD\LogViewer\Service\File\LogFileParserProvider;
+use FD\LogViewer\Service\File\LogRecordsOutputProvider;
+use FD\LogViewer\Service\PerformanceService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

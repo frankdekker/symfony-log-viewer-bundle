@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Iterator;
+namespace FD\LogViewer\Iterator;
 
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Service\File\LogLineParserInterface;
-use FD\SymfonyLogViewerBundle\StreamReader\AbstractStreamReader;
+use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Service\File\LogLineParserInterface;
+use FD\LogViewer\StreamReader\AbstractStreamReader;
 use IteratorAggregate;
 use Traversable;
 

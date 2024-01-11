@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Routing;
+namespace FD\LogViewer\Routing;
 
-use FD\SymfonyLogViewerBundle\Controller\IndexController;
+use FD\LogViewer\Controller\IndexController;
 use RuntimeException;
 use Symfony\Component\Routing\RouterInterface;
 

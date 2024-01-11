@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service\File\Monolog;
+namespace FD\LogViewer\Tests\Unit\Service\File\Monolog;
 
-use FD\SymfonyLogViewerBundle\Service\File\LogLineParserInterface;
-use FD\SymfonyLogViewerBundle\Service\File\Monolog\MonologLineParser;
+use FD\LogViewer\Service\File\LogLineParserInterface;
+use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;

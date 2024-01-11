@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Entity\Output;
+namespace FD\LogViewer\Tests\Unit\Entity\Output;
 
-use FD\SymfonyLogViewerBundle\Entity\Index\LogIndex;
-use FD\SymfonyLogViewerBundle\Entity\Index\LogRecord;
-use FD\SymfonyLogViewerBundle\Entity\Index\Paginator;
-use FD\SymfonyLogViewerBundle\Entity\Index\PerformanceStats;
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogRecordsOutput;
-use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
+use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\Index\LogRecord;
+use FD\LogViewer\Entity\Index\Paginator;
+use FD\LogViewer\Entity\Index\PerformanceStats;
+use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Entity\Output\LogRecordsOutput;
+use FD\LogViewer\Entity\Request\LogQueryDto;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

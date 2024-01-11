@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Iterator;
+namespace FD\LogViewer\Tests\Unit\Iterator;
 
 use ArrayIterator;
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Iterator\LogLineParserIterator;
-use FD\SymfonyLogViewerBundle\Service\File\LogLineParserInterface;
-use FD\SymfonyLogViewerBundle\StreamReader\AbstractStreamReader;
+use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Iterator\LogLineParserIterator;
+use FD\LogViewer\Service\File\LogLineParserInterface;
+use FD\LogViewer\StreamReader\AbstractStreamReader;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

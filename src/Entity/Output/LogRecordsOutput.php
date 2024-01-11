@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Entity\Output;
+namespace FD\LogViewer\Entity\Output;
 
-use FD\SymfonyLogViewerBundle\Entity\Index\LogIndex;
-use FD\SymfonyLogViewerBundle\Entity\Index\PerformanceStats;
-use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
+use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\Index\PerformanceStats;
+use FD\LogViewer\Entity\Request\LogQueryDto;
 use JsonSerializable;
 
 class LogRecordsOutput implements JsonSerializable

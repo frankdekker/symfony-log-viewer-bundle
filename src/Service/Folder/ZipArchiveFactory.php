@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service\Folder;
+namespace FD\LogViewer\Service\Folder;
 
-use FD\SymfonyLogViewerBundle\Entity\LogFolder;
-use FD\SymfonyLogViewerBundle\Entity\TempFile;
+use FD\LogViewer\Entity\LogFolder;
+use FD\LogViewer\Entity\TempFile;
 use RuntimeException;
 use SplFileInfo;
 use ZipArchive;

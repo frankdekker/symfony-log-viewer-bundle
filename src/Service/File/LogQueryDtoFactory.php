@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service\File;
+namespace FD\LogViewer\Service\File;
 
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
+use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Entity\Request\LogQueryDto;
 use Symfony\Component\HttpFoundation\Request;
 
 class LogQueryDtoFactory

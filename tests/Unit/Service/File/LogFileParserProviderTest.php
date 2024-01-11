@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service\File;
+namespace FD\LogViewer\Tests\Unit\Service\File;
 
 use ArrayIterator;
-use FD\SymfonyLogViewerBundle\Service\File\LogFileParserInterface;
-use FD\SymfonyLogViewerBundle\Service\File\LogFileParserProvider;
+use FD\LogViewer\Service\File\LogFileParserInterface;
+use FD\LogViewer\Service\File\LogFileParserProvider;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;

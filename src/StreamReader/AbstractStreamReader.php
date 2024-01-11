@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\StreamReader;
+namespace FD\LogViewer\StreamReader;
 
 use Generator;
 use IteratorAggregate;

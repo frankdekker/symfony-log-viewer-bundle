@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Entity\Output;
+namespace FD\LogViewer\Entity\Output;
 
 use JsonSerializable;
 

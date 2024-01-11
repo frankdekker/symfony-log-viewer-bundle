@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service\Folder;
+namespace FD\LogViewer\Service\Folder;
 
-use FD\SymfonyLogViewerBundle\Controller\DownloadFileController;
-use FD\SymfonyLogViewerBundle\Controller\DownloadFolderController;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogFileOutput;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogFolderOutput;
-use FD\SymfonyLogViewerBundle\Util\Utils;
+use FD\LogViewer\Controller\DownloadFileController;
+use FD\LogViewer\Controller\DownloadFolderController;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\LogFolderCollection;
+use FD\LogViewer\Entity\Output\LogFileOutput;
+use FD\LogViewer\Entity\Output\LogFolderOutput;
+use FD\LogViewer\Util\Utils;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LogFolderOutputFactory

@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Integration\Service\File;
+namespace FD\LogViewer\Tests\Integration\Service\File;
 
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
-use FD\SymfonyLogViewerBundle\Iterator\MaxRuntimeIterator;
-use FD\SymfonyLogViewerBundle\Service\File\LogParser;
-use FD\SymfonyLogViewerBundle\Service\File\Monolog\MonologLineParser;
-use FD\SymfonyLogViewerBundle\StreamReader\StreamReaderFactory;
-use FD\SymfonyLogViewerBundle\Tests\Integration\AbstractIntegrationTestCase;
+use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Iterator\MaxRuntimeIterator;
+use FD\LogViewer\Service\File\LogParser;
+use FD\LogViewer\Service\File\Monolog\MonologLineParser;
+use FD\LogViewer\StreamReader\StreamReaderFactory;
+use FD\LogViewer\Tests\Integration\AbstractIntegrationTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bridge\PhpUnit\ClockMock;
 use Symfony\Component\Finder\SplFileInfo;

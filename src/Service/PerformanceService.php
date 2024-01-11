@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service;
+namespace FD\LogViewer\Service;
 
-use FD\SymfonyLogViewerBundle\Entity\Index\PerformanceStats;
-use FD\SymfonyLogViewerBundle\Util\Utils;
+use FD\LogViewer\Entity\Index\PerformanceStats;
+use FD\LogViewer\Util\Utils;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 use function assert;

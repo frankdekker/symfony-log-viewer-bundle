@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Controller;
+namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
-use FD\SymfonyLogViewerBundle\Controller\FoldersController;
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogFolderOutput;
-use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputProvider;
+use FD\LogViewer\Controller\FoldersController;
+use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Entity\Output\LogFolderOutput;
+use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

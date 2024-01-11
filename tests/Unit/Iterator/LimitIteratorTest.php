@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Iterator;
+namespace FD\LogViewer\Tests\Unit\Iterator;
 
 use ArrayIterator;
-use FD\SymfonyLogViewerBundle\Iterator\LimitIterator;
+use FD\LogViewer\Iterator\LimitIterator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

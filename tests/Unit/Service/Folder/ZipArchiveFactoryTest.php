@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service\Folder;
+namespace FD\LogViewer\Tests\Unit\Service\Folder;
 
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\LogFolder;
-use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
-use FD\SymfonyLogViewerBundle\Service\Folder\ZipArchiveFactory;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\LogFolder;
+use FD\LogViewer\Entity\LogFolderCollection;
+use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

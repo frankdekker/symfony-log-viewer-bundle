@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service;
+namespace FD\LogViewer\Service;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\FinderConfig;
+use FD\LogViewer\Entity\Config\FinderConfig;
 use Symfony\Component\Finder\Finder;
 
 class FinderFactory

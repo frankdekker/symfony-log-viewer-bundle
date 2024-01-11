@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service\File;
+namespace FD\LogViewer\Service\File;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\LogFolder;
-use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
-use FD\SymfonyLogViewerBundle\Service\FinderFactory;
-use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderFactory;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\LogFolder;
+use FD\LogViewer\Entity\LogFolderCollection;
+use FD\LogViewer\Service\FinderFactory;
+use FD\LogViewer\Service\Folder\LogFolderFactory;
 use Traversable;
 
 class LogFileService

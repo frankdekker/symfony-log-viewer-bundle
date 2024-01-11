@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service\Folder;
+namespace FD\LogViewer\Tests\Unit\Service\Folder;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\LogFolder;
-use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
-use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderFactory;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\LogFolder;
+use FD\LogViewer\Entity\LogFolderCollection;
+use FD\LogViewer\Service\Folder\LogFolderFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\SplFileInfo;

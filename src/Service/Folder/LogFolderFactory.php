@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service\Folder;
+namespace FD\LogViewer\Service\Folder;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\LogFolder;
-use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
-use FD\SymfonyLogViewerBundle\Util\Utils;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\LogFolder;
+use FD\LogViewer\Entity\LogFolderCollection;
+use FD\LogViewer\Util\Utils;
 use Symfony\Component\Finder\SplFileInfo;
 
 class LogFolderFactory

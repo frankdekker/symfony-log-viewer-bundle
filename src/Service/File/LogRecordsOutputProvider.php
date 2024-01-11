@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service\File;
+namespace FD\LogViewer\Service\File;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogRecordsOutput;
-use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
-use FD\SymfonyLogViewerBundle\Service\PerformanceService;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\Output\LogRecordsOutput;
+use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Service\PerformanceService;
 
 class LogRecordsOutputProvider
 {

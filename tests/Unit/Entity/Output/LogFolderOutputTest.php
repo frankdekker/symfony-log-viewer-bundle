@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Entity\Output;
+namespace FD\LogViewer\Tests\Unit\Entity\Output;
 
-use FD\SymfonyLogViewerBundle\Entity\Output\LogFileOutput;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogFolderOutput;
+use FD\LogViewer\Entity\Output\LogFileOutput;
+use FD\LogViewer\Entity\Output\LogFolderOutput;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

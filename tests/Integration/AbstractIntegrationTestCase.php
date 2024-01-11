@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Integration;
+namespace FD\LogViewer\Tests\Integration;
 
 use PHPUnit\Framework\TestCase;
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Routing;
+namespace FD\LogViewer\Routing;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\Loader;

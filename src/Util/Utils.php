@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Util;
+namespace FD\LogViewer\Util;
 
 class Utils
 {

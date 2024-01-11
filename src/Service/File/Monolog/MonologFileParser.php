@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service\File\Monolog;
+namespace FD\LogViewer\Service\File\Monolog;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Entity\Index\LogIndex;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
-use FD\SymfonyLogViewerBundle\Service\File\LogFileParserInterface;
-use FD\SymfonyLogViewerBundle\Service\File\LogParser;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Service\File\LogFileParserInterface;
+use FD\LogViewer\Service\File\LogParser;
 use Monolog\Logger;
 use SplFileInfo;
 

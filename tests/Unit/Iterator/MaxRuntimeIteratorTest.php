@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Iterator;
+namespace FD\LogViewer\Tests\Unit\Iterator;
 
 use ArrayIterator;
-use FD\SymfonyLogViewerBundle\Iterator\MaxRuntimeException;
-use FD\SymfonyLogViewerBundle\Iterator\MaxRuntimeIterator;
+use FD\LogViewer\Iterator\MaxRuntimeException;
+use FD\LogViewer\Iterator\MaxRuntimeIterator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ClockMock;

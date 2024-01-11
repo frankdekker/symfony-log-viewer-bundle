@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Entity\Index;
+namespace FD\LogViewer\Tests\Unit\Entity\Index;
 
-use FD\SymfonyLogViewerBundle\Entity\Index\LogRecord;
+use FD\LogViewer\Entity\Index\LogRecord;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

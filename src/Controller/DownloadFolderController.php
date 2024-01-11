@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Controller;
+namespace FD\LogViewer\Controller;
 
-use FD\SymfonyLogViewerBundle\Service\File\LogFileService;
-use FD\SymfonyLogViewerBundle\Service\Folder\ZipArchiveFactory;
+use FD\LogViewer\Service\File\LogFileService;
+use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;

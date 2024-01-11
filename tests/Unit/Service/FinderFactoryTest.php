@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service;
+namespace FD\LogViewer\Tests\Unit\Service;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\FinderConfig;
-use FD\SymfonyLogViewerBundle\Service\FinderFactory;
+use FD\LogViewer\Entity\Config\FinderConfig;
+use FD\LogViewer\Service\FinderFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;

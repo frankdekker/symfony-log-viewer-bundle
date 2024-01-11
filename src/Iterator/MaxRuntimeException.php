@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Iterator;
+namespace FD\LogViewer\Iterator;
 
 use Exception;
 

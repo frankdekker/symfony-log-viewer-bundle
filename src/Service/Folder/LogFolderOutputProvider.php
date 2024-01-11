@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Service\Folder;
+namespace FD\LogViewer\Service\Folder;
 
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogFolderOutput;
-use FD\SymfonyLogViewerBundle\Service\File\LogFileService;
+use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Entity\Output\LogFolderOutput;
+use FD\LogViewer\Service\File\LogFileService;
 
 class LogFolderOutputProvider
 {

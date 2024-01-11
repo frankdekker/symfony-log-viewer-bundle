@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\StreamReader;
+namespace FD\LogViewer\Tests\Unit\StreamReader;
 
-use FD\SymfonyLogViewerBundle\StreamReader\AbstractStreamReader;
-use FD\SymfonyLogViewerBundle\StreamReader\ForwardStreamReader;
+use FD\LogViewer\StreamReader\AbstractStreamReader;
+use FD\LogViewer\StreamReader\ForwardStreamReader;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;

@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Integration\Routing;
+namespace FD\LogViewer\Tests\Integration\Routing;
 
 use Exception;
-use FD\SymfonyLogViewerBundle\Routing\RouteLoader;
+use FD\LogViewer\Routing\RouteLoader;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service\File\Monolog;
+namespace FD\LogViewer\Tests\Unit\Service\File\Monolog;
 
-use FD\SymfonyLogViewerBundle\Entity\Config\FinderConfig;
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Entity\Index\LogIndex;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\LogFolder;
-use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
-use FD\SymfonyLogViewerBundle\Service\File\LogParser;
-use FD\SymfonyLogViewerBundle\Service\File\Monolog\MonologFileParser;
-use FD\SymfonyLogViewerBundle\Service\File\Monolog\MonologLineParser;
+use FD\LogViewer\Entity\Config\FinderConfig;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\LogFolder;
+use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Service\File\LogParser;
+use FD\LogViewer\Service\File\Monolog\MonologFileParser;
+use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use Monolog\Logger;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;

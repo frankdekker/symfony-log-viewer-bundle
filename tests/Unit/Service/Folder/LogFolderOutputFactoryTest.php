@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Service\Folder;
+namespace FD\LogViewer\Tests\Unit\Service\Folder;
 
-use FD\SymfonyLogViewerBundle\Controller\DownloadFileController;
-use FD\SymfonyLogViewerBundle\Controller\DownloadFolderController;
-use FD\SymfonyLogViewerBundle\Entity\Config\FinderConfig;
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\LogFolder;
-use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogFileOutput;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogFolderOutput;
-use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputFactory;
+use FD\LogViewer\Controller\DownloadFileController;
+use FD\LogViewer\Controller\DownloadFolderController;
+use FD\LogViewer\Entity\Config\FinderConfig;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\LogFolder;
+use FD\LogViewer\Entity\LogFolderCollection;
+use FD\LogViewer\Entity\Output\LogFileOutput;
+use FD\LogViewer\Entity\Output\LogFolderOutput;
+use FD\LogViewer\Service\Folder\LogFolderOutputFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

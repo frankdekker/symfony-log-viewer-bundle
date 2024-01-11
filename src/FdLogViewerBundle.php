@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle;
+namespace FD\LogViewer;
 
-use FD\SymfonyLogViewerBundle\DependencyInjection\Compiler\MonologCompilerPass;
-use FD\SymfonyLogViewerBundle\DependencyInjection\Extension;
+use FD\LogViewer\DependencyInjection\Compiler\MonologCompilerPass;
+use FD\LogViewer\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-final class SymfonyLogViewerBundle extends Bundle
+final class FdLogViewerBundle extends Bundle
 {
     public function build(ContainerBuilder $container): void
     {

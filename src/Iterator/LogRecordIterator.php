@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Iterator;
+namespace FD\LogViewer\Iterator;
 
-use FD\SymfonyLogViewerBundle\Entity\Index\LogRecord;
-use FD\SymfonyLogViewerBundle\Service\File\LogLineParserInterface;
+use FD\LogViewer\Entity\Index\LogRecord;
+use FD\LogViewer\Service\File\LogLineParserInterface;
 use IteratorAggregate;
 use Traversable;
 

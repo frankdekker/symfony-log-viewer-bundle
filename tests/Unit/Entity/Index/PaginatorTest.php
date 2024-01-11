@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Entity\Index;
+namespace FD\LogViewer\Tests\Unit\Entity\Index;
 
-use FD\SymfonyLogViewerBundle\Entity\Index\Paginator;
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
+use FD\LogViewer\Entity\Index\Paginator;
+use FD\LogViewer\Entity\Output\DirectionEnum;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

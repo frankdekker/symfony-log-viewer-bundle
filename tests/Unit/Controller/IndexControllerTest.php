@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Controller;
+namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
-use FD\SymfonyLogViewerBundle\Controller\IndexController;
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogFolderOutput;
-use FD\SymfonyLogViewerBundle\Routing\RouteService;
-use FD\SymfonyLogViewerBundle\Service\Folder\LogFolderOutputProvider;
+use FD\LogViewer\Controller\IndexController;
+use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Entity\Output\LogFolderOutput;
+use FD\LogViewer\Routing\RouteService;
+use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

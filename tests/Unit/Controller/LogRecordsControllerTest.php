@@ -1,20 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\SymfonyLogViewerBundle\Tests\Unit\Controller;
+namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
-use FD\SymfonyLogViewerBundle\Controller\LogRecordsController;
-use FD\SymfonyLogViewerBundle\Entity\Config\LogFilesConfig;
-use FD\SymfonyLogViewerBundle\Entity\LogFile;
-use FD\SymfonyLogViewerBundle\Entity\LogFolder;
-use FD\SymfonyLogViewerBundle\Entity\LogFolderCollection;
-use FD\SymfonyLogViewerBundle\Entity\Output\DirectionEnum;
-use FD\SymfonyLogViewerBundle\Entity\Output\LogRecordsOutput;
-use FD\SymfonyLogViewerBundle\Entity\Request\LogQueryDto;
-use FD\SymfonyLogViewerBundle\Service\File\LogFileService;
-use FD\SymfonyLogViewerBundle\Service\File\LogQueryDtoFactory;
-use FD\SymfonyLogViewerBundle\Service\File\LogRecordsOutputProvider;
+use FD\LogViewer\Controller\LogRecordsController;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\LogFile;
+use FD\LogViewer\Entity\LogFolder;
+use FD\LogViewer\Entity\LogFolderCollection;
+use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Entity\Output\LogRecordsOutput;
+use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Service\File\LogFileService;
+use FD\LogViewer\Service\File\LogQueryDtoFactory;
+use FD\LogViewer\Service\File\LogRecordsOutputProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
