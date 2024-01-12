@@ -14,6 +14,7 @@ class LogFilesConfig
         public readonly ?string $name,
         public readonly FinderConfig $finderConfig,
         public readonly bool $downloadable,
+        public readonly bool $deletable,
         public readonly ?string $startOfLinePattern,
         public readonly string $logMessagePattern,
         public readonly string $dateFormat

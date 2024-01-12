@@ -11,10 +11,10 @@ class LogFileOutput implements JsonSerializable
         public readonly string $identifier,
         public readonly string $name,
         public readonly string $sizeFormatted,
-        public readonly string $downloadUrl,
         public readonly int $earliestTimestamp,
         public readonly int $latestTimestamp,
-        public readonly bool $canDownload
+        public readonly bool $canDownload,
+        public readonly bool $canDelete
     ) {
     }
 
@@ -27,8 +27,8 @@ class LogFileOutput implements JsonSerializable
             'identifier'     => $this->identifier,
             'name'           => $this->name,
             'size_formatted' => $this->sizeFormatted,
-            'download_url'   => $this->downloadUrl,
             'can_download'   => $this->canDownload,
+            'can_delete'     => $this->canDelete
         ];
     }
 }

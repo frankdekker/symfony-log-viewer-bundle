@@ -43,6 +43,7 @@ final class Extension extends BaseExtension implements PrependExtensionInterface
                 ->setArgument('$name', $config['name'] ?? null)
                 ->setArgument('$finderConfig', new Reference('fd.symfony.log.viewer.log_files_config.finder.' . $key))
                 ->setArgument('$downloadable', $config['downloadable'])
+                ->setArgument('$deletable', $config['deletable'])
                 ->setArgument('$startOfLinePattern', $config['start_of_line_pattern'] ?? null)
                 ->setArgument('$logMessagePattern', $config['log_message_pattern'])
                 ->setArgument('$dateFormat', $config['date_format'] ?? "Y-m-d H:i:s");

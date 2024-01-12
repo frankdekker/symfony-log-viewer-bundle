@@ -49,6 +49,7 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                     ->scalarNode('downloadable')->info("Whether or not to allow downloading of the log file")->defaultFalse()->end()
+                    ->scalarNode('deletable')->info("Whether or not to allow deletion of the log file")->defaultFalse()->end()
                     ->scalarNode('start_of_line_pattern')
                         ->info('The regex pattern for the start of a log line. Adds support for multiline log messages.')
                         ->defaultNull()

@@ -24,6 +24,9 @@ log_files:
     # Whether to allow downloading of the log file      
     downloadable: false
 
+    # Whether to allow deletion of the log file
+    deletable: false
+
     # The regex pattern for the start of a log line. Adds support for multiline log messages.
     start_of_line_pattern: '/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/'
     
