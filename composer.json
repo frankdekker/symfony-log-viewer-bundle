@@ -1,8 +1,21 @@
 {
     "name": "fdekker/log-viewer-bundle",
     "description": "A log viewer bundle for Symfony 6 and up",
+    "keywords": [
+        "symfony",
+        "symfony-bundle",
+        "logs",
+        "log viewer"
+    ],
     "type": "symfony-bundle",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Frank Dekker",
+            "email": "fdekker@gmail.com",
+            "role": "Developer"
+        }
+    ],
     "minimum-stability": "stable",
     "config": {
         "sort-packages": true,
