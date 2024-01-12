@@ -1,7 +1,57 @@
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF)](https://php.net/)
+[![Minimum Symfony Version](https://img.shields.io/badge/symfony-%3E%3D%206.3-brightgreen)](https://symfony.com/doc/current/validation.html)
+![Run tests](https://github.com/frankdekker/symfony-log-viewer-bundle/actions/workflows/test.yml/badge.svg)
+
 # Log viewer for Symfony
+*Inspired by [opcodesio/log-viewer](https://github.com/opcodesio/log-viewer).*
 
-## Installation
+[screenshot]
 
+ **Log Viewer** a bundle for your [Symfony](https://symfony.com/) app. It provides a user-friendly UI to read, filter and search log files.
+
+Out of the box it will read your Monolog logs in the `var/log` directory, but can be configured to
+read logs from any directory.
+
+
+### Features
+
+- 📂 **View all the Monolog logs** in your `%kernel.logs_dir%` directory,
+- 🔍 **Search** the logs,
+- 🎚 **Filter** by log level (error, info, debug, etc.), or by channel.
+- 🌑 **Dark mode**,
+- 💾 **Download** log files from the UI,
+- ☎️ **API access** for folders, files & log entries,
+
+## Getting started
+
+### Requirements
+
+- **PHP 8.1+**
+- **Symfony 6.3+**
+
+### Installation
+
+Use [composer](https://getcomposer.org/).
 ```bash
 composer require fdekker/log-viewer-bundle
 ```
+If you don't use Symfony Flex, you'll need to manually enable the bundle:
+```php
+# /config/bundles.php
+return [
+    // ...
+    FD\LogViewer\FdLogViewerBundle::class => ['all' => true],
+];
+```
+After installing the package, publish the front-end assets by running:
+```bash
+php bin/console assets:install
+```
+
+### Usage
+
+Once the installation is complete, you will be able to access **Log Viewer** directly in your browser.
+
+By default, the application is available at: `{APP_URL}/log-viewer`.
+
+(for example: `https://my-app.test/log-viewer`)
