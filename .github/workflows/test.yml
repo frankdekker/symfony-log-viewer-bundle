@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         php-versions: [ '8.1', '8.2', '8.3' ]
-        symfony: [ '^6.2', '^7.0' ]
+        symfony: [ '^6.3', '^7.0' ]
         composer-flags: [ '', '--prefer-lowest' ]
         exclude:
           - php-versions: 8.1

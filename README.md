@@ -43,6 +43,17 @@ return [
     FD\LogViewer\FdLogViewerBundle::class => ['all' => true],
 ];
 ```
+And add the route:
+```php
+<?php
+# /config/routes/fd_log_viewer.yaml
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+return static function (RoutingConfigurator $routingConfigurator): void {
+    $routingConfigurator->import('.', 'fd_symfony_log_viewer')->prefix('/log-viewer');
+};
+```
+
 After installing the package, publish the front-end assets by running:
 ```bash
 php bin/console assets:install
