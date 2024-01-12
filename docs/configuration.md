@@ -32,20 +32,4 @@ log_files:
 
     # The date format of how to present the date in the frontend.
     date_format: "Y-m-d H:i:s"
-
-    # Enabled log levels. Optional. Defaults to all.
-    levels: 
-      DEBUG: Debug
-      INFO: Info
-      NOTICE: Notice
-      WARNING: Warning
-      ERROR: Error
-      CRITICAL: Critical
-      ALERT: Alert
-      EMERGENCY: Emergency
-
-    # Enabled log channels. Optional. Defaults to all.
-    channels:
-      - app
-      - request
 ```
