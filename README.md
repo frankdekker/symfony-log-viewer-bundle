@@ -19,7 +19,7 @@ read logs from any directory.
 - 🔍 **Search** the logs,
 - 🎚 **Filter** by log level (error, info, debug, etc.), or by channel.
 - 🌑 **Dark mode**,
-- 💾 **Download** log files from the UI,
+- 💾 **Download** or **delete** log files from the UI,
 - ☎️ **API access** for folders, files & log entries,
 
 ## Getting started
