@@ -29,7 +29,7 @@ function toggle() {
 
 <template>
     <div class="dropdown pe-1" v-show="Object.keys(checklist.choices).length > 0" ref="dropdownEl">
-        <button class="btn btn-outline-primary" type="button" @click="toggle">
+        <button class="btn btn-outline-primary text-nowrap" type="button" @click="toggle">
             {{ label }} <span class="badge text-bg-primary">{{ checklist.selected.length }}</span>
         </button>
         <ul class="dropdown-menu" v-bind:class="{ 'show': open }">
