@@ -13,8 +13,8 @@ class LogFolderOutputTest extends TestCase
 {
     public function testJsonSerialize(): void
     {
-        $file   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 'downloadUrl', 0, 0, true);
-        $output = new LogFolderOutput('identifier', 'path', 'downloadUrl', true, 111111, [$file]);
+        $file   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 0, true, true);
+        $output = new LogFolderOutput('identifier', 'path', true, true, 111111, [$file]);
 
         static::assertSame(
             [
@@ -23,6 +23,7 @@ class LogFolderOutputTest extends TestCase
                 'download_url' => 'downloadUrl',
                 'files'        => [$file],
                 'can_download' => true,
+                'can_delete'   => true
             ],
             $output->jsonSerialize()
         );

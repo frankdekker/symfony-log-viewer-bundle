@@ -35,7 +35,7 @@ class IndexControllerTest extends AbstractControllerTestCase
      */
     public function testInvoke(): void
     {
-        $folder = new LogFolderOutput('identifier', 'path', 'url', true, 123456, []);
+        $folder = new LogFolderOutput('identifier', 'path', true, false, 123456, []);
 
         $this->routeService->expects(self::once())->method('getBaseUri')->willReturn('baseUri');
         $this->folderOutputProvider->expects(self::once())->method('provide')->with(DirectionEnum::Desc)->willReturn([$folder]);

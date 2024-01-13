@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\File\Monolog;
 
-use FD\LogViewer\Entity\Config\FinderConfig;
-use FD\LogViewer\Entity\Config\LogFilesConfig;
 use FD\LogViewer\Entity\Index\LogIndex;
 use FD\LogViewer\Entity\LogFile;
 use FD\LogViewer\Entity\LogFolder;
@@ -12,6 +10,7 @@ use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
+use FD\LogViewer\Tests\TestEntityTrait;
 use Monolog\Logger;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -21,6 +20,8 @@ use SplFileInfo;
 #[CoversClass(MonologFileParser::class)]
 class MonologFileParserTest extends TestCase
 {
+    use TestEntityTrait;
+
     private Logger&MockObject $logger;
     private LogParser&MockObject $logParser;
     private MonologFileParser $parser;
@@ -56,7 +57,7 @@ class MonologFileParserTest extends TestCase
 
     public function testGetLogIndex(): void
     {
-        $config   = new LogFilesConfig('logName', 'monolog', 'name', $this->createMock(FinderConfig::class), true, 'patternA', 'patternB', 'Y-m-d');
+        $config   = $this->createLogFileConfig();
         $logQuery = new LogQueryDto('identifier');
         $file     = new LogFile('identifier', 'path', 'relative', 123, 111, 222, $this->createMock(LogFolder::class));
         $index    = new LogIndex();

@@ -5,12 +5,11 @@ namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
 use FD\LogViewer\Controller\DownloadFileController;
-use FD\LogViewer\Entity\Config\FinderConfig;
-use FD\LogViewer\Entity\Config\LogFilesConfig;
 use FD\LogViewer\Entity\LogFile;
 use FD\LogViewer\Entity\LogFolder;
 use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Service\File\LogFileService;
+use FD\LogViewer\Tests\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +24,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 #[CoversClass(DownloadFileController::class)]
 class DownloadFileControllerTest extends AbstractControllerTestCase
 {
+    use TestEntityTrait;
+
     private LogFileService&MockObject $fileService;
 
     protected function setUp(): void
@@ -44,7 +45,7 @@ class DownloadFileControllerTest extends AbstractControllerTestCase
 
     public function testInvokeNotDownloadable(): void
     {
-        $config     = new LogFilesConfig('name', 'type', 'name', $this->createMock(FinderConfig::class), false, null, '', '');
+        $config     = $this->createLogFileConfig();
         $collection = new LogFolderCollection($config);
         $logFolder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $collection);
         $logFile    = new LogFile('identifier', 'path', 'relative', 11111, 22222, 33333, $logFolder);
@@ -58,7 +59,7 @@ class DownloadFileControllerTest extends AbstractControllerTestCase
 
     public function testInvokeSuccess(): void
     {
-        $config     = new LogFilesConfig('name', 'type', 'name', $this->createMock(FinderConfig::class), true, null, '', '');
+        $config     = $this->createLogFileConfig(['downloadable' => true]);
         $collection = new LogFolderCollection($config);
         $logFolder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $collection);
         $logFile    = new LogFile('identifier', __FILE__, 'relative', 11111, 22222, 33333, $logFolder);

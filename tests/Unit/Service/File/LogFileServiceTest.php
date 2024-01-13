@@ -12,6 +12,7 @@ use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\FinderFactory;
 use FD\LogViewer\Service\Folder\LogFolderFactory;
+use FD\LogViewer\Tests\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -20,6 +21,8 @@ use Symfony\Component\Finder\Finder;
 #[CoversClass(LogFileService::class)]
 class LogFileServiceTest extends TestCase
 {
+    use TestEntityTrait;
+
     private FinderFactory&MockObject $folderService;
     private LogFolderFactory&MockObject $logFolderFactory;
     private LogFileService $service;
@@ -30,7 +33,7 @@ class LogFileServiceTest extends TestCase
     {
         parent::setUp();
         $this->finderConfig = new FinderConfig(__DIR__, null, false, false);
-        $this->config       = new LogFilesConfig('logName', 'monolog', 'name', $this->finderConfig, true, 'patternA', 'patternB', 'Y-m-d');
+        $this->config       = $this->createLogFileConfig(['finderConfig' => $this->finderConfig]);
 
         $this->folderService    = $this->createMock(FinderFactory::class);
         $this->logFolderFactory = $this->createMock(LogFolderFactory::class);

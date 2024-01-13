@@ -30,7 +30,7 @@ class FoldersControllerTest extends AbstractControllerTestCase
     public function testInvoke(): void
     {
         $request = new Request();
-        $folder  = new LogFolderOutput('identifier', 'path', 'url', true, 123456, []);
+        $folder  = new LogFolderOutput('identifier', 'path', true, false, 123456, []);
 
         $this->folderOutputProvider->expects(self::once())->method('provide')->with(DirectionEnum::Desc)->willReturn([$folder]);
 
@@ -40,7 +40,7 @@ class FoldersControllerTest extends AbstractControllerTestCase
     public function testInvokeWithQueryParam(): void
     {
         $request = new Request(['direction' => DirectionEnum::Asc->value]);
-        $folder  = new LogFolderOutput('identifier', 'path', 'url', true, 123456, []);
+        $folder  = new LogFolderOutput('identifier', 'path', true, false, 123456, []);
 
         $this->folderOutputProvider->expects(self::once())->method('provide')->with(DirectionEnum::Asc)->willReturn([$folder]);
 

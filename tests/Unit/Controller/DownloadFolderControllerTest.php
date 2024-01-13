@@ -11,6 +11,7 @@ use FD\LogViewer\Entity\LogFolder;
 use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
+use FD\LogViewer\Tests\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use SplFileInfo;
@@ -26,6 +27,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 #[CoversClass(DownloadFolderController::class)]
 class DownloadFolderControllerTest extends AbstractControllerTestCase
 {
+    use TestEntityTrait;
+
     private LogFileService&MockObject $folderService;
     private ZipArchiveFactory&MockObject $zipArchiveFactory;
 
@@ -47,7 +50,7 @@ class DownloadFolderControllerTest extends AbstractControllerTestCase
 
     public function testInvokeNotDownloadable(): void
     {
-        $config     = new LogFilesConfig('name', 'type', 'name', $this->createMock(FinderConfig::class), false, null, '', '');
+        $config     = $this->createLogFileConfig();
         $collection = new LogFolderCollection($config);
         $logFolder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $collection);
 
@@ -60,7 +63,7 @@ class DownloadFolderControllerTest extends AbstractControllerTestCase
 
     public function testInvokeSuccess(): void
     {
-        $config     = new LogFilesConfig('name', 'type', 'name', $this->createMock(FinderConfig::class), true, null, '', '');
+        $config     = $this->createLogFileConfig(['downloadable' => true]);
         $collection = new LogFolderCollection($config);
         $logFolder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $collection);
         $zipFile    = new SplFileInfo(__FILE__);

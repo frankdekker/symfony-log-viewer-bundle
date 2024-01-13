@@ -74,7 +74,8 @@
             "FD\\LogViewer\\Dev\\": "dev/",
             "FD\\LogViewer\\Tests\\Functional\\": "tests/Functional/",
             "FD\\LogViewer\\Tests\\Integration\\": "tests/Integration/",
-            "FD\\LogViewer\\Tests\\Unit\\": "tests/Unit/"
+            "FD\\LogViewer\\Tests\\Unit\\": "tests/Unit/",
+            "FD\\LogViewer\\Tests\\": "tests/"
         }
     },
     "suggest": {
