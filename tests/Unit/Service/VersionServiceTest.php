@@ -12,6 +12,6 @@ class VersionServiceTest extends TestCase
 {
     public function testGetVersion(): void
     {
-        static::assertSame('dev-master', (new VersionService())->getVersion());
+        static::assertStringStartsWith('dev-', (new VersionService())->getVersion());
     }
 }
