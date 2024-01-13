@@ -14,6 +14,10 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Throwable;
 
+/**
+ * @codeCoverageIgnore
+ * @internal
+ */
 final class Extension extends BaseExtension implements PrependExtensionInterface
 {
     /**

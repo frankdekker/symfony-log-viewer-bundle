@@ -6,7 +6,11 @@ namespace FD\LogViewer\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class MonologCompilerPass implements CompilerPassInterface
+/**
+ * @codeCoverageIgnore
+ * @internal
+ */
+final class MonologCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
