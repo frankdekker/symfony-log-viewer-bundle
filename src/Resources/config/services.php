@@ -27,6 +27,7 @@ use FD\LogViewer\Service\JsonManifestVersionStrategy;
 use FD\LogViewer\Service\PerformanceService;
 use FD\LogViewer\Service\VersionService;
 use FD\LogViewer\StreamReader\StreamReaderFactory;
+use FD\LogViewer\Tests\Unit\Service\Filesystem;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
@@ -53,6 +54,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(JsonManifestVersionStrategy::class)
         ->arg('$manifestPath', '%kernel.project_dir%/public/bundles/fdlogviewer/.vite/manifest.json');
 
+    $services->set(Filesystem::class);
     $services->set(FinderFactory::class);
     $services->set(LogFileService::class)->arg('$logFileConfigs', tagged_iterator('fd.symfony.log.viewer.log_files_config'));
     $services->set(LogFolderFactory::class);

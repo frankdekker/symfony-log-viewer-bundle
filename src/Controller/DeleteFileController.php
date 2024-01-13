@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Controller;
 
 use FD\LogViewer\Service\File\LogFileService;
+use FD\LogViewer\Service\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DeleteFileController extends AbstractController
 {
-    public function __construct(private readonly LogFileService $fileService)
+    public function __construct(private readonly Filesystem $filesystem, private readonly LogFileService $fileService)
     {
     }
 
@@ -28,9 +29,7 @@ class DeleteFileController extends AbstractController
             throw new AccessDeniedHttpException(sprintf('Log file with id `%s` is not allowed to be deleted.', $identifier));
         }
 
-        if (@unlink($file->path) === false) {
-            throw new AccessDeniedHttpException(sprintf('Log file with id `%s` is not deletable (no-write-access).', $identifier));
-        }
+        $this->filesystem->remove($file->path);
 
         return new JsonResponse(['success' => true]);
     }
