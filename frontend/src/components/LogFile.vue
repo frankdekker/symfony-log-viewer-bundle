@@ -3,7 +3,7 @@ import SplitButtonGroup from '@/components/SplitButtonGroup.vue';
 import type LogFile from '@/models/LogFile';
 import axios from 'axios';
 import {ref, watch} from 'vue';
-import {useRoute} from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 
 defineProps<{
     file: LogFile
@@ -12,8 +12,16 @@ defineProps<{
 const toggleRef    = ref();
 const selectedFile = ref<string | null>(null);
 const route        = useRoute();
+const router       = useRouter();
 const baseUri      = axios.defaults.baseURL;
-const deleteFile   = (identifier: string) => axios.delete(baseUri + 'api/file/' + encodeURI(identifier));
+const deleteFile   = (identifier: string) => {
+    axios.delete('/api/file/' + encodeURI(identifier))
+        .then(() => {
+            if (selectedFile.value === identifier) {
+                router.push({name: 'home'});
+            }
+        });
+}
 
 watch(() => route.query.file, () => selectedFile.value = String(route.query.file));
 </script>
