@@ -12,7 +12,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * @codeCoverageIgnore
- * @internal
  */
 final class FdLogViewerBundle extends Bundle
 {
