@@ -58,8 +58,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="lsv-content h-100 overflow-hidden lsv-loadable" v-bind:class="{ 'lsv-loading': logRecordStore.loading }">
-        <div class="lsv-menu-grid pt-1">
+    <div class="slv-content h-100 overflow-hidden slv-loadable" v-bind:class="{ 'slv-loading': logRecordStore.loading }">
+        <div class="slv-menu-grid pt-1">
             <DropdownChecklist label="Levels" :checklist="levels"></DropdownChecklist>
             <DropdownChecklist label="Channels" :checklist="channels"></DropdownChecklist>
 
@@ -71,12 +71,12 @@ onMounted(() => {
                        aria-describedby="button-search"
                        v-model="query">
 
-                <select class="lsv-menu-sort-direction form-control" aria-label="Sort direction" title="Sort direction" v-model="sort">
+                <select class="slv-menu-sort-direction form-control" aria-label="Sort direction" title="Sort direction" v-model="sort">
                     <option value="desc">Newest First</option>
                     <option value="asc">Oldest First</option>
                 </select>
 
-                <select class="lsv-menu-page-size form-control" aria-label="Entries per page" title="Entries per page" v-model="perPage">
+                <select class="slv-menu-page-size form-control" aria-label="Entries per page" title="Entries per page" v-model="perPage">
                     <option value="50">50</option>
                     <option value="100">100</option>
                     <option value="150">150</option>
@@ -85,7 +85,7 @@ onMounted(() => {
                     <option value="300">300</option>
                 </select>
 
-                <button class="lsv-log-search-btn btn btn-outline-primary" type="button" id="button-search" @click="navigate">Search</button>
+                <button class="slv-log-search-btn btn btn-outline-primary" type="button" id="button-search" @click="navigate">Search</button>
             </div>
 
             <button class="btn btn-dark ms-1 me-1" type="button" aria-label="Refresh" title="Refresh" @click="load">
@@ -96,7 +96,7 @@ onMounted(() => {
         </div>
 
         <main class="overflow-auto d-none d-md-block">
-            <div class="lsv-entries list-group pt-1 pe-1 pb-3">
+            <div class="slv-entries list-group pt-1 pe-1 pb-3">
                 <LogRecord :logRecord="record" v-for="record in logRecordStore.records.logs ?? []"></LogRecord>
             </div>
         </main>
@@ -113,7 +113,7 @@ onMounted(() => {
                 Next {{ perPage }}
             </button>
 
-            <div class="lsv-spacer"></div>
+            <div class="slv-spacer"></div>
 
             <Performance :performance="logRecordStore.records.performance"></Performance>
         </footer>
@@ -121,26 +121,25 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.lsv-spacer {
+.slv-spacer {
     flex-grow: 1;
 }
 
-.lsv-content {
+.slv-content {
     display: grid;
     grid-template-rows: auto 1fr auto;
 }
 
-.lsv-menu-grid {
+.slv-menu-grid {
     display: grid;
     grid-template-columns: auto auto 1fr auto auto;
 }
 
-.lsv-entries {
+.slv-entries {
     --bs-list-group-border-radius: 0;
 }
 
-.lsv-menu-sort-direction, .lsv-menu-page-size, .lsv-log-search-btn {
+.slv-menu-sort-direction, .slv-menu-page-size, .slv-log-search-btn {
     max-width: fit-content;
 }
-
 </style>

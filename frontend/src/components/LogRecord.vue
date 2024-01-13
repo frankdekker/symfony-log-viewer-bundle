@@ -10,7 +10,7 @@ defineProps<{
 </script>
 
 <template>
-    <a href="javascript:" class="lsv-list-group-item list-group-item list-group-item-action" @click="expanded = !expanded" :aria-expanded="expanded">
+    <a href="javascript:" class="slv-list-group-item list-group-item list-group-item-action" @click="expanded = !expanded" :aria-expanded="expanded">
         <div :class="{ 'text-nowrap': !expanded, 'overflow-hidden': !expanded }">
             <i class="lvs-indicator bi bi-chevron-right me-1"></i>
             <span class="pe-2 text-secondary">{{ logRecord.datetime }}</span>
@@ -32,7 +32,7 @@ defineProps<{
 </template>
 
 <style scoped>
-.lsv-list-group-item {
+.slv-list-group-item {
     --bs-list-group-item-padding-x: 0px;
     --bs-list-group-item-padding-y: 0px;
 }

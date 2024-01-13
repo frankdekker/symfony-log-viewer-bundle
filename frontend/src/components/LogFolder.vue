@@ -24,7 +24,7 @@ defineProps<{
             </template>
             <template v-slot:btn-right>
                 <button type="button"
-                        class="lsv-toggle-btn btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                        class="slv-toggle-btn btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
                         @click="toggleRef.toggle"
                         v-if="folder.can_download">
                     <i class="bi bi-three-dots-vertical"></i>

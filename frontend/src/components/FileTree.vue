@@ -10,7 +10,7 @@ const folderStore    = useFolderStore()
 <template>
     <!-- FileTree -->
     <div class="p-1 pe-2 overflow-auto">
-        <div class="lsv-control-layout m-0">
+        <div class="slv-control-layout m-0">
             <div>
                 Host: Local
             </div>
@@ -23,7 +23,7 @@ const folderStore    = useFolderStore()
             </div>
         </div>
 
-        <div class="lsv-loadable" v-bind:class="{ 'lsv-loading': folderStore.loading }">
+        <div class="slv-loadable" v-bind:class="{ 'slv-loading': folderStore.loading }">
             <LogFolder :folder="folder"
                        :expanded="index === selectedFolder"
                        :key="index"
@@ -34,7 +34,7 @@ const folderStore    = useFolderStore()
 </template>
 
 <style scoped>
-.lsv-control-layout {
+.slv-control-layout {
     display: grid;
     grid-template-columns: auto 1fr auto;
 }
