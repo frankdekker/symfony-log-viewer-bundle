@@ -16,7 +16,7 @@ bus.on('folder-deleted', () => folderStore.update());
     <div class="p-1 pe-2 overflow-auto">
         <div class="slv-control-layout m-0">
             <div>
-                Host: Local
+<!--                Host: Local-->
             </div>
             <div></div>
             <div>

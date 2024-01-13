@@ -31,7 +31,7 @@ fd_log_viewer:
   log_files:
     monolog:
       type: monolog
-      name: Log
+      name: Monolog
       finder:
         in: "%kernel.logs_dir%"
         name: "*.log"
