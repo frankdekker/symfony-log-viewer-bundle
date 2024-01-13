@@ -43,10 +43,9 @@ return [
     FD\LogViewer\FdLogViewerBundle::class => ['all' => true],
 ];
 ```
-And add the route:
+And add the route by creating file `/config/routes/fd_log_viewer.php`:
 ```php
 <?php
-# /config/routes/fd_log_viewer.yaml
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return static function (RoutingConfigurator $routingConfigurator): void {
