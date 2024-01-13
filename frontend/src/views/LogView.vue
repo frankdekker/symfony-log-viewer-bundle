@@ -38,11 +38,11 @@ const navigate = () => {
 
 const load = () => {
     logRecordStore
-            .fetch(file.value, levels.value.selected, channels.value.selected, sort.value, perPage.value, query.value, offset.value)
-            .then(() => {
-                levels.value   = logRecordStore.records.levels;
-                channels.value = logRecordStore.records.channels;
-            });
+        .fetch(file.value, levels.value.selected, channels.value.selected, sort.value, perPage.value, query.value, offset.value)
+        .then(() => {
+            levels.value   = logRecordStore.records.levels;
+            channels.value = logRecordStore.records.channels;
+        });
 }
 
 onMounted(() => {
@@ -59,11 +59,11 @@ onMounted(() => {
 
 <template>
     <div class="slv-content h-100 overflow-hidden slv-loadable" v-bind:class="{ 'slv-loading': logRecordStore.loading }">
-        <div class="slv-menu-grid pt-1">
+        <div class="d-flex align-items-stretch pt-1">
             <DropdownChecklist label="Levels" :checklist="levels"></DropdownChecklist>
             <DropdownChecklist label="Channels" :checklist="channels"></DropdownChecklist>
 
-            <div class="input-group">
+            <div class="flex-grow-1 input-group">
                 <input type="text"
                        class="form-control"
                        placeholder="Search log entries"
@@ -113,7 +113,7 @@ onMounted(() => {
                 Next {{ perPage }}
             </button>
 
-            <div class="slv-spacer"></div>
+            <div class="flex-grow-1"></div>
 
             <Performance :performance="logRecordStore.records.performance"></Performance>
         </footer>
@@ -121,18 +121,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.slv-spacer {
-    flex-grow: 1;
-}
-
 .slv-content {
     display: grid;
     grid-template-rows: auto 1fr auto;
-}
-
-.slv-menu-grid {
-    display: grid;
-    grid-template-columns: auto auto 1fr auto auto;
 }
 
 .slv-entries {
