@@ -21,13 +21,13 @@ class LogQueryDtoFactory
         // levels
         $selectedLevels = null;
         if ($request->query->has('levels')) {
-            $selectedLevels = array_filter(explode(',', $request->query->getString('levels')), static fn($level) => $level !== '');
+            $selectedLevels = array_filter(explode(',', $request->query->get('levels')), static fn($level) => $level !== '');
         }
 
         // channels
         $selectedChannels = null;
         if ($request->query->has('channels')) {
-            $selectedChannels = array_filter(explode(',', $request->query->getString('channels')), static fn($channel) => $channel !== '');
+            $selectedChannels = array_filter(explode(',', $request->query->get('channels')), static fn($channel) => $channel !== '');
         }
 
         return new LogQueryDto(
