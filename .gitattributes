@@ -59,6 +59,7 @@
 /frontend export-ignore
 /tests export-ignore
 /.* export-ignore
+/*.sh export-ignore
 /php*.json export-ignore
 /php*.xml export-ignore
 /php*.dist export-ignore
