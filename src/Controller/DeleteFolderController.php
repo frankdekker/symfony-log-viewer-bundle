@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace FD\LogViewer\Controller;
 
 use FD\LogViewer\Service\File\LogFileService;
-use FD\LogViewer\Service\Filesystem;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -37,11 +37,13 @@ class DeleteFolderController extends AbstractController implements LoggerAwareIn
         foreach ($folder->getFiles() as $file) {
             try {
                 $this->filesystem->remove($file->path);
+                // @codeCoverageIgnoreStart
             } catch (RuntimeException) {
                 $this->logger?->notice(
                     'Log file with id `{id}` ({file}) is not deletable (no-write-access).',
                     ['id' => $identifier, 'file' => $file->path]
                 );
+                // @codeCoverageIgnoreEnd
             }
         }
 
