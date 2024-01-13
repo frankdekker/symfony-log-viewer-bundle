@@ -1,9 +1,11 @@
 #!/bin/bash
 set -e
 
-sleep 300
-
 rm -rf /app/dev/var
+
+cd ../.
+composer install
+cd dev
 
 php bin/console cache:clear
 php bin/console assets:install --symlink
