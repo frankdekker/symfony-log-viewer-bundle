@@ -16,7 +16,7 @@ do
     opt="$1";
     shift;
     case "$opt" in
-        "--logs" )
+        "--follow-log" )
            FOLLOW_LOG='1';;
         "--port" )
            PORT="$1"; shift;;
@@ -27,9 +27,9 @@ done
 echo "[PORT]: ${PORT}"
 
 if [ "$FOLLOW_LOG" == '1' ]; then
-    echo "[FOLLOW_LOG]: yes."
+    echo "[FOLLOW_LOG]: yes"
 else
-    echo "[FOLLOW_LOG]: no.  Use '--logs' flag to show docker compose logs."
+    echo "[FOLLOW_LOG]: no. Use '--follow-log' flag to show docker container logs after startup."
 fi
 echo ""
 
