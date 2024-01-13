@@ -52,7 +52,7 @@ docker compose up -d --wait
 echo ""
 echo -e "\e[48;5;21m\e[38;5;226m LogViewer: Environment running \e[0m"
 echo ""
-echo "    Environment available at: http://localhost:8888/log-viewer"
+echo "    Environment available at: http://localhost:8888/"
 echo ""
 
 if [ "$FOLLOW_LOG" == '1' ]; then
