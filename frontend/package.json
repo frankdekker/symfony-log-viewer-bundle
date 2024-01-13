@@ -15,6 +15,7 @@
         "axios": "^1.6.3",
         "bootstrap": "^5.3.2",
         "bootstrap-icons": "^1.11.2",
+        "mitt": "^3.0.1",
         "pinia": "^2.1.7",
         "vue": "^3.4.3",
         "vue-router": "^4.2.5"

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SplitButtonGroup from '@/components/SplitButtonGroup.vue';
 import type LogFile from '@/models/LogFile';
+import bus from '@/services/EventBus';
 import axios from 'axios';
 import {ref, watch} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
@@ -20,6 +21,7 @@ const deleteFile   = (identifier: string) => {
             if (selectedFile.value === identifier) {
                 router.push({name: 'home'});
             }
+            bus.emit('file-deleted', identifier);
         });
 }
 

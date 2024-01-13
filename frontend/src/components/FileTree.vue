@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import LogFolder from '@/components/LogFolder.vue';
+import bus from '@/services/EventBus';
 import {useFolderStore} from '@/stores/folders';
 import {ref} from 'vue'
 
 const selectedFolder = ref(0);
-const folderStore    = useFolderStore()
+const folderStore    = useFolderStore();
+
+bus.on('file-deleted', () => folderStore.update());
 </script>
 
 <template>
