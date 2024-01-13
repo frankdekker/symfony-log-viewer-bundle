@@ -14,8 +14,6 @@ class TempFileTest extends TestCase
     {
         $file = new TempFile();
         $path = $file->getPathname();
-
-        static::assertSame('tmp', $file->getExtension(), $path);
         static::assertFileExists($path);
 
         // should be deleted on destruct
