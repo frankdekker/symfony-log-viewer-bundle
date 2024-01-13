@@ -47,7 +47,11 @@ docker compose stop
 echo ""
 echo -e "\e[48;5;21m\e[38;5;226m LogViewer: Starting containers \e[0m"
 
-docker compose up -d --wait
+if [ "$FOLLOW_LOG" == '1' ]; then
+    docker compose up -d
+else
+    docker compose up -d --wait
+fi
 
 echo ""
 echo -e "\e[48;5;21m\e[38;5;226m LogViewer: Environment running \e[0m"
