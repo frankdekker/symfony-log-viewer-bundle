@@ -54,7 +54,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(JsonManifestVersionStrategy::class)
         ->arg('$manifestPath', '%kernel.project_dir%/public/bundles/fdlogviewer/.vite/manifest.json');
 
-    $services->set(Filesystem::class);
     $services->set(FinderFactory::class);
     $services->set(LogFileService::class)->arg('$logFileConfigs', tagged_iterator('fd.symfony.log.viewer.log_files_config'));
     $services->set(LogFolderFactory::class);
