@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Service\File\Monolog;
 
 use FD\LogViewer\Entity\Index\LogIndex;
-use FD\LogViewer\Entity\LogFile;
-use FD\LogViewer\Entity\LogFolder;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
@@ -59,7 +57,7 @@ class MonologFileParserTest extends TestCase
     {
         $config   = $this->createLogFileConfig();
         $logQuery = new LogQueryDto('identifier');
-        $file     = new LogFile('identifier', 'path', 'relative', 123, 111, 222, $this->createMock(LogFolder::class));
+        $file     = $this->createLogFile();
         $index    = new LogIndex();
 
         $this->logParser->expects(self::once())

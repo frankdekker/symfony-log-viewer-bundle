@@ -5,9 +5,6 @@ namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
 use FD\LogViewer\Controller\DownloadFolderController;
-use FD\LogViewer\Entity\Config\FinderConfig;
-use FD\LogViewer\Entity\Config\LogFilesConfig;
-use FD\LogViewer\Entity\LogFolder;
 use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
@@ -52,7 +49,7 @@ class DownloadFolderControllerTest extends AbstractControllerTestCase
     {
         $config     = $this->createLogFileConfig();
         $collection = new LogFolderCollection($config);
-        $logFolder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $collection);
+        $logFolder  = $this->createLogFolder(['collection' => $collection]);
 
         $this->folderService->expects(self::once())->method('findFolderByIdentifier')->with('identifier')->willReturn($logFolder);
 
@@ -65,7 +62,7 @@ class DownloadFolderControllerTest extends AbstractControllerTestCase
     {
         $config     = $this->createLogFileConfig(['downloadable' => true]);
         $collection = new LogFolderCollection($config);
-        $logFolder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $collection);
+        $logFolder  = $this->createLogFolder(['collection' => $collection]);
         $zipFile    = new SplFileInfo(__FILE__);
 
         $this->folderService->expects(self::once())->method('findFolderByIdentifier')->with('identifier')->willReturn($logFolder);

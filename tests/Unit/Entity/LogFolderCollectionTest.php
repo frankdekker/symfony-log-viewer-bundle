@@ -4,15 +4,16 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Entity;
 
 use FD\LogViewer\Entity\Config\LogFilesConfig;
-use FD\LogViewer\Entity\LogFile;
-use FD\LogViewer\Entity\LogFolder;
 use FD\LogViewer\Entity\LogFolderCollection;
+use FD\LogViewer\Tests\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(LogFolderCollection::class)]
 class LogFolderCollectionTest extends TestCase
 {
+    use TestEntityTrait;
+
     private LogFolderCollection $collection;
 
     protected function setUp(): void
@@ -22,8 +23,8 @@ class LogFolderCollectionTest extends TestCase
 
     public function testFirst(): void
     {
-        $folderA = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $this->collection);
-        $folderB = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $this->collection);
+        $folderA = $this->createLogFolder(['collection' => $this->collection]);
+        $folderB = $this->createLogFolder(['collection' => $this->collection]);
 
         $this->collection->getOrAdd('folderA', static fn() => $folderA);
         $this->collection->getOrAdd('folderB', static fn() => $folderB);
@@ -35,12 +36,12 @@ class LogFolderCollectionTest extends TestCase
 
     public function testFirstFile(): void
     {
-        $folderA = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $this->collection);
-        $fileA   = new LogFile('identifier', 'path', 'relative', 11111, 22222, 33333, $folderA);
+        $folderA = $this->createLogFolder(['collection' => $this->collection]);
+        $fileA   = $this->createLogFile(['folder' => $folderA]);
         $folderA->addFile($fileA);
 
-        $folderB = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $this->collection);
-        $fileB   = new LogFile('identifier', 'path', 'relative', 11111, 22222, 33333, $folderB);
+        $folderB = $this->createLogFolder(['collection' => $this->collection]);
+        $fileB   = $this->createLogFile(['folder' => $folderB]);
         $folderB->addFile($fileB);
 
         $this->collection->getOrAdd('folderA', static fn() => $folderA);
@@ -53,8 +54,8 @@ class LogFolderCollectionTest extends TestCase
 
     public function testToArray(): void
     {
-        $folderA = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $this->collection);
-        $folderB = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $this->collection);
+        $folderA = $this->createLogFolder(['collection' => $this->collection]);
+        $folderB = $this->createLogFolder(['collection' => $this->collection]);
 
         $this->collection->getOrAdd('folderA', static fn() => $folderA);
         $this->collection->getOrAdd('folderB', static fn() => $folderB);

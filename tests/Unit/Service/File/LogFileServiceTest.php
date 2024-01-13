@@ -6,8 +6,6 @@ namespace FD\LogViewer\Tests\Unit\Service\File;
 use ArrayIterator;
 use FD\LogViewer\Entity\Config\FinderConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;
-use FD\LogViewer\Entity\LogFile;
-use FD\LogViewer\Entity\LogFolder;
 use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\FinderFactory;
@@ -53,8 +51,8 @@ class LogFileServiceTest extends TestCase
 
     public function testFindFileByIdentifier(): void
     {
-        $folder = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $this->createMock(LogFolderCollection::class));
-        $file   = new LogFile('identifier', 'path', 'relative', 11111, 22222, 33333, $folder);
+        $folder = $this->createLogFolder();
+        $file   = $this->createLogFile(['folder' => $folder]);
         $folder->addFile($file);
         $folders = new LogFolderCollection($this->config);
         $folders->getOrAdd('folderA', static fn() => $folder);
@@ -80,7 +78,7 @@ class LogFileServiceTest extends TestCase
 
     public function testFindFolderByIdentifier(): void
     {
-        $folder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $this->createMock(LogFolderCollection::class));
+        $folder  = $this->createLogFolder();
         $folders = new LogFolderCollection($this->config);
         $folders->getOrAdd('folderA', static fn() => $folder);
 

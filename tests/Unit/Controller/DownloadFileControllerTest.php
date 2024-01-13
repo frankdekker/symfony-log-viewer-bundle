@@ -5,8 +5,6 @@ namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
 use FD\LogViewer\Controller\DownloadFileController;
-use FD\LogViewer\Entity\LogFile;
-use FD\LogViewer\Entity\LogFolder;
 use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Tests\TestEntityTrait;
@@ -47,8 +45,8 @@ class DownloadFileControllerTest extends AbstractControllerTestCase
     {
         $config     = $this->createLogFileConfig();
         $collection = new LogFolderCollection($config);
-        $logFolder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $collection);
-        $logFile    = new LogFile('identifier', 'path', 'relative', 11111, 22222, 33333, $logFolder);
+        $logFolder  = $this->createLogFolder(['collection' => $collection]);
+        $logFile    = $this->createLogFile(['folder' => $logFolder]);
 
         $this->fileService->expects(self::once())->method('findFileByIdentifier')->with('identifier')->willReturn($logFile);
 
@@ -61,8 +59,8 @@ class DownloadFileControllerTest extends AbstractControllerTestCase
     {
         $config     = $this->createLogFileConfig(['downloadable' => true]);
         $collection = new LogFolderCollection($config);
-        $logFolder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $collection);
-        $logFile    = new LogFile('identifier', __FILE__, 'relative', 11111, 22222, 33333, $logFolder);
+        $logFolder  = $this->createLogFolder(['collection' => $collection]);
+        $logFile    = $this->createLogFile(['path' => __FILE__, 'folder' => $logFolder]);
 
         $this->fileService->expects(self::once())->method('findFileByIdentifier')->with('identifier')->willReturn($logFile);
 

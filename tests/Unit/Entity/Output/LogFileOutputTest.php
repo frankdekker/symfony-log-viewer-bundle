@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Entity\Output;
 
 use FD\LogViewer\Entity\Output\LogFileOutput;
+use FD\LogViewer\Tests\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

@@ -5,16 +5,13 @@ namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
 use FD\LogViewer\Controller\LogRecordsController;
-use FD\LogViewer\Entity\Config\LogFilesConfig;
-use FD\LogViewer\Entity\LogFile;
-use FD\LogViewer\Entity\LogFolder;
-use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Output\LogRecordsOutput;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\File\LogQueryDtoFactory;
 use FD\LogViewer\Service\File\LogRecordsOutputProvider;
+use FD\LogViewer\Tests\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,6 +25,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 #[CoversClass(LogRecordsController::class)]
 class LogRecordsControllerTest extends AbstractControllerTestCase
 {
+    use TestEntityTrait;
+
     private LogFileService&MockObject $fileService;
     private LogQueryDtoFactory&MockObject $queryDtoFactory;
     private LogRecordsOutputProvider&MockObject $outputProvider;
@@ -58,10 +57,7 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
         $request  = new Request();
         $logQuery = new LogQueryDto('file', 123, 'search', DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
 
-        $config     = $this->createMock(LogFilesConfig::class);
-        $collection = new LogFolderCollection($config);
-        $logFolder  = new LogFolder('identifier', 'path', 'relative', 11111, 22222, $collection);
-        $logFile    = new LogFile('identifier', 'path', 'relative', 11111, 22222, 33333, $logFolder);
+        $logFile    = $this->createLogFile();
         $output     = $this->createMock(LogRecordsOutput::class);
 
         $this->queryDtoFactory->expects(self::once())->method('create')->with($request)->willReturn($logQuery);
