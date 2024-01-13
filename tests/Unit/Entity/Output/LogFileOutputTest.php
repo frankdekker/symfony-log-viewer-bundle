@@ -20,7 +20,6 @@ class LogFileOutputTest extends TestCase
                 'identifier'     => 'identifier',
                 'name'           => 'name',
                 'size_formatted' => 'sizeFormatted',
-                'download_url'   => 'downloadUrl',
                 'can_download'   => true,
                 'can_delete'     => true
             ],

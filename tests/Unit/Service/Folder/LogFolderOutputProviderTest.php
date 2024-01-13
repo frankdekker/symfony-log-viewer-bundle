@@ -35,7 +35,7 @@ class LogFolderOutputProviderTest extends TestCase
     public function testProvide(): void
     {
         $folders      = new LogFolderCollection($this->createMock(LogFilesConfig::class));
-        $folderOutput = new LogFolderOutput('identifier', 'path', 'url', true, 123456, []);
+        $folderOutput = new LogFolderOutput('identifier', 'path', true, true, 123456, []);
 
         $this->folderService->expects(self::once())->method('getFilesAndFolders')->willReturn([$folders]);
         $this->folderOutputFactory->expects(self::once())->method('createFromFolders')->with($folders)->willReturn([$folderOutput]);

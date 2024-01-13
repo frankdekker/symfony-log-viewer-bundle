@@ -28,7 +28,7 @@ class JsonManifestVersionStrategyTest extends TestCase
      */
     public function testGetVersionExistingFile(): void
     {
-        static::assertSame('bundles/symfonylogviewer/file', $this->strategy->getVersion('/path/to/file'));
+        static::assertSame('bundles/fdlogviewer/file', $this->strategy->getVersion('/path/to/file'));
     }
 
     /**

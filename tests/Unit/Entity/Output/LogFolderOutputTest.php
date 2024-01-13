@@ -20,7 +20,6 @@ class LogFolderOutputTest extends TestCase
             [
                 'identifier'   => 'identifier',
                 'path'         => 'path',
-                'download_url' => 'downloadUrl',
                 'files'        => [$file],
                 'can_download' => true,
                 'can_delete'   => true

@@ -40,7 +40,7 @@ class IndexControllerTest extends AbstractControllerTestCase
         $this->routeService->expects(self::once())->method('getBaseUri')->willReturn('baseUri');
         $this->folderOutputProvider->expects(self::once())->method('provide')->with(DirectionEnum::Desc)->willReturn([$folder]);
 
-        $this->expectRender('@SymfonyLogViewer/index.html.twig', ['base_uri' => 'baseUri', 'folders' => [$folder]]);
+        $this->expectRender('@FdLogViewer/index.html.twig', ['base_uri' => 'baseUri', 'folders' => [$folder]]);
 
         ($this->controller)();
     }

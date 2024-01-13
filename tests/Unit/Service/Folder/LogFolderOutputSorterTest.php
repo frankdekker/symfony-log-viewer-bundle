@@ -25,12 +25,12 @@ class LogFolderOutputSorterTest extends TestCase
     {
         parent::setUp();
 
-        $this->fileA   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 'downloadUrl', 0, 333333, true);
-        $this->fileB   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 'downloadUrl', 0, 444444, true);
-        $this->fileC   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 'downloadUrl', 0, 666666, true);
-        $this->fileD   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 'downloadUrl', 0, 555555, true);
-        $this->folderA = new LogFolderOutput('identifier', 'path', 'url', true, 222222, [$this->fileA, $this->fileB]);
-        $this->folderB = new LogFolderOutput('identifier', 'path', 'url', true, 111111, [$this->fileC, $this->fileD]);
+        $this->fileA   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 333333, true, true);
+        $this->fileB   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 444444, true, true);
+        $this->fileC   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 666666, true, true);
+        $this->fileD   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 555555, true, true);
+        $this->folderA = new LogFolderOutput('identifier', 'path', true, true, 222222, [$this->fileA, $this->fileB]);
+        $this->folderB = new LogFolderOutput('identifier', 'path', true, true, 111111, [$this->fileC, $this->fileD]);
 
         $this->sorter = new LogFolderOutputSorter();
     }
