@@ -12,7 +12,8 @@ defineProps<{
 const toggleRef    = ref();
 const selectedFile = ref<string | null>(null);
 const route        = useRoute();
-const download     = (identifier: string) => axios.get(`/api/download/file/${identifier}`)
+const baseUri      = axios.defaults.baseURL;
+const deleteFile   = (identifier: string) => axios.delete(baseUri + 'api/file/' + encodeURI(identifier));
 
 watch(() => route.query.file, () => selectedFile.value = String(route.query.file));
 </script>
@@ -34,12 +35,13 @@ watch(() => route.query.file, () => selectedFile.value = String(route.query.file
                     class="slv-toggle-btn btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
                     v-bind:class="{'btn-outline-primary-active': selectedFile === file.identifier }"
                     @click="toggleRef.toggle"
-                    v-if="file.can_download">
+                    v-if="file.can_download || file.can_delete">
                 <i class="bi bi-three-dots-vertical"></i>
             </button>
         </template>
         <template v-slot:dropdown>
-            <li><a class="dropdown-item" href="javascript:" @click="download(file.identifier)">Download</a></li>
+            <li><a class="dropdown-item" :href="baseUri + 'api/file/' + encodeURI(file.identifier)" v-if="file.can_download">Download</a></li>
+            <li><a class="dropdown-item" href="javascript:" @click="deleteFile(file.identifier)" v-if="file.can_delete">Delete</a></li>
         </template>
     </split-button-group>
 </template>

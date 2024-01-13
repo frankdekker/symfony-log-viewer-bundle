@@ -2,9 +2,11 @@
 import LogFile from '@/components/LogFile.vue';
 import SplitButtonGroup from '@/components/SplitButtonGroup.vue';
 import type LogFolder from '@/models/LogFolder';
+import axios from 'axios';
 import {ref} from 'vue';
 
 const toggleRef = ref();
+const baseUri   = axios.defaults.baseURL;
 
 defineProps<{
     expanded: boolean,
@@ -31,7 +33,9 @@ defineProps<{
                 </button>
             </template>
             <template v-slot:dropdown>
-                <li><a class="dropdown-item" :href="folder.download_url">Download</a></li>
+                <li>
+                    <a class="dropdown-item" :href="baseUri + 'api/folder/' + encodeURI(folder.identifier)" v-if="folder.can_download">Download</a>
+                </li>
             </template>
         </split-button-group>
 

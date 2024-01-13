@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use FD\LogViewer\Controller\DeleteFileController;
 use FD\LogViewer\Controller\DownloadFileController;
 use FD\LogViewer\Controller\DownloadFolderController;
 use FD\LogViewer\Controller\FoldersController;
@@ -26,12 +27,17 @@ return function (RoutingConfigurator $routes) {
         ->controller([LogRecordsController::class, '__invoke']);
 
     $routes
-        ->add(DownloadFolderController::class, '/api/download/folder/{identifier}')
+        ->add(DownloadFolderController::class, '/api/folder/{identifier}')
         ->methods(['GET'])
         ->controller([DownloadFolderController::class, '__invoke']);
 
     $routes
-        ->add(DownloadFileController::class, '/api/download/file/{identifier}')
+        ->add(DownloadFileController::class, '/api/file/{identifier}')
         ->methods(['GET'])
         ->controller([DownloadFileController::class, '__invoke']);
+
+    $routes
+        ->add(DeleteFileController::class, '/api/file/{identifier}')
+        ->methods(['DELETE'])
+        ->controller([DeleteFileController::class, '__invoke']);
 };
