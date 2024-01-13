@@ -12,17 +12,11 @@ permissions:
 jobs:
   test:
     name: PHP ${{ matrix.php-versions }} - Symfony ${{ matrix.symfony }} - Test ${{ matrix.composer-flags }}
-    env:
-      SYMFONY_REQUIRE: ${{ matrix.symfony }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         php-versions: [ '8.1', '8.2', '8.3' ]
-        symfony: [ '^6.3', '^7.0' ]
         composer-flags: [ '', '--prefer-lowest' ]
-        exclude:
-          - php-versions: 8.1
-            symfony: '^7.0'
     steps:
       - uses: actions/checkout@v4
 
@@ -31,9 +25,6 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: none
-
-      - name: Add symfony flex
-        run: composer global config --no-interaction allow-plugins.symfony/flex true && composer global require symfony/flex
 
       - name: Validate composer.json and composer.lock
         run: composer validate

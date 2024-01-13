@@ -27,7 +27,7 @@ read logs from any directory.
 ### Requirements
 
 - **PHP 8.1+**
-- **Symfony 6.3+**
+- **Symfony 6.0+ or 7.0+**
 
 ### Installation
 

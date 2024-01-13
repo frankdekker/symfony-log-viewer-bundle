@@ -4,6 +4,7 @@ set -e
 CURRENT_DIR=$PWD
 PROJECT_DIR=$(dirname $(realpath "$0"))
 FOLLOW_LOG='0'
+PORT='8888'
 
 ################################################################################
 ##                            setup env
@@ -17,9 +18,13 @@ do
     case "$opt" in
         "--logs" )
            FOLLOW_LOG='1';;
+        "--port" )
+           PORT="$1"; shift;;
         *) echo >&2 "Invalid option: $@"; exit 1;;
    esac
 done
+
+echo "[PORT]: ${PORT}"
 
 if [ "$FOLLOW_LOG" == '1' ]; then
     echo "[FOLLOW_LOG]: yes."
@@ -48,15 +53,15 @@ echo ""
 echo -e "\e[48;5;21m\e[38;5;226m LogViewer: Starting containers \e[0m"
 
 if [ "$FOLLOW_LOG" == '1' ]; then
-    docker compose up -d
+    NGINX_PORT=${PORT} docker compose up -d
 else
-    docker compose up -d --wait
+    NGINX_PORT=${PORT} docker compose up -d --wait
 fi
 
 echo ""
 echo -e "\e[48;5;21m\e[38;5;226m LogViewer: Environment running \e[0m"
 echo ""
-echo "    Environment available at: http://localhost:8888/"
+echo "    Environment available at: http://localhost:${PORT}/"
 echo ""
 
 if [ "$FOLLOW_LOG" == '1' ]; then
