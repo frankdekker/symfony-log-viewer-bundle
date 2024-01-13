@@ -9,7 +9,7 @@ cd ${PROJECT_DIR}/dev
 echo ""
 echo -e "\e[48;5;21m\e[38;5;226m LogViewer: building images \e[0m"
 
-docker compose build
+docker compose build --pull
 
 echo ""
 echo -e "\e[48;5;21m\e[38;5;226m LogViewer: Stopping current containers \e[0m"
