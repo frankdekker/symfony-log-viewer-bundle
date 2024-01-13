@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use FD\SymfonyLogViewerBundle\Dev\Kernel;
+use FD\LogViewer\Dev\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 require_once dirname(__DIR__, 2) . '/vendor/autoload_runtime.php';

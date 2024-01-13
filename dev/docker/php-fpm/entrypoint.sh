@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+sleep 300
+
 rm -rf /app/dev/var
 
 php bin/console cache:clear

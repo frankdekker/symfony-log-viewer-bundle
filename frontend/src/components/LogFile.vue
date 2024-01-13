@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SplitButtonGroup from '@/components/SplitButtonGroup.vue';
 import type LogFile from '@/models/LogFile';
+import axios from 'axios';
 import {ref, watch} from 'vue';
 import {useRoute} from 'vue-router';
 
@@ -8,9 +9,11 @@ defineProps<{
     file: LogFile
 }>()
 
-const toggleRef = ref();
-const selectedFile = ref<string|null>(null);
+const toggleRef    = ref();
+const selectedFile = ref<string | null>(null);
 const route        = useRoute();
+const download     = (identifier: string) => axios.get(`/api/download/file/${identifier}`)
+
 watch(() => route.query.file, () => selectedFile.value = String(route.query.file));
 </script>
 
@@ -36,7 +39,7 @@ watch(() => route.query.file, () => selectedFile.value = String(route.query.file
             </button>
         </template>
         <template v-slot:dropdown>
-            <li><a class="dropdown-item" :href="file.download_url">Download</a></li>
+            <li><a class="dropdown-item" href="javascript:" @click="download(file.identifier)">Download</a></li>
         </template>
     </split-button-group>
 </template>

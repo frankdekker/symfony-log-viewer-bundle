@@ -7,6 +7,7 @@
         "logs",
         "log viewer"
     ],
+    "homepage": "https://github.com/frankdekker/symfony-log-viewer-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
