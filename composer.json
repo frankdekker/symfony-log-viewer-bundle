@@ -39,7 +39,7 @@
         "symfony/validator": "^6.0||^7.0"
     },
     "require-dev": {
-        "digitalrevolution/accessorpair-constraint": "^2.1",
+        "digitalrevolution/accessorpair-constraint": "^2.1.18",
         "digitalrevolution/phpunit-extensions": "^1.3",
         "digitalrevolution/phpunit-file-coverage-inspection": "^v2.0",
         "mikey179/vfsstream": "^1.6.11",
