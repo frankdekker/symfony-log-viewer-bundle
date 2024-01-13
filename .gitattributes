@@ -7,7 +7,7 @@
 #   - `space-before-tab` Treat a space character that appears immediately before a tab character in the initial indent part of the line as an error
 #   - `tab-in-indent` Treats a tab character in the initial indent part of the line as an error
 # - `tabwidth` Tells how many character positions a tab occupies
-# - `diff=hmtl` & `diff=php` Diff is shown using the specified diff driver.
+# - `diff=html` & `diff=php` Diff is shown using the specified diff driver.
 *.css          text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=4
 *.html         text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=4 diff=html
 *.js           text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=4
