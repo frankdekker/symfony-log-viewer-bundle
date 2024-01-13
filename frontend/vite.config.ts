@@ -10,7 +10,7 @@ export default defineConfig(({command, mode}) => {
             vue(),
             vueJsx()
         ],
-        base: '/bundles/symfonylogviewer/',
+        base: '/bundles/fdlogviewer/',
         build: {
             sourcemap: mode === 'development',
             emptyOutDir: true,

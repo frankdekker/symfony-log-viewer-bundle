@@ -37,6 +37,6 @@ class JsonManifestVersionStrategy implements VersionStrategyInterface
 
         $path = $this->manifestData[$path]['file'] ?? throw new RuntimeException('Asset manifest file does not exist: ' . $path);
 
-        return 'bundles/symfonylogviewer/' . $path;
+        return 'bundles/fdlogviewer/' . $path;
     }
 }

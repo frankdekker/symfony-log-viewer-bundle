@@ -29,6 +29,6 @@ class IndexController extends AbstractController
         // retrieve all log files and folders
         $folders = $this->folderOutputProvider->provide(DirectionEnum::Desc);
 
-        return $this->render('@SymfonyLogViewer/index.html.twig', ['base_uri' => $baseUri, 'folders' => $folders]);
+        return $this->render('@FdLogViewer/index.html.twig', ['base_uri' => $baseUri, 'folders' => $folders]);
     }
 }
