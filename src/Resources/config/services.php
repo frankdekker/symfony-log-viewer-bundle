@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use FD\LogViewer\Controller\DeleteFileController;
+use FD\LogViewer\Controller\DeleteFolderController;
 use FD\LogViewer\Controller\DownloadFileController;
 use FD\LogViewer\Controller\DownloadFolderController;
 use FD\LogViewer\Controller\FoldersController;
@@ -43,6 +44,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(DownloadFileController::class)->tag('controller.service_arguments');
     $services->set(DownloadFolderController::class)->tag('controller.service_arguments');
     $services->set(DeleteFileController::class)->tag('controller.service_arguments');
+    $services->set(DeleteFolderController::class)->tag('controller.service_arguments');
 
     $services->set(RouteService::class);
     $services->set(RouteLoader::class)

@@ -14,6 +14,7 @@ class LogFolderOutput implements JsonSerializable
         public readonly string $identifier,
         public readonly string $path,
         public readonly bool $canDownload,
+        public readonly bool $canDelete,
         public readonly int $latestTimestamp,
         public array $files,
     ) {
@@ -29,7 +30,8 @@ class LogFolderOutput implements JsonSerializable
             'identifier'   => $this->identifier,
             'path'         => $this->path,
             'files'        => $this->files,
-            'can_download' => $this->canDownload
+            'can_download' => $this->canDownload,
+            'can_delete'   => $this->canDelete
         ];
     }
 }

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use FD\LogViewer\Controller\DeleteFileController;
+use FD\LogViewer\Controller\DeleteFolderController;
 use FD\LogViewer\Controller\DownloadFileController;
 use FD\LogViewer\Controller\DownloadFolderController;
 use FD\LogViewer\Controller\FoldersController;
@@ -40,4 +41,9 @@ return function (RoutingConfigurator $routes) {
         ->add(DeleteFileController::class, '/api/file/{identifier}')
         ->methods(['DELETE'])
         ->controller([DeleteFileController::class, '__invoke']);
+
+    $routes
+        ->add(DeleteFolderController::class, '/api/folder/{identifier}')
+        ->methods(['DELETE'])
+        ->controller([DeleteFolderController::class, '__invoke']);
 };

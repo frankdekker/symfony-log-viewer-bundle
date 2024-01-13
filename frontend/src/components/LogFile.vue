@@ -50,8 +50,16 @@ watch(() => route.query.file, () => selectedFile.value = String(route.query.file
             </button>
         </template>
         <template v-slot:dropdown>
-            <li><a class="dropdown-item" :href="baseUri + 'api/file/' + encodeURI(file.identifier)" v-if="file.can_download">Download</a></li>
-            <li><a class="dropdown-item" href="javascript:" @click="deleteFile(file.identifier)" v-if="file.can_delete">Delete</a></li>
+            <li>
+                <a class="dropdown-item" :href="baseUri + 'api/file/' + encodeURI(file.identifier)" v-if="file.can_download">
+                    <i class="bi bi-cloud-download me-3"></i>Download
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="javascript:" @click="deleteFile(file.identifier)" v-if="file.can_delete">
+                    <i class="bi bi-trash3 me-3"></i>Delete
+                </a>
+            </li>
         </template>
     </split-button-group>
 </template>

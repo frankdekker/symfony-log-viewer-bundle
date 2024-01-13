@@ -2,16 +2,28 @@
 import LogFile from '@/components/LogFile.vue';
 import SplitButtonGroup from '@/components/SplitButtonGroup.vue';
 import type LogFolder from '@/models/LogFolder';
+import bus from '@/services/EventBus';
 import axios from 'axios';
 import {ref} from 'vue';
+import {useRouter} from 'vue-router';
 
 const toggleRef = ref();
 const baseUri   = axios.defaults.baseURL;
+const router    = useRouter();
 
 defineProps<{
     expanded: boolean,
     folder: LogFolder
 }>()
+
+const deleteFile = (identifier: string) => {
+    axios.delete('/api/folder/' + encodeURI(identifier))
+        .then(() => {
+            router.push({name: 'home'});
+            bus.emit('folder-deleted', identifier);
+        });
+}
+
 </script>
 
 <template>
@@ -28,13 +40,20 @@ defineProps<{
                 <button type="button"
                         class="slv-toggle-btn btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
                         @click="toggleRef.toggle"
-                        v-if="folder.can_download">
+                        v-if="folder.can_download || folder.can_delete">
                     <i class="bi bi-three-dots-vertical"></i>
                 </button>
             </template>
             <template v-slot:dropdown>
                 <li>
-                    <a class="dropdown-item" :href="baseUri + 'api/folder/' + encodeURI(folder.identifier)" v-if="folder.can_download">Download</a>
+                    <a class="dropdown-item" :href="baseUri + 'api/folder/' + encodeURI(folder.identifier)" v-if="folder.can_download">
+                        <i class="bi bi-cloud-download me-3"></i>Download
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="javascript:" @click="deleteFile(folder.identifier)" v-if="folder.can_delete">
+                        <i class="bi bi-trash3 me-3"></i>Delete
+                    </a>
                 </li>
             </template>
         </split-button-group>

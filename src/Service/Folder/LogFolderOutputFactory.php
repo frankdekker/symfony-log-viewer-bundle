@@ -26,6 +26,7 @@ class LogFolderOutputFactory
                 $folder->identifier,
                 rtrim($folders->config->name . '/' . $path, '/'),
                 $folders->config->downloadable && extension_loaded('zip'),
+                $folders->config->deletable,
                 $folder->getLatestTimestamp(),
                 array_map(fn($file) => $this->createFromFile($file, $config->downloadable, $config->deletable), $folder->getFiles()),
             );

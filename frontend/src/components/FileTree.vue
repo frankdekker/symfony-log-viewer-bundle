@@ -8,6 +8,7 @@ const selectedFolder = ref(0);
 const folderStore    = useFolderStore();
 
 bus.on('file-deleted', () => folderStore.update());
+bus.on('folder-deleted', () => folderStore.update());
 </script>
 
 <template>
