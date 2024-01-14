@@ -110,4 +110,4 @@ jobs:
         run: cd frontend && npm run build
 
       - name: Git diff - expecting no changes
-        run: git status | grep -v "nothing to commit, working tree clean"
+        run: git status | grep "nothing to commit, working tree clean"
