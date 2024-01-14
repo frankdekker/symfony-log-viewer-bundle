@@ -92,3 +92,22 @@ jobs:
 
       - name: Run eslint
         run: cd frontend && npm run lint
+
+  build-assets-check:
+    name: Check build assets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 21.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21.x
+
+      - name: Install dependencies
+        run: cd frontend && npm install
+
+      - name: Build assets
+        run: cd frontend && npm run build
+
+      - name: Git diff
+        run: git status
