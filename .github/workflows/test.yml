@@ -59,8 +59,8 @@ jobs:
       - name: Check coverage
         run: test ! -f ./.coverage/coverage.xml || php vendor/bin/phpfci inspect ./.coverage/coverage.xml --exit-code-on-failure --reportText
 
-  quality:
-    name: Quality checks
+  php-quality:
+    name: PHP quality checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -76,3 +76,19 @@ jobs:
 
       - name: run checks
         run: composer check
+
+  ts-quality:
+    name: Typescript quality checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 21.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21.x
+
+      - name: Install dependencies
+        run: cd frontend && npm install
+
+      - name: Run eslint
+        run: cd frontend && npm run lint
