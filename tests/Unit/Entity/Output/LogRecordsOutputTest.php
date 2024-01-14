@@ -20,7 +20,7 @@ class LogRecordsOutputTest extends TestCase
     {
         $levels    = ['level1' => 'level1', 'level2' => 'level2'];
         $channels  = ['channel1' => 'channel1', 'channel2' => 'channel2'];
-        $logQuery  = new LogQueryDto('file', 123, 'search', DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
+        $logQuery  = new LogQueryDto('file', 123, 'search', DirectionEnum::Asc, ['foo'], ['bar'], 50);
         $paginator = new Paginator(DirectionEnum::Asc, true, true, 123);
         $record    = new LogRecord(111111, 'debug', 'request', 'message', [], []);
         $logIndex  = new LogIndex();

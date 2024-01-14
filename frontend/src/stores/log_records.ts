@@ -26,7 +26,7 @@ export const useLogRecordStore = defineStore('log_records', () => {
         }
         const channelChoices = Object.keys(records.value.channels.choices);
         if (channels.length > 0 && channels.length !== channelChoices.length) {
-            params.channels = levels.join(',');
+            params.channels = channels.join(',');
         }
         if (offset > 0) {
             params.offset = offset.toString();

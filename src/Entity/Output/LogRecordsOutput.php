@@ -31,11 +31,11 @@ class LogRecordsOutput implements JsonSerializable
         return [
             'levels'      => [
                 'choices'  => $this->levels,
-                'selected' => array_keys($this->logQuery->levels ?? $this->levels)
+                'selected' => $this->logQuery->levels ?? array_keys($this->levels)
             ],
             'channels'    => [
                 'choices'  => $this->channels,
-                'selected' => array_keys($this->logQuery->channels ?? $this->channels)
+                'selected' => $this->logQuery->channels ?? array_keys($this->channels)
             ],
             'logs'        => $this->logIndex->getLines(),
             'paginator'   => $this->logIndex->getPaginator(),

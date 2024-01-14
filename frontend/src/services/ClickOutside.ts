@@ -15,6 +15,10 @@ export default class ClickOutside {
         document.removeEventListener('click', this.onClick);
     }
 
+    public addElement(element: HTMLElement): void {
+        this.elements.push(element);
+    }
+
     private onClick(event: MouseEvent): void {
         if (event.target instanceof HTMLElement === false || this.isOutside(event.target)) {
             this.onClickOutside();
