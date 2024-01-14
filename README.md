@@ -7,7 +7,7 @@
 
 <div style="text-align: center">
 <h1 style="margin-bottom:0">Log viewer for Symfony</h1>
-<i>Inspired by <a href="https://github.com/opcodesio/log-viewer">opcodesio/log-viewer</a></i>
+<i>Inspired by <a href="https://github.com/opcodesio/log-viewer">opcodesio/log-viewer</a> for Laravel</i>
 <img src="docs/images/preview.png" alt="log-viewer">
 </div>
 
