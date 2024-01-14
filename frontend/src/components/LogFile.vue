@@ -8,7 +8,7 @@ import {useRoute, useRouter} from 'vue-router';
 
 defineProps<{
     file: LogFile
-}>()
+}>();
 
 const toggleRef    = ref();
 const selectedFile = ref<string | null>(null);
@@ -30,7 +30,7 @@ watch(() => route.query.file, () => selectedFile.value = String(route.query.file
 
 <template>
     <!-- LogFile -->
-    <split-button-group ref="toggleRef">
+    <split-button-group ref="toggleRef" alignment="right">
         <template v-slot:btn-left>
             <router-link :to="'/log?file=' + encodeURI(file.identifier)"
                          class="btn btn-file text-start btn-outline-primary"

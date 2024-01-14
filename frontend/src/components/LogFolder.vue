@@ -29,7 +29,7 @@ const deleteFile = (identifier: string) => {
 <template>
     <!-- LogFolder -->
     <div class="folder-group mt-1" :aria-expanded="expanded">
-        <split-button-group ref="toggleRef">
+        <split-button-group ref="toggleRef" alignment="right">
             <template v-slot:btn-left>
                 <button type="button" class="btn btn-outline-primary text-start" @click="$emit('expand')">
                     <i class="lvs-indicator bi bi-chevron-right me-2"></i>

@@ -6,6 +6,7 @@ import {watch, onUpdated, ref} from 'vue';
 const active       = ref<boolean>(false);
 const dropdownRef  = ref();
 const clickOutside = new ClickOutside([], () => toggle(false));
+const props = defineProps<{ alignment: 'left' | 'right' }>();
 
 const toggle = (forceActive: boolean | null = null): void => {
     active.value = forceActive ?? !active.value;
@@ -17,7 +18,7 @@ onUpdated(() => {
     if (active.value === false) {
         return;
     }
-    setRelativeTo(dropdownRef.value.parentElement, dropdownRef.value, 'right');
+    setRelativeTo(dropdownRef.value.parentElement, dropdownRef.value, props.alignment);
 });
 defineExpose({toggle});
 </script>

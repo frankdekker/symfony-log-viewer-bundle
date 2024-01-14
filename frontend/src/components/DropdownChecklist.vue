@@ -12,7 +12,7 @@ defineProps<{
 </script>
 
 <template>
-    <button-group v-show="Object.keys(checklist.choices).length > 0" ref="toggleRef" class="pe-1">
+    <button-group v-show="Object.keys(checklist.choices).length > 0" ref="toggleRef" class="pe-1" alignment="left">
         <template v-slot:btn>
             <button class="btn btn-outline-primary text-nowrap" type="button" @click="toggleRef.toggle">
                 {{ label }} <span class="badge text-bg-primary">{{ checklist.selected.length }}</span>
