@@ -19,11 +19,28 @@ We accept contributions via Pull Requests on [Github](https://github.com/).
  
 - **One pull request per feature** - If you want to do more than one thing, send multiple pull requests.
  
-- **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please [squash them](http://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages) before submitting.
+## Development
+
+### Requirements
+- [docker >= 20.10](https://docs.docker.com/engine/install/)
+- [docker compose plugin](https://docs.docker.com/compose/install/linux/)
+
+### Getting started
+A minimal Symfony project has been setup under `/dev/`. To start development, in the root of the project:
+
+```bash
+./start.sh [--port <nr>]
+```
+
+After the containers are up and running, the project is available at http://localhost:8888.
+
+> **_NOTE:_**  the nodejs container will automatically rebuild the frontend assets and deploy them in the `/public/` directory
+
+> **_NOTE:_**  When making changes to the frontend, ensure committing the compiled assets.  
  
- 
-## Running Tests
+## Running tests and code style checks
  
 ``` bash
-$ composer test
+composer check
+composer test
 ```

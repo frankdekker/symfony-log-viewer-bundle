@@ -17,7 +17,7 @@ class ZipArchiveFactory
         $zipPath = $tmpFile->getPathname();
         $archive = new ZipArchive();
 
-        if ($archive->open($zipPath, ZipArchive::CREATE) !== true) {
+        if ($archive->open($zipPath, ZipArchive::OVERWRITE) !== true) {
             // @codeCoverageIgnoreStart
             throw new RuntimeException('Could not open zip file ' . $zipPath . ' for writing');
             // @codeCoverageIgnoreEnd
