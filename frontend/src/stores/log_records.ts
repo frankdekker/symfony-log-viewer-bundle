@@ -21,16 +21,23 @@ export const useLogRecordStore = defineStore('log_records', () => {
             params.query = query;
         }
         const levelChoices = Object.keys(records.value.levels.choices);
-        if (levelChoices.length > 0 && levels.length !== levelChoices.length) {
-            params.levels = levels.join(',');
+        if (levels.length !== levelChoices.length) {
+            const paramLevels = levels.join(',');
+            if (paramLevels !== '') {
+                params.levels = paramLevels;
+            }
         }
         const channelChoices = Object.keys(records.value.channels.choices);
-        if (channelChoices.length > 0 && channels.length !== channelChoices.length) {
-            params.channels = channels.join(',');
+        if (channels.length > 0 && channels.length !== channelChoices.length) {
+            const paramChannels = levels.join(',');
+            if (paramChannels !== '') {
+                params.channels = paramChannels;
+            }
         }
         if (offset > 0) {
             params.offset = offset.toString();
         }
+
         loading.value = true;
         try {
             const response = await axios.get<LogRecords>('/api/logs', {params: params});

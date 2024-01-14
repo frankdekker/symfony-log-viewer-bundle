@@ -1,6 +1,3 @@
-[*]
-indent_size = 2
-
 [*.scss]
 ij_scss_align_closing_brace_with_properties = false
 ij_scss_blank_lines_around_nested_selector = 1
