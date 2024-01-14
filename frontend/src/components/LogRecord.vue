@@ -12,7 +12,7 @@ defineProps<{
 <template>
     <a href="javascript:" class="slv-list-group-item list-group-item list-group-item-action" @click="expanded = !expanded" :aria-expanded="expanded">
         <div :class="{ 'text-nowrap': !expanded, 'overflow-hidden': !expanded }">
-            <i class="lvs-indicator bi bi-chevron-right me-1"></i>
+            <i class="slv-indicator bi bi-chevron-right me-1"></i>
             <span class="pe-2 text-secondary">{{ logRecord.datetime }}</span>
             <span class="text-primary pe-2">{{ logRecord.channel }}</span>
             <span :class="['pe-2', logRecord.level_class ]">{{ logRecord.level_name }}</span>

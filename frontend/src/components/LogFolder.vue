@@ -32,7 +32,7 @@ const deleteFile = (identifier: string) => {
         <button-group ref="toggleRef" alignment="right" :split="folder.can_download || folder.can_delete">
             <template v-slot:btn_left>
                 <button type="button" class="btn btn-outline-primary text-start w-100" @click="$emit('expand')">
-                    <i class="lvs-indicator bi bi-chevron-right me-2"></i>
+                    <i class="slv-indicator bi bi-chevron-right me-2"></i>
                     <span class="text-nowrap">{{ folder.path }}</span>
                 </button>
             </template>

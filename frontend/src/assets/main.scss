@@ -43,11 +43,11 @@
     min-height: var(--lvs-min-header-height);
 }
 
-.lvs-indicator::before {
+.slv-indicator::before {
     transition: transform .25s ease;
 }
 
-[aria-expanded="true"] .lvs-indicator::before {
+[aria-expanded="true"] .slv-indicator::before {
     transform: rotate(90deg);
 }
 
