@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SplitButtonGroup from '@/components/SplitButtonGroup.vue';
+import ButtonGroup from '@/components/ButtonGroup.vue';
 import type LogFile from '@/models/LogFile';
 import bus from '@/services/EventBus';
 import axios from 'axios';
@@ -30,17 +30,17 @@ watch(() => route.query.file, () => selectedFile.value = String(route.query.file
 
 <template>
     <!-- LogFile -->
-    <split-button-group ref="toggleRef" alignment="right">
-        <template v-slot:btn-left>
+    <button-group ref="toggleRef" alignment="right" :split="file.can_download || file.can_delete">
+        <template v-slot:btn_left>
             <router-link :to="'/log?file=' + encodeURI(file.identifier)"
-                         class="btn btn-file text-start btn-outline-primary"
+                         class="btn btn-file text-start btn-outline-primary w-100"
                          v-bind:class="{'btn-outline-primary-active': selectedFile === file.identifier }"
                          :title="file.name">
                 <span class="d-block text-nowrap overflow-hidden">{{ file.name }}</span>
                 <span class="d-block file-size text-secondary text-nowrap overflow-hidden">{{ file.size_formatted }}</span>
             </router-link>
         </template>
-        <template v-slot:btn-right>
+        <template v-slot:btn_right>
             <button type="button"
                     class="slv-toggle-btn btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
                     v-bind:class="{'btn-outline-primary-active': selectedFile === file.identifier }"
@@ -61,7 +61,7 @@ watch(() => route.query.file, () => selectedFile.value = String(route.query.file
                 </a>
             </li>
         </template>
-    </split-button-group>
+    </button-group>
 </template>
 
 <style scoped>

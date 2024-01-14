@@ -28,7 +28,7 @@ bus.on('folder-deleted', () => folderStore.update());
         </div>
 
         <div class="slv-loadable" v-bind:class="{ 'slv-loading': folderStore.loading }">
-            <LogFolder :folder="folder"
+            <log-folder :folder="folder"
                        :expanded="index === selectedFolder"
                        :key="index"
                        v-for="(folder, index) in folderStore.folders"

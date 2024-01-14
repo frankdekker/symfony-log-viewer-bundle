@@ -31,6 +31,22 @@ final class Extension extends BaseExtension implements PrependExtensionInterface
 
         $mergedConfigs = $this->processConfiguration(new Configuration(), $configs);
 
+        // add defaults
+        if (count($mergedConfigs['log_files']) === 0) {
+            $mergedConfigs['log_files']['monolog'] = [
+                'type'         => 'monolog',
+                'name'         => 'Monolog',
+                'finder'       => [
+                    'in'                   => '%kernel.logs_dir%',
+                    'name'                 => '*.log',
+                    'ignoreUnreadableDirs' => true,
+                    'followLinks'          => false
+                ],
+                'downloadable' => false,
+                'deletable'    => false,
+            ];
+        }
+
         foreach ($mergedConfigs['log_files'] as $key => $config) {
             $container->register('fd.symfony.log.viewer.log_files_config.finder.' . $key, FinderConfig::class)
                 ->setPublic(false)
@@ -68,7 +84,7 @@ final class Extension extends BaseExtension implements PrependExtensionInterface
             'framework',
             [
                 'assets' => [
-                    'enabled' => true,
+                    'enabled'  => true,
                     'packages' => [
                         'fd_symfony_log_viewer' => [
                             'version_strategy' => JsonManifestVersionStrategy::class

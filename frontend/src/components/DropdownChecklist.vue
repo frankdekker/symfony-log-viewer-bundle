@@ -10,8 +10,8 @@ defineProps<{ label: string }>();
 </script>
 
 <template>
-    <button-group v-show="Object.keys(modelValue!.choices).length > 0" ref="toggleRef" alignment="left">
-        <template v-slot:btn>
+    <button-group v-show="Object.keys(modelValue!.choices).length > 0" ref="toggleRef" alignment="left" :split="false">
+        <template v-slot:btn_left>
             <button class="btn btn-outline-primary text-nowrap" type="button" @click="toggleRef.toggle">
                 {{ label }} <span class="badge text-bg-primary">{{ modelValue!.selected.length }}</span>
             </button>

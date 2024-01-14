@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import LogFile from '@/components/LogFile.vue';
-import SplitButtonGroup from '@/components/SplitButtonGroup.vue';
+import ButtonGroup from '@/components/ButtonGroup.vue';
 import type LogFolder from '@/models/LogFolder';
 import bus from '@/services/EventBus';
 import axios from 'axios';
@@ -29,14 +29,14 @@ const deleteFile = (identifier: string) => {
 <template>
     <!-- LogFolder -->
     <div class="folder-group mt-1" :aria-expanded="expanded">
-        <split-button-group ref="toggleRef" alignment="right">
-            <template v-slot:btn-left>
-                <button type="button" class="btn btn-outline-primary text-start" @click="$emit('expand')">
+        <button-group ref="toggleRef" alignment="right" :split="folder.can_download || folder.can_delete">
+            <template v-slot:btn_left>
+                <button type="button" class="btn btn-outline-primary text-start w-100" @click="$emit('expand')">
                     <i class="lvs-indicator bi bi-chevron-right me-2"></i>
                     <span class="text-nowrap">{{ folder.path }}</span>
                 </button>
             </template>
-            <template v-slot:btn-right>
+            <template v-slot:btn_right>
                 <button type="button"
                         class="slv-toggle-btn btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
                         @click="toggleRef.toggle"
@@ -56,7 +56,7 @@ const deleteFile = (identifier: string) => {
                     </a>
                 </li>
             </template>
-        </split-button-group>
+        </button-group>
 
         <div class="ms-2 mt-1" v-show="expanded">
             <LogFile :file="file" :key="index" v-for="(file, index) in folder.files"/>
