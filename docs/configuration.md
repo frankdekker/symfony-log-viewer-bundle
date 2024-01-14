@@ -81,8 +81,9 @@ Should the log folders and files be deletable. Default: `false`
 
 ### log_files.start_of_line_pattern <small>`string`</small>
 
-As monolog files can contain multiple lines per log entry, this pattern is used to find the start of a log entry.<br>
-The default regex pattern is `/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/` matches:
+As monolog files can contain multiple lines per log entry, this pattern is used to find the start of a log entry. Any lines not matching
+the pattern will be appended to the line before.
+The default regex pattern is `/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/` and matches:
 ```text
 [2021-08-01 ...] app.INFO: ....
 ```
