@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ClickOutside from '@/services/ClickOutside';
 import {setRelativeTo} from '@/services/Positioner';
-import {watch, onUpdated, ref} from 'vue';
+import {onUpdated, ref, watch} from 'vue';
 
 const active       = ref<boolean>(false);
 const dropdownRef  = ref();
@@ -17,15 +17,14 @@ onUpdated(() => {
     if (active.value === false) {
         return;
     }
-    setRelativeTo(dropdownRef.value.parentElement, dropdownRef.value, 'right');
+    setRelativeTo(dropdownRef.value.parentElement, dropdownRef.value, 'left');
 });
 defineExpose({toggle});
 </script>
 
 <template>
-    <div class="slv-btn-group btn-group">
-        <slot name="btn-left"></slot>
-        <slot name="btn-right"></slot>
+    <div class="dropdown">
+        <slot name="btn"></slot>
         <ul class="dropdown-menu" :class="{'d-block': active}" ref="dropdownRef">
             <slot name="dropdown"></slot>
         </ul>
