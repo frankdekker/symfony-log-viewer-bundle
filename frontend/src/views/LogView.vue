@@ -3,6 +3,7 @@ import DropdownChecklist from '@/components/DropdownChecklist.vue';
 import LogRecord from '@/components/LogRecord.vue';
 import PerformanceDetails from '@/components/PerformanceDetails.vue';
 import type Checklist from '@/models/Checklist';
+import Arrays from '@/services/Arrays';
 import {filter} from '@/services/Objects';
 import {nullify} from '@/services/Optional';
 import {useLogRecordStore} from '@/stores/log_records';
@@ -50,8 +51,8 @@ onMounted(() => {
     query.value             = String((route.query.query ?? ''));
     perPage.value           = String((route.query.perPage ?? '50'));
     sort.value              = String((route.query.sort ?? 'desc'));
-    levels.value.selected   = String(route.query.levels ?? '').split(',');
-    channels.value.selected = String(route.query.channels ?? '').split(',');
+    levels.value.selected   = Arrays.split(String(route.query.levels ?? ''), ',');
+    channels.value.selected = Arrays.split(String(route.query.channels ?? ''), ',');
     offset.value            = parseInt(String(route.query.offset ?? '0'));
     load();
 });

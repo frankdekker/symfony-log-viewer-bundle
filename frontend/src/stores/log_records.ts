@@ -21,18 +21,12 @@ export const useLogRecordStore = defineStore('log_records', () => {
             params.query = query;
         }
         const levelChoices = Object.keys(records.value.levels.choices);
-        if (levels.length !== levelChoices.length) {
-            const paramLevels = levels.join(',');
-            if (paramLevels !== '') {
-                params.levels = paramLevels;
-            }
+        if (levels.length > 0 && levels.length !== levelChoices.length) {
+            params.levels = levels.join(',');
         }
         const channelChoices = Object.keys(records.value.channels.choices);
         if (channels.length > 0 && channels.length !== channelChoices.length) {
-            const paramChannels = levels.join(',');
-            if (paramChannels !== '') {
-                params.channels = paramChannels;
-            }
+            params.channels = levels.join(',');
         }
         if (offset > 0) {
             params.offset = offset.toString();
