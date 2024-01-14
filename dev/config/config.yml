@@ -1,0 +1,58 @@
+parameters:
+  locale: en
+
+framework:
+  test: ~
+  secret: dev
+  router:
+    resource: "%kernel.project_dir%/config/routing.yml"
+    strict_requirements: true
+    utf8: true
+  http_method_override: false
+  php_errors:
+    log: true
+  handle_all_throwables: true
+  default_locale: en
+  profiler:
+    enabled: true
+    only_exceptions: false
+  validation:
+    email_validation_mode: html5
+
+web_profiler:
+  toolbar: true
+  intercept_redirects: false
+
+twig:
+  strict_variables: true
+
+monolog:
+  channels:
+    - deprecation
+  handlers:
+    main:
+      type: stream
+      path: "%kernel.logs_dir%/%kernel.environment%.log"
+      level: debug
+      channels: [ "!event", "!deprecation" ]
+    error:
+      type: stream
+      path: "%kernel.logs_dir%/error.log"
+      level: error
+      channels: [ "!event", "!deprecation" ]
+    deprecation:
+      type: stream
+      path: "%kernel.logs_dir%/deprecation.log"
+      level: debug
+      channels: [ "deprecation" ]
+
+fd_log_viewer:
+  log_files:
+    monolog:
+      type: monolog
+      name: Monolog
+      finder:
+        in: "%kernel.logs_dir%"
+        name: "*.log"
+      downloadable: true
+      deletable: true

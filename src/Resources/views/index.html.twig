@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html class="h-100 overflow-hidden" lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon"
+          type="image/svg+xml"
+          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23fff' viewBox='0 0 16 16'%3E%3Cpath d='M15 3.604H1v1.891h14v-1.89ZM1 7.208V16l7-3.926L15 16V7.208zM15 0H1v1.89h14z'/%3E%3C/svg%3E" />
+    <meta name="base-uri" content="{{ base_uri }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="folders" content="{{ folders|json_encode }}">
+    <title>Log Viewer for Symfony</title>
+    <link href="{{ asset('style.css', 'fd_symfony_log_viewer') }}" rel="stylesheet"/>
+    {# Toggle dark mode based on system settings #}
+    <script>document.documentElement.dataset.bsTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';</script>
+</head>
+<body class="h-100 overflow-hidden">
+<div id="log-viewer" class="slv-body-grid container-fluid p-0 h-100"></div>
+<script type="module" src="{{ asset('src/main.ts', 'fd_symfony_log_viewer') }}"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+name: Run checks
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php-versions }} - Test ${{ matrix.composer-flags }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: [ '8.1', '8.2', '8.3' ]
+        composer-flags: [ '', '--prefer-lowest' ]
+        exclude:
+          - php-versions: 8.3
+            composer-flags: ''
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: none
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-progress --no-suggest --prefer-stable ${{ matrix.composer-flags }}
+
+      - name: Run test suite
+        run: composer test
+
+  coverage:
+    name: PHP 8.3 - Test with coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          coverage: pcov
+
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-progress --no-suggest --prefer-stable
+
+      - name: Run test suite
+        run: php -dpcov.enabled=1 -dpcov.exclude="~vendor~" vendor/bin/phpunit --testsuite unit,integration --coverage-clover ./.coverage/coverage.xml
+
+      - name: Check coverage
+        run: test ! -f ./.coverage/coverage.xml || php vendor/bin/phpfci inspect ./.coverage/coverage.xml --exit-code-on-failure --reportText
+
+  php-quality:
+    name: PHP quality checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: run checks
+        run: composer check
+
+  ts-quality:
+    name: Typescript quality checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 21.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21.x
+
+      - name: Install dependencies
+        run: cd frontend && npm install
+
+      - name: Run eslint
+        run: cd frontend && npm run lint
+
+  build-assets-check:
+    name: Check build assets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 21.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21.x
+
+      - name: Install dependencies
+        run: cd frontend && npm install
+
+      - name: Build assets
+        run: cd frontend && npm run build
+
+      - name: Git diff - expecting no changes
+        run: git status | grep "nothing to commit, working tree clean"

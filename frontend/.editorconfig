@@ -1,0 +1,20 @@
+[*.scss]
+ij_scss_align_closing_brace_with_properties = false
+ij_scss_blank_lines_around_nested_selector = 1
+ij_scss_blank_lines_between_blocks = 1
+ij_scss_block_comment_add_space = false
+ij_scss_brace_placement = 0
+ij_scss_enforce_quotes_on_format = false
+ij_scss_hex_color_long_format = true
+ij_scss_hex_color_lower_case = true
+ij_scss_hex_color_short_format = false
+ij_scss_hex_color_upper_case = false
+ij_scss_keep_blank_lines_in_code = 1
+ij_scss_keep_indents_on_empty_lines = false
+ij_scss_keep_single_line_blocks = false
+ij_scss_line_comment_add_space = false
+ij_scss_line_comment_at_first_column = false
+ij_scss_space_after_colon = true
+ij_scss_space_before_opening_brace = true
+ij_scss_use_double_quotes = false
+ij_scss_value_alignment = 0

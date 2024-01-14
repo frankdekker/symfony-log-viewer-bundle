@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+    nginx:
+        container_name: log-viewer-nginx
+        build:
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
+        ports:
+            - ${NGINX_PORT:-8888}:80
+        volumes:
+            - ../.:/app:rw
+            - log-viewer-log:/var/log/nginx:rw
+
+    php-fpm:
+        container_name: log-viewer-php
+        build:
+            context: .
+            dockerfile: ./docker/php-fpm/Dockerfile
+        environment:
+            APP_ENV: dev
+            XDEBUG_MODE: debug
+            XDEBUG_CONFIG: client_host=host.docker.internal discover_client_host=true start_with_request=trigger
+            PHP_IDE_CONFIG: serverName=localhost
+        volumes:
+            - ../.:/app:rw
+            - log-viewer-log:/var/log/nginx:rw
+
+    nodejs:
+        container_name: log-viewer-nodejs
+        build:
+            context: .
+            dockerfile: ./docker/nodejs/Dockerfile
+        volumes:
+            - ../.:/app:rw
+volumes:
+    log-viewer-log:
+
+networks:
+    default:
+        name: log-viewer-network

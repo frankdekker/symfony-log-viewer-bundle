@@ -1,0 +1,18 @@
+main:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: FD\LogViewer\Controller\IndexController.base
+
+web_profiler_wdt:
+  resource: '@WebProfilerBundle/Resources/config/routing/wdt.xml'
+  prefix: /_wdt
+
+web_profiler_profiler:
+  resource: '@WebProfilerBundle/Resources/config/routing/profiler.xml'
+  prefix: /_profiler
+
+fd_symfony_log_viewer:
+  resource: .
+  type: fd_symfony_log_viewer
+  prefix: /log-viewer
