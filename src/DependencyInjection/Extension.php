@@ -49,7 +49,7 @@ final class Extension extends BaseExtension implements PrependExtensionInterface
                 ->setArgument('$downloadable', $config['downloadable'])
                 ->setArgument('$deletable', $config['deletable'])
                 ->setArgument('$startOfLinePattern', $config['start_of_line_pattern'] ?? null)
-                ->setArgument('$logMessagePattern', $config['log_message_pattern'])
+                ->setArgument('$logMessagePattern', $config['log_message_pattern'] ?? null)
                 ->setArgument('$dateFormat', $config['date_format'] ?? "Y-m-d H:i:s");
         }
     }
