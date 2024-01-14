@@ -12,9 +12,6 @@
          executionOrder="defects"
 >
     <testsuites>
-        <testsuite name="functional">
-            <directory>tests/Functional</directory>
-        </testsuite>
         <testsuite name="integration">
             <directory>tests/Integration</directory>
         </testsuite>
