@@ -59,7 +59,7 @@ const deleteFile = (identifier: string) => {
         </button-group>
 
         <div class="ms-2 mt-1" v-show="expanded">
-            <LogFile :file="file" :key="index" v-for="(file, index) in folder.files"/>
+            <log-file :file="file" :key="index" v-for="(file, index) in folder.files"/>
         </div>
     </div>
 </template>

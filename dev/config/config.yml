@@ -13,6 +13,15 @@ framework:
     log: true
   handle_all_throwables: true
   default_locale: en
+  profiler:
+    enabled: true
+    only_exceptions: false
+  validation:
+    email_validation_mode: html5
+
+web_profiler:
+  toolbar: true
+  intercept_redirects: false
 
 twig:
   strict_variables: true
@@ -25,7 +34,17 @@ monolog:
       type: stream
       path: "%kernel.logs_dir%/%kernel.environment%.log"
       level: debug
-      channels: ["!event"]
+      channels: [ "!event", "!deprecation" ]
+    error:
+      type: stream
+      path: "%kernel.logs_dir%/error.log"
+      level: error
+      channels: [ "!event", "!deprecation" ]
+    deprecation:
+      type: stream
+      path: "%kernel.logs_dir%/deprecation.log"
+      level: debug
+      channels: [ "deprecation" ]
 
 fd_log_viewer:
   log_files:

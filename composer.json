@@ -62,6 +62,7 @@
         "symfony/runtime": "^6.0||^7.0",
         "symfony/templating": "^6.0||^7.0",
         "symfony/twig-bundle": "^6.0||^7.0",
+        "symfony/web-profiler-bundle": "^6.0||^7.0",
         "symfony/yaml": "^6.0||^7.0",
         "twig/twig": "^3.8.0"
     },

@@ -30,7 +30,7 @@ watch(() => route.query.file, () => selectedFile.value = String(route.query.file
 
 <template>
     <!-- LogFile -->
-    <button-group ref="toggleRef" alignment="right" :split="file.can_download || file.can_delete">
+    <button-group ref="toggleRef" alignment="right" :split="file.can_download || file.can_delete" class="mb-1">
         <template v-slot:btn_left>
             <router-link :to="'/log?file=' + encodeURI(file.identifier)"
                          class="btn btn-file text-start btn-outline-primary w-100"
