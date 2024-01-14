@@ -1,11 +1,13 @@
+[![License](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF)](https://php.net/)
 [![Minimum Symfony Version](https://img.shields.io/badge/symfony-%3E%3D%206.0-brightgreen)](https://symfony.com/doc/current/validation.html)
+[![Vuejs](https://img.shields.io/badge/Vuejs-3.4-brightgreen)](https://vuejs.org/)
 [![codecov](https://codecov.io/gh/frankdekker/symfony-log-viewer-bundle/branch/master/graph/badge.svg)](https://app.codecov.io/gh/frankdekker/symfony-log-viewer-bundle)
 ![Run tests](https://github.com/frankdekker/symfony-log-viewer-bundle/actions/workflows/test.yml/badge.svg)
 
 <div style="text-align: center">
 <h1 style="margin-bottom:0">Log viewer for Symfony</h1>
-<i>Inspired by <a href="https://github.com/opcodesio/log-viewer">opcodesio/log-viewer</a></i>
+<i>Inspired by <a href="https://github.com/opcodesio/log-viewer">opcodesio/log-viewer</a> for Laravel</i>
 <img src="docs/images/preview.png" alt="log-viewer">
 </div>
 
