@@ -19,9 +19,11 @@ class MonologLineParser implements LogLineParserInterface
         '(?P<context>[[{].*?[\]}])\s+' .
         '(?P<extra>[[{].*?[\]}])\s+$/s';
 
-    public function __construct(private readonly ?string $startOfMessagePattern, private ?string $logLinePattern)
+    private readonly string $logLinePattern;
+
+    public function __construct(private readonly ?string $startOfMessagePattern, ?string $logLinePattern)
     {
-        $this->logLinePattern ??= self::LOG_LINE_PATTERN;
+        $this->logLinePattern = $logLinePattern ?? self::LOG_LINE_PATTERN;
     }
 
     /**
