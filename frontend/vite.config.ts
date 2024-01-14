@@ -4,7 +4,7 @@ import {fileURLToPath, URL} from 'node:url'
 import {defineConfig} from 'vite'
 
 // https://vitejs.dev/config/
-export default defineConfig(({command, mode}) => {
+export default defineConfig((options) => {
     return {
         plugins: [
             vue(),
@@ -12,13 +12,13 @@ export default defineConfig(({command, mode}) => {
         ],
         base: '/bundles/fdlogviewer/',
         build: {
-            sourcemap: mode === 'development',
+            sourcemap: options.mode === 'development',
             emptyOutDir: true,
             copyPublicDir: false,
             cssCodeSplit: false,
             outDir: '../src/Resources/public',
             manifest: true,
-            minify: mode === 'production',
+            minify: options.mode === 'production',
             rollupOptions: {
                 input: 'src/main.ts'
             }

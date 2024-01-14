@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DropdownChecklist from '@/components/DropdownChecklist.vue';
 import LogRecord from '@/components/LogRecord.vue';
-import Performance from '@/components/Performance.vue';
+import PerformanceDetails from '@/components/PerformanceDetails.vue';
 import type Checklist from '@/models/Checklist';
 import {filter} from '@/services/Objects';
 import {nullify} from '@/services/Optional';
@@ -46,13 +46,13 @@ const load = () => {
 }
 
 onMounted(() => {
-    file.value              = <string>route.query.file;
-    query.value             = <string>(route.query.query ?? '');
-    perPage.value           = <string>(route.query.perPage ?? '50');
-    sort.value              = <string>(route.query.sort ?? 'desc');
-    levels.value.selected   = (<string>(route.query.levels ?? '')).split(',');
-    channels.value.selected = (<string>(route.query.channels ?? '')).split(',');
-    offset.value            = parseInt(<string>(route.query.offset ?? '0'));
+    file.value              = String(route.query.file);
+    query.value             = String((route.query.query ?? ''));
+    perPage.value           = String((route.query.perPage ?? '50'));
+    sort.value              = String((route.query.sort ?? 'desc'));
+    levels.value.selected   = String(route.query.levels ?? '').split(',');
+    channels.value.selected = String(route.query.channels ?? '').split(',');
+    offset.value            = parseInt(String(route.query.offset ?? '0'));
     load();
 });
 </script>
@@ -97,7 +97,7 @@ onMounted(() => {
 
         <main class="overflow-auto d-none d-md-block">
             <div class="slv-entries list-group pt-1 pe-1 pb-3">
-                <LogRecord :logRecord="record" v-for="record in logRecordStore.records.logs ?? []"></LogRecord>
+                <log-record :logRecord="record" v-for="(record, index) in logRecordStore.records.logs ?? []" v-bind:key="index"></log-record>
             </div>
         </main>
 
@@ -115,7 +115,7 @@ onMounted(() => {
 
             <div class="flex-grow-1"></div>
 
-            <Performance :performance="logRecordStore.records.performance"></Performance>
+            <performance-details :performance="logRecordStore.records.performance"></performance-details>
         </footer>
     </div>
 </template>
