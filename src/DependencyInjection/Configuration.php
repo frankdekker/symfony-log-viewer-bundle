@@ -59,8 +59,6 @@ final class Configuration implements ConfigurationInterface
                         ->info('The regex pattern for a full log message which could include newlines.')
                     ->end()
                     ->scalarNode('date_format')->info('The date format of how to present the date in the frontend.')->defaultNull()->end()
-                    ->arrayNode('levels')->info('Enabled log levels. Optional. Defaults to all.')->end()
-                    ->arrayNode('channels')->info('Enabled log channels. Optional. Defaults to all.')->end()
                 ->end()
             ->end();
 

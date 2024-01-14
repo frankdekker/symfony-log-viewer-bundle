@@ -66,3 +66,6 @@ Once the installation is complete, you will be able to access **Log Viewer** dir
 By default, the application is available at: `{APP_URL}/log-viewer`.
 
 (for example: `https://my-app.test/log-viewer`)
+
+## Configuration
+- [Adjust default configuration](docs/configuration.md)
