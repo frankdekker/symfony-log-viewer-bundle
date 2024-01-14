@@ -11,12 +11,15 @@ permissions:
 
 jobs:
   test:
-    name: PHP ${{ matrix.php-versions }} - Symfony ${{ matrix.symfony }} - Test ${{ matrix.composer-flags }}
+    name: PHP ${{ matrix.php-versions }} - Test ${{ matrix.composer-flags }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         php-versions: [ '8.1', '8.2', '8.3' ]
         composer-flags: [ '', '--prefer-lowest' ]
+        exclude:
+          - php-versions: 8.3
+            composer-flags: ''
     steps:
       - uses: actions/checkout@v4
 
@@ -36,7 +39,7 @@ jobs:
         run: composer test
 
   coverage:
-    name: PHP coverage
+    name: PHP 8.3 - Test with coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
