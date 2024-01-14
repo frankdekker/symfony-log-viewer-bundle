@@ -1,5 +1,5 @@
 import type LogRecords from '@/models/LogRecords';
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
 
@@ -37,6 +37,9 @@ export const useLogRecordStore = defineStore('log_records', () => {
             const response = await axios.get<LogRecords>('/api/logs', {params: params});
             records.value  = response.data;
         } catch (e) {
+            if (e instanceof AxiosError && e.response?.status === 404) {
+                throw e;
+            }
             console.error(e);
             records.value = defaultData;
         } finally {
