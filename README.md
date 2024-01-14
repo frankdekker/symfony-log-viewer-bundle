@@ -1,13 +1,14 @@
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF)](https://php.net/)
-[![Minimum Symfony Version](https://img.shields.io/badge/symfony-%3E%3D%206.3-brightgreen)](https://symfony.com/doc/current/validation.html)
+[![Minimum Symfony Version](https://img.shields.io/badge/symfony-%3E%3D%206.0-brightgreen)](https://symfony.com/doc/current/validation.html)
 ![Run tests](https://github.com/frankdekker/symfony-log-viewer-bundle/actions/workflows/test.yml/badge.svg)
 
-# Log viewer for Symfony
-*Inspired by [opcodesio/log-viewer](https://github.com/opcodesio/log-viewer).*
+<div style="text-align: center">
+<h1 style="margin-bottom:0">Log viewer for Symfony</h1>
+<i>Inspired by <a href="https://github.com/opcodesio/log-viewer">opcodesio/log-viewer</a></i>
+<img src="docs/images/preview.png" alt="log-viewer">
+</div>
 
-[screenshot]
-
- **Log Viewer** a bundle for your [Symfony](https://symfony.com/) app. It provides a user-friendly UI to read, filter and search log files.
+ **Log Viewer**: a bundle for your [Symfony](https://symfony.com/) app. It provides a user-friendly UI to read, filter and search log files.
 
 Out of the box it will read your Monolog logs in the `var/log` directory, but can be configured to
 read logs from any directory.
