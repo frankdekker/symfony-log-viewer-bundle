@@ -109,5 +109,5 @@ jobs:
       - name: Build assets
         run: cd frontend && npm run build
 
-      - name: Git diff
-        run: git status
+      - name: Git diff - expecting no changes
+        run: git diff --exit-code
