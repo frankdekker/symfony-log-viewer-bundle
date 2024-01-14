@@ -60,8 +60,8 @@ onMounted(() => {
 <template>
     <div class="slv-content h-100 overflow-hidden slv-loadable" v-bind:class="{ 'slv-loading': logRecordStore.loading }">
         <div class="d-flex align-items-stretch pt-1">
-            <DropdownChecklist label="Levels" :checklist="levels"></DropdownChecklist>
-            <DropdownChecklist label="Channels" :checklist="channels"></DropdownChecklist>
+            <dropdown-checklist label="Levels" v-model="levels" class="pe-1"></dropdown-checklist>
+            <dropdown-checklist label="Channels" v-model="channels" class="pe-1"></dropdown-checklist>
 
             <div class="flex-grow-1 input-group">
                 <input type="text"
