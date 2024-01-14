@@ -1,7 +1,7 @@
 :root {
-    --lvs-max-sidebar-width: 450px;
-    --lvs-min-header-height: 45px;
-    --lvs-min-sidebar-width: 250px;
+    --slv-max-sidebar-width: 450px;
+    --slv-min-header-height: 45px;
+    --slv-min-sidebar-width: 250px;
 }
 
 .text-bg-primary {
@@ -36,11 +36,11 @@
 
 .slv-body-grid {
     display: grid;
-    grid-template-columns: minmax(var(--lvs-min-sidebar-width), min(25%, var(--lvs-max-sidebar-width))) 1fr;
+    grid-template-columns: minmax(var(--slv-min-sidebar-width), min(25%, var(--slv-max-sidebar-width))) 1fr;
 }
 
 .slv-header-height {
-    min-height: var(--lvs-min-header-height);
+    min-height: var(--slv-min-header-height);
 }
 
 .slv-indicator::before {
