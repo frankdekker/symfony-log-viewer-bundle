@@ -26,12 +26,12 @@ class TestKernel extends BaseKernel
 
     public function getCacheDir(): string
     {
-        return __DIR__ . '.kernel/cache';
+        return __DIR__ . '/.kernel/cache';
     }
 
     public function getLogDir(): string
     {
-        return __DIR__ . '.kernel/log';
+        return __DIR__ . '/.kernel/log';
     }
 
     /**
