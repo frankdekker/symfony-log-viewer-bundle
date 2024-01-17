@@ -11,6 +11,9 @@
          beStrictAboutTodoAnnotatedTests="true"
          executionOrder="defects"
 >
+    <php>
+        <env name="KERNEL_CLASS" value="FD\LogViewer\Tests\TestKernel"/>
+    </php>
     <testsuites>
         <testsuite name="functional">
             <directory>tests/Functional</directory>
