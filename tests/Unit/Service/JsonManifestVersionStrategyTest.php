@@ -3,24 +3,24 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service;
 
-use FD\LogViewer\Service\JsonManifestVersionStrategy;
+use FD\LogViewer\Service\JsonManifestAssetLoader;
 use JsonException;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-#[CoversClass(JsonManifestVersionStrategy::class)]
+#[CoversClass(JsonManifestAssetLoader::class)]
 class JsonManifestVersionStrategyTest extends TestCase
 {
-    private JsonManifestVersionStrategy $strategy;
+    private JsonManifestAssetLoader $strategy;
 
     protected function setUp(): void
     {
         parent::setUp();
         $manifest       = json_encode(['/path/to/file' => ['file' => 'file']]);
         $path           = vfsStream::setup('root', 0777, ['manifest.json' => $manifest])->url();
-        $this->strategy = new JsonManifestVersionStrategy($path . '/manifest.json');
+        $this->strategy = new JsonManifestAssetLoader($path . '/manifest.json');
     }
 
     /**

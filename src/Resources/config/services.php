@@ -23,7 +23,7 @@ use FD\LogViewer\Service\Folder\LogFolderOutputFactory;
 use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use FD\LogViewer\Service\Folder\LogFolderOutputSorter;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
-use FD\LogViewer\Service\JsonManifestVersionStrategy;
+use FD\LogViewer\Service\JsonManifestAssetLoader;
 use FD\LogViewer\Service\PerformanceService;
 use FD\LogViewer\Service\VersionService;
 use FD\LogViewer\StreamReader\StreamReaderFactory;
@@ -50,7 +50,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(RouteLoader::class)
         ->tag('routing.loader');
 
-    $services->set(JsonManifestVersionStrategy::class)
+    $services->set(JsonManifestAssetLoader::class)
         ->arg('$manifestPath', '%kernel.project_dir%/public/bundles/fdlogviewer/.vite/manifest.json');
 
     $services->set(FinderFactory::class);

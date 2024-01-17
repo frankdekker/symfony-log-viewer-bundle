@@ -5,9 +5,8 @@ namespace FD\LogViewer\Service;
 
 use JsonException;
 use RuntimeException;
-use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
 
-class JsonManifestVersionStrategy implements VersionStrategyInterface
+class JsonManifestAssetLoader
 {
     /** @var array<int|string, mixed>|null */
     private ?array $manifestData = null;
@@ -19,15 +18,7 @@ class JsonManifestVersionStrategy implements VersionStrategyInterface
     /**
      * @throws JsonException
      */
-    public function getVersion(string $path): string
-    {
-        return $this->applyVersion($path);
-    }
-
-    /**
-     * @throws JsonException
-     */
-    public function applyVersion(string $path): string
+    public function getUrl(string $asset): string
     {
         if ($this->manifestData === null) {
             $data = json_decode((string)file_get_contents($this->manifestPath), true, 512, JSON_THROW_ON_ERROR);
@@ -35,8 +26,8 @@ class JsonManifestVersionStrategy implements VersionStrategyInterface
             $this->manifestData = $data;
         }
 
-        $path = $this->manifestData[$path]['file'] ?? throw new RuntimeException('Asset manifest file does not exist: ' . $path);
+        $asset = $this->manifestData[$asset]['file'] ?? throw new RuntimeException('Asset manifest file does not exist: ' . $asset);
 
-        return 'bundles/fdlogviewer/' . $path;
+        return '/bundles/fdlogviewer/' . $asset;
     }
 }

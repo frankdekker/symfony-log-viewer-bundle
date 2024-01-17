@@ -5,11 +5,9 @@ namespace FD\LogViewer\DependencyInjection;
 
 use FD\LogViewer\Entity\Config\FinderConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;
-use FD\LogViewer\Service\JsonManifestVersionStrategy;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Throwable;
@@ -18,7 +16,7 @@ use Throwable;
  * @codeCoverageIgnore
  * @internal
  */
-final class Extension extends BaseExtension implements PrependExtensionInterface
+final class Extension extends BaseExtension
 {
     /**
      * @inheritDoc
@@ -73,25 +71,5 @@ final class Extension extends BaseExtension implements PrependExtensionInterface
     public function getAlias(): string
     {
         return 'fd_log_viewer';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function prepend(ContainerBuilder $container): void
-    {
-        $container->prependExtensionConfig(
-            'framework',
-            [
-                'assets' => [
-                    'enabled'  => true,
-                    'packages' => [
-                        'fd_symfony_log_viewer' => [
-                            'version_strategy' => JsonManifestVersionStrategy::class
-                        ],
-                    ],
-                ],
-            ]
-        );
     }
 }
