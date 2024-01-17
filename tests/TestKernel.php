@@ -6,7 +6,6 @@ namespace FD\LogViewer\Tests;
 
 use Exception;
 use FD\LogViewer\FdLogViewerBundle;
-use org\bovigo\vfs\vfsStream;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
@@ -17,14 +16,6 @@ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
 class TestKernel extends BaseKernel
 {
-    private string $varPath;
-
-    public function __construct(string $environment, bool $debug)
-    {
-        parent::__construct($environment, $debug);
-        $this->varPath = vfsStream::setup('var', 0777, ['log' => [], 'cache' => []])->url();
-    }
-
     /**
      * @return iterable<BundleInterface>
      */
@@ -33,15 +24,15 @@ class TestKernel extends BaseKernel
         return [new FrameworkBundle(), new MonologBundle(), new TwigBundle(), new FdLogViewerBundle()];
     }
 
-    //public function getCacheDir(): string
-    //{
-    //    return $this->varPath . '/cache';
-    //}
-    //
-    //public function getLogDir(): string
-    //{
-    //    return $this->varPath . '/log';
-    //}
+    public function getCacheDir(): string
+    {
+        return __DIR__ . '.kernel/cache';
+    }
+
+    public function getLogDir(): string
+    {
+        return __DIR__ . '.kernel/log';
+    }
 
     /**
      * @throws Exception
