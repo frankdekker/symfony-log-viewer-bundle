@@ -16,7 +16,7 @@ class LogIndexTest extends AbstractFunctionalTestCase
     {
         parent::setUp();
         $this->assetLoader = $this->createMock(JsonManifestAssetLoader::class);
-        $this->getContainer()->set(JsonManifestAssetLoader::class, $this->assetLoader);
+        static::getContainer()->set(JsonManifestAssetLoader::class, $this->assetLoader);
     }
 
     public function testInvoke(): void
