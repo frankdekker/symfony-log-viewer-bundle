@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 #[CoversClass(JsonManifestAssetLoader::class)]
-class JsonManifestVersionStrategyTest extends TestCase
+class JsonManifestAssetLoaderTest extends TestCase
 {
     private JsonManifestAssetLoader $strategy;
 
@@ -28,7 +28,7 @@ class JsonManifestVersionStrategyTest extends TestCase
      */
     public function testGetVersionExistingFile(): void
     {
-        static::assertSame('bundles/fdlogviewer/file', $this->strategy->getVersion('/path/to/file'));
+        static::assertSame('/bundles/fdlogviewer/file', $this->strategy->getUrl('/path/to/file'));
     }
 
     /**
@@ -37,7 +37,7 @@ class JsonManifestVersionStrategyTest extends TestCase
     public function testGetVersionFailed(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Asset manifest file does not exist:');
-        $this->strategy->getVersion('foobar');
+        $this->expectExceptionMessage('Asset file does not exist:');
+        $this->strategy->getUrl('foobar');
     }
 }
