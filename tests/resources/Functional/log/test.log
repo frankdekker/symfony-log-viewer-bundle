@@ -1,0 +1,3 @@
+[2000-01-02T12:00:00+00:00] app.DEBUG: Message for line 1 [] []
+[2000-01-02T12:00:13+00:00] request.INFO: Message for line 2 [] []
+[2000-01-02T12:00:20+00:00] security.NOTICE: Message for line 3 [] []

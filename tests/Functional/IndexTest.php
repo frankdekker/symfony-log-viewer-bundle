@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\MockObject\MockObject;
 
 #[CoversNothing]
-class LogIndexTest extends AbstractFunctionalTestCase
+class IndexTest extends AbstractFunctionalTestCase
 {
     private JsonManifestAssetLoader&MockObject $assetLoader;
 

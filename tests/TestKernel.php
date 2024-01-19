@@ -31,7 +31,7 @@ class TestKernel extends BaseKernel
 
     public function getLogDir(): string
     {
-        return __DIR__ . '/.kernel/log';
+        return __DIR__ . '/resources/Functional/log';
     }
 
     /**
@@ -51,7 +51,7 @@ class TestKernel extends BaseKernel
                     'profiler'              => ['enabled' => false],
                     'validation'            => ['email_validation_mode' => 'html5'],
                     'router'                => [
-                        'resource'            => __DIR__ . '/Fixtures/routes.php',
+                        'resource'            => __DIR__ . '/resources/Functional/routes.php',
                         'type'                => 'php',
                         'strict_requirements' => true,
                         'utf8'                => true,

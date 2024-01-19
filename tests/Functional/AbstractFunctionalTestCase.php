@@ -6,6 +6,7 @@ namespace FD\LogViewer\Tests\Functional;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractFunctionalTestCase extends WebTestCase
 {
@@ -33,5 +34,19 @@ abstract class AbstractFunctionalTestCase extends WebTestCase
         $service = self::getContainer()->get($alias ?? $serviceId);
 
         return $service;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected static function getJsonFromResponse(Response $response): array
+    {
+        $json = $response->getContent();
+        static::assertIsString($json);
+
+        $data = json_decode($json, true);
+        static::assertIsArray($data);
+
+        return $data;
     }
 }
