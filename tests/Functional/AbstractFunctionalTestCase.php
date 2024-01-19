@@ -37,9 +37,9 @@ abstract class AbstractFunctionalTestCase extends WebTestCase
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<int|string, mixed>
      */
-    protected static function getJsonFromResponse(Response $response): array
+    protected static function responseToArray(Response $response): array
     {
         $json = $response->getContent();
         static::assertIsString($json);

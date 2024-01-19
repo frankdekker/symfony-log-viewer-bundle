@@ -18,7 +18,7 @@ class FoldersTest extends AbstractFunctionalTestCase
         $this->client->request('GET', '/log-viewer/api/folders');
         static::assertResponseIsSuccessful();
 
-        $data = static::getJsonFromResponse($this->client->getResponse());
+        $data = static::responseToArray($this->client->getResponse());
         static::assertSame('test.log', $data[0]['files'][0]['name']);
     }
 }
