@@ -54,10 +54,7 @@ class IndexControllerTest extends AbstractControllerTestCase
             [
                 'base_uri' => 'baseUri',
                 'folders'  => [$folder],
-                'assets'   => [
-                    'style' => 'url1',
-                    'js'    => 'url2'
-                ],
+                'assets'   => ['style' => 'url1', 'js' => 'url2']
             ]
         );
 
