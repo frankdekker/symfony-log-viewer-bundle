@@ -1,0 +1,27 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        ":dependencyDashboard",
+        ":ignoreModulesAndTests",
+        "group:monorepos",
+        "group:recommended",
+        "workarounds:all",
+        "github>whitesource/merge-confidence:beta",
+        ":timezone(Europe/Amsterdam)",
+        ":enableVulnerabilityAlerts",
+        ":label(renovate)"
+    ],
+    "semanticCommits": "disabled",
+    "platformAutomerge": true,
+    "packageRules": [
+        {
+            "matchPackagePatterns": ["*"],
+            "rangeStrategy": "widen"
+        },
+        {
+            "matchDepTypes": ["devDependencies", "peerDependencies", "require-dev"],
+            "rangeStrategy": "auto",
+            "automerge": true
+        }
+    ]
+}
