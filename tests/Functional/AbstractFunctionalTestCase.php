@@ -20,6 +20,7 @@ abstract class AbstractFunctionalTestCase extends WebTestCase
     {
         parent::setUp();
         $this->client = static::createClient(['environment' => 'test', 'debug' => 'false']);
+        $this->client->catchExceptions(false);
     }
 
     /**
