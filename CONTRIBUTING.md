@@ -41,6 +41,7 @@ After the containers are up and running, the project is available at http://loca
 ## Running tests and code style checks
  
 ``` bash
-composer check
-composer test
+composer run check
+composer run test
+cd frontend && npm run lint
 ```
