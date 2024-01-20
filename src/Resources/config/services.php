@@ -27,8 +27,10 @@ use FD\LogViewer\Service\JsonManifestAssetLoader;
 use FD\LogViewer\Service\PerformanceService;
 use FD\LogViewer\Service\VersionService;
 use FD\LogViewer\StreamReader\StreamReaderFactory;
+use FD\LogViewer\Util\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\inline_service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
 return static function (ContainerConfigurator $container): void {
@@ -60,7 +62,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogFolderOutputProvider::class);
     $services->set(LogFolderOutputSorter::class);
     $services->set(LogRecordsOutputProvider::class);
-    $services->set(LogParser::class);
+    $services->set(LogParser::class)->arg('$clock', inline_service(Clock::class));
     $services->set(LogFileParserProvider::class)
         ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.monolog_file_parser', 'name'));
     $services->set(LogQueryDtoFactory::class);

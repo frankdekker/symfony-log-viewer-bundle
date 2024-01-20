@@ -4,52 +4,52 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Iterator;
 
 use ArrayIterator;
+use DateTimeImmutable;
 use FD\LogViewer\Iterator\MaxRuntimeException;
 use FD\LogViewer\Iterator\MaxRuntimeIterator;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\ClockMock;
+use Psr\Clock\ClockInterface;
 
 #[CoversClass(MaxRuntimeIterator::class)]
 class MaxRuntimeIteratorTest extends TestCase
 {
+    private ClockInterface&MockObject $clock;
+
     protected function setUp(): void
     {
         parent::setUp();
-        ClockMock::register(MaxRuntimeIterator::class);
-        ClockMock::register(static::class);
-        ClockMock::withClockMock(true);
+        $this->clock = $this->createMock(ClockInterface::class);
+        $this->clock
+            ->method('now')
+            ->willReturn(
+                new DateTimeImmutable('2020-01-01 00:00:00'),
+                new DateTimeImmutable('2020-01-01 00:00:15'),
+                new DateTimeImmutable('2020-01-01 00:00:30'),
+                new DateTimeImmutable('2020-01-01 00:00:45'),
+            );
     }
 
     public function testGetIteratorShouldNotThrow(): void
     {
-        $iterator = new MaxRuntimeIterator(new ArrayIterator([1, 2, 3]), 1, false);
+        $iterator = new MaxRuntimeIterator($this->clock, new ArrayIterator([1, 2, 3]), 1000, false);
         static::assertSame([1, 2, 3], iterator_to_array($iterator));
     }
 
     public function testGetIteratorShouldStopSilently(): void
     {
-        $iterator = new MaxRuntimeIterator(new ArrayIterator([1, 2, 3]), 20, false);
-        $result   = [];
-        foreach ($iterator as $value) {
-            // increment time by 15 seconds
-            sleep(15);
-            $result[] = $value;
-        }
-        static::assertSame([1, 2], $result);
+        // stop running after 20 seconds
+        $iterator = new MaxRuntimeIterator($this->clock, new ArrayIterator([1, 2, 3]), 20, false);
+        static::assertSame([1, 2], iterator_to_array($iterator));
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-     */
     public function testGetIteratorShouldThrow(): void
     {
-        $iterator = new MaxRuntimeIterator(new ArrayIterator([1, 2, 3]), 20, true);
+        // throw exception after 20 seconds
+        $iterator = new MaxRuntimeIterator($this->clock, new ArrayIterator([1, 2, 3]), 20, true);
 
         $this->expectException(MaxRuntimeException::class);
-        foreach ($iterator as $value) {
-            // increment time by 15 seconds
-            sleep(15);
-        }
+        iterator_to_array($iterator);
     }
 }

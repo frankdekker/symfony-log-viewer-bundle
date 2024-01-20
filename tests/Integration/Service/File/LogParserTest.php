@@ -5,13 +5,12 @@ namespace FD\LogViewer\Tests\Integration\Service\File;
 
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Request\LogQueryDto;
-use FD\LogViewer\Iterator\MaxRuntimeIterator;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use FD\LogViewer\StreamReader\StreamReaderFactory;
 use FD\LogViewer\Tests\Integration\AbstractIntegrationTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Symfony\Bridge\PhpUnit\ClockMock;
+use Psr\Clock\ClockInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
 #[CoversClass(LogParser::class)]
@@ -23,9 +22,8 @@ class LogParserTest extends AbstractIntegrationTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        ClockMock::register(MaxRuntimeIterator::class);
         $this->lineParser = new MonologLineParser(MonologLineParser::START_OF_MESSAGE_PATTERN, MonologLineParser::LOG_LINE_PATTERN);
-        $this->parser     = new LogParser(new StreamReaderFactory());
+        $this->parser     = new LogParser($this->createMock(ClockInterface::class), new StreamReaderFactory());
     }
 
     public function testParseWithPaginator(): void
