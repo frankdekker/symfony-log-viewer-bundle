@@ -43,13 +43,13 @@ class TestKernel extends BaseKernel
             $container->loadFromExtension(
                 'framework',
                 [
-                    'secret'                => 'test',
-                    'test'                  => null,
-                    'http_method_override'  => false,
-                    'php_errors'            => ['log' => true],
-                    'profiler'              => ['enabled' => false],
-                    'validation'            => ['email_validation_mode' => 'html5'],
-                    'router'                => [
+                    'secret'               => 'test',
+                    'test'                 => true,
+                    'http_method_override' => false,
+                    'php_errors'           => ['log' => true],
+                    'profiler'             => ['enabled' => false],
+                    'validation'           => ['email_validation_mode' => 'html5'],
+                    'router'               => [
                         'resource'            => dirname(__DIR__) . '/resources/Functional/routes.php',
                         'type'                => 'php',
                         'strict_requirements' => true,

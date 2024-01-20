@@ -19,7 +19,7 @@ abstract class AbstractFunctionalTestCase extends WebTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->client = static::createClient(['environment' => 'test', 'debug' => 'false']);
+        $this->client = static::createClient(['environment' => 'test', 'debug' => false]);
         $this->client->catchExceptions(false);
     }
 
