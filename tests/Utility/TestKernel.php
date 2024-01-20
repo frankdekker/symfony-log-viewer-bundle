@@ -6,15 +6,18 @@ namespace FD\LogViewer\Tests\Utility;
 
 use Exception;
 use FD\LogViewer\FdLogViewerBundle;
+use FD\LogViewer\Service\JsonManifestAssetLoader;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
-class TestKernel extends BaseKernel
+class TestKernel extends BaseKernel implements CompilerPassInterface
 {
     /**
      * @return iterable<BundleInterface>
@@ -32,6 +35,14 @@ class TestKernel extends BaseKernel
     public function getLogDir(): string
     {
         return dirname(__DIR__) . '/resources/Functional/log';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function process(ContainerBuilder $container): void
+    {
+        $container->getDefinition(JsonManifestAssetLoader::class)->setPublic(true);
     }
 
     /**
@@ -70,6 +81,8 @@ class TestKernel extends BaseKernel
                 ]
             );
             $container->loadFromExtension('twig', ['strict_variables' => true, 'debug' => false]);
+
+            $container->register(Filesystem::class)->setPublic(true);
         });
     }
 }
