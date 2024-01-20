@@ -21,6 +21,10 @@ final class Configuration implements ConfigurationInterface
         $rootNode = $tree->getRootNode();
 
         $rootNode->children()
+            ->scalarNode('enable_default_monolog')
+                ->info('Enable default monolog configuration')
+                ->defaultTrue()
+            ->end()
             ->arrayNode('log_files')
                 ->info('List of log files to show')
                 ->useAttributeAsKey('log_name')
@@ -61,6 +65,7 @@ final class Configuration implements ConfigurationInterface
                     ->scalarNode('date_format')->info('The date format of how to present the date in the frontend.')->defaultNull()->end()
                 ->end()
             ->end();
+
 
         return $tree;
     }

@@ -5,11 +5,9 @@ namespace FD\LogViewer\DependencyInjection;
 
 use FD\LogViewer\Entity\Config\FinderConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;
-use FD\LogViewer\Service\JsonManifestVersionStrategy;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Throwable;
@@ -18,7 +16,7 @@ use Throwable;
  * @codeCoverageIgnore
  * @internal
  */
-final class Extension extends BaseExtension implements PrependExtensionInterface
+final class Extension extends BaseExtension
 {
     /**
      * @inheritDoc
@@ -32,19 +30,8 @@ final class Extension extends BaseExtension implements PrependExtensionInterface
         $mergedConfigs = $this->processConfiguration(new Configuration(), $configs);
 
         // add defaults
-        if (count($mergedConfigs['log_files']) === 0) {
-            $mergedConfigs['log_files']['monolog'] = [
-                'type'         => 'monolog',
-                'name'         => 'Monolog',
-                'finder'       => [
-                    'in'                   => '%kernel.logs_dir%',
-                    'name'                 => '*.log',
-                    'ignoreUnreadableDirs' => true,
-                    'followLinks'          => false
-                ],
-                'downloadable' => false,
-                'deletable'    => false,
-            ];
+        if ($mergedConfigs['enable_default_monolog']) {
+            $mergedConfigs = self::addMonologDefault($mergedConfigs);
         }
 
         foreach ($mergedConfigs['log_files'] as $key => $config) {
@@ -76,22 +63,25 @@ final class Extension extends BaseExtension implements PrependExtensionInterface
     }
 
     /**
-     * @inheritdoc
+     * @template T of array
+     * @phpstan-param T $configs
+     *
+     * @phpstan-return T
      */
-    public function prepend(ContainerBuilder $container): void
+    private static function addMonologDefault(array $configs): array
     {
-        $container->prependExtensionConfig(
-            'framework',
-            [
-                'assets' => [
-                    'enabled'  => true,
-                    'packages' => [
-                        'fd_symfony_log_viewer' => [
-                            'version_strategy' => JsonManifestVersionStrategy::class
-                        ],
-                    ],
-                ],
-            ]
-        );
+        // monolog
+        $configs['log_files']['monolog']['type']         ??= 'monolog';
+        $configs['log_files']['monolog']['name']         ??= 'Monolog';
+        $configs['log_files']['monolog']['downloadable'] ??= false;
+        $configs['log_files']['monolog']['deletable']    ??= false;
+
+        // finder
+        $configs['log_files']['monolog']['finder']['in']                   ??= '%kernel.logs_dir%';
+        $configs['log_files']['monolog']['finder']['name']                 ??= '*.log';
+        $configs['log_files']['monolog']['finder']['ignoreUnreadableDirs'] ??= true;
+        $configs['log_files']['monolog']['finder']['followLinks']          ??= false;
+
+        return $configs;
     }
 }

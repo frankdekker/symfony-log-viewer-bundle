@@ -23,12 +23,14 @@ use FD\LogViewer\Service\Folder\LogFolderOutputFactory;
 use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use FD\LogViewer\Service\Folder\LogFolderOutputSorter;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
-use FD\LogViewer\Service\JsonManifestVersionStrategy;
+use FD\LogViewer\Service\JsonManifestAssetLoader;
 use FD\LogViewer\Service\PerformanceService;
 use FD\LogViewer\Service\VersionService;
 use FD\LogViewer\StreamReader\StreamReaderFactory;
+use FD\LogViewer\Util\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\inline_service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
 return static function (ContainerConfigurator $container): void {
@@ -50,7 +52,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(RouteLoader::class)
         ->tag('routing.loader');
 
-    $services->set(JsonManifestVersionStrategy::class)
+    $services->set(JsonManifestAssetLoader::class)
         ->arg('$manifestPath', '%kernel.project_dir%/public/bundles/fdlogviewer/.vite/manifest.json');
 
     $services->set(FinderFactory::class);
@@ -60,7 +62,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogFolderOutputProvider::class);
     $services->set(LogFolderOutputSorter::class);
     $services->set(LogRecordsOutputProvider::class);
-    $services->set(LogParser::class);
+    $services->set(LogParser::class)->arg('$clock', inline_service(Clock::class));
     $services->set(LogFileParserProvider::class)
         ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.monolog_file_parser', 'name'));
     $services->set(LogQueryDtoFactory::class);

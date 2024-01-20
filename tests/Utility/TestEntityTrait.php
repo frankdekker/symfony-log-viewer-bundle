@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\LogViewer\Tests;
+namespace FD\LogViewer\Tests\Utility;
 
 use FD\LogViewer\Entity\Config\FinderConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;

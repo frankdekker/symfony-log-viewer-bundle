@@ -9,7 +9,7 @@ use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Entity\Output\LogFileOutput;
 use FD\LogViewer\Entity\Output\LogFolderOutput;
 use FD\LogViewer\Service\Folder\LogFolderOutputFactory;
-use FD\LogViewer\Tests\TestEntityTrait;
+use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

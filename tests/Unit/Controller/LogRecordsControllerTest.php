@@ -11,7 +11,7 @@ use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\File\LogQueryDtoFactory;
 use FD\LogViewer\Service\File\LogRecordsOutputProvider;
-use FD\LogViewer\Tests\TestEntityTrait;
+use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

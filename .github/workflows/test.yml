@@ -17,9 +17,6 @@ jobs:
       matrix:
         php-versions: [ '8.1', '8.2', '8.3' ]
         composer-flags: [ '', '--prefer-lowest' ]
-        exclude:
-          - php-versions: 8.3
-            composer-flags: ''
     steps:
       - uses: actions/checkout@v4
 
@@ -33,7 +30,7 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer update --prefer-dist --no-progress --no-suggest --prefer-stable ${{ matrix.composer-flags }}
+        run: composer update --prefer-dist --no-progress --prefer-stable ${{ matrix.composer-flags }}
 
       - name: Run test suite
         run: composer test
@@ -51,7 +48,7 @@ jobs:
           coverage: pcov
 
       - name: Install dependencies
-        run: composer update --prefer-dist --no-progress --no-suggest --prefer-stable
+        run: composer update --prefer-dist --no-progress --prefer-stable
 
       - name: Run test suite
         run: php -dpcov.enabled=1 -dpcov.exclude="~vendor~" vendor/bin/phpunit --testsuite unit,integration --coverage-clover ./.coverage/coverage.xml

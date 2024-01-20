@@ -6,6 +6,7 @@ namespace FD\LogViewer\Entity;
 use RuntimeException;
 use SplFileInfo;
 
+use function register_shutdown_function;
 use function sys_get_temp_dir;
 use function tempnam;
 use function unlink;
@@ -21,9 +22,12 @@ class TempFile extends SplFileInfo
             // @codeCoverageIgnoreEnd
         }
         parent::__construct($path);
+
+        // cleanup temp file when script ends (and not when object lifecycle ends)
+        register_shutdown_function(fn() => $this->destruct());
     }
 
-    public function __destruct()
+    public function destruct(): void
     {
         if ($this->isFile()) {
             @unlink($this->getPathname());
