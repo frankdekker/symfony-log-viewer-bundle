@@ -17,6 +17,6 @@ class DownloadFolderTest extends AbstractFunctionalTestCase
         $this->client->request('GET', '/log-viewer/api/folder/' . self::getShortMd5('resources/Functional/log'));
         static::assertResponseIsSuccessful();
 
-        static::assertSame('attachment; filename=test.log', $this->client->getResponse()->headers->get('Content-Disposition'));
+        static::assertSame('attachment; filename=log.zip', $this->client->getResponse()->headers->get('Content-Disposition'));
     }
 }

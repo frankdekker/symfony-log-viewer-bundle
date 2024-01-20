@@ -17,7 +17,7 @@ class TempFileTest extends TestCase
         static::assertFileExists($path);
 
         // should be deleted on destruct
-        unset($file);
+        $file->destruct();
         static::assertFileDoesNotExist($path);
     }
 }
