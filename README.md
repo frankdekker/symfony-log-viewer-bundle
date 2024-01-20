@@ -56,6 +56,13 @@ return static function (RoutingConfigurator $routingConfigurator): void {
     $routingConfigurator->import('.', 'fd_symfony_log_viewer')->prefix('/log-viewer');
 };
 ```
+Ensure access to your logs are secure. Modify `/config/packages/security.php`:
+```php
+return static function (SecurityConfig $security): void {
+    ...
+    $security->accessControl()->path('^/log-viewer')->roles(['ROLE_ADMIN']);
+};
+```
 
 After installing the package, publish the front-end assets by running:
 ```bash
