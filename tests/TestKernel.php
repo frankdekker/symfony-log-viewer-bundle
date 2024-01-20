@@ -58,6 +58,18 @@ class TestKernel extends BaseKernel
                     ],
                 ]
             );
+
+            $container->loadFromExtension(
+                'fd_log_viewer',
+                [
+                    'log_files' => [
+                        'monolog' => [
+                            'downloadable' => true,
+                            'deletable'    => true,
+                        ],
+                    ],
+                ]
+            );
             $container->loadFromExtension('twig', ['strict_variables' => true, 'debug' => false]);
         });
     }

@@ -30,19 +30,8 @@ final class Extension extends BaseExtension
         $mergedConfigs = $this->processConfiguration(new Configuration(), $configs);
 
         // add defaults
-        if (count($mergedConfigs['log_files']) === 0) {
-            $mergedConfigs['log_files']['monolog'] = [
-                'type'         => 'monolog',
-                'name'         => 'Monolog',
-                'finder'       => [
-                    'in'                   => '%kernel.logs_dir%',
-                    'name'                 => '*.log',
-                    'ignoreUnreadableDirs' => true,
-                    'followLinks'          => false
-                ],
-                'downloadable' => false,
-                'deletable'    => false,
-            ];
+        if ($mergedConfigs['enable_default_monolog']) {
+            $mergedConfigs = self::addMonologDefault($mergedConfigs);
         }
 
         foreach ($mergedConfigs['log_files'] as $key => $config) {
@@ -71,5 +60,28 @@ final class Extension extends BaseExtension
     public function getAlias(): string
     {
         return 'fd_log_viewer';
+    }
+
+    /**
+     * @template T of array
+     * @phpstan-param T $configs
+     *
+     * @phpstan-return T
+     */
+    private static function addMonologDefault(array $configs): array
+    {
+        // monolog
+        $configs['log_files']['monolog']['type']         ??= 'monolog';
+        $configs['log_files']['monolog']['name']         ??= 'Monolog';
+        $configs['log_files']['monolog']['downloadable'] ??= false;
+        $configs['log_files']['monolog']['deletable']    ??= false;
+
+        // finder
+        $configs['log_files']['monolog']['finder']['in']                   ??= '%kernel.logs_dir%';
+        $configs['log_files']['monolog']['finder']['name']                 ??= '*.log';
+        $configs['log_files']['monolog']['finder']['ignoreUnreadableDirs'] ??= true;
+        $configs['log_files']['monolog']['finder']['followLinks']          ??= false;
+
+        return $configs;
     }
 }

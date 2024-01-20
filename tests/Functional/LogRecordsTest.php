@@ -8,11 +8,6 @@ use PHPUnit\Framework\Attributes\CoversNothing;
 #[CoversNothing]
 class LogRecordsTest extends AbstractFunctionalTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testInvoke(): void
     {
         $this->client->request('GET', '/log-viewer/api/logs?file=85d222d3');

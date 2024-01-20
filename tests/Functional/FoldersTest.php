@@ -8,11 +8,6 @@ use PHPUnit\Framework\Attributes\CoversNothing;
 #[CoversNothing]
 class FoldersTest extends AbstractFunctionalTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testInvoke(): void
     {
         $this->client->request('GET', '/log-viewer/api/folders');
