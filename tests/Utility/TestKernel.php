@@ -46,7 +46,6 @@ class TestKernel extends BaseKernel
                     'secret'                => 'test',
                     'test'                  => null,
                     'http_method_override'  => false,
-                    'handle_all_throwables' => false,
                     'php_errors'            => ['log' => true],
                     'profiler'              => ['enabled' => false],
                     'validation'            => ['email_validation_mode' => 'html5'],
