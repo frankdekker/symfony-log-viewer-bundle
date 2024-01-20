@@ -10,7 +10,7 @@ class LogRecordsTest extends AbstractFunctionalTestCase
 {
     public function testInvoke(): void
     {
-        $this->client->request('GET', '/log-viewer/api/logs?file=85d222d3');
+        $this->client->request('GET', '/log-viewer/api/logs?file=' . self::getShortMd5('resources/Functional/log/test.log'));
         static::assertResponseIsSuccessful();
 
         /** @var array{channels: mixed[], levels: mixed[], logs: mixed[]} $data */

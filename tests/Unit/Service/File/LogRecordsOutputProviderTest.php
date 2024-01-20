@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\File;
 
-use FD\LogViewer\Entity\Config\FinderConfig;
-use FD\LogViewer\Entity\Config\LogFilesConfig;
 use FD\LogViewer\Entity\Index\LogIndex;
 use FD\LogViewer\Entity\Index\PerformanceStats;
 use FD\LogViewer\Entity\LogFile;
@@ -14,7 +12,7 @@ use FD\LogViewer\Service\File\LogFileParserInterface;
 use FD\LogViewer\Service\File\LogFileParserProvider;
 use FD\LogViewer\Service\File\LogRecordsOutputProvider;
 use FD\LogViewer\Service\PerformanceService;
-use FD\LogViewer\Tests\TestEntityTrait;
+use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

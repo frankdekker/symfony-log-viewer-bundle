@@ -6,11 +6,15 @@ namespace FD\LogViewer\Tests\Functional;
 use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversNothing]
-class DownloadFileTest extends AbstractFunctionalTestCase
+class DownloadFolderTest extends AbstractFunctionalTestCase
 {
     public function testInvoke(): void
     {
-        $this->client->request('GET', '/log-viewer/api/file/' . self::getShortMd5('resources/Functional/log/test.log'));
+        if (extension_loaded('zip') === false) {
+            static::markTestSkipped('The zip extension is not available.');
+        }
+
+        $this->client->request('GET', '/log-viewer/api/folder/' . self::getShortMd5('resources/Functional/log'));
         static::assertResponseIsSuccessful();
 
         static::assertSame('attachment; filename=test.log', $this->client->getResponse()->headers->get('Content-Disposition'));

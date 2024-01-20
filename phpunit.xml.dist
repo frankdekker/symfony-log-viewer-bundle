@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd"
-         bootstrap="tests/bootstrap.php"
          requireCoverageMetadata="true"
          failOnRisky="true"
          failOnWarning="true"
@@ -13,7 +12,7 @@
          executionOrder="defects"
 >
     <php>
-        <env name="KERNEL_CLASS" value="FD\LogViewer\Tests\TestKernel"/>
+        <env name="KERNEL_CLASS" value="FD\LogViewer\Tests\Utility\TestKernel"/>
     </php>
     <testsuites>
         <testsuite name="functional">

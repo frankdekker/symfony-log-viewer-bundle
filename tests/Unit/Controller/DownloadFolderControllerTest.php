@@ -8,7 +8,7 @@ use FD\LogViewer\Controller\DownloadFolderController;
 use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
-use FD\LogViewer\Tests\TestEntityTrait;
+use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use SplFileInfo;

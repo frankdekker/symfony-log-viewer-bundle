@@ -8,7 +8,6 @@ use FD\LogViewer\Entity\LogFile;
 use FD\LogViewer\Entity\LogFolder;
 use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Service\Folder\LogFolderFactory;
-use FD\LogViewer\Tests\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\SplFileInfo;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Functional;
 
 use Exception;
+use FD\LogViewer\Util\Utils;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,5 +49,10 @@ abstract class AbstractFunctionalTestCase extends WebTestCase
         static::assertIsArray($data);
 
         return $data;
+    }
+
+    protected static function getShortMd5(string $relativePath): string
+    {
+        return Utils::shortMd5((string)realpath(dirname(__DIR__) . '/' . $relativePath));
     }
 }

@@ -8,7 +8,7 @@ use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
-use FD\LogViewer\Tests\TestEntityTrait;
+use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use Monolog\Logger;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;

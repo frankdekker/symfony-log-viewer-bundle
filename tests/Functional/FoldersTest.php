@@ -15,7 +15,6 @@ class FoldersTest extends AbstractFunctionalTestCase
 
         /** @var array<array{files: array<array{name: string}>}> $data */
         $data = static::responseToArray($this->client->getResponse());
-        static::assertTrue($data[0]['files'][0]['name']);
         static::assertSame('test.log', $data[0]['files'][0]['name']);
     }
 }
