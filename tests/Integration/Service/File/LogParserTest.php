@@ -95,9 +95,19 @@ class LogParserTest extends AbstractIntegrationTestCase
         static::assertNotNull($index->getPaginator());
     }
 
+    public function testParsePaginatorWithOffset(): void
+    {
+        $query = new LogQueryDto('identifier', 5, '', DirectionEnum::Asc, null, null, 500);
+        $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
+        $index = $this->parser->parse($file, $this->lineParser, $query);
+
+        static::assertCount(99, $index->getLines());
+        static::assertNotNull($index->getPaginator());
+    }
+
     public function testParseEof(): void
     {
-        $query = new LogQueryDto('identifier', 0, '', DirectionEnum::Asc, null, null, 500);
+        $query = new LogQueryDto('identifier', null, '', DirectionEnum::Asc, null, null, 500);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
