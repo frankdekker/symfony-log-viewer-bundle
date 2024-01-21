@@ -14,6 +14,7 @@ fd_log_viewer:
       finder: 
         in: "%kernel.logs_dir%"
         name: "*.log"
+        depth: '== 0'
         ignoreUnreadableDirs: true
         followLinks: false
       downloadable: false
@@ -59,6 +60,16 @@ Example:
 ```text
 *.log,*.txt
 ```
+
+### log_files.finder.depth <small>`int|string|string[]|null`</small>
+
+The maximum depth of directories to search for log files. If set to null all subdirectories will be added. Default: `== 0`
+
+Example:
+- `'== 0'` will only search in the specified directory.
+- `'>= 0'` will search in the specified directory and all subdirectories.
+- `['>= 0', '< 3]` will search in the specified directory and all subdirectories up to a depth of 2. 
+
 
 ### log_files.finder.ignoreUnreadableDirs <small>`boolean`</small>
 
