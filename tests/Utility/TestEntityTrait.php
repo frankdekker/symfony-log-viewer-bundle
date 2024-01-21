@@ -38,7 +38,7 @@ trait TestEntityTrait
             'dateFormat'         => 'Y-m-d'
         ];
 
-        $arguments['finderConfig'] ??= new FinderConfig('directory', 'file', true, true);
+        $arguments['finderConfig'] ??= new FinderConfig('directory', 'file', null, true, true);
 
         return new LogFilesConfig(...$arguments);
     }
