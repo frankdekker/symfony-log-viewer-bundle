@@ -23,8 +23,9 @@ class Arrays
             // recursively merge (non-list) arrays
             if (is_array($value)
                 && is_array($target[$key])
-                && (count($value) === 0 || array_is_list($value) === false)
-                && (count($target[$key]) === 0 || array_is_list($target[$key]) === false)) {
+                && array_is_list($value) === false
+                && (count($target[$key]) === 0 || array_is_list($target[$key]) === false)
+            ) {
                 $target[$key] = self::merge($target[$key], $value);
             }
         }
