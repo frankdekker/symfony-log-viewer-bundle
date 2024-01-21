@@ -29,7 +29,7 @@ final class Extension extends BaseExtension
                 'finder'       => [
                     'in'                   => '%kernel.logs_dir%',
                     'name'                 => '*.log',
-                    'depth'                => 1,
+                    'depth'                => '== 0',
                     'ignoreUnreadableDirs' => true,
                     'followLinks'          => false,
                 ],

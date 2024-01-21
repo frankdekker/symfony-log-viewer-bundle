@@ -44,7 +44,7 @@ final class Configuration implements ConfigurationInterface
                                 ->defaultNull()
                             ->end()
                             ->scalarNode('depth')
-                                ->info("The symfony/finder directory depth to search files for. Example: 1")
+                                ->info("The symfony/finder directory depth to search files for. Example: > 0")
                                 ->defaultNull()
                             ->end()
                             ->scalarNode('ignoreUnreadableDirs')
