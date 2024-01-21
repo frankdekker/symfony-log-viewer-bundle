@@ -56,7 +56,7 @@ return static function (RoutingConfigurator $routingConfigurator): void {
     $routingConfigurator->import('.', 'fd_symfony_log_viewer')->prefix('/log-viewer');
 };
 ```
-<span style="color:yellow">⚠</span> Ensure access to your logs are secure. Add the line below to `/config/packages/security.php`:
+<span style="color:yellow">⚠</span> Ensure access to your logs are secure by adding the line below to `/config/packages/security.php`:
 ```php
 return static function (SecurityConfig $security): void {
     ...
