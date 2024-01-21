@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Dev;
 
 use Exception;
-use FD\LogViewer\FdLogViewerBundle;
+use FD\LogViewer\FDLogViewerBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\MonologBundle\MonologBundle;
@@ -28,7 +28,7 @@ class Kernel extends BaseKernel
             new FrameworkBundle(),
             new MonologBundle(),
             new TwigBundle(),
-            new FdLogViewerBundle(),
+            new FDLogViewerBundle(),
             new WebProfilerBundle(),
         ];
     }

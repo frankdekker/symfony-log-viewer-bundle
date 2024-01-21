@@ -40,11 +40,12 @@ Use [composer](https://getcomposer.org/).
 composer require fdekker/log-viewer-bundle
 ```
 If you don't use Symfony Flex, you'll need to manually enable the bundle:
+
 ```php
 # /config/bundles.php
 return [
     // ...
-    FD\LogViewer\FdLogViewerBundle::class => ['all' => true],
+    FD\LogViewer\FDLogViewerBundle::class => ['all' => true],
 ];
 ```
 And add the route by creating file `/config/routes/fd_log_viewer.php`:
