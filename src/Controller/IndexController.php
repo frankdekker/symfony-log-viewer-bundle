@@ -32,7 +32,7 @@ class IndexController extends AbstractController
         $folders = $this->folderOutputProvider->provide(DirectionEnum::Desc);
 
         return $this->render(
-            '@FdLogViewer/index.html.twig',
+            '@FDLogViewer/index.html.twig',
             [
                 'base_uri' => $baseUri,
                 'folders'  => $folders,
