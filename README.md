@@ -78,4 +78,8 @@ By default, the application is available at: `{APP_URL}/log-viewer`.
 (for example: `https://my-app.test/log-viewer`)
 
 ## Configuration
-- [Adjust default configuration](docs/configuration.md)
+- [Adding more monolog directories](docs/adding-more-monolog-directories.md)
+- [Modifying monolog configuration](docs/modifying-monolog-configuration.md)
+- [Disabling the default monolog configuration](docs/disabling-default-monolog-configuration.md)
+- [Adding additional log files](docs/adding-additional-log-files.md)
+- [Full configuration reference](docs/configuration-reference.md)
