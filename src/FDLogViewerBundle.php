@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * @codeCoverageIgnore
  */
-final class FdLogViewerBundle extends Bundle
+final class FDLogViewerBundle extends Bundle
 {
     public function build(ContainerBuilder $container): void
     {

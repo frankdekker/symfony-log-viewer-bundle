@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Utility;
 
 use Exception;
-use FD\LogViewer\FdLogViewerBundle;
+use FD\LogViewer\FDLogViewerBundle;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\MonologBundle\MonologBundle;
@@ -24,7 +24,7 @@ class TestKernel extends BaseKernel implements CompilerPassInterface
      */
     public function registerBundles(): iterable
     {
-        return [new FrameworkBundle(), new MonologBundle(), new TwigBundle(), new FdLogViewerBundle()];
+        return [new FrameworkBundle(), new MonologBundle(), new TwigBundle(), new FDLogViewerBundle()];
     }
 
     public function getCacheDir(): string

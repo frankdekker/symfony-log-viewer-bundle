@@ -50,7 +50,7 @@ class IndexControllerTest extends AbstractControllerTestCase
             ->willReturn('url1', 'url2');
 
         $this->expectRender(
-            '@FdLogViewer/index.html.twig',
+            '@FDLogViewer/index.html.twig',
             [
                 'base_uri' => 'baseUri',
                 'folders'  => [$folder],
