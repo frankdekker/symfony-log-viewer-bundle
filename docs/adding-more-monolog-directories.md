@@ -1,6 +1,6 @@
 ## Add more monolog directories
 
-If you want to add more directories or more log files to the default monolog configuration, you can do it by adding 
+If you want to add more directories or more log files to the default monolog configuration, you can do it by 
 changing the finder configuration `fd_log_viewer.log_files.monolog.finder`:
 
 ```yaml
