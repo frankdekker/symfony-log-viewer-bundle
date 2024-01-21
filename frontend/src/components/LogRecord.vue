@@ -10,8 +10,8 @@ defineProps<{
 </script>
 
 <template>
-    <a href="javascript:" class="slv-list-group-item list-group-item list-group-item-action" @click="expanded = !expanded" :aria-expanded="expanded">
-        <div :class="{ 'text-nowrap': !expanded, 'overflow-hidden': !expanded }">
+    <div class="slv-list-group-item list-group-item list-group-item-action" :aria-expanded="expanded">
+        <div class="slv-list-link" :class="{ 'text-nowrap': !expanded, 'overflow-hidden': !expanded }" @click="expanded = !expanded">
             <i class="slv-indicator bi bi-chevron-right me-1"></i>
             <span class="pe-2 text-secondary">{{ logRecord.datetime }}</span>
             <span class="text-primary pe-2">{{ logRecord.channel }}</span>
@@ -28,12 +28,16 @@ defineProps<{
                 <pre class="m-0"><code>{{ prettyFormatJson(logRecord.extra) }}</code></pre>
             </div>
         </div>
-    </a>
+    </div>
 </template>
 
 <style scoped>
 .slv-list-group-item {
     --bs-list-group-item-padding-x: 0px;
     --bs-list-group-item-padding-y: 0px;
+}
+
+.slv-list-link {
+    cursor: pointer;
 }
 </style>
