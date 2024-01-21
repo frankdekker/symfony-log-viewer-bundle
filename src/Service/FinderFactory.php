@@ -20,6 +20,10 @@ class FinderFactory
             $finder->followLinks();
         }
 
+        if ($config->depth !== null) {
+            $finder->depth($config->depth);
+        }
+
         $finder->files()->in(array_map('trim', explode(',', $config->inDirectories)));
 
         if ($config->fileName !== null) {

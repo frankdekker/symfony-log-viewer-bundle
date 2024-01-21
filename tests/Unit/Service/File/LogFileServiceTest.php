@@ -30,7 +30,7 @@ class LogFileServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->finderConfig = new FinderConfig(__DIR__, null, false, false);
+        $this->finderConfig = new FinderConfig(__DIR__, null, null, false, false);
         $this->config       = $this->createLogFileConfig(['finderConfig' => $this->finderConfig]);
 
         $this->folderService    = $this->createMock(FinderFactory::class);
