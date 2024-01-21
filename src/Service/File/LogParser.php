@@ -41,9 +41,10 @@ class LogParser
             $index->addLine($logLine);
         }
 
-        // stream reader didn't reach the end
-        if ($lineIterator->isEOF() === false) {
-            $index->setPaginator(new Paginator($logQuery->direction, $logQuery->offset === null, true, $lineIterator->getPosition()));
+        // create paginator
+        $hasOffset = (int)$logQuery->offset > 0;
+        if ($lineIterator->isEOF() === false || $hasOffset) {
+            $index->setPaginator(new Paginator($logQuery->direction, $hasOffset, $lineIterator->isEOF() === false, $lineIterator->getPosition()));
         }
 
         return $index;
