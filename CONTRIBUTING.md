@@ -26,7 +26,7 @@ We accept contributions via Pull Requests on [Github](https://github.com/).
 - [docker compose plugin](https://docs.docker.com/compose/install/linux/)
 
 ### Getting started
-A minimal Symfony project has been setup under `/dev/`. To start development, in the root of the project:
+A minimal Symfony project has been setup under `/dev/`. To start development, in the root of the project run:
 
 ```bash
 ./start.sh [--port <nr>]
@@ -41,6 +41,7 @@ After the containers are up and running, the project is available at http://loca
 ## Running tests and code style checks
  
 ``` bash
-composer check
-composer test
+composer run check
+composer run test
+cd frontend && npm run lint
 ```
