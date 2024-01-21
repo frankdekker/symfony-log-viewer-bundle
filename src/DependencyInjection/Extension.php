@@ -5,6 +5,7 @@ namespace FD\LogViewer\DependencyInjection;
 
 use FD\LogViewer\Entity\Config\FinderConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Util\Arrays;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
@@ -18,6 +19,23 @@ use Throwable;
  */
 final class Extension extends BaseExtension
 {
+    private const DEFAULT_MONOLOG_CONFIG = [
+        'log_files' => [
+            'monolog' => [
+                'type'         => 'monolog',
+                'name'         => 'Monolog',
+                'downloadable' => false,
+                'deletable'    => false,
+                'finder'       => [
+                    'in'                   => '%kernel.logs_dir%',
+                    'name'                 => '*.log',
+                    'ignoreUnreadableDirs' => true,
+                    'followLinks'          => false,
+                ],
+            ]
+        ]
+    ];
+
     /**
      * @inheritDoc
      * @throws Throwable
@@ -31,7 +49,7 @@ final class Extension extends BaseExtension
 
         // add defaults
         if ($mergedConfigs['enable_default_monolog']) {
-            $mergedConfigs = self::addMonologDefault($mergedConfigs);
+            $mergedConfigs = Arrays::merge($mergedConfigs, self::DEFAULT_MONOLOG_CONFIG);
         }
 
         foreach ($mergedConfigs['log_files'] as $key => $config) {
@@ -60,28 +78,5 @@ final class Extension extends BaseExtension
     public function getAlias(): string
     {
         return 'fd_log_viewer';
-    }
-
-    /**
-     * @template T of array
-     * @phpstan-param T $configs
-     *
-     * @phpstan-return T
-     */
-    private static function addMonologDefault(array $configs): array
-    {
-        // monolog
-        $configs['log_files']['monolog']['type']         ??= 'monolog';
-        $configs['log_files']['monolog']['name']         ??= 'Monolog';
-        $configs['log_files']['monolog']['downloadable'] ??= false;
-        $configs['log_files']['monolog']['deletable']    ??= false;
-
-        // finder
-        $configs['log_files']['monolog']['finder']['in']                   ??= '%kernel.logs_dir%';
-        $configs['log_files']['monolog']['finder']['name']                 ??= '*.log';
-        $configs['log_files']['monolog']['finder']['ignoreUnreadableDirs'] ??= true;
-        $configs['log_files']['monolog']['finder']['followLinks']          ??= false;
-
-        return $configs;
     }
 }
