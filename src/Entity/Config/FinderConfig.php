@@ -11,6 +11,7 @@ class FinderConfig
     public function __construct(
         public readonly string $inDirectories,
         public readonly ?string $fileName,
+        public readonly ?int $depth,
         public readonly bool $ignoreUnreadableDirs,
         public readonly bool $followLinks
     ) {

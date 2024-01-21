@@ -22,7 +22,7 @@ class FinderFactoryTest extends TestCase
 
     public function testFindFilesMinimal(): void
     {
-        $config   = new FinderConfig(__DIR__, null, false, false);
+        $config   = new FinderConfig(__DIR__, null, null, false, false);
         $expected = (new Finder())->files()->in([__DIR__])->sortByName();
 
         static::assertEquals($expected, $this->service->createForConfig($config));
@@ -30,8 +30,8 @@ class FinderFactoryTest extends TestCase
 
     public function testFindFilesFull(): void
     {
-        $config   = new FinderConfig(__DIR__, '*.php', true, true);
-        $expected = (new Finder())->ignoreUnreadableDirs()->followLinks()->files()->in([__DIR__])->name(['*.php'])->sortByName();
+        $config   = new FinderConfig(__DIR__, '*.php', 2, true, true);
+        $expected = (new Finder())->ignoreUnreadableDirs()->followLinks()->depth(2)->files()->in([__DIR__])->name(['*.php'])->sortByName();
 
         static::assertEquals($expected, $this->service->createForConfig($config));
     }

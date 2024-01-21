@@ -29,6 +29,7 @@ final class Extension extends BaseExtension
                 'finder'       => [
                     'in'                   => '%kernel.logs_dir%',
                     'name'                 => '*.log',
+                    'depth'                => 1,
                     'ignoreUnreadableDirs' => true,
                     'followLinks'          => false,
                 ],
@@ -57,6 +58,7 @@ final class Extension extends BaseExtension
                 ->setPublic(false)
                 ->setArgument('$inDirectories', $config['finder']['in'])
                 ->setArgument('$fileName', $config['finder']['name'])
+                ->setArgument('$depth', $config['finder']['depth'])
                 ->setArgument('$ignoreUnreadableDirs', $config['finder']['ignoreUnreadableDirs'])
                 ->setArgument('$followLinks', $config['finder']['followLinks']);
 
