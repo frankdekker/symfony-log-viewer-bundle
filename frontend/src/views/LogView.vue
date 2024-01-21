@@ -71,14 +71,23 @@ onMounted(() => {
                        placeholder="Search log entries"
                        aria-label="Search log entries"
                        aria-describedby="button-search"
+                       @change="navigate"
                        v-model="query">
 
-                <select class="slv-menu-sort-direction form-control" aria-label="Sort direction" title="Sort direction" v-model="sort">
+                <select class="slv-menu-sort-direction form-control"
+                        aria-label="Sort direction"
+                        title="Sort direction"
+                        v-model="sort"
+                        @change="navigate">
                     <option value="desc">Newest First</option>
                     <option value="asc">Oldest First</option>
                 </select>
 
-                <select class="slv-menu-page-size form-control" aria-label="Entries per page" title="Entries per page" v-model="perPage">
+                <select class="slv-menu-page-size form-control"
+                        aria-label="Entries per page"
+                        title="Entries per page"
+                        v-model="perPage"
+                        @change="navigate">
                     <option value="50">50</option>
                     <option value="100">100</option>
                     <option value="150">150</option>
