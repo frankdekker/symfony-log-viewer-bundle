@@ -1,0 +1,40 @@
+<?php
+declare(strict_types=1);
+
+namespace FD\LogViewer\Service\Parser;
+
+use DateTimeImmutable;
+use Exception;
+use FD\LogViewer\Entity\Parser\DateAfterTerm;
+use FD\LogViewer\Entity\Parser\DateBeforeTerm;
+use FD\LogViewer\Entity\Parser\StringTerm;
+use FD\LogViewer\Entity\Parser\TermInterface;
+
+/**
+ * BNF
+ * <term> ::= <date-term> <string>
+ * <date-term> ::= before:<string> | after:<string>
+ */
+class TermParser
+{
+    public function __construct(private readonly StringParser $stringParser)
+    {
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function parse(StringReader $string): TermInterface
+    {
+        $string->skipWhitespace();
+
+        if (strcasecmp('before:', $string->peek(6)) === 0) {
+            return new DateBeforeTerm(new DateTimeImmutable($this->stringParser->parse($string)));
+        }
+        if (strcasecmp('after:', $string->peek(6)) === 0) {
+            return new DateAfterTerm(new DateTimeImmutable($this->stringParser->parse($string)));
+        }
+
+        return new StringTerm($this->stringParser->parse($string));
+    }
+}
