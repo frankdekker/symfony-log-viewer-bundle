@@ -10,26 +10,27 @@ class QuotedStringParser
         // skip the opening quote
         $string->next();
 
-        $result       = '';
-        $previousChar = null;
+        $result  = '';
+        $escaped = false;
         for (; $string->eol() === false; $string->next()) {
             $char = $string->get();
 
-            if ($char === $escapeChar) {
-                if ($previousChar === null) {
-                    $previousChar = $char;
-                } elseif ($previousChar === $char) {
-                    $previousChar = null;
-                }
+            // skip the escape character
+            if ($char === $escapeChar && $escaped === false) {
+                $escaped = true;
                 continue;
             }
 
-            if ($previousChar === null && $char === $quote) {
+            if ($escaped === false && $char === $quote) {
                 break;
             }
 
-            $result       .= $char;
-            $previousChar = null;
+            if ($escaped) {
+                $result  .= $escapeChar;
+                $escaped = false;
+            }
+
+            $result .= $char;
         }
 
         return $result;
