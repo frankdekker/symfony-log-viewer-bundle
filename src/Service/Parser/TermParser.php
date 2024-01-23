@@ -7,8 +7,8 @@ use DateTimeImmutable;
 use Exception;
 use FD\LogViewer\Entity\Parser\DateAfterTerm;
 use FD\LogViewer\Entity\Parser\DateBeforeTerm;
-use FD\LogViewer\Entity\Parser\WordTerm;
 use FD\LogViewer\Entity\Parser\TermInterface;
+use FD\LogViewer\Entity\Parser\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
 
 /**
@@ -32,10 +32,15 @@ class TermParser
         if (strcasecmp('before:', $string->peek(7)) === 0) {
             return new DateBeforeTerm(new DateTimeImmutable($this->stringParser->parse($string)));
         }
+
         if (strcasecmp('after:', $string->peek(6)) === 0) {
             return new DateAfterTerm(new DateTimeImmutable($this->stringParser->parse($string)));
         }
 
-        return new WordTerm($this->stringParser->parse($string));
+        if (strcasecmp('exclude:', $string->peek(8)) === 0) {
+            return new WordTerm($this->stringParser->parse($string), WordTerm::TYPE_EXCLUDE);
+        }
+
+        return new WordTerm($this->stringParser->parse($string), WordTerm::TYPE_INCLUDE);
     }
 }

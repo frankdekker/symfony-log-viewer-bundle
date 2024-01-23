@@ -58,6 +58,21 @@ class TermParserTest extends TestCase
     /**
      * @throws Exception
      */
+    public function testParseExcludeWord(): void
+    {
+        $string = new StringReader("   exclude:foobar");
+
+        $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('foobar');
+
+        $term = $this->parser->parse($string);
+        static::assertInstanceOf(WordTerm::class, $term);
+        static::assertSame('foobar', $term->string);
+        static::assertSame(WordTerm::TYPE_EXCLUDE, $term->type);
+    }
+
+    /**
+     * @throws Exception
+     */
     public function testParseString(): void
     {
         $string = new StringReader("   foobar");
@@ -67,5 +82,6 @@ class TermParserTest extends TestCase
         $term = $this->parser->parse($string);
         static::assertInstanceOf(WordTerm::class, $term);
         static::assertSame('foobar', $term->string);
+        static::assertSame(WordTerm::TYPE_INCLUDE, $term->type);
     }
 }
