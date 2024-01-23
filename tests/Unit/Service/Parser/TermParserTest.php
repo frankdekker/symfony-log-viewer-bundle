@@ -6,7 +6,7 @@ namespace FD\LogViewer\Tests\Unit\Service\Parser;
 use Exception;
 use FD\LogViewer\Entity\Parser\DateAfterTerm;
 use FD\LogViewer\Entity\Parser\DateBeforeTerm;
-use FD\LogViewer\Entity\Parser\StringTerm;
+use FD\LogViewer\Entity\Parser\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
 use FD\LogViewer\Service\Parser\StringParser;
 use FD\LogViewer\Service\Parser\TermParser;
@@ -65,7 +65,7 @@ class TermParserTest extends TestCase
         $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('foobar');
 
         $term = $this->parser->parse($string);
-        static::assertInstanceOf(StringTerm::class, $term);
+        static::assertInstanceOf(WordTerm::class, $term);
         static::assertSame('foobar', $term->string);
     }
 }

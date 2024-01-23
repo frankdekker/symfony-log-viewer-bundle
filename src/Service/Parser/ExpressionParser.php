@@ -5,6 +5,8 @@ namespace FD\LogViewer\Service\Parser;
 
 use Exception;
 use FD\LogViewer\Entity\Parser\Expression;
+use FD\LogViewer\Entity\Parser\WordsTerm;
+use FD\LogViewer\Entity\Parser\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
 
 /**
@@ -26,11 +28,21 @@ class ExpressionParser
     public function parse(StringReader $string): Expression
     {
         $terms = [];
+        $words = [];
 
         while ($string->eol() === false) {
             $string->skipWhitespace();
-            $terms[] = $this->termParser->parse($string);
+            $term = $this->termParser->parse($string);
+            if ($term instanceof WordTerm) {
+                $words[] = $term;
+            } else {
+                $terms[] = $term;
+            }
             $string->skipWhitespace();
+        }
+
+        if (count($words) > 0) {
+            $terms[] = new WordsTerm($words);
         }
 
         return new Expression($terms);

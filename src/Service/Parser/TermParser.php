@@ -7,7 +7,7 @@ use DateTimeImmutable;
 use Exception;
 use FD\LogViewer\Entity\Parser\DateAfterTerm;
 use FD\LogViewer\Entity\Parser\DateBeforeTerm;
-use FD\LogViewer\Entity\Parser\StringTerm;
+use FD\LogViewer\Entity\Parser\WordTerm;
 use FD\LogViewer\Entity\Parser\TermInterface;
 use FD\LogViewer\Reader\String\StringReader;
 
@@ -36,6 +36,6 @@ class TermParser
             return new DateAfterTerm(new DateTimeImmutable($this->stringParser->parse($string)));
         }
 
-        return new StringTerm($this->stringParser->parse($string));
+        return new WordTerm($this->stringParser->parse($string));
     }
 }

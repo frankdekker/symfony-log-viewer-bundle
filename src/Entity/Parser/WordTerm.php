@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Entity\Parser;
 
-class StringTerm implements TermInterface
+class WordTerm implements TermInterface
 {
     /**
      * @codeCoverageIgnore Simple DTO
