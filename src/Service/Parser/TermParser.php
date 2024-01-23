@@ -28,7 +28,7 @@ class TermParser
     {
         $string->skipWhitespace();
 
-        if (strcasecmp('before:', $string->peek(6)) === 0) {
+        if (strcasecmp('before:', $string->peek(7)) === 0) {
             return new DateBeforeTerm(new DateTimeImmutable($this->stringParser->parse($string)));
         }
         if (strcasecmp('after:', $string->peek(6)) === 0) {
