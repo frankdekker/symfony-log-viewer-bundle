@@ -33,56 +33,19 @@ class ExpressionParserTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testParseWordsTerm(): void
-    {
-        $wordA = new WordTerm('foo');
-        $wordB = new WordTerm('foo');
-
-        $string = $this->createMock(StringReader::class);
-
-        $string->expects(self::exactly(3))->method('eol')->willReturn(false, false, true);
-        $string->expects(self::exactly(4))->method('skipWhitespace');
-        $this->termParser->expects(self::exactly(2))->method('parse')->with($string)->willReturn($wordA, $wordB);
-
-        $expected = new Expression([new WordsTerm([$wordA, $wordB])]);
-        $actual   = $this->parser->parse($string);
-        static::assertEquals($expected, $actual);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testParseTerms(): void
+    public function testParse(): void
     {
         $termA = new DateBeforeTerm(new DateTimeImmutable());
         $termB = new DateAfterTerm(new DateTimeImmutable());
+        $termC = new WordTerm('foo');
 
         $string = $this->createMock(StringReader::class);
 
-        $string->expects(self::exactly(3))->method('eol')->willReturn(false, false, true);
-        $string->expects(self::exactly(4))->method('skipWhitespace');
-        $this->termParser->expects(self::exactly(2))->method('parse')->with($string)->willReturn($termA, $termB);
+        $string->expects(self::exactly(4))->method('eol')->willReturn(false, false, false, true);
+        $string->expects(self::exactly(6))->method('skipWhitespace');
+        $this->termParser->expects(self::exactly(3))->method('parse')->with($string)->willReturn($termA, $termB, $termC);
 
-        $expected = new Expression([$termA, $termB]);
-        $actual   = $this->parser->parse($string);
-        static::assertEquals($expected, $actual);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testParseWordTermCombination(): void
-    {
-        $wordA = new WordTerm('foo');
-        $termB = new DateAfterTerm(new DateTimeImmutable());
-
-        $string = $this->createMock(StringReader::class);
-
-        $string->expects(self::exactly(3))->method('eol')->willReturn(false, false, true);
-        $string->expects(self::exactly(4))->method('skipWhitespace');
-        $this->termParser->expects(self::exactly(2))->method('parse')->with($string)->willReturn($wordA, $termB);
-
-        $expected = new Expression([$termB, new WordsTerm([$wordA])]);
+        $expected = new Expression([$termA, $termB, $termC]);
         $actual   = $this->parser->parse($string);
         static::assertEquals($expected, $actual);
     }
