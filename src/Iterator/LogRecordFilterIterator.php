@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Iterator;
 
+use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Entity\Index\LogRecord;
+use FD\LogViewer\Service\File\LogRecordMatcher;
 use IteratorAggregate;
 use Traversable;
 
@@ -22,9 +24,14 @@ class LogRecordFilterIterator implements IteratorAggregate
      * @param string[]|null            $levels
      * @param string[]|null            $channels
      */
-    public function __construct(private readonly iterable $iterator, ?array $levels, ?array $channels)
-    {
-        $this->levels   = $levels === null ? null : array_flip($levels);
+    public function __construct(
+        private readonly LogRecordMatcher $matcher,
+        private readonly iterable $iterator,
+        private readonly ?Expression $query,
+        ?array $levels,
+        ?array $channels
+    ) {
+        $this->levels = $levels === null ? null : array_flip($levels);
         $this->channels = $channels === null ? null : array_flip($channels);
     }
 
@@ -36,6 +43,10 @@ class LogRecordFilterIterator implements IteratorAggregate
             }
 
             if ($this->channels !== null && isset($this->channels[$record->channel]) === false) {
+                continue;
+            }
+
+            if ($this->query !== null && $this->matcher->matches($record, $this->query) === false) {
                 continue;
             }
 

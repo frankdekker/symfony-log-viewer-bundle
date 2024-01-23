@@ -16,6 +16,7 @@ use FD\LogViewer\Service\File\LogFileParserProvider;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\LogQueryDtoFactory;
+use FD\LogViewer\Service\File\LogRecordMatcher;
 use FD\LogViewer\Service\File\LogRecordsOutputProvider;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
 use FD\LogViewer\Service\FinderFactory;
@@ -83,6 +84,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogFileParserProvider::class)
         ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.monolog_file_parser', 'name'));
     $services->set(LogQueryDtoFactory::class);
+    $services->set(LogRecordMatcher::class);
     $services->set(MonologFileParser::class)
         ->tag('fd.symfony.log.viewer.monolog_file_parser', ['name' => 'monolog'])
         ->arg('$loggerLocator', tagged_iterator('fd.symfony.log.viewer.logger'));
