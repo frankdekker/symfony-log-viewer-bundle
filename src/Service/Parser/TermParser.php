@@ -9,6 +9,7 @@ use FD\LogViewer\Entity\Parser\DateAfterTerm;
 use FD\LogViewer\Entity\Parser\DateBeforeTerm;
 use FD\LogViewer\Entity\Parser\StringTerm;
 use FD\LogViewer\Entity\Parser\TermInterface;
+use FD\LogViewer\Reader\String\StringReader;
 
 /**
  * BNF

@@ -5,9 +5,9 @@ namespace FD\LogViewer\Tests\Integration\Service\File;
 
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
-use FD\LogViewer\StreamReader\StreamReaderFactory;
 use FD\LogViewer\Tests\Integration\AbstractIntegrationTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Psr\Clock\ClockInterface;

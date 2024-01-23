@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\LogViewer\StreamReader;
+namespace FD\LogViewer\Reader\Stream;
 
 use Generator;
 

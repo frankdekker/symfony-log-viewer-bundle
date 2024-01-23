@@ -9,6 +9,7 @@ use FD\LogViewer\Controller\DownloadFolderController;
 use FD\LogViewer\Controller\FoldersController;
 use FD\LogViewer\Controller\IndexController;
 use FD\LogViewer\Controller\LogRecordsController;
+use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use FD\LogViewer\Routing\RouteLoader;
 use FD\LogViewer\Routing\RouteService;
 use FD\LogViewer\Service\File\LogFileParserProvider;
@@ -26,7 +27,6 @@ use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
 use FD\LogViewer\Service\PerformanceService;
 use FD\LogViewer\Service\VersionService;
-use FD\LogViewer\StreamReader\StreamReaderFactory;
 use FD\LogViewer\Util\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 

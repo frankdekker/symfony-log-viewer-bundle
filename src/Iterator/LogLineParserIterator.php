@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace FD\LogViewer\Iterator;
 
 use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Reader\Stream\AbstractStreamReader;
 use FD\LogViewer\Service\File\LogLineParserInterface;
-use FD\LogViewer\StreamReader\AbstractStreamReader;
 use IteratorAggregate;
 use Traversable;
 

@@ -1,17 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\LogViewer\Service\Parser;
-
-use LogicException;
+namespace FD\LogViewer\Reader\String;
 
 class StringReader
 {
     private readonly int $length;
     private int $position = 0;
-
-    /** @var int[] */
-    private array $marks = [];
 
     public function __construct(private readonly string $string)
     {
@@ -61,40 +56,5 @@ class StringReader
     public function eol(): bool
     {
         return $this->position >= $this->length;
-    }
-
-    /**
-     * Mark the current position to optionally restore later
-     */
-    public function mark(): self
-    {
-        $this->marks[] = $this->position;
-
-        return $this;
-    }
-
-    /**
-     * Unmark the current position
-     */
-    public function unmark(): self
-    {
-        array_pop($this->marks);
-
-        return $this;
-    }
-
-    /**
-     * Restore the position to the previously marked position
-     */
-    public function restore(): self
-    {
-        $position = array_pop($this->marks);
-        if ($position === false) {
-            throw new LogicException('No mark to restore');
-        }
-
-        $this->position = (int)$position;
-
-        return $this;
     }
 }

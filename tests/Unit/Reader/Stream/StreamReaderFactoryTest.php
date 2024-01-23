@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\LogViewer\Tests\Unit\StreamReader;
+namespace FD\LogViewer\Tests\Unit\Reader\Stream;
 
 use FD\LogViewer\Entity\Output\DirectionEnum;
-use FD\LogViewer\StreamReader\StreamReaderFactory;
+use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;

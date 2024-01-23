@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\Parser;
 
+use FD\LogViewer\Reader\String\StringReader;
 use FD\LogViewer\Service\Parser\QuotedStringParser;
-use FD\LogViewer\Service\Parser\StringReader;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

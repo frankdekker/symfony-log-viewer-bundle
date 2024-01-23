@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\Parser;
 
+use FD\LogViewer\Reader\String\StringReader;
+
 class QuotedStringParser
 {
     public function parse(StringReader $string, string $quote, string $escapeChar): string

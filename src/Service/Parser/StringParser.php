@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\Parser;
 
+use FD\LogViewer\Reader\String\StringReader;
+
 class StringParser
 {
     public function __construct(private readonly QuotedStringParser $quotedStringParser, private readonly WordParser $wordParser)

@@ -5,6 +5,7 @@ namespace FD\LogViewer\Service\Parser;
 
 use Exception;
 use FD\LogViewer\Entity\Parser\Expression;
+use FD\LogViewer\Reader\String\StringReader;
 
 /**
  * BNF:
