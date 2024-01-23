@@ -11,7 +11,7 @@ use FD\LogViewer\Entity\Parser\Expression;
  * <expression> ::= <term> | <term> <expression>
  * <term> ::= <date-term> <string>
  * <date-term> ::= before:<string> | after:<string>
- * <string> ::= "characters-with-optional-space" | characters-without-space
+ * <string> ::= "<characters without unescaped double quote>" | '<characters without unescaped quote>' | <characters-without-space>
  */
 class ExpressionParser
 {
