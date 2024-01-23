@@ -44,7 +44,7 @@ const load = () => {
             levels.value   = logRecordStore.records.levels;
             channels.value = logRecordStore.records.channels;
         })
-        .catch(() => router.push({name: 'file-not-found'}));
+        .catch((error: Error) => router.push({name: error.message}));
 }
 
 onMounted(() => {
