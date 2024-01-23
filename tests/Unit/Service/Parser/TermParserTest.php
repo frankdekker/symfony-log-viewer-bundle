@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Service\Parser;
 
 use Exception;
-use FD\LogViewer\Entity\Parser\DateAfterTerm;
-use FD\LogViewer\Entity\Parser\DateBeforeTerm;
-use FD\LogViewer\Entity\Parser\WordTerm;
+use FD\LogViewer\Entity\Expression\DateAfterTerm;
+use FD\LogViewer\Entity\Expression\DateBeforeTerm;
+use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
 use FD\LogViewer\Service\Parser\StringParser;
 use FD\LogViewer\Service\Parser\TermParser;

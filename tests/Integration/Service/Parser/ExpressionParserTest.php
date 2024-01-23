@@ -5,10 +5,10 @@ namespace FD\LogViewer\Tests\Integration\Service\Parser;
 
 use DateTimeImmutable;
 use Exception;
-use FD\LogViewer\Entity\Parser\DateAfterTerm;
-use FD\LogViewer\Entity\Parser\DateBeforeTerm;
-use FD\LogViewer\Entity\Parser\Expression;
-use FD\LogViewer\Entity\Parser\WordTerm;
+use FD\LogViewer\Entity\Expression\DateAfterTerm;
+use FD\LogViewer\Entity\Expression\DateBeforeTerm;
+use FD\LogViewer\Entity\Expression\Expression;
+use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
 use FD\LogViewer\Service\Parser\ExpressionParser;
 use FD\LogViewer\Service\Parser\QuotedStringParser;

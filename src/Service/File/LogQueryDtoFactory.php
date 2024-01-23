@@ -3,20 +3,33 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\File;
 
+use Exception;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Reader\String\StringReader;
+use FD\LogViewer\Service\Parser\ExpressionParser;
 use Symfony\Component\HttpFoundation\Request;
 
 class LogQueryDtoFactory
 {
+    public function __construct(private readonly ExpressionParser $expressionParser)
+    {
+    }
+
+    /**
+     * @throws Exception
+     */
     public function create(Request $request): LogQueryDto
     {
         $fileIdentifier = $request->query->get('file', '');
         $offset         = $request->query->get('offset');
         $offset         = $offset === null || $offset === '0' ? null : (int)$offset;
-        $query          = $request->query->get('query', '');
+        $query          = trim($request->query->get('query', ''));
         $direction      = DirectionEnum::from($request->query->get('direction', 'desc'));
         $perPage        = $request->query->getInt('per_page', 25);
+
+        // search expression
+        $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query));
 
         // levels
         $selectedLevels = null;
@@ -33,7 +46,7 @@ class LogQueryDtoFactory
         return new LogQueryDto(
             $fileIdentifier,
             $offset,
-            $query,
+            $expression,
             $direction,
             $selectedLevels,
             $selectedChannels,

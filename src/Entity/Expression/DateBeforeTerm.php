@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\LogViewer\Entity\Parser;
+namespace FD\LogViewer\Entity\Expression;
 
 use DateTimeImmutable;
 

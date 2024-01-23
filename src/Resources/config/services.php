@@ -25,6 +25,11 @@ use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use FD\LogViewer\Service\Folder\LogFolderOutputSorter;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
+use FD\LogViewer\Service\Parser\ExpressionParser;
+use FD\LogViewer\Service\Parser\QuotedStringParser;
+use FD\LogViewer\Service\Parser\StringParser;
+use FD\LogViewer\Service\Parser\TermParser;
+use FD\LogViewer\Service\Parser\WordParser;
 use FD\LogViewer\Service\PerformanceService;
 use FD\LogViewer\Service\VersionService;
 use FD\LogViewer\Util\Clock;
@@ -54,6 +59,18 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(JsonManifestAssetLoader::class)
         ->arg('$manifestPath', '%kernel.project_dir%/public/bundles/fdlogviewer/.vite/manifest.json');
+
+    $services->set(ExpressionParser::class)
+        ->arg(
+            '$termParser',
+            inline_service(TermParser::class)
+                ->arg(
+                    '$stringParser',
+                    inline_service(StringParser::class)
+                        ->arg('$quotedStringParser', inline_service(QuotedStringParser::class))
+                        ->arg('$wordParser', inline_service(WordParser::class))
+                )
+        );
 
     $services->set(FinderFactory::class);
     $services->set(LogFileService::class)->arg('$logFileConfigs', tagged_iterator('fd.symfony.log.viewer.log_files_config'));
