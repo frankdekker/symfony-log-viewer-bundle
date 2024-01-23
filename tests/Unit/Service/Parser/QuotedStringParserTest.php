@@ -29,6 +29,7 @@ class QuotedStringParserTest extends TestCase
     {
         $reader = new StringReader('"word 1" bar');
         static::assertSame("word 1", $this->parser->parse($reader, '"', '\\'));
+        static::assertFalse($reader->eol());
     }
 
     public function testParseWithDifferentQuoteType(): void
@@ -48,5 +49,12 @@ class QuotedStringParserTest extends TestCase
     {
         $reader = new StringReader('"word\\"" bar');
         static::assertSame("word\\\"", $this->parser->parse($reader, '"', '\\'));
+    }
+
+    public function testParseToEol(): void
+    {
+        $reader = new StringReader('"word"');
+        static::assertSame("word", $this->parser->parse($reader, '"', '\\'));
+        static::assertTrue($reader->eol());
     }
 }

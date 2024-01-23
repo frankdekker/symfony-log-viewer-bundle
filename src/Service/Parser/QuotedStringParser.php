@@ -35,6 +35,9 @@ class QuotedStringParser
             $result .= $char;
         }
 
+        // skip the closing quote
+        $string->next();
+
         return $result;
     }
 }

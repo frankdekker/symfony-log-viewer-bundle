@@ -30,14 +30,17 @@ class TermParser
         $string->skipWhitespace();
 
         if (strcasecmp('before:', $string->peek(7)) === 0) {
+            $string->next(7);
             return new DateBeforeTerm(new DateTimeImmutable($this->stringParser->parse($string)));
         }
 
         if (strcasecmp('after:', $string->peek(6)) === 0) {
+            $string->next(6);
             return new DateAfterTerm(new DateTimeImmutable($this->stringParser->parse($string)));
         }
 
         if (strcasecmp('exclude:', $string->peek(8)) === 0) {
+            $string->next(8);
             return new WordTerm($this->stringParser->parse($string), WordTerm::TYPE_EXCLUDE);
         }
 

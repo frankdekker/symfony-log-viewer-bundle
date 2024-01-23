@@ -48,9 +48,9 @@ class StringReader
     /**
      * Move the cursor to the next character
      */
-    public function next(): self
+    public function next(int $skip = 1): self
     {
-        $this->position++;
+        $this->position += $skip;
 
         return $this;
     }
