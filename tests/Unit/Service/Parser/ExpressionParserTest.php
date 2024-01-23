@@ -8,7 +8,6 @@ use Exception;
 use FD\LogViewer\Entity\Parser\DateAfterTerm;
 use FD\LogViewer\Entity\Parser\DateBeforeTerm;
 use FD\LogViewer\Entity\Parser\Expression;
-use FD\LogViewer\Entity\Parser\WordsTerm;
 use FD\LogViewer\Entity\Parser\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
 use FD\LogViewer\Service\Parser\ExpressionParser;
@@ -37,7 +36,7 @@ class ExpressionParserTest extends TestCase
     {
         $termA = new DateBeforeTerm(new DateTimeImmutable());
         $termB = new DateAfterTerm(new DateTimeImmutable());
-        $termC = new WordTerm('foo');
+        $termC = new WordTerm('foo', WordTerm::TYPE_INCLUDE);
 
         $string = $this->createMock(StringReader::class);
 
