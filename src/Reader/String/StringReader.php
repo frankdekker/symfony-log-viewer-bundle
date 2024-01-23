@@ -5,6 +5,8 @@ namespace FD\LogViewer\Reader\String;
 
 class StringReader
 {
+    private const WHITESPACES = [" ", "\t", "\n", "\r"];
+
     private readonly int $length;
     private int $position = 0;
 
@@ -40,7 +42,7 @@ class StringReader
 
     public function skipWhitespace(): self
     {
-        return $this->skip([" ", "\t", "\n", "\r"]);
+        return $this->skip(self::WHITESPACES);
     }
 
     /**
