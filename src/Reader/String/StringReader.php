@@ -18,7 +18,10 @@ class StringReader
         return $this->string[$this->position];
     }
 
-    public function peek(int $length = 1): string
+    /**
+     * Returns the next characters without moving the cursor
+     */
+    public function peek(int $length): string
     {
         return substr($this->string, $this->position, $length);
     }
