@@ -12,6 +12,7 @@
          executionOrder="defects"
 >
     <php>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
         <env name="KERNEL_CLASS" value="FD\LogViewer\Tests\Utility\TestKernel"/>
     </php>
     <testsuites>
