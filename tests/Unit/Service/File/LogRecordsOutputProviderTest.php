@@ -49,7 +49,7 @@ class LogRecordsOutputProviderTest extends TestCase
         $this->logParser->expects(self::once())->method('getLogIndex')->with($config, $file, $logQuery)->willReturn($logIndex);
         $this->performanceService->expects(self::once())->method('getPerformanceStats')->willReturn($performance);
 
-        $expected = new LogRecordsOutput(['level' => 'level'], ['channel' => 'channel'], $logQuery, $logIndex, $performance);
+        $expected = new LogRecordsOutput(['level' => 'level'], ['channel' => 'channel'], $logIndex, $performance);
 
         $result = $this->provider->provide($config, $file, $logQuery);
         static::assertEquals($expected, $result);

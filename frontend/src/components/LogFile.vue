@@ -2,6 +2,7 @@
 import ButtonGroup from '@/components/ButtonGroup.vue';
 import type LogFile from '@/models/LogFile';
 import bus from '@/services/EventBus';
+import {useSearchStore} from '@/stores/search';
 import axios from 'axios';
 import {ref, watch} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
@@ -14,6 +15,7 @@ const toggleRef    = ref();
 const selectedFile = ref<string | null>(null);
 const route        = useRoute();
 const router       = useRouter();
+const searchStore  = useSearchStore();
 const baseUri      = axios.defaults.baseURL;
 const deleteFile   = (identifier: string) => {
     axios.delete('/api/file/' + encodeURI(identifier))
@@ -32,7 +34,7 @@ watch(() => route.query.file, () => selectedFile.value = String(route.query.file
     <!-- LogFile -->
     <button-group ref="toggleRef" alignment="right" :split="file.can_download || file.can_delete" class="mb-1" :hide-on-selected="true">
         <template v-slot:btn_left>
-            <router-link :to="'/log?file=' + encodeURI(file.identifier)"
+            <router-link :to="'/log?' + searchStore.toQueryString({file: file.identifier})"
                          class="btn btn-file text-start btn-outline-primary w-100"
                          v-bind:class="{'btn-outline-primary-active': selectedFile === file.identifier }"
                          :title="file.name">

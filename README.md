@@ -21,7 +21,7 @@ read logs from any directory.
 
 - 📂 **View all the Monolog logs** in your `%kernel.logs_dir%` directory,
 - 🔍 **Search** the logs,
-- 🎚 **Filter** by log level (error, info, debug, etc.), or by channel.
+- 🎚 **Filter** by log level (error, info, debug, etc.), by channel, date range or log content,
 - 🌑 **Dark mode**,
 - 💾 **Download** or **delete** log files from the UI,
 - ☎️ **API access** for folders, files & log entries,

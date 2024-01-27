@@ -5,8 +5,6 @@ import {ref} from 'vue'
 
 export const useLogRecordStore = defineStore('log_records', () => {
     const defaultData: LogRecords = {
-        levels: {choices: {}, selected: []},
-        channels: {choices: {}, selected: []},
         logs: [],
         paginator: null
     };
@@ -14,20 +12,13 @@ export const useLogRecordStore = defineStore('log_records', () => {
     const loading = ref(false);
     const records = ref<LogRecords>(defaultData);
 
-    async function fetch(file: string, levels: string[], channels: string[], direction: string, perPage: string, query: string, offset: number) {
+    async function fetch(file: string, direction: string, perPage: string, query: string, offset: number) {
         const params: { [key: string]: string } = {file, direction, per_page: perPage};
 
         if (query !== '') {
             params.query = query;
         }
-        const levelChoices = Object.keys(records.value.levels.choices);
-        if (levels.length > 0 && levels.length !== levelChoices.length) {
-            params.levels = levels.join(',');
-        }
-        const channelChoices = Object.keys(records.value.channels.choices);
-        if (channels.length > 0 && channels.length !== channelChoices.length) {
-            params.channels = channels.join(',');
-        }
+
         if (offset > 0) {
             params.offset = offset.toString();
         }

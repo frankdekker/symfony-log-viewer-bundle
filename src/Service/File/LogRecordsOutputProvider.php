@@ -24,7 +24,6 @@ class LogRecordsOutputProvider
         return new LogRecordsOutput(
             $logParser->getLevels(),
             $logParser->getChannels(),
-            $logQuery,
             $logParser->getLogIndex($config, $file, $logQuery),
             $this->performanceService->getPerformanceStats()
         );

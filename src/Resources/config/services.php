@@ -25,9 +25,11 @@ use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use FD\LogViewer\Service\Folder\LogFolderOutputSorter;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
+use FD\LogViewer\Service\Matcher\ChannelTermMatcher;
 use FD\LogViewer\Service\Matcher\DateAfterTermMatcher;
 use FD\LogViewer\Service\Matcher\DateBeforeTermMatcher;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
+use FD\LogViewer\Service\Matcher\SeverityTermMatcher;
 use FD\LogViewer\Service\Matcher\WordTermMatcher;
 use FD\LogViewer\Service\Parser\DateParser;
 use FD\LogViewer\Service\Parser\ExpressionParser;
@@ -101,6 +103,8 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(DateBeforeTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
     $services->set(DateAfterTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
+    $services->set(SeverityTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
+    $services->set(ChannelTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
     $services->set(WordTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
     $services->set(LogRecordMatcher::class)->arg('$termMatchers', tagged_iterator('fd.symfony.log.viewer.term_matcher'));
 };
