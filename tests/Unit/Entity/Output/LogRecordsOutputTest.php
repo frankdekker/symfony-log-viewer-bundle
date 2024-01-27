@@ -9,7 +9,6 @@ use FD\LogViewer\Entity\Index\Paginator;
 use FD\LogViewer\Entity\Index\PerformanceStats;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Output\LogRecordsOutput;
-use FD\LogViewer\Entity\Request\LogQueryDto;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +19,6 @@ class LogRecordsOutputTest extends TestCase
     {
         $levels    = ['level1' => 'level1', 'level2' => 'level2'];
         $channels  = ['channel1' => 'channel1', 'channel2' => 'channel2'];
-        $logQuery  = new LogQueryDto('file', 123, null, DirectionEnum::Asc, ['foo'], ['bar'], 50);
         $paginator = new Paginator(DirectionEnum::Asc, true, true, 123);
         $record    = new LogRecord(111111, 'debug', 'request', 'message', [], []);
         $logIndex  = new LogIndex();
@@ -28,7 +26,7 @@ class LogRecordsOutputTest extends TestCase
         $logIndex->setPaginator($paginator);
         $performance = $this->createMock(PerformanceStats::class);
 
-        $logRecordsOutput = new LogRecordsOutput($levels, $channels, $logQuery, $logIndex, $performance);
+        $logRecordsOutput = new LogRecordsOutput($levels, $channels, $logIndex, $performance);
 
         static::assertSame(
             [
