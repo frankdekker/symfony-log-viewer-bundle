@@ -116,7 +116,7 @@ onMounted(() => {
             <button class="ms-2 btn btn-sm btn-outline-secondary"
                     @click="offset = logRecordStore.records.paginator?.offset ?? 0; navigate()"
                     v-bind:disabled="logRecordStore.records.paginator?.more !== true">
-                Next {{ perPage }}
+                Next {{ searchStore.perPage }}
             </button>
 
             <div class="flex-grow-1"></div>
