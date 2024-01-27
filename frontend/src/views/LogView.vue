@@ -14,13 +14,14 @@ const router         = useRouter();
 const route          = useRoute();
 const logRecordStore = useLogRecordStore();
 
-const file     = ref('');
-const query    = ref('');
-const levels   = ref<Checklist>({choices: {}, selected: []});
-const channels = ref<Checklist>({choices: {}, selected: []});
-const perPage  = ref('50');
-const sort     = ref('desc');
-const offset   = ref(0);
+const file       = ref('');
+const query      = ref('');
+const levels     = ref<Checklist>({choices: {}, selected: []});
+const channels   = ref<Checklist>({choices: {}, selected: []});
+const perPage    = ref('50');
+const sort       = ref('desc');
+const offset     = ref(0);
+const badRequest = ref(false);
 
 const navigate = () => {
     const fileOffset = offset.value > 0 && logRecordStore.records.paginator?.direction !== sort.value ? 0 : offset.value;
@@ -38,13 +39,21 @@ const navigate = () => {
 }
 
 const load = () => {
+    badRequest.value = false;
     logRecordStore
         .fetch(file.value, levels.value.selected, channels.value.selected, sort.value, perPage.value, query.value, offset.value)
         .then(() => {
             levels.value   = logRecordStore.records.levels;
             channels.value = logRecordStore.records.channels;
         })
-        .catch((error: Error) => router.push({name: error.message}));
+        .catch((error: Error) => {
+            if (error.message === 'bad-request') {
+                badRequest.value = true;
+                return;
+            }
+
+            router.push({name: error.message});
+        });
 }
 
 onMounted(() => {
@@ -68,6 +77,7 @@ onMounted(() => {
             <div class="flex-grow-1 input-group">
                 <input type="text"
                        class="form-control"
+                       :class="{'is-invalid': badRequest}"
                        placeholder="Search log entries"
                        aria-label="Search log entries"
                        aria-describedby="button-search"
@@ -132,6 +142,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.slv-bad-request {
+    background: red;
+}
 .slv-content {
     display: grid;
     grid-template-rows: auto 1fr auto;
