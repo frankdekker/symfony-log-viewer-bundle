@@ -7,6 +7,7 @@ Out of the box, [Log viewer](../README.md) will have the following configuration
 ```yaml
 fd_log_viewer:
     enable_default_monolog: true
+    home_route: null
 
     log_files:
         monolog:
@@ -33,6 +34,13 @@ fd_log_viewer:
 **type**: `boolean`. Default: `true`
 
 Out of the box the bundle is configured with a default monolog configuration. Set this to `false` to override this behaviour.
+<br><br>
+
+### home_route
+
+**type**: `string|null`. Default: `null`
+
+The name of the route that will be used as url for the back button. If null the back button will redirect to `https://your-domain/`.
 <br><br>
 
 ### log_files
