@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\LogViewer\Tests\Unit\StreamReader;
+namespace FD\LogViewer\Tests\Unit\Reader\Stream;
 
-use FD\LogViewer\StreamReader\AbstractStreamReader;
-use FD\LogViewer\StreamReader\ReverseStreamReader;
+use FD\LogViewer\Reader\Stream\AbstractStreamReader;
+use FD\LogViewer\Reader\Stream\ReverseStreamReader;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;

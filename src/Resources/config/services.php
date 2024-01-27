@@ -9,6 +9,7 @@ use FD\LogViewer\Controller\DownloadFolderController;
 use FD\LogViewer\Controller\FoldersController;
 use FD\LogViewer\Controller\IndexController;
 use FD\LogViewer\Controller\LogRecordsController;
+use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use FD\LogViewer\Routing\RouteLoader;
 use FD\LogViewer\Routing\RouteService;
 use FD\LogViewer\Service\File\LogFileParserProvider;
@@ -24,9 +25,18 @@ use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use FD\LogViewer\Service\Folder\LogFolderOutputSorter;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
+use FD\LogViewer\Service\Matcher\DateAfterTermMatcher;
+use FD\LogViewer\Service\Matcher\DateBeforeTermMatcher;
+use FD\LogViewer\Service\Matcher\LogRecordMatcher;
+use FD\LogViewer\Service\Matcher\WordTermMatcher;
+use FD\LogViewer\Service\Parser\DateParser;
+use FD\LogViewer\Service\Parser\ExpressionParser;
+use FD\LogViewer\Service\Parser\QuotedStringParser;
+use FD\LogViewer\Service\Parser\StringParser;
+use FD\LogViewer\Service\Parser\TermParser;
+use FD\LogViewer\Service\Parser\WordParser;
 use FD\LogViewer\Service\PerformanceService;
 use FD\LogViewer\Service\VersionService;
-use FD\LogViewer\StreamReader\StreamReaderFactory;
 use FD\LogViewer\Util\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -57,6 +67,19 @@ return static function (ContainerConfigurator $container): void {
     $services->set(JsonManifestAssetLoader::class)
         ->arg('$manifestPath', '%kernel.project_dir%/public/bundles/fdlogviewer/.vite/manifest.json');
 
+    $services->set(ExpressionParser::class)
+        ->arg(
+            '$termParser',
+            inline_service(TermParser::class)
+                ->arg(
+                    '$stringParser',
+                    inline_service(StringParser::class)
+                        ->arg('$quotedStringParser', inline_service(QuotedStringParser::class))
+                        ->arg('$wordParser', inline_service(WordParser::class))
+                )
+                ->arg('$dateParser', inline_service(DateParser::class))
+        );
+
     $services->set(FinderFactory::class);
     $services->set(LogFileService::class)->arg('$logFileConfigs', tagged_iterator('fd.symfony.log.viewer.log_files_config'));
     $services->set(LogFolderFactory::class);
@@ -75,4 +98,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(StreamReaderFactory::class);
     $services->set(VersionService::class);
     $services->set(ZipArchiveFactory::class);
+
+    $services->set(DateBeforeTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
+    $services->set(DateAfterTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
+    $services->set(WordTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
+    $services->set(LogRecordMatcher::class)->arg('$termMatchers', tagged_iterator('fd.symfony.log.viewer.term_matcher'));
 };

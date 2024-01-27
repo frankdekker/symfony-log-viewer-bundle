@@ -22,26 +22,15 @@ class LogRecordIteratorTest extends TestCase
         $this->lineParser = $this->createMock(LogLineParserInterface::class);
     }
 
-    public function testGetIteratorShouldSkipIfSearchQueryDoesNotMatch(): void
-    {
-        $iterator = new ArrayIterator(['message']);
-
-        $this->lineParser->expects(self::never())->method('parse')->with('message');
-
-        $recordIterator = new LogRecordIterator($iterator, $this->lineParser, 'foo');
-
-        static::assertEquals([], iterator_to_array($recordIterator));
-    }
-
-    public function testGetIteratorShouldSkipNullFromParser(): void
+    public function testGetIteratorShouldYieldErrorFromParser(): void
     {
         $iterator = new ArrayIterator(['message']);
 
         $this->lineParser->expects(self::once())->method('parse')->with('message')->willReturn(null);
 
-        $recordIterator = new LogRecordIterator($iterator, $this->lineParser, '');
+        $recordIterator = new LogRecordIterator($iterator, $this->lineParser);
 
-        static::assertEquals([], iterator_to_array($recordIterator));
+        static::assertEquals([new LogRecord(0, 'error', 'parse', 'message', [], [])], iterator_to_array($recordIterator));
     }
 
     public function testGetIterator(): void
@@ -62,7 +51,7 @@ class LogRecordIteratorTest extends TestCase
                 ]
             );
 
-        $recordIterator = new LogRecordIterator($iterator, $this->lineParser, '');
+        $recordIterator = new LogRecordIterator($iterator, $this->lineParser);
         $expectedRecord = new LogRecord(111111, 'debug', 'request', 'message', [], []);
 
         static::assertEquals([$expectedRecord], iterator_to_array($recordIterator));

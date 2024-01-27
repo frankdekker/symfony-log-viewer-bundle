@@ -37,8 +37,14 @@ export const useLogRecordStore = defineStore('log_records', () => {
             const response = await axios.get<LogRecords>('/api/logs', {params: params});
             records.value  = response.data;
         } catch (e) {
+            if (e instanceof AxiosError && e.response?.status === 400) {
+                throw new Error('bad-request');
+            }
             if (e instanceof AxiosError && e.response?.status === 404) {
-                throw e;
+                throw new Error('file-not-found');
+            }
+            if (e instanceof AxiosError && [500, 501, 502, 503, 504].includes(Number(e.response?.status))) {
+                throw new Error('error');
             }
             console.error(e);
             records.value = defaultData;

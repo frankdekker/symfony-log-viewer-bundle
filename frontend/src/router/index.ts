@@ -1,3 +1,4 @@
+import ErrorView from '@/views/ErrorView.vue';
 import FileNotFoundView from '@/views/FileNotFoundView.vue';
 import HomeView from '@/views/HomeView.vue'
 import LogView from '@/views/LogView.vue';
@@ -21,6 +22,11 @@ function router(baseUri: string) {
                 path: '/404',
                 name: 'file-not-found',
                 component: FileNotFoundView
+            },
+            {
+                path: '/5XX',
+                name: 'error',
+                component: ErrorView
             }
         ]
     });

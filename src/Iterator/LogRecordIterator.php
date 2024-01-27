@@ -19,19 +19,15 @@ class LogRecordIterator implements IteratorAggregate
     public function __construct(
         private readonly Traversable $iterator,
         private readonly LogLineParserInterface $lineParser,
-        private readonly string $query
     ) {
     }
 
     public function getIterator(): Traversable
     {
         foreach ($this->iterator as $message) {
-            if ($this->query !== '' && stripos($message, $this->query) === false) {
-                continue;
-            }
-
             $lineData = $this->lineParser->parse($message);
             if ($lineData === null) {
+                yield new LogRecord(0, 'error', 'parse', $message, [], []);
                 continue;
             }
 
