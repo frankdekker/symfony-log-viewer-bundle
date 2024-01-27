@@ -16,7 +16,7 @@ class DateParser
         try {
             return new DateTimeImmutable($date);
         } catch (Throwable $exception) {
-            throw new InvalidDateTimeException('Invalid date' . $date, 0, $exception);
+            throw new InvalidDateTimeException('Invalid date ' . $date, 0, $exception);
         }
     }
 }
