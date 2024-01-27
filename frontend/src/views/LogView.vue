@@ -36,15 +36,15 @@ const load = () => {
     badRequest.value = false;
     logRecordStore
         .fetch(file.value, sort.value, perPage.value, query.value, offset.value)
-        .then(() => {
-            searchRef.value?.focus();
-        })
         .catch((error: Error) => {
             if (error.message === 'bad-request') {
                 badRequest.value = true;
                 return;
             }
             router.push({name: error.message});
+        })
+        .finally(() => {
+            searchRef.value?.focus();
         });
 }
 
@@ -66,8 +66,8 @@ onMounted(() => {
                        class="form-control"
                        :class="{'is-invalid': badRequest}"
                        ref="searchRef"
-                       placeholder="Search log entries"
-                       aria-label="Search log entries"
+                       placeholder="Search log entries, Use severity:, channel:, before:, after:, or exclude: to fine-tune the search."
+                       aria-label="Search log entries, Use severity:, channel:, before:, after:, or exclude: to fine-tune the search."
                        aria-describedby="button-search"
                        @change="navigate"
                        v-model="query">
