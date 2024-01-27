@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\Parser;
 
-use DateTimeImmutable;
 use Exception;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
 use FD\LogViewer\Entity\Expression\DateBeforeTerm;
@@ -19,23 +18,23 @@ use FD\LogViewer\Reader\String\StringReader;
  */
 class TermParser
 {
-    public function __construct(private readonly StringParser $stringParser)
+    public function __construct(private readonly StringParser $stringParser, private readonly DateParser $dateParser)
     {
     }
 
     /**
-     * @throws Exception
+     * @throws InvalidDateTimeException
      */
     public function parse(StringReader $string): TermInterface
     {
         $string->skipWhitespace();
 
         if ($string->read('before:') || $string->read('b:')) {
-            return new DateBeforeTerm(new DateTimeImmutable($this->stringParser->parse($string)));
+            return new DateBeforeTerm($this->dateParser->toDateTimeImmutable($this->stringParser->parse($string)));
         }
 
         if ($string->read('after:') || $string->read('a:')) {
-            return new DateAfterTerm(new DateTimeImmutable($this->stringParser->parse($string)));
+            return new DateAfterTerm($this->dateParser->toDateTimeImmutable($this->stringParser->parse($string)));
         }
 
         if ($string->read('exclude:') || $string->read('-:')) {

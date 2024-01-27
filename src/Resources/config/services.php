@@ -29,6 +29,7 @@ use FD\LogViewer\Service\Matcher\DateAfterTermMatcher;
 use FD\LogViewer\Service\Matcher\DateBeforeTermMatcher;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
 use FD\LogViewer\Service\Matcher\WordTermMatcher;
+use FD\LogViewer\Service\Parser\DateParser;
 use FD\LogViewer\Service\Parser\ExpressionParser;
 use FD\LogViewer\Service\Parser\QuotedStringParser;
 use FD\LogViewer\Service\Parser\StringParser;
@@ -76,6 +77,7 @@ return static function (ContainerConfigurator $container): void {
                         ->arg('$quotedStringParser', inline_service(QuotedStringParser::class))
                         ->arg('$wordParser', inline_service(WordParser::class))
                 )
+                ->arg('$dateParser', inline_service(DateParser::class))
         );
 
     $services->set(FinderFactory::class);

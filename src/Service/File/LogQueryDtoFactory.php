@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\File;
 
-use Exception;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Reader\String\StringReader;
 use FD\LogViewer\Service\Parser\ExpressionParser;
+use FD\LogViewer\Service\Parser\InvalidDateTimeException;
 use Symfony\Component\HttpFoundation\Request;
 
 class LogQueryDtoFactory
@@ -17,7 +17,7 @@ class LogQueryDtoFactory
     }
 
     /**
-     * @throws Exception
+     * @throws InvalidDateTimeException
      */
     public function create(Request $request): LogQueryDto
     {

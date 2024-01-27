@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\Parser;
 
-use Exception;
 use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Reader\String\StringReader;
 
@@ -21,7 +20,7 @@ class ExpressionParser
     }
 
     /**
-     * @throws Exception
+     * @throws InvalidDateTimeException
      */
     public function parse(StringReader $string): Expression
     {
