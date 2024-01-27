@@ -84,4 +84,5 @@ By default, the application is available at: `{APP_URL}/log-viewer`.
 - [Disabling the default monolog configuration](docs/disabling-default-monolog-configuration.md)
 - [Adding additional log files](docs/adding-additional-log-files.md)
 - [Configuring the back home url](docs/configuring-the-back-home-route.md)
+- [Advanced search queries](docs/search-queries.md)
 - [Full configuration reference](docs/configuration-reference.md)
