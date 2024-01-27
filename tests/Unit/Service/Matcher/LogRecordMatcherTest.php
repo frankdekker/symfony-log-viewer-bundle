@@ -13,11 +13,12 @@ use FD\LogViewer\Service\Matcher\TermMatcherInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Traversable;
 
 #[CoversClass(LogRecordMatcher::class)]
 class LogRecordMatcherTest extends TestCase
 {
-    /** @var TermMatcherInterface<int, TermInterface>&MockObject */
+    /** @var TermMatcherInterface<TermInterface>&MockObject */
     private TermMatcherInterface&MockObject $termMatcher;
     private LogRecordMatcher $matcher;
 
@@ -25,7 +26,9 @@ class LogRecordMatcherTest extends TestCase
     {
         parent::setUp();
         $this->termMatcher = $this->createMock(TermMatcherInterface::class);
-        $this->matcher     = new LogRecordMatcher(new ArrayIterator([$this->termMatcher]));
+        /** @var Traversable<int, TermMatcherInterface<TermInterface>> $iterator */
+        $iterator      = new ArrayIterator([$this->termMatcher]);
+        $this->matcher = new LogRecordMatcher($iterator);
     }
 
     public function testMatchesMatch(): void
