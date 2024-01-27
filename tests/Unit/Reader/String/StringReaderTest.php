@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(StringReader::class)]
 class StringReaderTest extends TestCase
 {
-    public function testRead(): void
+    public function testReadString(): void
     {
         $string = new StringReader('Foobar  ');
 
@@ -30,5 +30,14 @@ class StringReaderTest extends TestCase
 
         $string->skipWhitespace();
         static::assertTrue($string->eol());
+    }
+
+    public function testRead(): void
+    {
+        $string = new StringReader('foobar');
+
+        static::assertFalse($string->read('baz'));
+        static::assertTrue($string->read('foo'));
+        static::assertSame('b', $string->get());
     }
 }
