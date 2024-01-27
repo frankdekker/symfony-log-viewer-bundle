@@ -5,7 +5,7 @@ namespace FD\LogViewer\Iterator;
 
 use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Entity\Index\LogRecord;
-use FD\LogViewer\Service\File\LogRecordMatcher;
+use FD\LogViewer\Service\Matcher\LogRecordMatcher;
 use IteratorAggregate;
 use Traversable;
 

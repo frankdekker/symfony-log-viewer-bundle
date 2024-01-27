@@ -12,6 +12,7 @@ use FD\LogViewer\Iterator\LogRecordFilterIterator;
 use FD\LogViewer\Iterator\LogRecordIterator;
 use FD\LogViewer\Iterator\MaxRuntimeIterator;
 use FD\LogViewer\Reader\Stream\StreamReaderFactory;
+use FD\LogViewer\Service\Matcher\LogRecordMatcher;
 use Psr\Clock\ClockInterface;
 use SplFileInfo;
 

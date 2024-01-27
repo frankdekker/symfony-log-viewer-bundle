@@ -16,7 +16,6 @@ use FD\LogViewer\Service\File\LogFileParserProvider;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\LogQueryDtoFactory;
-use FD\LogViewer\Service\File\LogRecordMatcher;
 use FD\LogViewer\Service\File\LogRecordsOutputProvider;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
 use FD\LogViewer\Service\FinderFactory;
@@ -26,6 +25,10 @@ use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use FD\LogViewer\Service\Folder\LogFolderOutputSorter;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
+use FD\LogViewer\Service\Matcher\DateAfterTermMatcher;
+use FD\LogViewer\Service\Matcher\DateBeforeTermMatcher;
+use FD\LogViewer\Service\Matcher\LogRecordMatcher;
+use FD\LogViewer\Service\Matcher\WordTermMatcher;
 use FD\LogViewer\Service\Parser\ExpressionParser;
 use FD\LogViewer\Service\Parser\QuotedStringParser;
 use FD\LogViewer\Service\Parser\StringParser;
@@ -86,7 +89,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogFileParserProvider::class)
         ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.monolog_file_parser', 'name'));
     $services->set(LogQueryDtoFactory::class);
-    $services->set(LogRecordMatcher::class);
     $services->set(MonologFileParser::class)
         ->tag('fd.symfony.log.viewer.monolog_file_parser', ['name' => 'monolog'])
         ->arg('$loggerLocator', tagged_iterator('fd.symfony.log.viewer.logger'));
@@ -94,4 +96,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(StreamReaderFactory::class);
     $services->set(VersionService::class);
     $services->set(ZipArchiveFactory::class);
+
+    $services->set(DateBeforeTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
+    $services->set(DateAfterTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
+    $services->set(WordTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
+    $services->set(LogRecordMatcher::class)->arg('$termMatchers', tagged_iterator('fd.symfony.log.viewer.term_matcher'));
 };
