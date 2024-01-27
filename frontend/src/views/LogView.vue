@@ -11,6 +11,7 @@ const router         = useRouter();
 const route          = useRoute();
 const logRecordStore = useLogRecordStore();
 
+const searchRef  = ref<HTMLInputElement>();
 const file       = ref('');
 const query      = ref('');
 const perPage    = ref('50');
@@ -35,33 +36,36 @@ const load = () => {
     badRequest.value = false;
     logRecordStore
         .fetch(file.value, sort.value, perPage.value, query.value, offset.value)
+        .then(() => {
+            searchRef.value?.focus();
+        })
         .catch((error: Error) => {
             if (error.message === 'bad-request') {
                 badRequest.value = true;
                 return;
             }
-
             router.push({name: error.message});
         });
 }
 
 onMounted(() => {
-    file.value              = String(route.query.file);
-    query.value             = String((route.query.query ?? ''));
-    perPage.value           = String((route.query.perPage ?? '50'));
-    sort.value              = String((route.query.sort ?? 'desc'));
-    offset.value            = parseInt(String(route.query.offset ?? '0'));
+    file.value    = String(route.query.file);
+    query.value   = String((route.query.query ?? ''));
+    perPage.value = String((route.query.perPage ?? '50'));
+    sort.value    = String((route.query.sort ?? 'desc'));
+    offset.value  = parseInt(String(route.query.offset ?? '0'));
     load();
 });
 </script>
 
 <template>
-    <div class="slv-content h-100 overflow-hidden slv-loadable" v-bind:class="{ 'slv-loading': logRecordStore.loading }">
+    <div class="slv-content h-100 overflow-hidden">
         <div class="d-flex align-items-stretch pt-1">
             <div class="flex-grow-1 input-group">
                 <input type="text"
                        class="form-control"
                        :class="{'is-invalid': badRequest}"
+                       ref="searchRef"
                        placeholder="Search log entries"
                        aria-label="Search log entries"
                        aria-describedby="button-search"
@@ -96,17 +100,15 @@ onMounted(() => {
             <button class="btn btn-dark ms-1 me-1" type="button" aria-label="Refresh" title="Refresh" @click="load">
                 <i class="bi bi-arrow-clockwise"></i>
             </button>
-
-            <div></div>
         </div>
 
-        <main class="overflow-auto d-none d-md-block">
+        <main class="overflow-auto d-none d-md-block slv-loadable" v-bind:class="{ 'slv-loading': logRecordStore.loading }">
             <div class="slv-entries list-group pt-1 pe-1 pb-3">
                 <log-record :logRecord="record" v-for="(record, index) in logRecordStore.records.logs ?? []" v-bind:key="index"></log-record>
             </div>
         </main>
 
-        <footer class="pt-1 pb-1 d-flex">
+        <footer class="pt-1 pb-1 d-flex" v-show="!logRecordStore.loading">
             <button class="btn btn-sm btn-outline-secondary"
                     @click="offset = 0; navigate()"
                     v-bind:disabled="logRecordStore.records.paginator?.first !== false">
