@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import DropdownChecklist from '@/components/DropdownChecklist.vue';
 import LogRecord from '@/components/LogRecord.vue';
 import PerformanceDetails from '@/components/PerformanceDetails.vue';
-import type Checklist from '@/models/Checklist';
-import Arrays from '@/services/Arrays';
 import {filter} from '@/services/Objects';
 import {nullify} from '@/services/Optional';
 import {useLogRecordStore} from '@/stores/log_records';
@@ -16,8 +13,6 @@ const logRecordStore = useLogRecordStore();
 
 const file       = ref('');
 const query      = ref('');
-const levels     = ref<Checklist>({choices: {}, selected: []});
-const channels   = ref<Checklist>({choices: {}, selected: []});
 const perPage    = ref('50');
 const sort       = ref('desc');
 const offset     = ref(0);
@@ -31,8 +26,6 @@ const navigate = () => {
             query: nullify(query.value, ''),
             perPage: nullify(perPage.value, '50'),
             sort: nullify(sort.value, 'desc'),
-            levels: nullify(levels.value.selected.join(','), Object.keys(logRecordStore.records.levels.choices).join(',')),
-            channels: nullify(channels.value.selected.join(','), Object.keys(logRecordStore.records.channels.choices).join(',')),
             offset: nullify(fileOffset, 0)
         })
     });
@@ -41,11 +34,7 @@ const navigate = () => {
 const load = () => {
     badRequest.value = false;
     logRecordStore
-        .fetch(file.value, levels.value.selected, channels.value.selected, sort.value, perPage.value, query.value, offset.value)
-        .then(() => {
-            levels.value   = logRecordStore.records.levels;
-            channels.value = logRecordStore.records.channels;
-        })
+        .fetch(file.value, sort.value, perPage.value, query.value, offset.value)
         .catch((error: Error) => {
             if (error.message === 'bad-request') {
                 badRequest.value = true;
@@ -61,8 +50,6 @@ onMounted(() => {
     query.value             = String((route.query.query ?? ''));
     perPage.value           = String((route.query.perPage ?? '50'));
     sort.value              = String((route.query.sort ?? 'desc'));
-    levels.value.selected   = Arrays.split(String(route.query.levels ?? ''), ',');
-    channels.value.selected = Arrays.split(String(route.query.channels ?? ''), ',');
     offset.value            = parseInt(String(route.query.offset ?? '0'));
     load();
 });
@@ -71,9 +58,6 @@ onMounted(() => {
 <template>
     <div class="slv-content h-100 overflow-hidden slv-loadable" v-bind:class="{ 'slv-loading': logRecordStore.loading }">
         <div class="d-flex align-items-stretch pt-1">
-            <dropdown-checklist label="Levels" v-model="levels" class="pe-1"></dropdown-checklist>
-            <dropdown-checklist label="Channels" v-model="channels" class="pe-1"></dropdown-checklist>
-
             <div class="flex-grow-1 input-group">
                 <input type="text"
                        class="form-control"
