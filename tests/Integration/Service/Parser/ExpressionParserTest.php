@@ -10,6 +10,7 @@ use FD\LogViewer\Entity\Expression\DateBeforeTerm;
 use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
+use FD\LogViewer\Service\Parser\DateParser;
 use FD\LogViewer\Service\Parser\ExpressionParser;
 use FD\LogViewer\Service\Parser\QuotedStringParser;
 use FD\LogViewer\Service\Parser\StringParser;
@@ -26,7 +27,7 @@ class ExpressionParserTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->parser = new ExpressionParser(new TermParser(new StringParser(new QuotedStringParser(), new WordParser())));
+        $this->parser = new ExpressionParser(new TermParser(new StringParser(new QuotedStringParser(), new WordParser()), new DateParser()));
     }
 
     /**
