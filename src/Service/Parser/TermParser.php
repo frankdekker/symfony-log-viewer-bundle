@@ -13,7 +13,8 @@ use FD\LogViewer\Reader\String\StringReader;
 
 /**
  * BNF
- * <term> ::= <date-term> <string>
+ * <term> ::= <date-term> | <exclude-term> | <string>
+ * <exclude-term> ::= exclude:<string>
  * <date-term> ::= before:<string> | after:<string>
  */
 class TermParser
@@ -29,18 +30,15 @@ class TermParser
     {
         $string->skipWhitespace();
 
-        if (strcasecmp('before:', $string->peek(7)) === 0) {
-            $string->next(7);
+        if ($string->read('before:') || $string->read('b:')) {
             return new DateBeforeTerm(new DateTimeImmutable($this->stringParser->parse($string)));
         }
 
-        if (strcasecmp('after:', $string->peek(6)) === 0) {
-            $string->next(6);
+        if ($string->read('after:') || $string->read('a:')) {
             return new DateAfterTerm(new DateTimeImmutable($this->stringParser->parse($string)));
         }
 
-        if (strcasecmp('exclude:', $string->peek(8)) === 0) {
-            $string->next(8);
+        if ($string->read('exclude:') || $string->read('-:')) {
             return new WordTerm($this->stringParser->parse($string), WordTerm::TYPE_EXCLUDE);
         }
 

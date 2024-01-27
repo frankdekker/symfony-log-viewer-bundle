@@ -29,6 +29,21 @@ class StringReader
     }
 
     /**
+     * Read the given string if possible moving the cursor. If the string is not found, the cursor is not moved.
+     */
+    public function read(string $string): bool
+    {
+        $length = strlen($string);
+        if (strcasecmp($string, $this->peek(strlen($string))) === 0) {
+            $this->next($length);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param string[] $chars
      */
     public function skip(array $chars): self
