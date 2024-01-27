@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\Parser;
 
-use Exception;
+use FD\LogViewer\Entity\Expression\ChannelTerm;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
 use FD\LogViewer\Entity\Expression\DateBeforeTerm;
+use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\TermInterface;
 use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
@@ -35,6 +36,14 @@ class TermParser
 
         if ($string->read('after:') || $string->read('a:')) {
             return new DateAfterTerm($this->dateParser->toDateTimeImmutable($this->stringParser->parse($string)));
+        }
+
+        if ($string->read('severity:') || $string->read('s:')) {
+            return new SeverityTerm(array_map('trim', explode('|', $this->stringParser->parse($string))));
+        }
+
+        if ($string->read('channel:') || $string->read('c:')) {
+            return new ChannelTerm(array_map('trim', explode('|', $this->stringParser->parse($string))));
         }
 
         if ($string->read('exclude:') || $string->read('-:')) {
