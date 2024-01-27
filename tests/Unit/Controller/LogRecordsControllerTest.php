@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
+use Exception;
 use FD\LogViewer\Controller\LogRecordsController;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Output\LogRecordsOutput;
@@ -11,12 +12,14 @@ use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\File\LogQueryDtoFactory;
 use FD\LogViewer\Service\File\LogRecordsOutputProvider;
+use FD\LogViewer\Service\Parser\InvalidDateTimeException;
 use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -39,6 +42,23 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
         parent::setUp();
     }
 
+    /**
+     * @throws Exception
+     */
+    public function testInvokeBadRequest(): void
+    {
+        $request = new Request();
+
+        $this->queryDtoFactory->expects(self::once())->method('create')->with($request)->willThrowException(new InvalidDateTimeException('foo'));
+
+        $this->expectException(BadRequestHttpException::class);
+        $this->expectExceptionMessage('Invalid date.');
+        ($this->controller)($request);
+    }
+
+    /**
+     * @throws Exception
+     */
     public function testInvokeNotFound(): void
     {
         $request  = new Request();
@@ -52,13 +72,16 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
         ($this->controller)($request);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testInvoke(): void
     {
         $request  = new Request();
         $logQuery = new LogQueryDto('file', 123, null, DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
 
-        $logFile    = $this->createLogFile();
-        $output     = $this->createMock(LogRecordsOutput::class);
+        $logFile = $this->createLogFile();
+        $output  = $this->createMock(LogRecordsOutput::class);
 
         $this->queryDtoFactory->expects(self::once())->method('create')->with($request)->willReturn($logQuery);
         $this->fileService->expects(self::once())->method('findFileByIdentifier')->with('file')->willReturn($logFile);
