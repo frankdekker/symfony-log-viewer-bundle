@@ -5,8 +5,10 @@ namespace FD\LogViewer\Tests\Unit\Service\Parser;
 
 use DateTimeImmutable;
 use Exception;
+use FD\LogViewer\Entity\Expression\ChannelTerm;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
 use FD\LogViewer\Entity\Expression\DateBeforeTerm;
+use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
 use FD\LogViewer\Service\Parser\DateParser;
@@ -59,6 +61,34 @@ class TermParserTest extends TestCase
         $term = $this->parser->parse($string);
         static::assertInstanceOf(DateAfterTerm::class, $term);
         static::assertSame('2020-01-01', $term->date->format('Y-m-d'));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testParseSeverity(): void
+    {
+        $string = new StringReader("   severity:info|error");
+
+        $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('info|error');
+
+        $term = $this->parser->parse($string);
+        static::assertInstanceOf(SeverityTerm::class, $term);
+        static::assertSame(['info', 'error'], $term->severities);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testParseChannel(): void
+    {
+        $string = new StringReader("   channel:app|request");
+
+        $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('app|request');
+
+        $term = $this->parser->parse($string);
+        static::assertInstanceOf(ChannelTerm::class, $term);
+        static::assertSame(['app', 'request'], $term->channels);
     }
 
     /**
