@@ -4,29 +4,28 @@ import PerformanceDetails from '@/components/PerformanceDetails.vue';
 import {filter} from '@/services/Objects';
 import {nullify} from '@/services/Optional';
 import {useLogRecordStore} from '@/stores/log_records';
+import {useSearchStore} from '@/stores/search';
 import {onMounted, ref} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 
 const router         = useRouter();
 const route          = useRoute();
 const logRecordStore = useLogRecordStore();
+const searchStore    = useSearchStore();
 
 const searchRef  = ref<HTMLInputElement>();
 const file       = ref('');
-const query      = ref('');
-const perPage    = ref('50');
-const sort       = ref('desc');
 const offset     = ref(0);
 const badRequest = ref(false);
 
 const navigate = () => {
-    const fileOffset = offset.value > 0 && logRecordStore.records.paginator?.direction !== sort.value ? 0 : offset.value;
+    const fileOffset = offset.value > 0 && logRecordStore.records.paginator?.direction !== searchStore.sort ? 0 : offset.value;
     router.push({
         query: filter({
             file: file.value,
-            query: nullify(query.value, ''),
-            perPage: nullify(perPage.value, '50'),
-            sort: nullify(sort.value, 'desc'),
+            query: nullify(searchStore.query, ''),
+            perPage: nullify(searchStore.perPage, '50'),
+            sort: nullify(searchStore.sort, 'desc'),
             offset: nullify(fileOffset, 0)
         })
     });
@@ -35,7 +34,7 @@ const navigate = () => {
 const load = () => {
     badRequest.value = false;
     logRecordStore
-        .fetch(file.value, sort.value, perPage.value, query.value, offset.value)
+        .fetch(file.value, searchStore.sort, searchStore.perPage, searchStore.query, offset.value)
         .catch((error: Error) => {
             if (error.message === 'bad-request') {
                 badRequest.value = true;
@@ -49,11 +48,11 @@ const load = () => {
 }
 
 onMounted(() => {
-    file.value    = String(route.query.file);
-    query.value   = String((route.query.query ?? ''));
-    perPage.value = String((route.query.perPage ?? '50'));
-    sort.value    = String((route.query.sort ?? 'desc'));
-    offset.value  = parseInt(String(route.query.offset ?? '0'));
+    file.value          = String(route.query.file);
+    searchStore.query   = String((route.query.query ?? ''));
+    searchStore.perPage = String((route.query.perPage ?? '50'));
+    searchStore.sort    = String((route.query.sort ?? 'desc'));
+    offset.value        = parseInt(String(route.query.offset ?? '0'));
     load();
 });
 </script>
@@ -70,12 +69,12 @@ onMounted(() => {
                        aria-label="Search log entries, Use severity:, channel:, before:, after:, or exclude: to fine-tune the search."
                        aria-describedby="button-search"
                        @change="navigate"
-                       v-model="query">
+                       v-model="searchStore.query">
 
                 <select class="slv-menu-sort-direction form-control"
                         aria-label="Sort direction"
                         title="Sort direction"
-                        v-model="sort"
+                        v-model="searchStore.sort"
                         @change="navigate">
                     <option value="desc">Newest First</option>
                     <option value="asc">Oldest First</option>
@@ -84,7 +83,7 @@ onMounted(() => {
                 <select class="slv-menu-page-size form-control"
                         aria-label="Entries per page"
                         title="Entries per page"
-                        v-model="perPage"
+                        v-model="searchStore.perPage"
                         @change="navigate">
                     <option value="50">50</option>
                     <option value="100">100</option>
