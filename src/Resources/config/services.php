@@ -40,7 +40,9 @@ return static function (ContainerConfigurator $container): void {
         ->autowire()
         ->autoconfigure();
 
-    $services->set(IndexController::class)->tag('controller.service_arguments');
+    $services->set(IndexController::class)
+        ->arg('$homeRoute', '%fd.symfony.log.viewer.log_files_config.home_route%')
+        ->tag('controller.service_arguments');
     $services->set(FoldersController::class)->tag('controller.service_arguments');
     $services->set(LogRecordsController::class)->tag('controller.service_arguments');
     $services->set(DownloadFileController::class)->tag('controller.service_arguments');

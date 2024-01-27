@@ -52,9 +52,10 @@ class IndexControllerTest extends AbstractControllerTestCase
         $this->expectRender(
             '@FDLogViewer/index.html.twig',
             [
-                'base_uri' => 'baseUri',
-                'folders'  => [$folder],
-                'assets'   => ['style' => 'url1', 'js' => 'url2']
+                'base_uri'   => 'baseUri',
+                'home_route' => 'home',
+                'folders'    => [$folder],
+                'assets'     => ['style' => 'url1', 'js' => 'url2']
             ]
         );
 
@@ -63,6 +64,6 @@ class IndexControllerTest extends AbstractControllerTestCase
 
     public function getController(): AbstractController
     {
-        return new IndexController($this->assetLoader, $this->routeService, $this->folderOutputProvider);
+        return new IndexController('home', $this->assetLoader, $this->routeService, $this->folderOutputProvider);
     }
 }

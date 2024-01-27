@@ -18,5 +18,4 @@ const app = createApp(LogViewer);
 
 app.use(createPinia());
 app.use(router(baseUri));
-
 app.mount('#log-viewer');
