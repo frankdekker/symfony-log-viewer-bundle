@@ -30,14 +30,8 @@ class LogRecordsOutputTest extends TestCase
 
         static::assertSame(
             [
-                'levels'      => [
-                    'choices'  => $levels,
-                    'selected' => ['foo']
-                ],
-                'channels'    => [
-                    'choices'  => $channels,
-                    'selected' => ['bar']
-                ],
+                'levels'      => $levels,
+                'channels'    => $channels,
                 'logs'        => [$record],
                 'paginator'   => $paginator,
                 'performance' => $performance
