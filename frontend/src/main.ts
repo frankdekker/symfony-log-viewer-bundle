@@ -1,5 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import './assets/main.scss'
 import axios from 'axios';
 import {createPinia} from 'pinia'
