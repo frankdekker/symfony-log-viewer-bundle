@@ -85,6 +85,7 @@ onMounted(() => {
                        v-model="query">
 
                 <select class="slv-menu-sort-direction form-control"
+                        :class="{'is-invalid': badRequest}"
                         aria-label="Sort direction"
                         title="Sort direction"
                         v-model="sort"
@@ -94,6 +95,7 @@ onMounted(() => {
                 </select>
 
                 <select class="slv-menu-page-size form-control"
+                        :class="{'is-invalid': badRequest}"
                         aria-label="Entries per page"
                         title="Entries per page"
                         v-model="perPage"
