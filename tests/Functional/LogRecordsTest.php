@@ -15,8 +15,8 @@ class LogRecordsTest extends AbstractFunctionalTestCase
 
         /** @var array{channels: mixed[], levels: mixed[], logs: mixed[]} $data */
         $data = static::responseToArray($this->client->getResponse());
-        static::assertCount(2, $data['channels']);
-        static::assertCount(2, $data['levels']);
+        static::assertCount(6, $data['channels']);
+        static::assertCount(8, $data['levels']);
         static::assertCount(3, $data['logs']);
     }
 }
