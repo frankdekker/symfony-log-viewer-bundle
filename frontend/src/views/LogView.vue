@@ -144,9 +144,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.slv-bad-request {
-    background: red;
-}
 .slv-content {
     display: grid;
     grid-template-rows: auto 1fr auto;
