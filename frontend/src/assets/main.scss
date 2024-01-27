@@ -30,16 +30,13 @@
     }
 }
 
-.slv-app-title {
-    color: rgb(2, 132, 199)
-}
-
 .slv-body-grid {
     display: grid;
     grid-template-columns: minmax(var(--slv-min-sidebar-width), min(25%, var(--slv-max-sidebar-width))) 1fr;
 }
 
 .slv-header-height {
+    box-sizing: border-box;
     min-height: var(--slv-min-header-height);
 }
 

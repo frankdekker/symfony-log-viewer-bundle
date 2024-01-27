@@ -48,6 +48,8 @@ final class Extension extends BaseExtension
 
         $mergedConfigs = $this->processConfiguration(new Configuration(), $configs);
 
+        $container->setParameter('fd.symfony.log.viewer.log_files_config.home_route', $mergedConfigs['home_route'] ?? null);
+
         // add defaults
         if ($mergedConfigs['enable_default_monolog']) {
             $mergedConfigs = Arrays::merge($mergedConfigs, self::DEFAULT_MONOLOG_CONFIG);

@@ -14,6 +14,7 @@ use Throwable;
 class IndexController extends AbstractController
 {
     public function __construct(
+        private readonly ?string $homeRoute,
         private readonly JsonManifestAssetLoader $assetLoader,
         private readonly RouteService $routeService,
         private readonly LogFolderOutputProvider $folderOutputProvider
@@ -34,9 +35,10 @@ class IndexController extends AbstractController
         return $this->render(
             '@FDLogViewer/index.html.twig',
             [
-                'base_uri' => $baseUri,
-                'folders'  => $folders,
-                'assets'   => [
+                'base_uri'   => $baseUri,
+                'home_route' => $this->homeRoute,
+                'folders'    => $folders,
+                'assets'     => [
                     'style' => $this->assetLoader->getUrl('style.css'),
                     'js'    => $this->assetLoader->getUrl('src/main.ts')
                 ],
