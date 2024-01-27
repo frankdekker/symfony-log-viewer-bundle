@@ -28,6 +28,7 @@ class LogRecordIterator implements IteratorAggregate
             $lineData = $this->lineParser->parse($message);
             if ($lineData === null) {
                 yield new LogRecord(0, 'error', 'parse', $message, [], []);
+                continue;
             }
 
             yield new LogRecord(
