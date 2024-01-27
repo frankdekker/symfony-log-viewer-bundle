@@ -5,9 +5,11 @@ namespace FD\LogViewer\Tests\Integration\Service\Parser;
 
 use DateTimeImmutable;
 use Exception;
+use FD\LogViewer\Entity\Expression\ChannelTerm;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
 use FD\LogViewer\Entity\Expression\DateBeforeTerm;
 use FD\LogViewer\Entity\Expression\Expression;
+use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
 use FD\LogViewer\Service\Parser\DateParser;
@@ -80,6 +82,28 @@ class ExpressionParserTest extends TestCase
             ]
         );
         $actual   = $this->parser->parse(new StringReader('after:2020-01-10T00:00 before:"2020-01-10 10:00"'));
+
+        static::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testParseChannels(): void
+    {
+        $expected = new Expression([new ChannelTerm(['app', 'request'])]);
+        $actual   = $this->parser->parse(new StringReader('channel:app|request'));
+
+        static::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testParseSeverity(): void
+    {
+        $expected = new Expression([new SeverityTerm(['warning', 'error'])]);
+        $actual   = $this->parser->parse(new StringReader('severity:warning|error'));
 
         static::assertEquals($expected, $actual);
     }
