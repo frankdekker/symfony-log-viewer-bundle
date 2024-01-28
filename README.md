@@ -74,15 +74,14 @@ php bin/console assets:install
 
 Once the installation is complete, you will be able to access **Log Viewer** directly in your browser.
 
-By default, the application is available at: `{APP_URL}/log-viewer`.
-
-(for example: `https://my-app.test/log-viewer`)
+By default, it is available at: `/log-viewer` on your domain.
 
 ## Configuration
 - [Adding more monolog directories](docs/adding-more-monolog-directories.md)
 - [Modifying monolog configuration](docs/modifying-monolog-configuration.md)
 - [Disabling the default monolog configuration](docs/disabling-default-monolog-configuration.md)
 - [Adding additional log files](docs/adding-additional-log-files.md)
+- [Adding nginx logs](docs/configuring-nginx-logs.md)
 - [Configuring the back home url](docs/configuring-the-back-home-route.md)
 - [Advanced search queries](docs/search-queries.md)
 - [Full configuration reference](docs/configuration-reference.md)
