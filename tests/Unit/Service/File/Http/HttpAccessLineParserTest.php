@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\LogViewer\Tests\Unit\Service\File\Nginx;
+namespace FD\LogViewer\Tests\Unit\Service\File\Http;
 
 use FD\LogViewer\Service\File\Http\HttpAccessLineParser;
 use FD\LogViewer\Service\File\LogLineParserInterface;
@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(HttpAccessLineParser::class)]
-class NginxAccessLineParserTest extends TestCase
+class HttpAccessLineParserTest extends TestCase
 {
     private HttpAccessLineParser $parser;
 
