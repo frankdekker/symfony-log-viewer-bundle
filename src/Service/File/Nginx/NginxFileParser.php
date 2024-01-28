@@ -39,6 +39,9 @@ class NginxFileParser implements LogFileParserInterface
         if ($this->type === 'access') {
             return $this->logParser->parse(new SplFileInfo($file->path), new NginxAccessLineParser($config->logMessagePattern), $logQuery);
         }
+        if ($this->type === 'error') {
+            return $this->logParser->parse(new SplFileInfo($file->path), new NginxErrorLineParser($config->logMessagePattern), $logQuery);
+        }
         throw new InvalidArgumentException('Unknown log type: ' . $this->type);
     }
 }
