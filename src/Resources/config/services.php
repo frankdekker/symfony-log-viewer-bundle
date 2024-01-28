@@ -12,12 +12,15 @@ use FD\LogViewer\Controller\LogRecordsController;
 use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use FD\LogViewer\Routing\RouteLoader;
 use FD\LogViewer\Routing\RouteService;
+use FD\LogViewer\Service\File\Apache\ApacheErrorFileParser;
+use FD\LogViewer\Service\File\Http\HttpAccessFileParser;
 use FD\LogViewer\Service\File\LogFileParserProvider;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\LogQueryDtoFactory;
 use FD\LogViewer\Service\File\LogRecordsOutputProvider;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
+use FD\LogViewer\Service\File\Nginx\NginxErrorFileParser;
 use FD\LogViewer\Service\FinderFactory;
 use FD\LogViewer\Service\Folder\LogFolderFactory;
 use FD\LogViewer\Service\Folder\LogFolderOutputFactory;
@@ -91,11 +94,13 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogRecordsOutputProvider::class);
     $services->set(LogParser::class)->arg('$clock', inline_service(Clock::class));
     $services->set(LogFileParserProvider::class)
-        ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.monolog_file_parser', 'name'));
+        ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.log_file_parser', 'name'));
     $services->set(LogQueryDtoFactory::class);
-    $services->set(MonologFileParser::class)
-        ->tag('fd.symfony.log.viewer.monolog_file_parser', ['name' => 'monolog'])
+    $services->set(MonologFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'monolog'])
         ->arg('$loggerLocator', tagged_iterator('fd.symfony.log.viewer.logger'));
+    $services->set(HttpAccessFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'http-access']);
+    $services->set(NginxErrorFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'nginx-error']);
+    $services->set(ApacheErrorFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'apache-error']);
     $services->set(PerformanceService::class);
     $services->set(StreamReaderFactory::class);
     $services->set(VersionService::class);

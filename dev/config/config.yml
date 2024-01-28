@@ -52,3 +52,19 @@ fd_log_viewer:
     monolog:
       downloadable: true
       deletable: true
+    nginx-access:
+      type: nginx-access
+      name: Nginx access
+      finder:
+        in: "/var/log/nginx"
+        name: "nginx.access.log"
+      downloadable: true
+      deletable: true
+    nginx-error:
+      type: nginx-error
+      name: Nginx error
+      finder:
+        in: "/var/log/nginx"
+        name: "nginx.error.log"
+      downloadable: true
+      deletable: true

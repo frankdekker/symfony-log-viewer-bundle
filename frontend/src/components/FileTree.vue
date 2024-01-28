@@ -2,10 +2,8 @@
 import LogFolder from '@/components/LogFolder.vue';
 import bus from '@/services/EventBus';
 import {useFolderStore} from '@/stores/folders';
-import {ref} from 'vue'
 
-const selectedFolder = ref(0);
-const folderStore    = useFolderStore();
+const folderStore = useFolderStore();
 
 bus.on('file-deleted', () => folderStore.update());
 bus.on('folder-deleted', () => folderStore.update());
@@ -15,9 +13,7 @@ bus.on('folder-deleted', () => folderStore.update());
     <!-- FileTree -->
     <div class="p-1 pe-2 overflow-auto">
         <div class="slv-control-layout m-0">
-            <div>
-<!--                Host: Local-->
-            </div>
+            <div><!-- Host: Local --></div>
             <div></div>
             <div>
                 <select class="form-control p-0 border-0" v-model="folderStore.direction" v-on:change="folderStore.update">
@@ -28,11 +24,7 @@ bus.on('folder-deleted', () => folderStore.update());
         </div>
 
         <div class="slv-loadable" v-bind:class="{ 'slv-loading': folderStore.loading }">
-            <log-folder :folder="folder"
-                       :expanded="index === selectedFolder"
-                       :key="index"
-                       v-for="(folder, index) in folderStore.folders"
-                       @expand="selectedFolder = index"/>
+            <log-folder :folder="folder" :expand="true" :key="index" v-for="(folder, index) in folderStore.folders"/>
         </div>
     </div>
 </template>
