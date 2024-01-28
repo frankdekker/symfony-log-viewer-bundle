@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\LogViewer\Tests\Unit\Service\File\Nginx;
+namespace FD\LogViewer\Tests\Unit\Service\File\Apache;
 
+use FD\LogViewer\Service\File\Apache\ApacheErrorLineParser;
 use FD\LogViewer\Service\File\LogLineParserInterface;
-use FD\LogViewer\Service\File\Nginx\ApacheErrorLineParser;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -31,20 +31,21 @@ class ApacheErrorLineParserTest extends TestCase
 
     public function testParse(): void
     {
-        $line = '2020/01/01 12:34:56 [error] 21#21: *11 upstream timed out (110: Operation timed out) while reading response header from upstream' .
-            ', client: 192.168.0.1, server: , request: "GET /log-viewer/log HTTP/1.1", upstream: "fastcgi://172.21.0.2:9000", ' .
-            'host: "example.com:8888"';
+        $line = '[Fri Jan 01 12:34:56.498215 2020] [proxy_fcgi:error] [pid 10000] (70007)The timeout specified has expired: ' .
+            '[client 192.168.0.1:65344] AH01075: Error dispatching request to : (polling), referer: http://example.com/referer';
 
         $expected = [
-            'date'     => '2020/01/01 12:34:56',
+            'date'     => 'Fri Jan 01 12:34:56.498215 2020',
             'severity' => 'error',
             'channel'  => '',
-            'message'  => '*11 upstream timed out (110: Operation timed out) while reading response header from upstream',
+            'message'  => 'AH01075: Error dispatching request to : (polling)',
             'context'  => [
-                'ip'       => '192.168.0.1',
-                'request'  => 'GET /log-viewer/log HTTP/1.1',
-                'upstream' => 'fastcgi://172.21.0.2:9000',
-                'host'     => 'example.com:8888',
+                'module'       => 'proxy_fcgi',
+                'pid'          => '10000',
+                'error_status' => '(70007)The timeout specified has expired:',
+                'ip'           => '192.168.0.1',
+                'port'         => '65344',
+                'referer'      => 'http://example.com/referer',
             ],
             'extra'    => '',
         ];

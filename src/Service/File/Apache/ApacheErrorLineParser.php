@@ -8,14 +8,13 @@ use FD\LogViewer\Service\File\LogLineParserInterface;
 class ApacheErrorLineParser implements LogLineParserInterface
 {
     public const LOG_LINE_PATTERN =
-        '/^(?P<date>[\d+\/ :]+) ' .
-        '\[(?P<severity>.+)\] .*?: ' .
-        '(?P<message>.+?)' .
-        '(?:, client: (?P<ip>.+?))?' .
-        '(?:, server: (?P<server>.*?))?' .
-        '(?:, request: "?(?P<request>.+?)"?)?' .
-        '(?:, upstream: "?(?P<upstream>.+?)"?)?' .
-        '(?:, host: "?(?P<host>.+?)"?)?$/';
+        '/^\[(?<date>.*?)\] ' .
+        '\[(?:(?<module>.*?):)?(?<severity>.*?)\] ' .
+        '\[pid\s(?<pid>\d*)\]' .
+        '(?: (?<error_status>[^\]]*?))?' .
+        '(?: \[client (?<ip>.*):(?<port>\d+)\]) ' .
+        '(?<message>.*?)' .
+        '(?:, referer: (?<referer>\S*?))?$/';
 
     private readonly string $logLinePattern;
 
