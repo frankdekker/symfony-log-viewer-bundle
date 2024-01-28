@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Service\File\Nginx;
 
 use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Service\File\Http\HttpAccessLineParser;
 use FD\LogViewer\Service\File\LogParser;
-use FD\LogViewer\Service\File\Nginx\NginxAccessLineParser;
-use FD\LogViewer\Service\File\Nginx\NginxErrorLineParser;
-use FD\LogViewer\Service\File\Nginx\NginxFileParser;
+use FD\LogViewer\Service\File\Nginx\ApacheErrorLineParser;
+use FD\LogViewer\Service\File\Nginx\NginxErrorFileParser;
 use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -15,19 +15,19 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 
-#[CoversClass(NginxFileParser::class)]
+#[CoversClass(NginxErrorFileParser::class)]
 class NginxFileParserTest extends TestCase
 {
     use TestEntityTrait;
 
     private LogParser&MockObject $logParser;
-    private NginxFileParser $parser;
+    private NginxErrorFileParser $parser;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->logParser = $this->createMock(LogParser::class);
-        $this->parser    = new NginxFileParser('access', $this->logParser);
+        $this->parser    = new NginxErrorFileParser('access', $this->logParser);
     }
 
     public function testGetChannels(): void
@@ -49,7 +49,7 @@ class NginxFileParserTest extends TestCase
         $this->logParser->expects(self::once())->method('parse')
             ->with(
                 new SplFileInfo('path'),
-                new NginxAccessLineParser('patternB'),
+                new HttpAccessLineParser('patternB'),
                 $logQuery
             );
 
@@ -65,11 +65,11 @@ class NginxFileParserTest extends TestCase
         $this->logParser->expects(self::once())->method('parse')
             ->with(
                 new SplFileInfo('path'),
-                new NginxErrorLineParser('patternB'),
+                new ApacheErrorLineParser('patternB'),
                 $logQuery
             );
 
-        $this->parser = new NginxFileParser('error', $this->logParser);
+        $this->parser = new NginxErrorFileParser('error', $this->logParser);
         $this->parser->getLogIndex($config, $file, $logQuery);
     }
 
@@ -79,7 +79,7 @@ class NginxFileParserTest extends TestCase
         $file     = $this->createLogFile();
         $logQuery = $this->createMock(LogQueryDto::class);
 
-        $this->parser = new NginxFileParser('foobar', $this->logParser);
+        $this->parser = new NginxErrorFileParser('foobar', $this->logParser);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown log type:');

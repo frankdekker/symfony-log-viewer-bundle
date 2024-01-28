@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\File\Nginx;
 
+use FD\LogViewer\Service\File\Http\HttpAccessLineParser;
 use FD\LogViewer\Service\File\LogLineParserInterface;
-use FD\LogViewer\Service\File\Nginx\NginxAccessLineParser;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(NginxAccessLineParser::class)]
+#[CoversClass(HttpAccessLineParser::class)]
 class NginxAccessLineParserTest extends TestCase
 {
-    private NginxAccessLineParser $parser;
+    private HttpAccessLineParser $parser;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->parser = new NginxAccessLineParser(null);
+        $this->parser = new HttpAccessLineParser(null);
     }
 
     public function testMatches(): void

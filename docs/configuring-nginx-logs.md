@@ -6,7 +6,7 @@ To add nginx logs to the Log Viewer, add the following to your `config/packages/
 fd_log_viewer:
     log_files:
         nginx-access:
-            type: nginx-access
+            type: http-access
             name: Nginx access
             finder:
                 in: "/var/log/nginx"

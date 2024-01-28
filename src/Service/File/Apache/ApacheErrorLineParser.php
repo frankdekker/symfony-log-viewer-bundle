@@ -1,23 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace FD\LogViewer\Service\File\Nginx;
+namespace FD\LogViewer\Service\File\Apache;
 
 use FD\LogViewer\Service\File\LogLineParserInterface;
 
-class NginxAccessLineParser implements LogLineParserInterface
+class ApacheErrorLineParser implements LogLineParserInterface
 {
-    /** @noinspection RequiredAttributes */
     public const LOG_LINE_PATTERN =
-        '/^(?P<ip>\S+) ' .
-        '(?P<identity>\S+) ' .
-        '(?P<remote_user>\S+) ' .
-        '\[(?P<date>[^\]]+)\] ' .
-        '"(?P<method>\S+) (?P<path>\S+) (?P<http_version>\S+)" ' .
-        '(?P<status_code>\S+) ' .
-        '(?P<content_length>\S+) ' .
-        '"(?P<referrer>[^"]*)" ' .
-        '"(?P<user_agent>[^"]*)"/';
+        '/^(?P<date>[\d+\/ :]+) ' .
+        '\[(?P<severity>.+)\] .*?: ' .
+        '(?P<message>.+?)' .
+        '(?:, client: (?P<ip>.+?))?' .
+        '(?:, server: (?P<server>.*?))?' .
+        '(?:, request: "?(?P<request>.+?)"?)?' .
+        '(?:, upstream: "?(?P<upstream>.+?)"?)?' .
+        '(?:, host: "?(?P<host>.+?)"?)?$/';
 
     private readonly string $logLinePattern;
 
@@ -43,7 +41,7 @@ class NginxAccessLineParser implements LogLineParserInterface
             return null;
         }
 
-        $filter  = ['date', 'method', 'path'];
+        $filter  = ['date', 'severity', 'message'];
         $context = array_filter(
             $matches,
             static fn($value, $key) => trim($value) !== '' && is_int($key) === false && in_array($key, $filter, true) === false,
@@ -52,9 +50,9 @@ class NginxAccessLineParser implements LogLineParserInterface
 
         return [
             'date'     => $matches['date'],
-            'severity' => $matches['status_code'],
+            'severity' => $matches['severity'],
             'channel'  => '',
-            'message'  => sprintf('%s %s', $matches['method'] ?? '', $matches['path'] ?? ''),
+            'message'  => $matches['message'],
             'context'  => $context,
             'extra'    => '',
         ];

@@ -52,9 +52,13 @@ This entry allows you to add more log file directories to the Log Viewer. Each e
 
 ### log_files.type
 
-**type**: `string` (`enum: monolog|nginx-access|nginx-error`)
+**type**: `string` (`enum: monolog|http-access|apache-error|nginx-error`)
 
 This is the type of log file that will be read. 
+- `monolog` is the default type and will read the default monolog log files.
+- `http-access` will read the access log files of Apache and Nginx.
+- `apache-error` will read the error log files of Apache.
+- `nginx-error` will read the error log files of Nginx.
 <br><br>
 
 ### log_files.name
