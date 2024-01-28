@@ -4,19 +4,19 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Service\File\Nginx;
 
 use FD\LogViewer\Service\File\LogLineParserInterface;
-use FD\LogViewer\Service\File\Nginx\NginxErrorLineParser;
+use FD\LogViewer\Service\File\Nginx\ApacheErrorLineParser;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(NginxErrorLineParser::class)]
-class NginxErrorLineParserTest extends TestCase
+#[CoversClass(ApacheErrorLineParser::class)]
+class ApacheErrorLineParserTest extends TestCase
 {
-    private NginxErrorLineParser $parser;
+    private ApacheErrorLineParser $parser;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->parser = new NginxErrorLineParser(null);
+        $this->parser = new ApacheErrorLineParser(null);
     }
 
     public function testMatches(): void
