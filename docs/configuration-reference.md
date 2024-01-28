@@ -52,9 +52,9 @@ This entry allows you to add more log file directories to the Log Viewer. Each e
 
 ### log_files.type
 
-**type**: `string` (`enum: monolog`)
+**type**: `string` (`enum: monolog|nginx-access|nginx-error`)
 
-This is the type of log file that will be read. Currently only `monolog` is supported.
+This is the type of log file that will be read. 
 <br><br>
 
 ### log_files.name
@@ -142,7 +142,7 @@ Should the log folders and files be deletable.
 
 **type**: `string|null`.
 
-As log files can contain multiple lines per log entry, this pattern is used to find the start of a log entry. Any lines not matching
+As certain log files can contain multiple lines per log entry, this pattern is used to find the start of a log entry. Any lines not matching
 the pattern will be appended to the line before.
 The default monolog regex pattern is `/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/` and matches:
 

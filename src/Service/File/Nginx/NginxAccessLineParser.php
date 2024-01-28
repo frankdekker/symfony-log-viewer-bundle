@@ -8,13 +8,11 @@ use FD\LogViewer\Service\File\LogLineParserInterface;
 class NginxAccessLineParser implements LogLineParserInterface
 {
     public const LOG_LINE_PATTERN =
-        '/(?P<ip>\S+) ' .
+        '/^(?P<ip>\S+) ' .
         '(?P<identity>\S+) ' .
         '(?P<remote_user>\S+) ' .
-        '\[(?P<date>.+)\] ' .
-        '"(?P<method>\S+) ' .
-        '(?P<path>\S+) ' .
-        '(?P<http_version>\S+)" ' .
+        '\[(?P<date>[^\]]+)\] ' .
+        '"(?P<method>\S+) (?P<path>\S+) (?P<http_version>\S+)" ' .
         '(?P<status_code>\S+) ' .
         '(?P<content_length>\S+) ' .
         '"(?P<referrer>[^"]*)" ' .
