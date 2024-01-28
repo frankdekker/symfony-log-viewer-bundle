@@ -83,5 +83,5 @@ By default, it is available at: `/log-viewer` on your domain.
 - [Adding additional log files](docs/adding-additional-log-files.md)
 - [Adding nginx logs](docs/configuring-nginx-logs.md)
 - [Configuring the back home url](docs/configuring-the-back-home-route.md)
-- [Advanced search queries](docs/search-queries.md)
+- [Advanced search queries](docs/advanced-search-queries.md)
 - [Full configuration reference](docs/configuration-reference.md)
