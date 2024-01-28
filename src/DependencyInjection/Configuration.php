@@ -36,7 +36,7 @@ final class Configuration implements ConfigurationInterface
                     ->scalarNode('home_route')
                         ->info("The name of the route to redirect to when clicking the back button")
                     ->end()
-                    ->scalarNode('name')->info("The pretty name to show for these log files")->defaultNull()->end()
+                    ->scalarNode('name')->info("The pretty name to show for these log files")->end()
                     ->arrayNode('finder')
                         ->children()
                             ->scalarNode('in')

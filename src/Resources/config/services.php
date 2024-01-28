@@ -18,6 +18,7 @@ use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\LogQueryDtoFactory;
 use FD\LogViewer\Service\File\LogRecordsOutputProvider;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
+use FD\LogViewer\Service\File\Nginx\NginxFileParser;
 use FD\LogViewer\Service\FinderFactory;
 use FD\LogViewer\Service\Folder\LogFolderFactory;
 use FD\LogViewer\Service\Folder\LogFolderOutputFactory;
@@ -91,11 +92,17 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogRecordsOutputProvider::class);
     $services->set(LogParser::class)->arg('$clock', inline_service(Clock::class));
     $services->set(LogFileParserProvider::class)
-        ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.monolog_file_parser', 'name'));
+        ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.log_file_parser', 'name'));
     $services->set(LogQueryDtoFactory::class);
     $services->set(MonologFileParser::class)
-        ->tag('fd.symfony.log.viewer.monolog_file_parser', ['name' => 'monolog'])
+        ->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'monolog'])
         ->arg('$loggerLocator', tagged_iterator('fd.symfony.log.viewer.logger'));
+    $services->set('fd.symfony.log.viewer.nginx_access_file_parser', NginxFileParser::class)
+        ->arg('$type', 'access')
+        ->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'nginx-access']);
+    $services->set('fd.symfony.log.viewer.nginx_error_file_parser', NginxFileParser::class)
+        ->arg('$type', 'error')
+        ->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'nginx-error']);
     $services->set(PerformanceService::class);
     $services->set(StreamReaderFactory::class);
     $services->set(VersionService::class);

@@ -2,12 +2,14 @@ version: '3'
 
 services:
     nginx:
+        container_name: log-viewer-nginx
         image: nginx:stable-alpine
         ports:
             - ${NGINX_PORT:-8888}:80
         volumes:
             - ../.:/app:rw
             - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+            - log-viewer-log:/var/log/nginx:rw
 
     php-fpm:
         container_name: log-viewer-php
