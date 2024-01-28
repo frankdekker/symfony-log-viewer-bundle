@@ -7,6 +7,7 @@ use FD\LogViewer\Service\File\LogLineParserInterface;
 
 class NginxAccessLineParser implements LogLineParserInterface
 {
+    /** @noinspection RequiredAttributes */
     public const LOG_LINE_PATTERN =
         '/^(?P<ip>\S+) ' .
         '(?P<identity>\S+) ' .
