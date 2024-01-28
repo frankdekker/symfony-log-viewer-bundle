@@ -19,7 +19,7 @@ read logs from any directory.
 
 ### Features
 
-- 📂 **View all the Monolog or Nginx logs** in specified directories,
+- 📂 **View all the Monolog, Apache2 or Nginx logs** in specified directories,
 - 🔍 **Search** the logs,
 - 🎚 **Filter** by log level (error, info, debug, etc.), by channel, date range or log content,
 - 🌑 **Dark mode**,
