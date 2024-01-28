@@ -81,6 +81,7 @@ By default, it is available at: `/log-viewer` on your domain.
 - [Modifying monolog configuration](docs/modifying-monolog-configuration.md)
 - [Disabling the default monolog configuration](docs/disabling-default-monolog-configuration.md)
 - [Adding additional log files](docs/adding-additional-log-files.md)
+- [Adding apache logs](docs/configuring-apache-logs.md)
 - [Adding nginx logs](docs/configuring-nginx-logs.md)
 - [Configuring the back home url](docs/configuring-the-back-home-route.md)
 - [Advanced search queries](docs/advanced-search-queries.md)
