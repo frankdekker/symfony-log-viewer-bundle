@@ -6,6 +6,7 @@ namespace FD\LogViewer\Service\Parser;
 use FD\LogViewer\Entity\Expression\ChannelTerm;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
 use FD\LogViewer\Entity\Expression\DateBeforeTerm;
+use FD\LogViewer\Entity\Expression\KeyValueTerm;
 use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\TermInterface;
 use FD\LogViewer\Entity\Expression\WordTerm;
@@ -19,8 +20,11 @@ use FD\LogViewer\Reader\String\StringReader;
  */
 class TermParser
 {
-    public function __construct(private readonly StringParser $stringParser, private readonly DateParser $dateParser)
-    {
+    public function __construct(
+        private readonly StringParser $stringParser,
+        private readonly DateParser $dateParser,
+        private readonly KeyValueParser $keyValueParser
+    ) {
     }
 
     /**
@@ -48,6 +52,14 @@ class TermParser
 
         if ($string->read('exclude:') || $string->read('-:')) {
             return new WordTerm($this->stringParser->parse($string), WordTerm::TYPE_EXCLUDE);
+        }
+
+        if ($string->read('context:')) {
+            return $this->keyValueParser->parse(KeyValueTerm::TYPE_CONTEXT, $string);
+        }
+
+        if ($string->read('extra:')) {
+            return $this->keyValueParser->parse(KeyValueTerm::TYPE_CONTEXT, $string);
         }
 
         return new WordTerm($this->stringParser->parse($string), WordTerm::TYPE_INCLUDE);

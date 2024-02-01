@@ -14,19 +14,19 @@ class StringReaderTest extends TestCase
     {
         $string = new StringReader('Foobar  ');
 
-        static::assertSame('F', $string->get());
+        static::assertSame('F', $string->char());
         static::assertSame('Foob', $string->peek(4));
 
         $string->next();
-        static::assertSame('o', $string->get());
+        static::assertSame('o', $string->char());
         static::assertSame('ooba', $string->peek(4));
 
         $string->skip(['o']);
-        static::assertSame('b', $string->get());
+        static::assertSame('b', $string->char());
         static::assertSame('bar ', $string->peek(4));
 
         $string->skip(['b', 'a', 'r']);
-        static::assertSame(' ', $string->get());
+        static::assertSame(' ', $string->char());
 
         $string->skipWhitespace();
         static::assertTrue($string->eol());
@@ -38,6 +38,6 @@ class StringReaderTest extends TestCase
 
         static::assertFalse($string->read('baz'));
         static::assertTrue($string->read('foo'));
-        static::assertSame('b', $string->get());
+        static::assertSame('b', $string->char());
     }
 }
