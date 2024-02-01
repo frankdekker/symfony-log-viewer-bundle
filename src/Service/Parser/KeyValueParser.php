@@ -22,23 +22,25 @@ class KeyValueParser
             return new KeyValueTerm($type, null, $value);
         }
 
-        $keys = [];
+        $keys = [$value];
         if ($string->char() === '.') {
-            $keys[] = $value;
-
-            while ($string->eol() === false || $string->char() === '=') {
+            while ($string->eol() === false && $string->char() === '.') {
                 $string->next();
                 $keys[] = $this->stringParser->parse($string, ['.', '=']);
             }
 
-            if ($string->eol()) {
+            if ($string->char() !== '=') {
                 return new KeyValueTerm($type, null, implode('.', $keys));
             }
         }
 
-        // skip '='
-        $string->next();
+        if ($string->char() === '=') {
+            // skip =
+            $string->next();
 
-        return new KeyValueTerm($type, $keys, $this->stringParser->parse($string));
+            return new KeyValueTerm($type, $keys, $this->stringParser->parse($string));
+        }
+
+        return new KeyValueTerm($type, null, $value);
     }
 }
