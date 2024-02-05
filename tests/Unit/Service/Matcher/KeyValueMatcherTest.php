@@ -70,4 +70,11 @@ class KeyValueMatcherTest extends TestCase
         $term   = new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, ['key'], 'value');
         static::assertFalse($this->matcher->matches($term, $record));
     }
+
+    public function testMatchesShouldIgnoreUnmatchedKeys(): void
+    {
+        $record = new LogRecord(2000000, 'Warning', 'app', 'message', [], ['key' => 'value']);
+        $term   = new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, ['foobar'], 'value');
+        static::assertFalse($this->matcher->matches($term, $record));
+    }
 }
