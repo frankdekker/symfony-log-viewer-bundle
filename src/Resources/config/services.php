@@ -37,6 +37,7 @@ use FD\LogViewer\Service\Matcher\SeverityTermMatcher;
 use FD\LogViewer\Service\Matcher\WordTermMatcher;
 use FD\LogViewer\Service\Parser\DateParser;
 use FD\LogViewer\Service\Parser\ExpressionParser;
+use FD\LogViewer\Service\Parser\KeyValueParser;
 use FD\LogViewer\Service\Parser\QuotedStringParser;
 use FD\LogViewer\Service\Parser\StringParser;
 use FD\LogViewer\Service\Parser\TermParser;
@@ -47,6 +48,7 @@ use FD\LogViewer\Util\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\inline_service;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
 return static function (ContainerConfigurator $container): void {
@@ -73,17 +75,20 @@ return static function (ContainerConfigurator $container): void {
     $services->set(JsonManifestAssetLoader::class)
         ->arg('$manifestPath', '%kernel.project_dir%/public/bundles/fdlogviewer/.vite/manifest.json');
 
+    $services->set(StringParser::class)
+        ->arg('$quotedStringParser', inline_service(QuotedStringParser::class))
+        ->arg('$wordParser', inline_service(WordParser::class));
     $services->set(ExpressionParser::class)
         ->arg(
             '$termParser',
             inline_service(TermParser::class)
-                ->arg(
-                    '$stringParser',
-                    inline_service(StringParser::class)
-                        ->arg('$quotedStringParser', inline_service(QuotedStringParser::class))
-                        ->arg('$wordParser', inline_service(WordParser::class))
+                ->args(
+                    [
+                        service(StringParser::class),
+                        inline_service(DateParser::class),
+                        inline_service(KeyValueParser::class)->args([service(StringParser::class)])
+                    ]
                 )
-                ->arg('$dateParser', inline_service(DateParser::class))
         );
 
     $services->set(FinderFactory::class);
