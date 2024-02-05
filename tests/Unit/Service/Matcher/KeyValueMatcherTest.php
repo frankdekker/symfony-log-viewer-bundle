@@ -10,6 +10,7 @@ use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Service\Matcher\KeyValueMatcher;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 #[CoversClass(KeyValueMatcher::class)]
 class KeyValueMatcherTest extends TestCase
@@ -35,10 +36,24 @@ class KeyValueMatcherTest extends TestCase
         static::assertTrue($this->matcher->matches($term, $record));
     }
 
+    public function testMatchesShouldSearchInStringData(): void
+    {
+        $record = new LogRecord(2000000, 'Warning', 'app', 'message', [], 'value');
+        $term   = new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, null, 'val');
+        static::assertTrue($this->matcher->matches($term, $record));
+    }
+
     public function testMatchesAKeyValue(): void
     {
         $record = new LogRecord(2000000, 'Warning', 'app', 'message', [], ['key' => 'value']);
         $term   = new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, ['key'], 'value');
+        static::assertTrue($this->matcher->matches($term, $record));
+    }
+
+    public function testMatchesAKeyValueWithoutArrayData(): void
+    {
+        $record = new LogRecord(2000000, 'Warning', 'app', 'message', [], 'value');
+        $term   = new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, ['key'], 'val');
         static::assertTrue($this->matcher->matches($term, $record));
     }
 
@@ -47,5 +62,12 @@ class KeyValueMatcherTest extends TestCase
         $record = new LogRecord(2000000, 'Warning', 'app', 'message', [], ['key1' => ['key2' => 'value']]);
         $term   = new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, ['key1', 'key2'], 'value');
         static::assertTrue($this->matcher->matches($term, $record));
+    }
+
+    public function testMatchesShouldIgnoreNonScalarValues(): void
+    {
+        $record = new LogRecord(2000000, 'Warning', 'app', 'message', [], ['key' => new stdClass()]);
+        $term   = new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, ['key'], 'value');
+        static::assertFalse($this->matcher->matches($term, $record));
     }
 }
