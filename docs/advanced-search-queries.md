@@ -45,6 +45,7 @@ before:"2020-01-31 23:59:59" after:"2020-01-01 00:00:00" exclude:"new IndexContr
 
 ### Searching context or extra
 
+Matches if at least one of the array values contains the given string:
 ```text
 context:foo
 extra:bar
