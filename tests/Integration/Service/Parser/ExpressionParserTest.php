@@ -9,11 +9,13 @@ use FD\LogViewer\Entity\Expression\ChannelTerm;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
 use FD\LogViewer\Entity\Expression\DateBeforeTerm;
 use FD\LogViewer\Entity\Expression\Expression;
+use FD\LogViewer\Entity\Expression\KeyValueTerm;
 use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
 use FD\LogViewer\Service\Parser\DateParser;
 use FD\LogViewer\Service\Parser\ExpressionParser;
+use FD\LogViewer\Service\Parser\KeyValueParser;
 use FD\LogViewer\Service\Parser\QuotedStringParser;
 use FD\LogViewer\Service\Parser\StringParser;
 use FD\LogViewer\Service\Parser\TermParser;
@@ -29,7 +31,8 @@ class ExpressionParserTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->parser = new ExpressionParser(new TermParser(new StringParser(new QuotedStringParser(), new WordParser()), new DateParser()));
+        $stringParser = new StringParser(new QuotedStringParser(), new WordParser());
+        $this->parser = new ExpressionParser(new TermParser($stringParser, new DateParser(), new KeyValueParser($stringParser)));
     }
 
     /**
@@ -120,6 +123,38 @@ class ExpressionParserTest extends TestCase
             ]
         );
         $actual   = $this->parser->parse(new StringReader('exclude:"foo" bar'));
+
+        static::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testParseSearchContext(): void
+    {
+        $expected = new Expression(
+            [
+                new KeyValueTerm(KeyValueTerm::TYPE_CONTEXT, null, 'baz'),
+                new KeyValueTerm(KeyValueTerm::TYPE_CONTEXT, ['foo'], 'bar'),
+            ]
+        );
+        $actual   = $this->parser->parse(new StringReader('context:baz context:foo="bar"'));
+
+        static::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testParseSearchExtra(): void
+    {
+        $expected = new Expression(
+            [
+                new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, null, 'baz'),
+                new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, ['foo'], 'bar'),
+            ]
+        );
+        $actual   = $this->parser->parse(new StringReader('extra:baz extra:foo="bar"'));
 
         static::assertEquals($expected, $actual);
     }
