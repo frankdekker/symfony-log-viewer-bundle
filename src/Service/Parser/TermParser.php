@@ -59,7 +59,7 @@ class TermParser
         }
 
         if ($string->read('extra:')) {
-            return $this->keyValueParser->parse(KeyValueTerm::TYPE_CONTEXT, $string);
+            return $this->keyValueParser->parse(KeyValueTerm::TYPE_EXTRA, $string);
         }
 
         return new WordTerm($this->stringParser->parse($string), WordTerm::TYPE_INCLUDE);
