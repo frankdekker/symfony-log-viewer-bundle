@@ -15,7 +15,7 @@ class StringReader
         $this->length = strlen($this->string);
     }
 
-    public function get(): string
+    public function char(): string
     {
         return $this->string[$this->position];
     }
@@ -48,7 +48,7 @@ class StringReader
      */
     public function skip(array $chars): self
     {
-        while ($this->eol() === false && in_array($this->get(), $chars, true)) {
+        while ($this->eol() === false && in_array($this->char(), $chars, true)) {
             $this->next();
         }
 
@@ -72,6 +72,7 @@ class StringReader
 
     /**
      * True if the end of line is reached
+     * @phpstan-impure
      */
     public function eol(): bool
     {

@@ -9,11 +9,13 @@ use FD\LogViewer\Reader\String\StringReader;
 /**
  * BNF:
  * <expression> ::= <term> | <term> <expression>
- * <term> ::= <date-term> | <exclude-term> | <severity-term> | <channel-term> <string>
+ * <term> ::= <date-term> | <exclude-term> | <severity-term> | <channel-term> <string> | <context-term> | <extra-term>
  * <date-term> ::= before:<string> | af
  * <severity-term> ::= severity:<string>
  * <channel-term> ::= channel:<string>
  * <exclude-term> ::= exclude:<string>
+ * <context-term> ::= context:<string> | context:<key>=<string>
+ * <extra-term> ::= extra:<string> | extra:<key>=<string>
  * <string> ::= "<characters without unescaped double quote>" | '<characters without unescaped quote>' | <characters-without-space>
  */
 class ExpressionParser

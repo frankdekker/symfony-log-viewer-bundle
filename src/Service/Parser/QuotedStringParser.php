@@ -15,7 +15,7 @@ class QuotedStringParser
         $result  = '';
         $escaped = false;
         for (; $string->eol() === false; $string->next()) {
-            $char = $string->get();
+            $char = $string->char();
 
             // skip the escape character
             if ($char === $escapeChar && $escaped === false) {

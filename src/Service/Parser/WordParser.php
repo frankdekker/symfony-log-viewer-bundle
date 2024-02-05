@@ -9,12 +9,15 @@ class WordParser
 {
     public const WHITESPACE = [' ' => true, "\t" => true, "\n" => true, "\r" => true];
 
-    public function parse(StringReader $string): string
+    /**
+     * @param string[] $stopAt
+     */
+    public function parse(StringReader $string, array $stopAt = []): string
     {
         $result = '';
         for (; $string->eol() === false; $string->next()) {
-            $char = $string->get();
-            if (isset(self::WHITESPACE[$char])) {
+            $char = $string->char();
+            if (isset(self::WHITESPACE[$char]) || in_array($char, $stopAt, true)) {
                 break;
             }
             $result .= $char;
