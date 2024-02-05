@@ -56,10 +56,10 @@ class KeyValueMatcher implements TermMatcherInterface
 
         $value = $data;
         foreach ($keys as $key) {
-            if (is_array($value) === false || isset($data[$key]) === false) {
+            if (is_array($value) === false || isset($value[$key]) === false) {
                 return false;
             }
-            $value = $data[$key];
+            $value = $value[$key];
         }
 
         return is_scalar($value) && stripos((string)$value, $term) !== false;
