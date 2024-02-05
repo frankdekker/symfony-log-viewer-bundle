@@ -16,7 +16,7 @@ class StringParser
      */
     public function parse(StringReader $string, array $stopAt = []): string
     {
-        if (in_array($string->char(), ['"', "'"], true)) {
+        if ($string->eol() === false && in_array($string->char(), ['"', "'"], true)) {
             return $this->quotedStringParser->parse($string, $string->char(), '\\');
         }
 
