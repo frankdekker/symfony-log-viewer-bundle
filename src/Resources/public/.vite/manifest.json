@@ -1,8 +1,8 @@
 {
   "src/main.ts": {
     "file": "assets/main-mTIZXVgV.js",
-    "isEntry": true,
-    "src": "src/main.ts"
+    "src": "src/main.ts",
+    "isEntry": true
   },
   "style.css": {
     "file": "assets/style-Ggw-MUUa.css",
