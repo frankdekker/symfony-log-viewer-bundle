@@ -7,8 +7,10 @@ use FD\LogViewer\Entity\Index\LogIndex;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
+use FD\LogViewer\Service\File\Monolog\MonologJsonParser;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use FD\LogViewer\Tests\Utility\TestEntityTrait;
+use InvalidArgumentException;
 use Monolog\Logger;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -77,9 +79,21 @@ class MonologFileParserTest extends TestCase
 
         $this->logParser->expects(self::once())
             ->method('parse')
-            ->with(new SplFileInfo('path'), new MonologLineParser('patternA', 'patternB'), $logQuery)
+            ->with(new SplFileInfo('path'), new MonologJsonParser(), $logQuery)
             ->willReturn($index);
 
-        static::assertSame($index, $this->parser->getLogIndex($config, $file, $logQuery));
+        $parser = new MonologFileParser(MonologFileParser::TYPE_JSON, [$this->logger], $this->logParser);
+        static::assertSame($index, $parser->getLogIndex($config, $file, $logQuery));
+    }
+
+    public function testGetLogIndexInvalidType(): void
+    {
+        $config = $this->createLogFileConfig();
+        $file   = $this->createLogFile();
+        $parser = new MonologFileParser('foobar', [$this->logger], $this->logParser);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid format type');
+        $parser->getLogIndex($config, $file, new LogQueryDto('identifier'));
     }
 }
