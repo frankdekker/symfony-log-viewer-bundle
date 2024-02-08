@@ -29,7 +29,7 @@ class MonologFileParserTest extends TestCase
         parent::setUp();
         $this->logger    = $this->createMock(Logger::class);
         $this->logParser = $this->createMock(LogParser::class);
-        $this->parser    = new MonologFileParser([$this->logger], $this->logParser);
+        $this->parser    = new MonologFileParser(MonologFileParser::TYPE_LINE, [$this->logger], $this->logParser);
     }
 
     public function testGetLevels(): void
@@ -53,7 +53,22 @@ class MonologFileParserTest extends TestCase
         static::assertSame(['app' => 'app'], $this->parser->getChannels());
     }
 
-    public function testGetLogIndex(): void
+    public function testGetLogIndexForLineParser(): void
+    {
+        $config   = $this->createLogFileConfig();
+        $logQuery = new LogQueryDto('identifier');
+        $file     = $this->createLogFile();
+        $index    = new LogIndex();
+
+        $this->logParser->expects(self::once())
+            ->method('parse')
+            ->with(new SplFileInfo('path'), new MonologLineParser('patternA', 'patternB'), $logQuery)
+            ->willReturn($index);
+
+        static::assertSame($index, $this->parser->getLogIndex($config, $file, $logQuery));
+    }
+
+    public function testGetLogIndexForJsonParser(): void
     {
         $config   = $this->createLogFileConfig();
         $logQuery = new LogQueryDto('identifier');
