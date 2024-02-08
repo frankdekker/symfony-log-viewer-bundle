@@ -90,6 +90,7 @@ class MonologFileParserTest extends TestCase
     {
         $config = $this->createLogFileConfig();
         $file   = $this->createLogFile();
+        // @phpstan-ignore-next-line
         $parser = new MonologFileParser('foobar', [$this->logger], $this->logParser);
 
         $this->expectException(InvalidArgumentException::class);
