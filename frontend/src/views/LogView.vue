@@ -20,7 +20,6 @@ const offset     = ref(0);
 const badRequest = ref(false);
 
 const navigate = () => {
-    console.log('test');
     const fileOffset = offset.value > 0 && logRecordStore.records.paginator?.direction !== searchStore.sort ? 0 : offset.value;
     router.push({
         query: filter({
