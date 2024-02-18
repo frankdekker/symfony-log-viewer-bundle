@@ -20,11 +20,15 @@ do
            FOLLOW_LOG='1';;
         "--port" )
            PORT="$1"; shift;;
-        *) echo >&2 "Invalid option: $@"; exit 1;;
+        *) echo >&2 "Invalid option: $opt"; exit 1;;
    esac
 done
 
-echo "[PORT]: ${PORT}"
+if [ "$PORT" == '8888' ]; then
+    echo "[PORT]: ${PORT}. Use '--port' flag to change the default port."
+else
+    echo "[PORT]: ${PORT}"
+fi
 
 if [ "$FOLLOW_LOG" == '1' ]; then
     echo "[FOLLOW_LOG]: yes"
