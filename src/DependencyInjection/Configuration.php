@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -20,23 +21,27 @@ final class Configuration implements ConfigurationInterface
         /** @var ArrayNodeDefinition $rootNode */
         $rootNode = $tree->getRootNode();
 
-        $node = $rootNode->children()
+        $rootNode->children()
             ->scalarNode('enable_default_monolog')
-            ->info('Enable default monolog configuration')
-            ->defaultTrue()
-            ->end();
-
-        $node = $this->configureLogFiles($node->arrayNode('log_files'));
-        $node = $this->configureHosts($node->arrayNode('hosts'));
+                ->info('Enable default monolog configuration')
+                ->defaultTrue()
+            ->end()
+            ->append($this->configureLogFiles())
+            ->append($this->configureHosts());
 
         return $tree;
     }
 
-    private function configureLogFiles(ArrayNodeDefinition $node): ArrayNodeDefinition
+    private function configureLogFiles(): NodeDefinition
     {
-        return $node->info('List of log files to show')
-                ->useAttributeAsKey('log_name')
-                ->arrayPrototype()
+        $tree = new TreeBuilder('log_files');
+        /** @var ArrayNodeDefinition $rootNode */
+        $rootNode = $tree->getRootNode();
+
+        return $rootNode
+            ->info('List of log files to show')
+            ->useAttributeAsKey('log_name')
+            ->arrayPrototype()
                 ->children()
                     ->scalarNode('type')
                         ->info("The type of log file: monolog, nginx, apache, or the service id of an implementation of `LogFileParserInterface`")
@@ -80,9 +85,14 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    private function configureHosts(ArrayNodeDefinition $node): ArrayNodeDefinition
+    private function configureHosts(): NodeDefinition
     {
-        return $node->info('List of hosts')
+        $tree = new TreeBuilder('log_files');
+        /** @var ArrayNodeDefinition $rootNode */
+        $rootNode = $tree->getRootNode();
+
+        return $rootNode
+            ->info('List of hosts')
             ->useAttributeAsKey('host_name')
             ->arrayPrototype()
                 ->children()
