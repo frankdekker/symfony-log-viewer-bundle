@@ -1,6 +1,5 @@
 {
     "fd_log_viewer": {
-        "enable_default_monolog": true,
         "home_route": "home",
         "log_files": {
             "monolog": {

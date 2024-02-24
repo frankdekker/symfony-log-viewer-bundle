@@ -21,13 +21,7 @@ final class Configuration implements ConfigurationInterface
         $rootNode = $tree->getRootNode();
 
         $rootNode->children()
-            ->scalarNode('enable_default_monolog')
-                ->info('Enable default monolog configuration')
-                ->defaultTrue()
-            ->end()
-            ->scalarNode('home_route')
-                ->info("The name of the route to redirect to when clicking the back button")
-            ->end()
+            ->scalarNode('home_route')->info("The name of the route to redirect to when clicking the back button")->end()
             ->append($this->configureLogFiles())
             ->append($this->configureHosts());
 
@@ -44,6 +38,23 @@ final class Configuration implements ConfigurationInterface
             ->info('List of log files to show')
             ->useAttributeAsKey('log_name')
             ->requiresAtLeastOneElement()
+            ->defaultValue(
+                [
+                    'monolog' => [
+                        'type'         => 'monolog',
+                        'name'         => 'Monolog',
+                        'downloadable' => false,
+                        'deletable'    => false,
+                        'finder'       => [
+                            'in'                   => '%kernel.logs_dir%',
+                            'name'                 => '*.log',
+                            'depth'                => '== 0',
+                            'ignoreUnreadableDirs' => true,
+                            'followLinks'          => false,
+                        ],
+                    ]
+                ]
+            )
             ->arrayPrototype()
                 ->children()
                     ->scalarNode('type')
@@ -79,8 +90,14 @@ final class Configuration implements ConfigurationInterface
                         ->info('The regex pattern for the start of a log line. Adds support for multiline log messages.')
                         ->defaultNull()
                     ->end()
-                    ->scalarNode('log_message_pattern')->info('The regex pattern for a full log message which could include newlines.')->end()
-                    ->scalarNode('date_format')->info('The date format of how to present the date in the frontend.')->defaultNull()->end()
+                    ->scalarNode('log_message_pattern')
+                        ->info('The regex pattern for a full log message which could include newlines.')
+                        ->defaultNull()
+                    ->end()
+                    ->scalarNode('date_format')
+                        ->info('The date format of how to present the date in the frontend.')
+                        ->defaultValue('Y-m-d H:i:s')
+                    ->end()
                 ->end()
             ->end();
     }
@@ -94,6 +111,8 @@ final class Configuration implements ConfigurationInterface
         return $rootNode
             ->info('List of hosts')
             ->useAttributeAsKey('host_name')
+            ->requiresAtLeastOneElement()
+            ->defaultValue(['localhost' => ['name' => 'Local', 'host' => null]])
             ->arrayPrototype()
                 ->children()
                     ->scalarNode('name')->info("The pretty name to show for this host")->end()

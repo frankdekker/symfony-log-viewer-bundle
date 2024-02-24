@@ -1,0 +1,23 @@
+{
+    "log_files": {
+        "monolog": {
+            "type": "monolog",
+            "name": "Monolog",
+            "downloadable": false,
+            "deletable": false,
+            "finder": {
+                "in": "%kernel.logs_dir%",
+                "name": "*.log",
+                "depth": "== 0",
+                "ignoreUnreadableDirs": true,
+                "followLinks": false
+            }
+        }
+    },
+    "hosts": {
+        "localhost": {
+            "name": "Local",
+            "host": null
+        }
+    }
+}

@@ -21,26 +21,30 @@ class ConfigurationTest extends TestCase
         $this->configuration = new Configuration();
     }
 
-    public function testMinimalConfig(): void
+    public function testDefaultConfig(): void
     {
-        $configs = [
-            'enable_default_monolog' => true,
-            'log_files'              => [],
-            'hosts'                  => [],
-        ];
-
-        $result = $this->processor->processConfiguration($this->configuration, []);
+        $configs = self::getJson(__DIR__ . '/data/default-config.json');
+        $result  = $this->processor->processConfiguration($this->configuration, []);
 
         static::assertSame($configs, $result);
     }
 
     public function testFullConfig(): void
     {
-        $configs = json_decode((string)file_get_contents(__DIR__ . '/data/full-config.json'), true);
-        static::assertIsArray($configs);
-
-        $result = $this->processor->processConfiguration($this->configuration, $configs);
+        $configs = self::getJson(__DIR__ . '/data/full-config.json');
+        $result  = $this->processor->processConfiguration($this->configuration, $configs);
 
         static::assertSame($configs['fd_log_viewer'], $result);
+    }
+
+    /**
+     * @return array<int|string, mixed>
+     */
+    private static function getJson(string $path): array
+    {
+        $configs = json_decode((string)file_get_contents($path), true);
+        static::assertIsArray($configs);
+
+        return $configs;
     }
 }

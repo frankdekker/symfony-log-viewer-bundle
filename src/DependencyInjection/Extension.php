@@ -5,7 +5,6 @@ namespace FD\LogViewer\DependencyInjection;
 
 use FD\LogViewer\Entity\Config\FinderConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;
-use FD\LogViewer\Util\Arrays;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
@@ -19,24 +18,6 @@ use Throwable;
  */
 final class Extension extends BaseExtension
 {
-    private const DEFAULT_MONOLOG_CONFIG = [
-        'log_files' => [
-            'monolog' => [
-                'type'         => 'monolog',
-                'name'         => 'Monolog',
-                'downloadable' => false,
-                'deletable'    => false,
-                'finder'       => [
-                    'in'                   => '%kernel.logs_dir%',
-                    'name'                 => '*.log',
-                    'depth'                => '== 0',
-                    'ignoreUnreadableDirs' => true,
-                    'followLinks'          => false,
-                ],
-            ]
-        ]
-    ];
-
     /**
      * @inheritDoc
      * @throws Throwable
@@ -49,11 +30,6 @@ final class Extension extends BaseExtension
         $mergedConfigs = $this->processConfiguration(new Configuration(), $configs);
 
         $container->setParameter('fd.symfony.log.viewer.log_files_config.home_route', $mergedConfigs['home_route'] ?? null);
-
-        // add defaults
-        if ($mergedConfigs['enable_default_monolog']) {
-            $mergedConfigs = Arrays::merge($mergedConfigs, self::DEFAULT_MONOLOG_CONFIG);
-        }
 
         foreach ($mergedConfigs['log_files'] as $key => $config) {
             $container->register('fd.symfony.log.viewer.log_files_config.finder.' . $key, FinderConfig::class)
