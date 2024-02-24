@@ -10,7 +10,6 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * @codeCoverageIgnore
  * @internal
  */
 final class Configuration implements ConfigurationInterface
@@ -26,8 +25,10 @@ final class Configuration implements ConfigurationInterface
                 ->info('Enable default monolog configuration')
                 ->defaultTrue()
             ->end()
-            ->append($this->configureLogFiles())
-            ->append($this->configureHosts());
+            ->scalarNode('home_route')
+                ->info("The name of the route to redirect to when clicking the back button")
+            ->end()
+            ->append($this->configureLogFiles());
 
         return $tree;
     }
@@ -41,13 +42,11 @@ final class Configuration implements ConfigurationInterface
         return $rootNode
             ->info('List of log files to show')
             ->useAttributeAsKey('log_name')
+            ->requiresAtLeastOneElement()
             ->arrayPrototype()
                 ->children()
                     ->scalarNode('type')
                         ->info("The type of log file: monolog, nginx, apache, or the service id of an implementation of `LogFileParserInterface`")
-                    ->end()
-                    ->scalarNode('home_route')
-                        ->info("The name of the route to redirect to when clicking the back button")
                     ->end()
                     ->scalarNode('name')->info("The pretty name to show for these log files")->end()
                     ->arrayNode('finder')
