@@ -43,8 +43,6 @@ final class Configuration implements ConfigurationInterface
                     'monolog' => [
                         'type'         => 'monolog',
                         'name'         => 'Monolog',
-                        'downloadable' => false,
-                        'deletable'    => false,
                         'finder'       => [
                             'in'                   => '%kernel.logs_dir%',
                             'name'                 => '*.log',
@@ -52,6 +50,8 @@ final class Configuration implements ConfigurationInterface
                             'ignoreUnreadableDirs' => true,
                             'followLinks'          => false,
                         ],
+                        'downloadable' => false,
+                        'deletable'    => false,
                     ]
                 ]
             )
