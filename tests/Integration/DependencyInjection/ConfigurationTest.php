@@ -29,6 +29,15 @@ class ConfigurationTest extends TestCase
         static::assertSame($configs, $result);
     }
 
+    public function testHostsOverrideConfig(): void
+    {
+        $configs = self::getJson(__DIR__ . '/data/hosts-override-config.json');
+        $result  = $this->processor->processConfiguration($this->configuration, $configs);
+
+        $expected = self::getJson(__DIR__ . '/data/expected-hosts-override-config.json');
+        static::assertSame($expected, $result);
+    }
+
     public function testFullConfig(): void
     {
         $configs = self::getJson(__DIR__ . '/data/full-config.json');

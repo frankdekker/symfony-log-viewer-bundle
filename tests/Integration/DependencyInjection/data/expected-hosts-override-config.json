@@ -1,0 +1,29 @@
+{
+    "hosts": {
+        "remote": {
+            "name": "Remote",
+            "host": "https://api.example/log-viewer",
+            "auth": {
+                "type": "FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\BearerAuthenticator",
+                "options": {
+                    "token": "t0k3n"
+                }
+            }
+        }
+    },
+    "log_files": {
+        "monolog": {
+            "type": "monolog",
+            "name": "Monolog",
+            "finder": {
+                "in": "%kernel.logs_dir%",
+                "name": "*.log",
+                "depth": "== 0",
+                "ignoreUnreadableDirs": true,
+                "followLinks": false
+            },
+            "downloadable": false,
+            "deletable": false
+        }
+    }
+}
