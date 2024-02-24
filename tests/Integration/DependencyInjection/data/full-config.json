@@ -24,6 +24,37 @@
             "localhost": {
                 "name": "Localhost",
                 "host": null
+            },
+            "basic_auth_remote_host": {
+                "name": "BasicRemoteHost",
+                "host": "https://www.example.com/log-viewer",
+                "auth": {
+                    "type": "FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\BasicAuthAuthenticator",
+                    "options": {
+                        "username": "user",
+                        "password": "password"
+                    }
+                }
+            },
+            "bearer_remote_host": {
+                "name": "BearerRemoteHost",
+                "host": "https://www.example.com/log-viewer",
+                "auth": {
+                    "type": "FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\BearerAuthenticator",
+                    "options": {
+                        "token": "t0k3n"
+                    }
+                }
+            },
+            "header_remote_host": {
+                "name": "HeaderRemoteHost",
+                "host": "https://www.example.com/log-viewer",
+                "auth": {
+                    "type": "FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\HeaderAuthenticator",
+                    "options": {
+                        "X_PRIVATE_TOKEN": "t0k3n"
+                    }
+                }
             }
         }
     }
