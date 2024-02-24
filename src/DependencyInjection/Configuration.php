@@ -74,15 +74,14 @@ final class Configuration implements ConfigurationInterface
                         ->info('The regex pattern for the start of a log line. Adds support for multiline log messages.')
                         ->defaultNull()
                     ->end()
-                    ->scalarNode('log_message_pattern')
-                        ->info('The regex pattern for a full log message which could include newlines.')
-                    ->end()
+                    ->scalarNode('log_message_pattern')->info('The regex pattern for a full log message which could include newlines.')->end()
                     ->scalarNode('date_format')->info('The date format of how to present the date in the frontend.')->defaultNull()->end()
                 ->end()
             ->end();
     }
 
-    private function configureHosts(ArrayNodeDefinition $node): ArrayNodeDefinition {
+    private function configureHosts(ArrayNodeDefinition $node): ArrayNodeDefinition
+    {
         return $node->info('List of hosts')
             ->useAttributeAsKey('host_name')
             ->arrayPrototype()
@@ -90,6 +89,6 @@ final class Configuration implements ConfigurationInterface
                     ->scalarNode('name')->info("The pretty name to show for this host")->end()
                     ->scalarNode('host')->info("The host to connect to")->defaultNull()->end()
                 ->end()
-
+            ->end();
     }
 }
