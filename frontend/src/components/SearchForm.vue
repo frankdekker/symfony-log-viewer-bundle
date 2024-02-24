@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import Foldout from '@/services/Foldout';
 import {ref} from 'vue';
 
-const searchRef = ref<HTMLInputElement>();
-const query     = defineModel<string>('query');
-const sort      = defineModel<string>('sort');
-const perPage   = defineModel<string>('perPage');
+const filterButton   = ref<HTMLElement>();
+const filterDropdown = ref<HTMLElement>();
+const searchRef      = ref<HTMLInputElement>();
+const query          = defineModel<string>('query');
+const sort           = defineModel<string>('sort');
+const perPage        = defineModel<string>('perPage');
 
 const focus = (): void => {
     searchRef.value?.focus();
@@ -14,10 +17,24 @@ defineProps<{
     badRequest: boolean,
 }>();
 defineExpose({focus});
+
+new Foldout(filterButton, filterDropdown).bind();
+
 </script>
 
 <template>
     <div class="input-group">
+        <button ref="filterButton" class="btn btn-outline-secondary dropdown-toggle" type="button" aria-expanded="false">Filter</button>
+        <ul class="dropdown-menu" ref="filterDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Separated link</a></li>
+        </ul>
+
         <input type="text"
                class="form-control"
                :class="{'is-invalid': badRequest}"
