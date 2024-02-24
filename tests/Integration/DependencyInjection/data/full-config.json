@@ -19,6 +19,12 @@
                 "log_message_pattern": "log-message-pattern",
                 "date_format": "date-format"
             }
+        },
+        "hosts": {
+            "localhost": {
+                "name": "Localhost",
+                "host": null
+            }
         }
     }
 }

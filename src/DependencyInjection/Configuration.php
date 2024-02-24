@@ -28,7 +28,8 @@ final class Configuration implements ConfigurationInterface
             ->scalarNode('home_route')
                 ->info("The name of the route to redirect to when clicking the back button")
             ->end()
-            ->append($this->configureLogFiles());
+            ->append($this->configureLogFiles())
+            ->append($this->configureHosts());
 
         return $tree;
     }
@@ -86,7 +87,7 @@ final class Configuration implements ConfigurationInterface
 
     private function configureHosts(): NodeDefinition
     {
-        $tree = new TreeBuilder('log_files');
+        $tree = new TreeBuilder('hosts');
         /** @var ArrayNodeDefinition $rootNode */
         $rootNode = $tree->getRootNode();
 

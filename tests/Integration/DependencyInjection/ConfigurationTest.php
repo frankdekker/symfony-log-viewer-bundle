@@ -26,6 +26,7 @@ class ConfigurationTest extends TestCase
         $configs = [
             'enable_default_monolog' => true,
             'log_files'              => [],
+            'hosts'                  => [],
         ];
 
         $result = $this->processor->processConfiguration($this->configuration, []);
