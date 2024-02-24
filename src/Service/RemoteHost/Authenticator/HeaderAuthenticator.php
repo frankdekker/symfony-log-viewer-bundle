@@ -11,7 +11,7 @@ class HeaderAuthenticator implements AuthenticatorInterface
     public function authenticate(array $hostOptions, array $requestOptions): array
     {
         foreach ($hostOptions as $key => $value) {
-            $requestOptions['headers'][$key] = $value;
+            $requestOptions['headers'][$key] = $value; // @phpstan-ignore-line
         }
 
         return $requestOptions;

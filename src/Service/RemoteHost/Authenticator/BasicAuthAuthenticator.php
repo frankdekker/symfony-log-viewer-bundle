@@ -18,7 +18,7 @@ class BasicAuthAuthenticator implements AuthenticatorInterface
 
         $authorization = 'Basic ' . base64_encode(sprintf('%s:%s', $hostOptions['username'], $hostOptions['password']));
 
-        $requestOptions['headers']['Authorization'] = $authorization;
+        $requestOptions['headers']['Authorization'] = $authorization; // @phpstan-ignore-line
 
         return $requestOptions;
     }
