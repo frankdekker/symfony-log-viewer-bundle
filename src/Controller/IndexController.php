@@ -6,7 +6,7 @@ namespace FD\LogViewer\Controller;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Routing\RouteService;
 use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
-use FD\LogViewer\Service\Host\HostListProvider;
+use FD\LogViewer\Service\Host\HostProvider;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ class IndexController extends AbstractController
         private readonly JsonManifestAssetLoader $assetLoader,
         private readonly RouteService $routeService,
         private readonly LogFolderOutputProvider $folderOutputProvider,
-        private readonly HostListProvider $hostListProvider
+        private readonly HostProvider $hostListProvider
     ) {
     }
 

@@ -8,7 +8,7 @@ class HostAuthenticationConfig
     /**
      * @codeCoverageIgnore Simple DTO
      *
-     * @param array<int|string, mixed> $options
+     * @param array<string, string> $options
      */
     public function __construct(
         public readonly string $type,

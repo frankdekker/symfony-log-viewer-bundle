@@ -27,7 +27,9 @@ use FD\LogViewer\Service\Folder\LogFolderOutputFactory;
 use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use FD\LogViewer\Service\Folder\LogFolderOutputSorter;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
-use FD\LogViewer\Service\Host\HostListProvider;
+use FD\LogViewer\Service\Host\HostInvokeService;
+use FD\LogViewer\Service\Host\HostProvider;
+use FD\LogViewer\Service\Host\HostServiceBridge;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
 use FD\LogViewer\Service\Matcher\ChannelTermMatcher;
 use FD\LogViewer\Service\Matcher\DateAfterTermMatcher;
@@ -47,6 +49,8 @@ use FD\LogViewer\Service\PerformanceService;
 use FD\LogViewer\Service\VersionService;
 use FD\LogViewer\Util\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\inline_service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -93,7 +97,9 @@ return static function (ContainerConfigurator $container): void {
         );
 
     $services->set(FinderFactory::class);
-    $services->set(HostListProvider::class)->arg('$hosts', tagged_iterator('fd.symfony.log.viewer.hosts_config'));
+    $services->set(HostInvokeService::class);
+    $services->set(HostServiceBridge::class);
+    $services->set(HostProvider::class)->arg('$hosts', tagged_iterator('fd.symfony.log.viewer.hosts_config'));
     $services->set(LogFileService::class)->arg('$logFileConfigs', tagged_iterator('fd.symfony.log.viewer.log_files_config'));
     $services->set(LogFolderFactory::class);
     $services->set(LogFolderOutputFactory::class);

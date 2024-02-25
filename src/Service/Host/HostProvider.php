@@ -7,13 +7,25 @@ namespace FD\LogViewer\Service\Host;
 use FD\LogViewer\Entity\Config\HostConfig;
 use Traversable;
 
-class HostListProvider
+class HostProvider
 {
     /**
      * @param Traversable<HostConfig> $hosts
      */
     public function __construct(private readonly Traversable $hosts)
     {
+    }
+
+    public function getHostByKey(string $key): ?HostConfig
+    {
+        /** @var HostConfig $host */
+        foreach ($this->hosts as $host) {
+            if ($host->key === $key) {
+                return $host;
+            }
+        }
+
+        return null;
     }
 
     /**

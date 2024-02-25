@@ -15,4 +15,9 @@ class HostConfig
         public readonly ?HostAuthenticationConfig $authentication = null,
     ) {
     }
+
+    public function isLocal(): bool
+    {
+        return $this->host === null;
+    }
 }
