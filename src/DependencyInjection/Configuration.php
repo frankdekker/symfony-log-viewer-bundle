@@ -145,7 +145,7 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    private function normalizeConfig(array $config): array
+    private function normalizeConfig(array $config): array // @phpstan-ignore-line
     {
         // default monolog config is overridden
         if (count($config) !== 0 && array_key_exists('monolog', $config) === false) {
