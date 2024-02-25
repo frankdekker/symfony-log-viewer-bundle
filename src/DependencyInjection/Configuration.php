@@ -135,7 +135,6 @@ final class Configuration implements ConfigurationInterface
                             ->end()
                             ->arrayNode('options')
                                 ->info('The options to pass to the authenticator, see the authenticator for the available options')
-                                ->isRequired()
                                 ->requiresAtLeastOneElement()
                                 ->useAttributeAsKey('name')
                                 ->prototype('scalar')->end()
