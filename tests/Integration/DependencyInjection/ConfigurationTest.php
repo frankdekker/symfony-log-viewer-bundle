@@ -23,10 +23,10 @@ class ConfigurationTest extends TestCase
 
     public function testDefaultConfig(): void
     {
-        $configs = self::getJson(__DIR__ . '/data/default-config.json');
-        $result  = $this->processor->processConfiguration($this->configuration, []);
+        $result = $this->processor->processConfiguration($this->configuration, []);
 
-        static::assertSame($configs, $result);
+        $expected = self::getJson(__DIR__ . '/data/expected-default-config.json');
+        static::assertSame($expected, $result);
     }
 
     public function testOverrideMonologConfig(): void
