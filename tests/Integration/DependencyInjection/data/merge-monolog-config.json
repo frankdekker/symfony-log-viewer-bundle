@@ -1,0 +1,12 @@
+{
+    "fd_log_viewer": {
+        "log_files": {
+            "monolog": {
+                "type": "monolog",
+                "name": "TestMonolog",
+                "downloadable": true,
+                "deletable": true
+            }
+        }
+    }
+}

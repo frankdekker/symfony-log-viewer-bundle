@@ -45,13 +45,13 @@ final class Extension extends BaseExtension
                 ->setPublic(false)
                 ->setArgument('$logName', $key)
                 ->setArgument('$type', $config['type'])
-                ->setArgument('$name', $config['name'] ?? null)
+                ->setArgument('$name', $config['name'])
                 ->setArgument('$finderConfig', new Reference('fd.symfony.log.viewer.log_files_config.finder.' . $key))
                 ->setArgument('$downloadable', $config['downloadable'])
                 ->setArgument('$deletable', $config['deletable'])
-                ->setArgument('$startOfLinePattern', $config['start_of_line_pattern'] ?? null)
-                ->setArgument('$logMessagePattern', $config['log_message_pattern'] ?? null)
-                ->setArgument('$dateFormat', $config['date_format'] ?? "Y-m-d H:i:s");
+                ->setArgument('$startOfLinePattern', $config['start_of_line_pattern'])
+                ->setArgument('$logMessagePattern', $config['log_message_pattern'])
+                ->setArgument('$dateFormat', $config['date_format']);
         }
     }
 

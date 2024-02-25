@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\DependencyInjection;
 
+use Closure;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -20,7 +21,8 @@ final class Configuration implements ConfigurationInterface
         /** @var ArrayNodeDefinition $rootNode */
         $rootNode = $tree->getRootNode();
 
-        $rootNode->children()
+        $rootNode
+            ->children()
             ->scalarNode('home_route')->info("The name of the route to redirect to when clicking the back button")->end()
             ->append($this->configureLogFiles())
             ->append($this->configureHosts());
@@ -38,20 +40,27 @@ final class Configuration implements ConfigurationInterface
             ->info('List of log files to show')
             ->useAttributeAsKey('log_name')
             ->requiresAtLeastOneElement()
+            ->beforeNormalization()
+                ->always()
+                ->then(Closure::fromCallable([$this, 'normalizeConfig']))
+            ->end()
             ->defaultValue(
                 [
                     'monolog' => [
-                        'type'         => 'monolog',
-                        'name'         => 'Monolog',
-                        'finder'       => [
+                        'type'                  => 'monolog',
+                        'name'                  => 'Monolog',
+                        'finder'                => [
                             'in'                   => '%kernel.logs_dir%',
                             'name'                 => '*.log',
                             'depth'                => '== 0',
                             'ignoreUnreadableDirs' => true,
                             'followLinks'          => false,
                         ],
-                        'downloadable' => false,
-                        'deletable'    => false,
+                        'downloadable'          => false,
+                        'deletable'             => false,
+                        'start_of_line_pattern' => null,
+                        'log_message_pattern'   => null,
+                        'date_format'           => 'Y-m-d H:i:s',
                     ]
                 ]
             )
@@ -134,5 +143,21 @@ final class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
+    }
+
+    private function normalizeConfig(array $config): array
+    {
+        // default monolog config is overridden
+        if (count($config) !== 0 && array_key_exists('monolog', $config) === false) {
+            return $config;
+        }
+
+        $config['monolog']['type']            ??= 'monolog';
+        $config['monolog']['name']            ??= 'Monolog';
+        $config['monolog']['finder']['in']    ??= '%kernel.logs_dir%';
+        $config['monolog']['finder']['name']  ??= '*.log';
+        $config['monolog']['finder']['depth'] ??= '== 0';
+
+        return $config;
     }
 }

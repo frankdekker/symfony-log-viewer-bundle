@@ -2,7 +2,9 @@
     "log_files": {
         "monolog": {
             "type": "monolog",
-            "name": "Monolog",
+            "name": "TestMonolog",
+            "downloadable": true,
+            "deletable": true,
             "finder": {
                 "in": "%kernel.logs_dir%",
                 "name": "*.log",
@@ -10,8 +12,6 @@
                 "ignoreUnreadableDirs": true,
                 "followLinks": false
             },
-            "downloadable": false,
-            "deletable": false,
             "start_of_line_pattern": null,
             "log_message_pattern": null,
             "date_format": "Y-m-d H:i:s"

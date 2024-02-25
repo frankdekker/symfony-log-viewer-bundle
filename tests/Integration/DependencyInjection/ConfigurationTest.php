@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DependencyInjection;
+namespace FD\LogViewer\Tests\Integration\DependencyInjection;
 
 use FD\LogViewer\DependencyInjection\Configuration;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -35,6 +35,15 @@ class ConfigurationTest extends TestCase
         $result  = $this->processor->processConfiguration($this->configuration, $configs);
 
         $expected = self::getJson(__DIR__ . '/data/expected-hosts-override-config.json');
+        static::assertSame($expected, $result);
+    }
+
+    public function testMergeMonologConfig(): void
+    {
+        $configs = self::getJson(__DIR__ . '/data/merge-monolog-config.json');
+        $result  = $this->processor->processConfiguration($this->configuration, $configs);
+
+        $expected = self::getJson(__DIR__ . '/data/expected-merge-monolog-config.json');
         static::assertSame($expected, $result);
     }
 
