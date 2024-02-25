@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace FD\LogViewer\DependencyInjection;
 
 use FD\LogViewer\Entity\Config\FinderConfig;
+use FD\LogViewer\Entity\Config\HostAuthenticationConfig;
+use FD\LogViewer\Entity\Config\HostConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -52,6 +54,26 @@ final class Extension extends BaseExtension
                 ->setArgument('$startOfLinePattern', $config['start_of_line_pattern'])
                 ->setArgument('$logMessagePattern', $config['log_message_pattern'])
                 ->setArgument('$dateFormat', $config['date_format']);
+        }
+
+        foreach ($mergedConfigs['hosts'] as $key => $config) {
+            if (isset($config['auth'])) {
+                $container->register('fd.symfony.log.viewer.hosts_config.authentication.' . $key, HostAuthenticationConfig::class)
+                    ->setPublic(false)
+                    ->setArgument('$type', $config['auth']['type'])
+                    ->setArgument('$options', $config['auth']['options'] ?? []);
+            }
+
+            $container->register('fd.symfony.log.viewer.hosts_config.config.' . $key, HostConfig::class)
+                ->addTag('fd.symfony.log.viewer.hosts_config')
+                ->setPublic(false)
+                ->setArgument('$key', $key)
+                ->setArgument('$name', $config['name'])
+                ->setArgument('$host', $config['host'])
+                ->setArgument(
+                    '$authentication',
+                    new Reference('fd.symfony.log.viewer.hosts_config.authentication.' . $key, ContainerBuilder::NULL_ON_INVALID_REFERENCE)
+                );
         }
     }
 
