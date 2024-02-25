@@ -1,0 +1,25 @@
+{
+    "log_files": {
+        "apache": {
+            "type": "apache",
+            "finder": {
+                "in": "/var/log/apache2/",
+                "name": null,
+                "depth": null,
+                "ignoreUnreadableDirs": true,
+                "followLinks": false
+            },
+            "downloadable": false,
+            "deletable": false,
+            "start_of_line_pattern": null,
+            "log_message_pattern": null,
+            "date_format": "Y-m-d H:i:s"
+        }
+    },
+    "hosts": {
+        "localhost": {
+            "name": "Local",
+            "host": null
+        }
+    }
+}

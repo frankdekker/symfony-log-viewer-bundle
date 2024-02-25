@@ -29,12 +29,12 @@ class ConfigurationTest extends TestCase
         static::assertSame($configs, $result);
     }
 
-    public function testHostsOverrideConfig(): void
+    public function testOverrideMonologConfig(): void
     {
-        $configs = self::getJson(__DIR__ . '/data/hosts-override-config.json');
+        $configs = self::getJson(__DIR__ . '/data/override-monolog-config.json');
         $result  = $this->processor->processConfiguration($this->configuration, $configs);
 
-        $expected = self::getJson(__DIR__ . '/data/expected-hosts-override-config.json');
+        $expected = self::getJson(__DIR__ . '/data/expected-override-monolog-config.json');
         static::assertSame($expected, $result);
     }
 
@@ -44,6 +44,15 @@ class ConfigurationTest extends TestCase
         $result  = $this->processor->processConfiguration($this->configuration, $configs);
 
         $expected = self::getJson(__DIR__ . '/data/expected-merge-monolog-config.json');
+        static::assertSame($expected, $result);
+    }
+
+    public function testOverrideHostsConfig(): void
+    {
+        $configs = self::getJson(__DIR__ . '/data/hosts-override-config.json');
+        $result  = $this->processor->processConfiguration($this->configuration, $configs);
+
+        $expected = self::getJson(__DIR__ . '/data/expected-hosts-override-config.json');
         static::assertSame($expected, $result);
     }
 

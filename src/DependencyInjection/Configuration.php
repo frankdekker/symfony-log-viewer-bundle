@@ -71,6 +71,7 @@ final class Configuration implements ConfigurationInterface
                     ->end()
                     ->scalarNode('name')->info("The pretty name to show for these log files")->end()
                     ->arrayNode('finder')
+                        ->isRequired()
                         ->children()
                             ->scalarNode('in')
                                 ->info("The symfony/finder pattern to iterate through directories. Example: %kernel.logs_dir%")
