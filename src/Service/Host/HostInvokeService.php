@@ -40,13 +40,6 @@ class HostInvokeService
             $options = $this->getAuthenticator($hostConfig->authentication->type)->authenticate($hostConfig->authentication->options, $options);
         }
 
-        if ($this->httpClient === null) {
-            throw new LogicException(
-                'No HttpClientInterface registered. Try running "composer require symfony/http-client" and ensure to enable ' .
-                'it via framework.http_client.enabled=true in /config/packages/framework.yaml.'
-            );
-        }
-
         $httpResponse = $this->httpClient->request($method, rtrim((string)$hostConfig->host, '/') . '/' . ltrim($url, '/'), $options);
 
         // transform to symfony response
