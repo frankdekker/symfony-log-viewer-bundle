@@ -9,6 +9,7 @@ use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Output\LogFolderOutput;
 use FD\LogViewer\Routing\RouteService;
 use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
+use FD\LogViewer\Service\Host\HostProvider;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -26,12 +27,14 @@ class IndexControllerTest extends AbstractControllerTestCase
     private JsonManifestAssetLoader&MockObject $assetLoader;
     private RouteService&MockObject $routeService;
     private LogFolderOutputProvider&MockObject $folderOutputProvider;
+    private HostProvider&MockObject $hostProvider;
 
     protected function setUp(): void
     {
         $this->assetLoader          = $this->createMock(JsonManifestAssetLoader::class);
         $this->routeService         = $this->createMock(RouteService::class);
         $this->folderOutputProvider = $this->createMock(LogFolderOutputProvider::class);
+        $this->hostProvider         = $this->createMock(HostProvider::class);
         parent::setUp();
     }
 
@@ -44,6 +47,7 @@ class IndexControllerTest extends AbstractControllerTestCase
 
         $this->routeService->expects(self::once())->method('getBaseUri')->willReturn('baseUri');
         $this->folderOutputProvider->expects(self::once())->method('provide')->with(DirectionEnum::Desc)->willReturn([$folder]);
+        $this->hostProvider->expects(self::once())->method('getHosts')->willReturn(['host' => 'host']);
         $this->assetLoader->expects(self::exactly(2))
             ->method('getUrl')
             ->with(...consecutive(['style.css'], ['src/main.ts']))
@@ -55,7 +59,8 @@ class IndexControllerTest extends AbstractControllerTestCase
                 'base_uri'   => 'baseUri',
                 'home_route' => 'home',
                 'folders'    => [$folder],
-                'assets'     => ['style' => 'url1', 'js' => 'url2']
+                'assets'     => ['style' => 'url1', 'js' => 'url2'],
+                'hosts'      => ['host' => 'host']
             ]
         );
 
@@ -64,6 +69,6 @@ class IndexControllerTest extends AbstractControllerTestCase
 
     public function getController(): AbstractController
     {
-        return new IndexController('home', $this->assetLoader, $this->routeService, $this->folderOutputProvider);
+        return new IndexController('home', $this->assetLoader, $this->routeService, $this->folderOutputProvider, $this->hostProvider);
     }
 }
