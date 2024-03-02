@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
-use FD\LogViewer\Controller\DownloadFileController;
+use FD\LogViewer\Controller\DownloadFileRemoteHost;
 use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Tests\Utility\TestEntityTrait;
@@ -17,9 +17,9 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @extends AbstractControllerTestCase<DownloadFileController>
+ * @extends AbstractControllerTestCase<DownloadFileRemoteHost>
  */
-#[CoversClass(DownloadFileController::class)]
+#[CoversClass(DownloadFileRemoteHost::class)]
 class DownloadFileControllerTest extends AbstractControllerTestCase
 {
     use TestEntityTrait;
@@ -73,6 +73,6 @@ class DownloadFileControllerTest extends AbstractControllerTestCase
 
     public function getController(): AbstractController
     {
-        return new DownloadFileController($this->fileService);
+        return new DownloadFileRemoteHost($this->fileService);
     }
 }

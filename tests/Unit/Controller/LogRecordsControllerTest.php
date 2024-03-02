@@ -5,7 +5,7 @@ namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
 use Exception;
-use FD\LogViewer\Controller\LogRecordsController;
+use FD\LogViewer\Controller\LogRecordsRemoteHost;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Output\LogRecordsOutput;
 use FD\LogViewer\Entity\Request\LogQueryDto;
@@ -23,9 +23,9 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @extends AbstractControllerTestCase<LogRecordsController>
+ * @extends AbstractControllerTestCase<LogRecordsRemoteHost>
  */
-#[CoversClass(LogRecordsController::class)]
+#[CoversClass(LogRecordsRemoteHost::class)]
 class LogRecordsControllerTest extends AbstractControllerTestCase
 {
     use TestEntityTrait;
@@ -94,6 +94,6 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
 
     public function getController(): AbstractController
     {
-        return new LogRecordsController($this->fileService, $this->queryDtoFactory, $this->outputProvider);
+        return new LogRecordsRemoteHost($this->fileService, $this->queryDtoFactory, $this->outputProvider);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\EventSubscriber;
 
-use FD\LogViewer\Controller\ProxyControllerInterface;
+use FD\LogViewer\Controller\RemoteHostProxyInterface;
 use FD\LogViewer\Entity\Config\HostConfig;
 use FD\LogViewer\Routing\RouteService;
 use FD\LogViewer\Service\Host\HostInvokeService;
@@ -21,7 +21,7 @@ use Throwable;
  * Listen for requests with 'host' query, and forward request if the host is a remote host.
  */
 #[AsEventListener(KernelEvents::REQUEST, 'onKernelRequest')]
-class RemoteRequestProxySubscriber
+class RemoteHostProxySubscriber
 {
     public function __construct(
         private readonly ControllerResolverInterface $controllerResolver,
@@ -61,7 +61,7 @@ class RemoteRequestProxySubscriber
     {
         $callable = $this->controllerResolver->getController($request);
 
-        return is_array($callable) && isset($callable[0]) && $callable[0] instanceof ProxyControllerInterface;
+        return is_array($callable) && isset($callable[0]) && $callable[0] instanceof RemoteHostProxyInterface;
     }
 
     /**

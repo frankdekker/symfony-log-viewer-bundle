@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
-use FD\LogViewer\Controller\DeleteFolderController;
+use FD\LogViewer\Controller\DeleteFolderRemoteHost;
 use FD\LogViewer\Entity\LogFolderCollection;
 use FD\LogViewer\Service\File\LogFileService;
 use FD\LogViewer\Tests\Utility\TestEntityTrait;
@@ -17,9 +17,9 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @extends AbstractControllerTestCase<DeleteFolderController>
+ * @extends AbstractControllerTestCase<DeleteFolderRemoteHost>
  */
-#[CoversClass(DeleteFolderController::class)]
+#[CoversClass(DeleteFolderRemoteHost::class)]
 class DeleteFolderControllerTest extends AbstractControllerTestCase
 {
     use TestEntityTrait;
@@ -75,6 +75,6 @@ class DeleteFolderControllerTest extends AbstractControllerTestCase
 
     public function getController(): AbstractController
     {
-        return new DeleteFolderController($this->filesystem, $this->folderService);
+        return new DeleteFolderRemoteHost($this->filesystem, $this->folderService);
     }
 }

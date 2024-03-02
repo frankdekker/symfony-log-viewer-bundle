@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\EventSubscriber;
 
-use FD\LogViewer\Controller\FoldersController;
+use FD\LogViewer\Controller\FoldersRemoteHost;
 use FD\LogViewer\Entity\Config\HostConfig;
-use FD\LogViewer\EventSubscriber\RemoteRequestProxySubscriber;
+use FD\LogViewer\EventSubscriber\RemoteHostProxySubscriber;
 use FD\LogViewer\Routing\RouteService;
 use FD\LogViewer\Service\Host\HostInvokeService;
 use FD\LogViewer\Service\Host\HostProvider;
@@ -18,15 +18,15 @@ use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Throwable;
 
-#[CoversClass(RemoteRequestProxySubscriber::class)]
-class RemoteRequestProxySubscriberTest extends TestCase
+#[CoversClass(RemoteHostProxySubscriber::class)]
+class RemoteHostProxySubscriberTest extends TestCase
 {
     private ControllerResolverInterface&MockObject $controllerResolver;
     private RouteService&MockObject $routeService;
     private HostProvider&MockObject $hostProvider;
     private HostInvokeService&MockObject $invokeService;
-    private FoldersController&MockObject $controller;
-    private RemoteRequestProxySubscriber $subscriber;
+    private FoldersRemoteHost&MockObject $controller;
+    private RemoteHostProxySubscriber $subscriber;
 
     protected function setUp(): void
     {
@@ -35,8 +35,8 @@ class RemoteRequestProxySubscriberTest extends TestCase
         $this->routeService       = $this->createMock(RouteService::class);
         $this->hostProvider       = $this->createMock(HostProvider::class);
         $this->invokeService      = $this->createMock(HostInvokeService::class);
-        $this->controller         = $this->createMock(FoldersController::class);
-        $this->subscriber         = new RemoteRequestProxySubscriber(
+        $this->controller         = $this->createMock(FoldersRemoteHost::class);
+        $this->subscriber         = new RemoteHostProxySubscriber(
             $this->controllerResolver,
             $this->routeService,
             $this->hostProvider,

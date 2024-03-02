@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use FD\LogViewer\Controller\DeleteFileController;
-use FD\LogViewer\Controller\DeleteFolderController;
-use FD\LogViewer\Controller\DownloadFileController;
-use FD\LogViewer\Controller\DownloadFolderController;
-use FD\LogViewer\Controller\FoldersController;
+use FD\LogViewer\Controller\DeleteFileRemoteHost;
+use FD\LogViewer\Controller\DeleteFolderRemoteHost;
+use FD\LogViewer\Controller\DownloadFileRemoteHost;
+use FD\LogViewer\Controller\DownloadFolderRemoteHost;
+use FD\LogViewer\Controller\FoldersRemoteHost;
 use FD\LogViewer\Controller\IndexController;
-use FD\LogViewer\Controller\LogRecordsController;
+use FD\LogViewer\Controller\LogRecordsRemoteHost;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes) {
@@ -18,32 +18,32 @@ return function (RoutingConfigurator $routes) {
         ->controller([IndexController::class, '__invoke']);
 
     $routes
-        ->add(FoldersController::class, '/api/folders')
+        ->add(FoldersRemoteHost::class, '/api/folders')
         ->methods(['GET'])
-        ->controller([FoldersController::class, '__invoke']);
+        ->controller([FoldersRemoteHost::class, '__invoke']);
 
     $routes
-        ->add(LogRecordsController::class, '/api/logs')
+        ->add(LogRecordsRemoteHost::class, '/api/logs')
         ->methods(['GET'])
-        ->controller([LogRecordsController::class, '__invoke']);
+        ->controller([LogRecordsRemoteHost::class, '__invoke']);
 
     $routes
-        ->add(DownloadFolderController::class, '/api/folder/{identifier}')
+        ->add(DownloadFolderRemoteHost::class, '/api/folder/{identifier}')
         ->methods(['GET'])
-        ->controller([DownloadFolderController::class, '__invoke']);
+        ->controller([DownloadFolderRemoteHost::class, '__invoke']);
 
     $routes
-        ->add(DownloadFileController::class, '/api/file/{identifier}')
+        ->add(DownloadFileRemoteHost::class, '/api/file/{identifier}')
         ->methods(['GET'])
-        ->controller([DownloadFileController::class, '__invoke']);
+        ->controller([DownloadFileRemoteHost::class, '__invoke']);
 
     $routes
-        ->add(DeleteFileController::class, '/api/file/{identifier}')
+        ->add(DeleteFileRemoteHost::class, '/api/file/{identifier}')
         ->methods(['DELETE'])
-        ->controller([DeleteFileController::class, '__invoke']);
+        ->controller([DeleteFileRemoteHost::class, '__invoke']);
 
     $routes
-        ->add(DeleteFolderController::class, '/api/folder/{identifier}')
+        ->add(DeleteFolderRemoteHost::class, '/api/folder/{identifier}')
         ->methods(['DELETE'])
-        ->controller([DeleteFolderController::class, '__invoke']);
+        ->controller([DeleteFolderRemoteHost::class, '__invoke']);
 };
