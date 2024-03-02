@@ -37,13 +37,13 @@ class RemoteRequestProxySubscriber
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        $host    = $this->hostProvider->getHostByKey($request->query->get('host', 'localhost'));
-        if ($host === null || $host->isLocal()) {
+        // must be log-viewer controller
+        if ($request->query->has('host') === false || $this->isControllerSupported($request) === false) {
             return;
         }
 
-        // must be log-viewer controller
-        if ($this->isControllerSupported($request) === false) {
+        $host = $this->hostProvider->getHostByKey($request->query->get('host', 'localhost'));
+        if ($host === null || $host->isLocal()) {
             return;
         }
 
