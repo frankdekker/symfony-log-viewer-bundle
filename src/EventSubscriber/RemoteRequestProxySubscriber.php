@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace FD\LogViewer\EventSubscriber;
 
 use FD\LogViewer\Controller\ProxyControllerInterface;
+use FD\LogViewer\Entity\Config\HostConfig;
 use FD\LogViewer\Routing\RouteService;
 use FD\LogViewer\Service\Host\HostInvokeService;
 use FD\LogViewer\Service\Host\HostProvider;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -51,18 +53,8 @@ class RemoteRequestProxySubscriber
             return;
         }
 
-        $query = $request->query->all();
-        unset($query['host']);
-        $headers = [
-            'Accept'            => $request->headers->get('Accept', 'application/json'),
-            'X-Forwarded-Host'  => $request->getHost(),
-            'X-Forwarded-Port'  => $request->getPort(),
-            'X-Forwarded-Proto' => $request->getScheme()
-        ];
-
-        $response = $this->invokeService->request($host, $request->getMethod(), $uri, ['query' => $query, 'headers' => $headers]);
-
-        $event->setResponse($response);
+        // invoke the request
+        $event->setResponse($this->invoke($host, $uri, $request));
     }
 
     private function isControllerSupported(Request $request): bool
@@ -80,5 +72,23 @@ class RemoteRequestProxySubscriber
         }
 
         return $this->routeService->getRelativeUriFor($route);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    private function invoke(HostConfig $host, string $uri, Request $request): Response
+    {
+        $query = $request->query->all();
+        unset($query['host']);
+
+        $headers = [
+            'Accept'            => $request->headers->get('Accept', 'application/json'),
+            'X-Forwarded-Host'  => $request->getHost(),
+            'X-Forwarded-Port'  => $request->getPort(),
+            'X-Forwarded-Proto' => $request->getScheme()
+        ];
+
+        return $this->invokeService->request($host, $request->getMethod(), $uri, ['query' => $query, 'headers' => $headers]);
     }
 }
