@@ -31,7 +31,10 @@ class HostInvokeService
         }
 
         if ($this->httpClient === null) {
-            throw new LogicException('No HttpClientInterface registered. Try running "composer require symfony/http-client".');
+            throw new LogicException(
+                'No HttpClientInterface registered. Try running "composer require symfony/http-client" and ensure to enable ' .
+                'it via framework.http_client.enabled=true in /config/packages/framework.yaml.'
+            );
         }
 
         return $this->httpClient->request($method, rtrim((string)$hostConfig->host, '/') . '/' . ltrim($url, '/'), $options)->getContent();

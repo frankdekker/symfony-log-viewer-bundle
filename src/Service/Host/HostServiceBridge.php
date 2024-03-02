@@ -31,6 +31,6 @@ class HostServiceBridge
             return json_encode($this->folderOutputProvider->provide($direction), JSON_THROW_ON_ERROR);
         }
 
-        return $this->hostInvokeService->request($hostConfig, 'GET', '/folders', ['query' => ['direction' => $direction->value]]);
+        return $this->hostInvokeService->request($hostConfig, 'GET', '/api/folders', ['query' => ['direction' => $direction->value]]);
     }
 }

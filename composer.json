@@ -20,6 +20,7 @@
     "minimum-stability": "stable",
     "config": {
         "sort-packages": true,
+        "lock": false,
         "allow-plugins": {
             "symfony/runtime": true,
             "phpstan/extension-installer": true
