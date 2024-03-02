@@ -49,7 +49,7 @@ class RemoteRequestProxySubscriberTest extends TestCase
      */
     public function testOnKernelRequestUnsupportedController(): void
     {
-        $request = new Request();
+        $request = new Request(['host' => 'remote']);
         $event   = $this->createMock(RequestEvent::class);
         $event->method('getRequest')->willReturn($request);
 
@@ -63,12 +63,12 @@ class RemoteRequestProxySubscriberTest extends TestCase
      */
     public function testOnKernelRequestAbsentHostQueryParam(): void
     {
-        $request = new Request();
+        $request = new Request(['host' => 'remote']);
         $event   = $this->createMock(RequestEvent::class);
         $event->method('getRequest')->willReturn($request);
 
         $this->controllerResolver->expects(self::once())->method('getController')->with($request)->willReturn([$this->controller, '__invoke']);
-        $this->hostProvider->expects(self::once())->method('getHostByKey')->with('localhost')->willReturn(null);
+        $this->hostProvider->expects(self::once())->method('getHostByKey')->with('remote')->willReturn(null);
 
         $this->subscriber->onKernelRequest($event);
     }
