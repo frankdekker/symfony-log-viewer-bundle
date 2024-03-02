@@ -3,6 +3,7 @@ import LogRecord from '@/components/LogRecord.vue';
 import PerformanceDetails from '@/components/PerformanceDetails.vue';
 import {filter} from '@/services/Objects';
 import {nullify} from '@/services/Optional';
+import {useHostsStore} from '@/stores/hosts';
 import {useLogRecordStore} from '@/stores/log_records';
 import {useSearchStore} from '@/stores/search';
 import {onMounted, ref} from 'vue';
@@ -11,6 +12,7 @@ import {useRoute, useRouter} from 'vue-router';
 const router         = useRouter();
 const route          = useRoute();
 const logRecordStore = useLogRecordStore();
+const hostsStore     = useHostsStore();
 const searchStore    = useSearchStore();
 
 const searchRef  = ref<HTMLInputElement>();
@@ -22,6 +24,7 @@ const navigate = () => {
     const fileOffset = offset.value > 0 && logRecordStore.records.paginator?.direction !== searchStore.sort ? 0 : offset.value;
     router.push({
         query: filter({
+            host: nullify(hostsStore.selected, 'localhost'),
             file: file.value,
             query: nullify(searchStore.query, ''),
             perPage: nullify(searchStore.perPage, '50'),
@@ -34,7 +37,7 @@ const navigate = () => {
 const load = () => {
     badRequest.value = false;
     logRecordStore
-        .fetch(file.value, searchStore.sort, searchStore.perPage, searchStore.query, offset.value)
+        .fetch(hostsStore.selected, file.value, searchStore.sort, searchStore.perPage, searchStore.query, offset.value)
         .catch((error: Error) => {
             if (error.message === 'bad-request') {
                 badRequest.value = true;
@@ -49,9 +52,10 @@ const load = () => {
 
 onMounted(() => {
     file.value          = String(route.query.file);
-    searchStore.query   = String((route.query.query ?? ''));
-    searchStore.perPage = String((route.query.perPage ?? '50'));
-    searchStore.sort    = String((route.query.sort ?? 'desc'));
+    hostsStore.selected = String(route.query.host ?? 'localhost');
+    searchStore.query   = String(route.query.query ?? '');
+    searchStore.perPage = String(route.query.perPage ?? '50');
+    searchStore.sort    = String(route.query.sort ?? 'desc');
     offset.value        = parseInt(String(route.query.offset ?? '0'));
     load();
 });

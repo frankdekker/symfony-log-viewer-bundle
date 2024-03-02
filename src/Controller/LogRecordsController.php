@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class LogRecordsController extends AbstractController
+class LogRecordsController extends AbstractController implements ProxyControllerInterface
 {
     public function __construct(
         private readonly LogFileService $fileService,

@@ -23,4 +23,16 @@ class RouteService
 
         return $baseUri;
     }
+
+    public function getRelativeUriFor(string $routeName): ?string
+    {
+        $uri = $this->router->getRouteCollection()->get($routeName)?->getPath();
+        if ($uri === null) {
+            return null;
+        }
+
+        $uri = preg_replace('/^' . preg_quote($this->getBaseUri(), '/') . '/', '', $uri);
+
+        return is_string($uri) ? $uri : null;
+    }
 }

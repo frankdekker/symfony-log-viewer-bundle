@@ -9,6 +9,7 @@ use FD\LogViewer\Controller\DownloadFolderController;
 use FD\LogViewer\Controller\FoldersController;
 use FD\LogViewer\Controller\IndexController;
 use FD\LogViewer\Controller\LogRecordsController;
+use FD\LogViewer\EventSubscriber\RemoteRequestProxySubscriber;
 use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use FD\LogViewer\Routing\RouteLoader;
 use FD\LogViewer\Routing\RouteService;
@@ -29,7 +30,6 @@ use FD\LogViewer\Service\Folder\LogFolderOutputSorter;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use FD\LogViewer\Service\Host\HostInvokeService;
 use FD\LogViewer\Service\Host\HostProvider;
-use FD\LogViewer\Service\Host\HostServiceBridge;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
 use FD\LogViewer\Service\Matcher\ChannelTermMatcher;
 use FD\LogViewer\Service\Matcher\DateAfterTermMatcher;
@@ -49,8 +49,6 @@ use FD\LogViewer\Service\PerformanceService;
 use FD\LogViewer\Service\VersionService;
 use FD\LogViewer\Util\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\inline_service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -77,6 +75,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set(RouteLoader::class)
         ->tag('routing.loader');
 
+    $services->set(RemoteRequestProxySubscriber::class)->arg('$controllerResolver', service('controller_resolver'));
+
     $services->set(JsonManifestAssetLoader::class)
         ->arg('$manifestPath', '%kernel.project_dir%/public/bundles/fdlogviewer/.vite/manifest.json');
 
@@ -98,7 +98,6 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(FinderFactory::class);
     $services->set(HostInvokeService::class);
-    $services->set(HostServiceBridge::class);
     $services->set(HostProvider::class)->arg('$hosts', tagged_iterator('fd.symfony.log.viewer.hosts_config'));
     $services->set(LogFileService::class)->arg('$logFileConfigs', tagged_iterator('fd.symfony.log.viewer.log_files_config'));
     $services->set(LogFolderFactory::class);

@@ -10,6 +10,7 @@ use FD\LogViewer\Service\RemoteHost\Authenticator\BearerAuthenticator;
 use FD\LogViewer\Service\RemoteHost\Authenticator\HeaderAuthenticator;
 use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Throwable;
 
@@ -24,7 +25,7 @@ class HostInvokeService
      *
      * @throws Throwable
      */
-    public function request(HostConfig $hostConfig, string $method, string $url, array $options): string
+    public function request(HostConfig $hostConfig, string $method, string $url, array $options): Response
     {
         if ($hostConfig->authentication !== null) {
             $options = $this->getAuthenticator($hostConfig->authentication->type)->authenticate($hostConfig->authentication->options, $options);
@@ -37,7 +38,10 @@ class HostInvokeService
             );
         }
 
-        return $this->httpClient->request($method, rtrim((string)$hostConfig->host, '/') . '/' . ltrim($url, '/'), $options)->getContent();
+        $httpResponse = $this->httpClient->request($method, rtrim((string)$hostConfig->host, '/') . '/' . ltrim($url, '/'), $options);
+
+        // transform to symfony response
+        return new Response($httpResponse->getContent(false), $httpResponse->getStatusCode(), $httpResponse->getHeaders(false));
     }
 
     private function getAuthenticator(string $type): AuthenticatorInterface

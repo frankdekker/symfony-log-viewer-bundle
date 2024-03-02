@@ -4,26 +4,21 @@ declare(strict_types=1);
 namespace FD\LogViewer\Controller;
 
 use FD\LogViewer\Entity\Output\DirectionEnum;
-use FD\LogViewer\Service\Host\HostServiceBridge;
+use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Throwable;
+use Symfony\Component\HttpFoundation\Response;
 
-class FoldersController extends AbstractController
+class FoldersController extends AbstractController implements ProxyControllerInterface
 {
-    public function __construct(private readonly HostServiceBridge $hostServiceBridge)
+    public function __construct(private readonly LogFolderOutputProvider $folderOutputProvider)
     {
     }
 
-    /**
-     * @throws Throwable
-     */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request): Response
     {
-        $host      = $request->query->get('host', 'localhost');
         $direction = DirectionEnum::tryFrom($request->query->get('direction', DirectionEnum::Desc->value)) ?? DirectionEnum::Desc;
 
-        return new JsonResponse($this->hostServiceBridge->getLogFolders($host, $direction), json: true);
+        return $this->json($this->folderOutputProvider->provide($direction));
     }
 }
