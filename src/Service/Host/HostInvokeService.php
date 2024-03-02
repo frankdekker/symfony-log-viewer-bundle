@@ -11,14 +11,15 @@ use FD\LogViewer\Service\RemoteHost\Authenticator\HeaderAuthenticator;
 use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Throwable;
 
 class HostInvokeService
 {
-    public function __construct(private readonly ?HttpClientInterface $httpClient = null)
-    {
+    public function __construct(
+        private readonly ResponseFactory $responseFactory,
+        private readonly ?HttpClientInterface $httpClient = null
+    ) {
     }
 
     /**
@@ -42,20 +43,7 @@ class HostInvokeService
         $httpResponse = $this->httpClient->request($method, rtrim((string)$hostConfig->host, '/') . '/' . ltrim($url, '/'), $options);
 
         // transform to symfony response
-        return new StreamedResponse(
-            function () use ($httpResponse) {
-                $outputStream = fopen('php://output', 'wb');
-                assert(is_resource($outputStream));
-                assert($this->httpClient !== null);
-
-                foreach ($this->httpClient->stream($httpResponse) as $chunk) {
-                    fwrite($outputStream, $chunk->getContent());
-                }
-                fclose($outputStream);
-            },
-            $httpResponse->getStatusCode(),
-            $httpResponse->getHeaders(false)
-        );
+        return $this->responseFactory->toStreamedResponse($this->httpClient, $httpResponse);
     }
 
     private function getAuthenticator(string $type): AuthenticatorInterface

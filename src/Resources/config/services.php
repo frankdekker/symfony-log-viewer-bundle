@@ -30,6 +30,7 @@ use FD\LogViewer\Service\Folder\LogFolderOutputSorter;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use FD\LogViewer\Service\Host\HostInvokeService;
 use FD\LogViewer\Service\Host\HostProvider;
+use FD\LogViewer\Service\Host\ResponseFactory;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
 use FD\LogViewer\Service\Matcher\ChannelTermMatcher;
 use FD\LogViewer\Service\Matcher\DateAfterTermMatcher;
@@ -98,6 +99,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(FinderFactory::class);
     $services->set(HostInvokeService::class);
+    $services->set(ResponseFactory::class);
     $services->set(HostProvider::class)->arg('$hosts', tagged_iterator('fd.symfony.log.viewer.hosts_config'));
     $services->set(LogFileService::class)->arg('$logFileConfigs', tagged_iterator('fd.symfony.log.viewer.log_files_config'));
     $services->set(LogFolderFactory::class);
