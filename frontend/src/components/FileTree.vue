@@ -20,7 +20,7 @@ bus.on('folder-deleted', () => folderStore.update());
                         v-model="hostsStore.selected"
                         v-on:change="folderStore.update"
                         v-if="Object.keys(hostsStore.hosts).length > 0">
-                    <option v-for="(name, key) in hostsStore.hosts" :value="key">{{ name }}</option>
+                    <option v-for="(name, key) in hostsStore.hosts" :value="key" :key="key">{{ name }}</option>
                 </select>
             </div>
             <div></div>
