@@ -47,6 +47,7 @@ use FD\LogViewer\Service\Parser\StringParser;
 use FD\LogViewer\Service\Parser\TermParser;
 use FD\LogViewer\Service\Parser\WordParser;
 use FD\LogViewer\Service\PerformanceService;
+use FD\LogViewer\Service\RemoteHost\Authenticator\AuthenticatorFactory;
 use FD\LogViewer\Service\VersionService;
 use FD\LogViewer\Util\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -100,6 +101,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(FinderFactory::class);
     $services->set(HostInvokeService::class);
     $services->set(ResponseFactory::class);
+    $services->set(AuthenticatorFactory::class);
     $services->set(HostProvider::class)->arg('$hosts', tagged_iterator('fd.symfony.log.viewer.hosts_config'));
     $services->set(LogFileService::class)->arg('$logFileConfigs', tagged_iterator('fd.symfony.log.viewer.log_files_config'));
     $services->set(LogFolderFactory::class);
