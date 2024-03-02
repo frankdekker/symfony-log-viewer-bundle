@@ -48,7 +48,7 @@ class RemoteRequestProxySubscriber
         }
 
         // must have a route
-        $uri = $this->getRelativeUri($request);
+        $uri = $this->routeService->getRelativeUriFor($request);
         if ($uri === null) {
             return;
         }
@@ -62,16 +62,6 @@ class RemoteRequestProxySubscriber
         $callable = $this->controllerResolver->getController($request);
 
         return is_array($callable) && isset($callable[0]) && $callable[0] instanceof ProxyControllerInterface;
-    }
-
-    private function getRelativeUri(Request $request): ?string
-    {
-        $route = $request->attributes->get('_route');
-        if (is_string($route) === false) {
-            return null;
-        }
-
-        return $this->routeService->getRelativeUriFor($route);
     }
 
     /**

@@ -1,4 +1,5 @@
 import type LogRecords from '@/models/LogRecords';
+import type ParameterBag from '@/models/ParameterBag';
 import axios, {AxiosError} from 'axios';
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
@@ -12,24 +13,10 @@ export const useLogRecordStore = defineStore('log_records', () => {
     const loading = ref(false);
     const records = ref<LogRecords>(defaultData);
 
-    async function fetch(host: string, file: string, direction: string, perPage: string, query: string, offset: number) {
-        const params: { [key: string]: string } = {file, direction, per_page: perPage};
-
-        if (host !== '' && host !== 'localhost') {
-            params.host = host;
-        }
-
-        if (query !== '') {
-            params.query = query;
-        }
-
-        if (offset > 0) {
-            params.offset = offset.toString();
-        }
-
+    async function fetch(params: ParameterBag) {
         loading.value = true;
         try {
-            const response = await axios.get<LogRecords>('/api/logs', {params: params});
+            const response = await axios.get<LogRecords>('/api/logs', {params: params.all()});
             records.value  = response.data;
         } catch (e) {
             if (e instanceof AxiosError && e.response?.status === 400) {

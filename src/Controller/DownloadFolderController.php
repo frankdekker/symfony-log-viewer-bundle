@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class DownloadFolderController extends AbstractController
+class DownloadFolderController extends AbstractController implements ProxyControllerInterface
 {
     public function __construct(private readonly LogFileService $folderService, private readonly ZipArchiveFactory $zipArchiveFactory)
     {

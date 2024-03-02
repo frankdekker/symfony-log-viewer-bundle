@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import ButtonGroup from '@/components/ButtonGroup.vue';
 import type LogFile from '@/models/LogFile';
+import ParameterBag from '@/models/ParameterBag';
 import bus from '@/services/EventBus';
+import {useHostsStore} from '@/stores/hosts';
 import {useSearchStore} from '@/stores/search';
 import axios from 'axios';
 import {ref, watch} from 'vue';
@@ -16,9 +18,12 @@ const selectedFile = ref<string | null>(null);
 const route        = useRoute();
 const router       = useRouter();
 const searchStore  = useSearchStore();
-const baseUri      = axios.defaults.baseURL;
-const deleteFile   = (identifier: string) => {
-    axios.delete('/api/file/' + encodeURI(identifier))
+const hostsStore   = useHostsStore();
+
+const baseUri    = axios.defaults.baseURL;
+const deleteFile = (identifier: string) => {
+    const params = new ParameterBag().set('host', hostsStore.selected, 'localhost').all();
+    axios.delete('/api/file/' + encodeURI(identifier), {params: params})
         .then(() => {
             if (selectedFile.value === identifier) {
                 router.push({name: 'home'});
@@ -53,7 +58,9 @@ watch(() => route.query.file, () => selectedFile.value = String(route.query.file
         </template>
         <template v-slot:dropdown>
             <li>
-                <a class="dropdown-item" :href="baseUri + 'api/file/' + encodeURI(file.identifier)" v-if="file.can_download">
+                <a class="dropdown-item"
+                   :href="baseUri + 'api/file/' + encodeURI(file.identifier) + '?' + new ParameterBag().set('host', hostsStore.selected, 'localhost').toString()"
+                   v-if="file.can_download">
                     <i class="bi bi-cloud-download me-3"></i>Download
                 </a>
             </li>
