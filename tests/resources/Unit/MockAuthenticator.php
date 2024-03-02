@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\resources\Unit;
 
 use FD\LogViewer\Service\RemoteHost\Authenticator\AuthenticatorInterface;
+use LogicException;
 
 class MockAuthenticator implements AuthenticatorInterface
 {
@@ -12,6 +13,6 @@ class MockAuthenticator implements AuthenticatorInterface
      */
     public function authenticate(array $hostOptions, array $requestOptions): array
     {
-        return [];
+        throw new LogicException('Not implemented');
     }
 }
