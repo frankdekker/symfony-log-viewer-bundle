@@ -113,7 +113,7 @@ jobs:
         run: cd frontend && npm run build
 
       - name: Restore directory
-        run: cd ../. && ls -lF
+        run: ls -lF
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
