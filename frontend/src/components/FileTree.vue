@@ -19,13 +19,15 @@ bus.on('folder-deleted', () => folderStore.update());
     <div class="p-1 pe-2 overflow-auto">
         <div class="slv-control-layout m-0">
             <div>
-                <select class="form-control p-0 border-0" v-model="hostsStore.selected" v-if="Object.keys(hostsStore.hosts).length > 0">
+                <select class="form-select pb-0 pt-0 ps-0 slv-form-select border-0"
+                        v-model="hostsStore.selected"
+                        v-if="Object.keys(hostsStore.hosts).length > 0">
                     <option v-for="(name, key) in hostsStore.hosts" :value="key" :key="key">{{ name }}</option>
                 </select>
             </div>
             <div></div>
             <div>
-                <select class="form-control p-0 border-0" v-model="folderStore.direction" v-on:change="folderStore.update">
+                <select class="form-select pb-0 pt-0 ps-0 slv-form-select border-0" v-model="folderStore.direction" v-on:change="folderStore.update">
                     <option value="desc">Newest First</option>
                     <option value="asc">Oldest First</option>
                 </select>
@@ -42,5 +44,10 @@ bus.on('folder-deleted', () => folderStore.update());
 .slv-control-layout {
     display: grid;
     grid-template-columns: auto 1fr auto;
+}
+
+.slv-form-select {
+    padding-right: 1.8rem;
+    background-position: right 0.35rem center;
 }
 </style>
