@@ -97,7 +97,7 @@ jobs:
         run: cd frontend && npm run lint
 
   build-assets-check:
-    name: Check build assets
+    name: Build assets
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -112,5 +112,10 @@ jobs:
       - name: Build assets
         run: cd frontend && npm run build
 
-      - name: Git diff - expecting no changes
-        run: git status
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: Frank Dekker
+          author_email: fdekker@gmail.com
+          message: Auto build assets
+          cwd: ./src/public/
