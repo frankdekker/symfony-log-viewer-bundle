@@ -6,7 +6,7 @@ export default class ParameterBag {
             value = null;
         }
 
-        if (value !== null) {
+        if (value !== null && value !== undefined && value !== '') {
             this.parameters[key] = String(value);
         }
         return this;
