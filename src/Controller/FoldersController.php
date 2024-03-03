@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class FoldersRemoteHost extends AbstractController implements RemoteHostProxyInterface
+class FoldersController extends AbstractController implements RemoteHostProxyInterface
 {
     public function __construct(private readonly LogFolderOutputProvider $folderOutputProvider)
     {

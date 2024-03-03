@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Controller;
 
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
-use FD\LogViewer\Controller\FoldersRemoteHost;
+use FD\LogViewer\Controller\FoldersController;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Output\LogFolderOutput;
 use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
@@ -14,9 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @extends AbstractControllerTestCase<FoldersRemoteHost>
+ * @extends AbstractControllerTestCase<FoldersController>
  */
-#[CoversClass(FoldersRemoteHost::class)]
+#[CoversClass(FoldersController::class)]
 class FoldersControllerTest extends AbstractControllerTestCase
 {
     private LogFolderOutputProvider&MockObject $folderOutputProvider;
@@ -49,6 +49,6 @@ class FoldersControllerTest extends AbstractControllerTestCase
 
     public function getController(): AbstractController
     {
-        return new FoldersRemoteHost($this->folderOutputProvider);
+        return new FoldersController($this->folderOutputProvider);
     }
 }

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use FD\LogViewer\Controller\DeleteFileRemoteHost;
-use FD\LogViewer\Controller\DeleteFolderRemoteHost;
-use FD\LogViewer\Controller\DownloadFileRemoteHost;
-use FD\LogViewer\Controller\DownloadFolderRemoteHost;
-use FD\LogViewer\Controller\FoldersRemoteHost;
+use FD\LogViewer\Controller\DeleteFileController;
+use FD\LogViewer\Controller\DeleteFolderController;
+use FD\LogViewer\Controller\DownloadFileController;
+use FD\LogViewer\Controller\DownloadFolderController;
+use FD\LogViewer\Controller\FoldersController;
 use FD\LogViewer\Controller\IndexController;
-use FD\LogViewer\Controller\LogRecordsRemoteHost;
+use FD\LogViewer\Controller\LogRecordsController;
 use FD\LogViewer\EventSubscriber\RemoteHostProxySubscriber;
 use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use FD\LogViewer\Routing\RouteLoader;
@@ -66,12 +66,12 @@ return static function (ContainerConfigurator $container): void {
     $services->set(IndexController::class)
         ->arg('$homeRoute', '%fd.symfony.log.viewer.log_files_config.home_route%')
         ->tag('controller.service_arguments');
-    $services->set(FoldersRemoteHost::class)->tag('controller.service_arguments');
-    $services->set(LogRecordsRemoteHost::class)->tag('controller.service_arguments');
-    $services->set(DownloadFileRemoteHost::class)->tag('controller.service_arguments');
-    $services->set(DownloadFolderRemoteHost::class)->tag('controller.service_arguments');
-    $services->set(DeleteFileRemoteHost::class)->tag('controller.service_arguments');
-    $services->set(DeleteFolderRemoteHost::class)->tag('controller.service_arguments');
+    $services->set(FoldersController::class)->tag('controller.service_arguments');
+    $services->set(LogRecordsController::class)->tag('controller.service_arguments');
+    $services->set(DownloadFileController::class)->tag('controller.service_arguments');
+    $services->set(DownloadFolderController::class)->tag('controller.service_arguments');
+    $services->set(DeleteFileController::class)->tag('controller.service_arguments');
+    $services->set(DeleteFolderController::class)->tag('controller.service_arguments');
 
     $services->set(RouteService::class);
     $services->set(RouteLoader::class)

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\EventSubscriber;
 
-use FD\LogViewer\Controller\FoldersRemoteHost;
+use FD\LogViewer\Controller\FoldersController;
 use FD\LogViewer\Entity\Config\HostConfig;
 use FD\LogViewer\EventSubscriber\RemoteHostProxySubscriber;
 use FD\LogViewer\Routing\RouteService;
@@ -25,7 +25,7 @@ class RemoteHostProxySubscriberTest extends TestCase
     private RouteService&MockObject $routeService;
     private HostProvider&MockObject $hostProvider;
     private HostInvokeService&MockObject $invokeService;
-    private FoldersRemoteHost&MockObject $controller;
+    private FoldersController&MockObject $controller;
     private RemoteHostProxySubscriber $subscriber;
 
     protected function setUp(): void
@@ -35,7 +35,7 @@ class RemoteHostProxySubscriberTest extends TestCase
         $this->routeService       = $this->createMock(RouteService::class);
         $this->hostProvider       = $this->createMock(HostProvider::class);
         $this->invokeService      = $this->createMock(HostInvokeService::class);
-        $this->controller         = $this->createMock(FoldersRemoteHost::class);
+        $this->controller         = $this->createMock(FoldersController::class);
         $this->subscriber         = new RemoteHostProxySubscriber(
             $this->controllerResolver,
             $this->routeService,
