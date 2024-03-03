@@ -116,8 +116,13 @@ jobs:
         run: ls -lF
 
       - name: Commit changes
-        uses: EndBug/add-and-commit@v9
+        uses: actions/checkout@v3
         with:
-          author_name: Frank Dekker
-          author_email: fdekker@gmail.com
-          message: Auto build assets
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+        run: |
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git add --all .
+            git commit --message build assets
+            git push
