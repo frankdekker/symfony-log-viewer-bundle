@@ -35,8 +35,6 @@ A minimal Symfony project has been setup under `/dev/`. To start development, in
 After the containers are up and running, the project is available at http://localhost:8888.
 
 > **_NOTE:_**  the nodejs container will automatically rebuild the frontend assets and deploy them in the `/public/` directory
-
-> **_NOTE:_**  When making changes to the frontend, ensure committing the compiled assets.  
  
 ## Running tests and code style checks
  
