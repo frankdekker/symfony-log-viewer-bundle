@@ -99,11 +99,16 @@ jobs:
   build-assets-check:
     name: Build assets
     runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the changed files back to the repository.
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.head_ref }}
+
       - name: Use Node.js 21.x
         uses: actions/setup-node@v4
         with:
@@ -118,10 +123,6 @@ jobs:
       - name: Restore directory
         run: ls -lF
 
-      - name: Commit changes
-        run: |
-            git config user.name github-actions
-            git config user.email github-actions@github.com
-            git add --all .
-            git commit --message "build assets"
-            git push
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Build assets
