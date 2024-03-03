@@ -1,5 +1,6 @@
 export default class ParameterBag {
-    private parameters: { [key: string]: any } = {};
+    constructor(private parameters: { [key: string]: any } = {}) {
+    }
 
     public set<T = any>(key: string, value: T | null, defaultVal: T | null = null): ParameterBag {
         if (value === defaultVal) {
