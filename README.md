@@ -19,10 +19,12 @@ read logs from any directory.
 
 ### Features
 
-- 📂 **View all the Monolog, Apache2 or Nginx logs** in specified directories,
+- 📂 View all the **Monolog logs** in the `%kernel.logs_dir%` directory,
+- 📂 **View other types of logs** - Apache, Nginx, or custom logs,
 - 🔍 **Search** the logs,
-- 🎚 **Filter** by log level (error, info, debug, etc.), by channel, date range or log content,
+- 🔍 **Filter** by log level (error, info, debug, etc.), by channel, date range or log content inclusion or exclusion,
 - 🌑 **Dark mode**,
+- 🖥️ **Multiple host** support,
 - 💾 **Download** or **delete** log files from the UI,
 - ☎️ **API access** for folders, files & log entries,
 

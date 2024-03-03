@@ -6,7 +6,6 @@ Out of the box, [Log viewer](../README.md) will have the following configuration
 
 ```yaml
 fd_log_viewer:
-    enable_default_monolog: true
     home_route: null
 
     log_files:
@@ -25,16 +24,13 @@ fd_log_viewer:
             log_message_pattern: '/^\[(?P<date>[^\]]+)\]\s+(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+(?P<message>.*)\s+(?P<context>[[{].*?[\]}])\s+(?P<extra>[[{].*?[\]}])\s+$/s'
             date_format: "Y-m-d H:i:s"
 
+    hosts:
+        localhost:
+            name: Local
+            host: null
 ```
 
 ## Configuration
-
-### enable_default_monolog
-
-**type**: `boolean`. Default: `true`
-
-Out of the box the bundle is configured with a default monolog configuration. Set this to `false` to override this behaviour.
-<br><br>
 
 ### home_route
 
@@ -54,13 +50,14 @@ This entry allows you to add more log file directories to the Log Viewer. Each e
 
 **type**: `string` (`enum: monolog(.json)|http-access|apache-error|nginx-error`)
 
-This is the type of log file that will be read. 
+This is the type of log file that will be read.
+
 - `monolog` is the default type and will read the default monolog log files.
 - `monolog.json` will read the monolog log files that use `formatter: 'monolog.formatter.json'`.
 - `http-access` will read the access log files of Apache and Nginx.
 - `apache-error` will read the error log files of Apache.
 - `nginx-error` will read the error log files of Nginx.
-<br><br>
+  <br><br>
 
 ### log_files.name
 
@@ -101,19 +98,21 @@ Example:
 ```text
 *.log,*.txt
 ```
+
 <br>
 
 ### log_files.finder.depth
+
 **type**: `int|string|string[]|null`. Default: `'== 0'`
 
 The maximum depth of directories to search for log files. If set to null all subdirectories will be added.
 
 Example:
+
 - `'== 0'` will only search in the specified directory.
 - `'>= 0'` will search in the specified directory and all subdirectories.
 - `['>= 0', '< 3]` will search in the specified directory and all subdirectories up to a depth of 2.
-<br><br>
-
+  <br><br>
 
 ### log_files.finder.ignoreUnreadableDirs
 
@@ -187,4 +186,66 @@ If you use a custom monolog format, adjust this pattern to your needs.
 **type**: `string`. Default: `Y-m-d H:i:s`
 
 This is the date format that will be used to format the date in frontend.
+<br><br>
+
+### hosts
+
+**type**: `array<string, mixed>`
+
+This entry allows you to add more hosts to the log viewer
+
+**Full example:**
+```yaml
+hosts:
+    local:
+        name: Local
+        host: null
+    remote:
+        name: Remote
+        host: https://example.com/log-viewer
+        auth:
+            type: basic
+            options:
+                username: user
+                password: pass
+```
+<br>
+
+### hosts.name
+
+**type**: `string`
+
+The display name of the host. Will be shown in the UI host selector.
+<br><br>
+
+### hosts.host
+
+**type**: `string|null`
+
+The url to the remote host log-viewer API. If null, the local host will be used. Must include the log-viewer route prefix.
+Example: `host: https://example.com/log-viewer`
+
+### hosts.auth
+
+**type**: `array<string, mixed>`
+
+For remote hosts, specifies the authentication method.
+<br><br>
+
+### hosts.auth.type
+
+**type**: `string` (`enum: basic|bearer|header|class-string`)
+
+The remote host authentication method:
+
+- `basic`: Basic authentication. Requires `username` and `password` option.
+- `bearer`: Bearer token authentication. Requires `token` option.
+- `header`: Custom header authentication. The key-values in the options will be added to the request headers.
+- `class-string`: Custom authentication. The class must implement `FD\LogViewerBundle\Authentication\AuthenticationInterface`.
+<br><br>
+
+### hosts.auth.options
+
+**type**: `array<string, string>`
+The options specific for the authentication method.
 <br><br>
