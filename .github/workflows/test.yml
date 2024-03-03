@@ -110,7 +110,10 @@ jobs:
         run: cd frontend && npm install
 
       - name: Build assets
-        run: cd frontend && npm run build && cd ..
+        run: cd frontend && npm run build
+
+      - name: Restore directory
+        run: cd ../. && ls -lF
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
@@ -118,4 +121,3 @@ jobs:
           author_name: Frank Dekker
           author_email: fdekker@gmail.com
           message: Auto build assets
-          cwd: src/public/
