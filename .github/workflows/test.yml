@@ -101,6 +101,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
       - name: Use Node.js 21.x
         uses: actions/setup-node@v4
         with:
@@ -116,10 +119,6 @@ jobs:
         run: ls -lF
 
       - name: Commit changes
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
         run: |
             git config user.name github-actions
             git config user.email github-actions@github.com
