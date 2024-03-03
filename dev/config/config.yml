@@ -4,6 +4,7 @@ parameters:
 framework:
   test: ~
   secret: dev
+  ide: "javascript:fetch('http://localhost:63342/api/file?file=%%f&line=%%l'.replace('/app/', ''));"
   router:
     resource: "%kernel.project_dir%/config/routing.yml"
     strict_requirements: true
@@ -13,6 +14,8 @@ framework:
     log: true
   handle_all_throwables: true
   default_locale: en
+  http_client:
+    enabled: true
   profiler:
     enabled: true
     only_exceptions: false

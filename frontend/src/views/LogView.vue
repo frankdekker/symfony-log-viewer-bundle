@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import LogRecord from '@/components/LogRecord.vue';
 import PerformanceDetails from '@/components/PerformanceDetails.vue';
-import {filter} from '@/services/Objects';
-import {nullify} from '@/services/Optional';
+import ParameterBag from '@/models/ParameterBag';
+import {useHostsStore} from '@/stores/hosts';
 import {useLogRecordStore} from '@/stores/log_records';
 import {useSearchStore} from '@/stores/search';
 import {onMounted, ref} from 'vue';
@@ -11,6 +11,7 @@ import {useRoute, useRouter} from 'vue-router';
 const router         = useRouter();
 const route          = useRoute();
 const logRecordStore = useLogRecordStore();
+const hostsStore     = useHostsStore();
 const searchStore    = useSearchStore();
 
 const searchRef  = ref<HTMLInputElement>();
@@ -20,21 +21,26 @@ const badRequest = ref(false);
 
 const navigate = () => {
     const fileOffset = offset.value > 0 && logRecordStore.records.paginator?.direction !== searchStore.sort ? 0 : offset.value;
-    router.push({
-        query: filter({
-            file: file.value,
-            query: nullify(searchStore.query, ''),
-            perPage: nullify(searchStore.perPage, '50'),
-            sort: nullify(searchStore.sort, 'desc'),
-            offset: nullify(fileOffset, 0)
-        })
-    });
+    const params     = new ParameterBag()
+        .set('host', hostsStore.selected, 'localhost')
+        .set('file', file.value)
+        .set('query', searchStore.query, '')
+        .set('per_page', searchStore.perPage, '50')
+        .set('sort', searchStore.sort, 'desc')
+        .set('offset', fileOffset, 0);
+    router.push({query: params.all()});
 }
 
 const load = () => {
     badRequest.value = false;
     logRecordStore
-        .fetch(file.value, searchStore.sort, searchStore.perPage, searchStore.query, offset.value)
+        .fetch(new ParameterBag()
+            .set('host', hostsStore.selected, 'localhost')
+            .set('file', file.value)
+            .set('query', searchStore.query, '')
+            .set('per_page', searchStore.perPage, '50')
+            .set('sort', searchStore.sort, 'desc')
+            .set('offset', offset.value, 0))
         .catch((error: Error) => {
             if (error.message === 'bad-request') {
                 badRequest.value = true;
@@ -49,9 +55,10 @@ const load = () => {
 
 onMounted(() => {
     file.value          = String(route.query.file);
-    searchStore.query   = String((route.query.query ?? ''));
-    searchStore.perPage = String((route.query.perPage ?? '50'));
-    searchStore.sort    = String((route.query.sort ?? 'desc'));
+    hostsStore.selected = String(route.query.host ?? 'localhost');
+    searchStore.query   = String(route.query.query ?? '');
+    searchStore.perPage = String(route.query.per_page ?? '50');
+    searchStore.sort    = String(route.query.sort ?? 'desc');
     offset.value        = parseInt(String(route.query.offset ?? '0'));
     load();
 });

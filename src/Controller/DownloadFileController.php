@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class DownloadFileController extends AbstractController
+class DownloadFileController extends AbstractController implements RemoteHostProxyInterface
 {
     public function __construct(private readonly LogFileService $fileService)
     {

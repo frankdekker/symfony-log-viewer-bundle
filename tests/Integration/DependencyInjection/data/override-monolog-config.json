@@ -1,0 +1,12 @@
+{
+    "fd_log_viewer": {
+        "log_files": {
+            "apache": {
+                "type": "apache",
+                "finder": {
+                    "in": "/var/log/apache2/"
+                }
+            }
+        }
+    }
+}

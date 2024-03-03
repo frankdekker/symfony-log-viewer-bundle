@@ -2,15 +2,18 @@
 import ButtonGroup from '@/components/ButtonGroup.vue';
 import LogFile from '@/components/LogFile.vue';
 import type LogFolder from '@/models/LogFolder';
+import ParameterBag from '@/models/ParameterBag';
 import bus from '@/services/EventBus';
+import {useHostsStore} from '@/stores/hosts';
 import axios from 'axios';
 import {onMounted, ref} from 'vue';
 import {useRouter} from 'vue-router';
 
-const toggleRef = ref();
-const baseUri   = axios.defaults.baseURL;
-const router    = useRouter();
-const expanded  = ref(false);
+const toggleRef  = ref();
+const baseUri    = axios.defaults.baseURL;
+const router     = useRouter();
+const expanded   = ref(false);
+const hostsStore = useHostsStore();
 
 const props = defineProps<{
     expand: boolean,
@@ -18,7 +21,8 @@ const props = defineProps<{
 }>()
 
 const deleteFile = (identifier: string) => {
-    axios.delete('/api/folder/' + encodeURI(identifier))
+    const params = new ParameterBag().set('host', hostsStore.selected, 'localhost').all();
+    axios.delete('/api/folder/' + encodeURI(identifier), {params: params})
         .then(() => {
             router.push({name: 'home'});
             bus.emit('folder-deleted', identifier);
@@ -49,7 +53,9 @@ onMounted(() => expanded.value = props.expand);
             </template>
             <template v-slot:dropdown>
                 <li>
-                    <a class="dropdown-item" :href="baseUri + 'api/folder/' + encodeURI(folder.identifier)" v-if="folder.can_download">
+                    <a class="dropdown-item"
+                       :href="baseUri + 'api/folder/' + encodeURI(folder.identifier) + '?' + new ParameterBag().set('host', hostsStore.selected, 'localhost').toString()"
+                       v-if="folder.can_download">
                         <i class="bi bi-cloud-download me-3"></i>Download
                     </a>
                 </li>

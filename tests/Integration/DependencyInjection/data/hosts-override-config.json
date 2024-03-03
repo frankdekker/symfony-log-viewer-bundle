@@ -1,0 +1,16 @@
+{
+    "fd_log_viewer": {
+        "hosts": {
+            "remote": {
+                "name": "Remote",
+                "host": "https://api.example/log-viewer",
+                "auth": {
+                    "type": "FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\BearerAuthenticator",
+                    "options": {
+                        "token": "t0k3n"
+                    }
+                }
+            }
+        }
+    }
+}
