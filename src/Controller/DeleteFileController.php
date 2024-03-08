@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class DeleteFileController extends AbstractController
+class DeleteFileController extends AbstractController implements RemoteHostProxyInterface
 {
     public function __construct(private readonly Filesystem $filesystem, private readonly LogFileService $fileService)
     {

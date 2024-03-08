@@ -13,6 +13,10 @@
     ],
     "semanticCommits": "disabled",
     "platformAutomerge": true,
+    "separateMinorPatch": true,
+    "patch": {
+        "enabled": false
+    },
     "packageRules": [
         {
             "matchPackagePatterns": ["*"],

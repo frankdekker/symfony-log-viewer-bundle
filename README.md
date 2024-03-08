@@ -19,10 +19,12 @@ read logs from any directory.
 
 ### Features
 
-- 📂 **View all the Monolog, Apache2 or Nginx logs** in specified directories,
+- 📂 View all the **Monolog logs** in the `%kernel.logs_dir%` directory,
+- 📂 **View other types of logs** - Apache, Nginx, or custom logs,
 - 🔍 **Search** the logs,
-- 🎚 **Filter** by log level (error, info, debug, etc.), by channel, date range or log content,
+- 🔍 **Filter** by log level (error, info, debug, etc.), by channel, date range or log content inclusion or exclusion,
 - 🌑 **Dark mode**,
+- 🖥️ **Multiple host** support,
 - 💾 **Download** or **delete** log files from the UI,
 - ☎️ **API access** for folders, files & log entries,
 
@@ -83,6 +85,7 @@ By default, it is available at: `/log-viewer` on your domain.
 - [Adding additional log files](docs/adding-additional-log-files.md)
 - [Adding apache logs](docs/configuring-apache-logs.md)
 - [Adding nginx logs](docs/configuring-nginx-logs.md)
+- [Adding remote hosts](docs/adding-remote-hosts.md)
 - [Configuring the back home url](docs/configuring-the-back-home-route.md)
 - [Advanced search queries](docs/advanced-search-queries.md)
 - [Full configuration reference](docs/configuration-reference.md)

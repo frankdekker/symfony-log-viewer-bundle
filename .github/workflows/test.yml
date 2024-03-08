@@ -85,6 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js 21.x
         uses: actions/setup-node@v4
         with:
@@ -97,10 +98,17 @@ jobs:
         run: cd frontend && npm run lint
 
   build-assets-check:
-    name: Check build assets
+    name: Build assets
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
       - name: Use Node.js 21.x
         uses: actions/setup-node@v4
         with:
@@ -112,5 +120,6 @@ jobs:
       - name: Build assets
         run: cd frontend && npm run build
 
-      - name: Git diff - expecting no changes
-        run: git status | grep "nothing to commit, working tree clean"
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'Auto build assets [skip ci]'

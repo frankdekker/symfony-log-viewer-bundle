@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class DeleteFolderController extends AbstractController implements LoggerAwareInterface
+class DeleteFolderController extends AbstractController implements LoggerAwareInterface, RemoteHostProxyInterface
 {
     use LoggerAwareTrait;
 

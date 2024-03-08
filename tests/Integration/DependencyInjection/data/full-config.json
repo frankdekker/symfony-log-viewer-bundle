@@ -1,0 +1,60 @@
+{
+    "fd_log_viewer": {
+        "home_route": "home",
+        "log_files": {
+            "monolog": {
+                "type": "monolog",
+                "name": "TestMonolog",
+                "finder": {
+                    "in": "in-directory",
+                    "name": "*.error.log",
+                    "depth": ">= 1",
+                    "ignoreUnreadableDirs": false,
+                    "followLinks": true
+                },
+                "downloadable": true,
+                "deletable": true,
+                "start_of_line_pattern": "start-of-line",
+                "log_message_pattern": "log-message-pattern",
+                "date_format": "date-format"
+            }
+        },
+        "hosts": {
+            "localhost": {
+                "name": "Localhost",
+                "host": null
+            },
+            "basic_auth_remote_host": {
+                "name": "BasicRemoteHost",
+                "host": "https://www.example.com/log-viewer",
+                "auth": {
+                    "type": "FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\BasicAuthAuthenticator",
+                    "options": {
+                        "username": "user",
+                        "password": "password"
+                    }
+                }
+            },
+            "bearer_remote_host": {
+                "name": "BearerRemoteHost",
+                "host": "https://www.example.com/log-viewer",
+                "auth": {
+                    "type": "FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\BearerAuthenticator",
+                    "options": {
+                        "token": "t0k3n"
+                    }
+                }
+            },
+            "header_remote_host": {
+                "name": "HeaderRemoteHost",
+                "host": "https://www.example.com/log-viewer",
+                "auth": {
+                    "type": "FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\HeaderAuthenticator",
+                    "options": {
+                        "X_PRIVATE_TOKEN": "t0k3n"
+                    }
+                }
+            }
+        }
+    }
+}

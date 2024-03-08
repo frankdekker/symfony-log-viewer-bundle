@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <phpmd-baseline>
+  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="src/DependencyInjection/Configuration.php" method="normalizeConfig"/>
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="src/Service/Parser/TermParser.php" method="parse"/>
   <violation rule="PHPMD\Rule\Design\NpathComplexity" file="src/Service/Parser/TermParser.php" method="parse"/>
 </phpmd-baseline>

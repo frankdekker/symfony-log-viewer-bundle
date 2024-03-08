@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace FD\LogViewer\DependencyInjection;
 
 use FD\LogViewer\Entity\Config\FinderConfig;
+use FD\LogViewer\Entity\Config\HostAuthenticationConfig;
+use FD\LogViewer\Entity\Config\HostConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;
-use FD\LogViewer\Util\Arrays;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
@@ -19,24 +20,6 @@ use Throwable;
  */
 final class Extension extends BaseExtension
 {
-    private const DEFAULT_MONOLOG_CONFIG = [
-        'log_files' => [
-            'monolog' => [
-                'type'         => 'monolog',
-                'name'         => 'Monolog',
-                'downloadable' => false,
-                'deletable'    => false,
-                'finder'       => [
-                    'in'                   => '%kernel.logs_dir%',
-                    'name'                 => '*.log',
-                    'depth'                => '== 0',
-                    'ignoreUnreadableDirs' => true,
-                    'followLinks'          => false,
-                ],
-            ]
-        ]
-    ];
-
     /**
      * @inheritDoc
      * @throws Throwable
@@ -49,11 +32,6 @@ final class Extension extends BaseExtension
         $mergedConfigs = $this->processConfiguration(new Configuration(), $configs);
 
         $container->setParameter('fd.symfony.log.viewer.log_files_config.home_route', $mergedConfigs['home_route'] ?? null);
-
-        // add defaults
-        if ($mergedConfigs['enable_default_monolog']) {
-            $mergedConfigs = Arrays::merge($mergedConfigs, self::DEFAULT_MONOLOG_CONFIG);
-        }
 
         foreach ($mergedConfigs['log_files'] as $key => $config) {
             $container->register('fd.symfony.log.viewer.log_files_config.finder.' . $key, FinderConfig::class)
@@ -69,13 +47,33 @@ final class Extension extends BaseExtension
                 ->setPublic(false)
                 ->setArgument('$logName', $key)
                 ->setArgument('$type', $config['type'])
-                ->setArgument('$name', $config['name'] ?? null)
+                ->setArgument('$name', $config['name'])
                 ->setArgument('$finderConfig', new Reference('fd.symfony.log.viewer.log_files_config.finder.' . $key))
                 ->setArgument('$downloadable', $config['downloadable'])
                 ->setArgument('$deletable', $config['deletable'])
-                ->setArgument('$startOfLinePattern', $config['start_of_line_pattern'] ?? null)
-                ->setArgument('$logMessagePattern', $config['log_message_pattern'] ?? null)
-                ->setArgument('$dateFormat', $config['date_format'] ?? "Y-m-d H:i:s");
+                ->setArgument('$startOfLinePattern', $config['start_of_line_pattern'])
+                ->setArgument('$logMessagePattern', $config['log_message_pattern'])
+                ->setArgument('$dateFormat', $config['date_format']);
+        }
+
+        foreach ($mergedConfigs['hosts'] as $key => $config) {
+            if (isset($config['auth'])) {
+                $container->register('fd.symfony.log.viewer.hosts_config.authentication.' . $key, HostAuthenticationConfig::class)
+                    ->setPublic(false)
+                    ->setArgument('$type', $config['auth']['type'])
+                    ->setArgument('$options', $config['auth']['options'] ?? []);
+            }
+
+            $container->register('fd.symfony.log.viewer.hosts_config.config.' . $key, HostConfig::class)
+                ->addTag('fd.symfony.log.viewer.hosts_config')
+                ->setPublic(false)
+                ->setArgument('$key', $key)
+                ->setArgument('$name', $config['name'])
+                ->setArgument('$host', $config['host'])
+                ->setArgument(
+                    '$authentication',
+                    new Reference('fd.symfony.log.viewer.hosts_config.authentication.' . $key, ContainerBuilder::NULL_ON_INVALID_REFERENCE)
+                );
         }
     }
 
