@@ -5,8 +5,8 @@ const expanded = ref(false);
 const emit     = defineEmits(['add']);
 
 const addFilter = (event: MouseEvent) => {
-    const target = <HTMLElement>event.target;
-    const filter = <HTMLInputElement>target.closest('[data-role=filter]');
+    const target = event.target as HTMLElement;
+    const filter = target.closest('[data-role=filter]') as HTMLInputElement;
     const fields = Array.from(filter.querySelectorAll('input'));
     let pattern  = String(filter.dataset.pattern);
     const strip  = filter.dataset.strip;
