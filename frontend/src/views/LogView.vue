@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import LogRecord from '@/components/LogRecord.vue';
 import PerformanceDetails from '@/components/PerformanceDetails.vue';
+import SearchForm from '@/components/SearchForm.vue';
 import ParameterBag from '@/models/ParameterBag';
 import {useHostsStore} from '@/stores/hosts';
 import {useLogRecordStore} from '@/stores/log_records';
@@ -14,7 +15,7 @@ const logRecordStore = useLogRecordStore();
 const hostsStore     = useHostsStore();
 const searchStore    = useSearchStore();
 
-const searchRef  = ref<HTMLInputElement>();
+const searchRef  = ref<InstanceType<typeof SearchForm>>()
 const file       = ref('');
 const offset     = ref(0);
 const badRequest = ref(false);
@@ -67,41 +68,13 @@ onMounted(() => {
 <template>
     <div class="slv-content h-100 overflow-hidden">
         <div class="d-flex align-items-stretch pt-1">
-            <div class="flex-grow-1 input-group">
-                <input type="text"
-                       class="form-control"
-                       :class="{'is-invalid': badRequest}"
-                       ref="searchRef"
-                       placeholder="Search log entries, Use severity:, channel:, before:, after:, or exclude: to fine-tune the search."
-                       aria-label="Search log entries, Use severity:, channel:, before:, after:, or exclude: to fine-tune the search."
-                       aria-describedby="button-search"
-                       @change="navigate"
-                       v-model="searchStore.query">
-
-                <select class="slv-menu-sort-direction form-control"
-                        aria-label="Sort direction"
-                        title="Sort direction"
-                        v-model="searchStore.sort"
-                        @change="navigate">
-                    <option value="desc">Newest First</option>
-                    <option value="asc">Oldest First</option>
-                </select>
-
-                <select class="slv-menu-page-size form-control"
-                        aria-label="Entries per page"
-                        title="Entries per page"
-                        v-model="searchStore.perPage"
-                        @change="navigate">
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                    <option value="150">150</option>
-                    <option value="200">200</option>
-                    <option value="250">250</option>
-                    <option value="300">300</option>
-                </select>
-
-                <button class="slv-log-search-btn btn btn-outline-primary" type="button" id="button-search" @click="navigate">Search</button>
-            </div>
+            <search-form class="flex-grow-1"
+                         ref="searchRef"
+                         :bad-request="badRequest"
+                         v-model:query="searchStore.query"
+                         v-model:sort="searchStore.sort"
+                         v-model:perPage="searchStore.perPage"
+                         @navigate="navigate"></search-form>
 
             <button class="btn btn-dark ms-1 me-1" type="button" aria-label="Refresh" title="Refresh" @click="load">
                 <i class="bi bi-arrow-clockwise"></i>
@@ -141,9 +114,5 @@ onMounted(() => {
 
 .slv-entries {
     --bs-list-group-border-radius: 0;
-}
-
-.slv-menu-sort-direction, .slv-menu-page-size, .slv-log-search-btn {
-    max-width: fit-content;
 }
 </style>
