@@ -10,6 +10,7 @@ const addFilter = (event: MouseEvent) => {
     const fields = Array.from(filter.querySelectorAll('input'));
     let pattern  = String(filter.dataset.pattern);
     const strip  = filter.dataset.strip;
+    let replaced = false;
 
     for (const input of fields) {
         const key = input.name;
@@ -21,12 +22,15 @@ const addFilter = (event: MouseEvent) => {
         const escapeVal = (val.indexOf(' ') === -1 ? val : '"' + val + '"');
         const matches   = pattern.match('\\{' + key + '(=)?\\}');
         if (matches !== null) {
-            pattern = pattern.replace(matches[0], escapeVal + (matches[1] ?? ''));
+            pattern = pattern.replace(matches[0], val === '' ? '' : escapeVal + (matches[1] ?? ''));
         }
         input.value = '';
+        replaced    = replaced || val !== '';
     }
 
-    emit('add', pattern);
+    if (replaced) {
+        emit('add', pattern);
+    }
 }
 
 </script>

@@ -8,7 +8,6 @@ The search query allows for more fine-grained control over the search results. T
 | `after:<date>`,`after:"<date>"`             | `a`   | Show all logs messages that occur after the specified date.                     |
 | `severity:<pipe-separated-string>`          | `s`   | Show all logs messages that match the given severity/severities.                |
 | `channel:<pipe-separated-string>`           | `c`   | Show all logs messages that match the given channel(s).                         |
-| `after:<date>`,`after:"<date>"`             | `a`   | Show all logs messages that occur after the specified date.                     |
 | `exclude:<word>`,`exclude:"<words>"`        | `-`   | Exclude the specific sentence from the results. Can be specified multiple times |
 | `context:<string>`, `context:<key>=<value>` |       | Show all logs messages that match the given context.                            |
 | `extra:<string>`, `extra:<key>=<value>`     |       | Show all logs messages that match the given extra.                              |

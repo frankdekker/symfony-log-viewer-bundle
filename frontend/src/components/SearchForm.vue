@@ -25,8 +25,8 @@ defineExpose({focus});
                class="form-control"
                :class="{'is-invalid': badRequest}"
                ref="searchRef"
-               placeholder="Search log entries, Use severity:, channel:, before:, after:, or exclude: to fine-tune the search."
-               aria-label="Search log entries, Use severity:, channel:, before:, after:, or exclude: to fine-tune the search."
+               placeholder="Search log entries."
+               aria-label="Search log entries."
                aria-describedby="button-search"
                @change="$emit('navigate')"
                v-model="query">
