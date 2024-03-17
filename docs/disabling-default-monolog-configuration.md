@@ -1,9 +1,14 @@
 ## Disable the default monolog configuration
 
-If you want to disable the default monolog configuration, add the following to your configuration:
-
+If you want to disable the default monolog configuration, overwrite `log_files` with your own configuration. For example:
 ```yaml
 # config/packages/fd_log_viewer.yaml
 fd_log_viewer:
-    enable_default_monolog: false
+    log_files:
+        apache-access:
+            type: http-access
+            name: Apache2 access
+            finder:
+                in: "/var/log/apache2"
+                name: "access.log"
 ```
