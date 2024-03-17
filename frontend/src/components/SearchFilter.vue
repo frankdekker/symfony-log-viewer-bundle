@@ -23,16 +23,15 @@ const addFilter = (event: MouseEvent) => {
         const matches   = pattern.match('\\{' + key + '(=)?\\}');
         if (matches !== null) {
             pattern = pattern.replace(matches[0], val === '' ? '' : escapeVal + (matches[1] ?? ''));
+            replaced    = replaced || val !== '';
         }
         input.value = '';
-        replaced    = replaced || val !== '';
     }
 
     if (replaced) {
         emit('add', pattern);
     }
 }
-
 </script>
 
 <template>
