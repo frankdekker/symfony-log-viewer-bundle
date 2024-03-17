@@ -19,7 +19,7 @@ defineExpose({focus});
 
 <template>
     <div class="input-group">
-        <SearchFilter/>
+        <SearchFilter @add="(value) => query = (query === '' ? value : query + ' ' + value)" />
 
         <input type="text"
                class="form-control"

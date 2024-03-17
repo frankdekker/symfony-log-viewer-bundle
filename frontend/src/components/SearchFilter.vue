@@ -6,18 +6,27 @@ const emit     = defineEmits(['add']);
 
 const addFilter = (event: MouseEvent) => {
     const target = <HTMLElement>event.target;
-    const input  = <HTMLInputElement>target.previousElementSibling;
-    let value  = input.value.trim();
-    if (value === '') {
-        return;
+    const filter = <HTMLInputElement>target.closest('[data-role=filter]');
+    const fields = Array.from(filter.querySelectorAll('input'));
+    let pattern  = String(filter.dataset.pattern);
+    const strip  = filter.dataset.strip;
+
+    for (const input of fields) {
+        const key = input.name;
+        let val   = input.value.trim();
+        if (strip !== undefined) {
+            val = val.replace(strip, '');
+        }
+
+        const escapeVal = (val.indexOf(' ') === -1 ? val : '"' + val + '"');
+        const matches   = pattern.match('\\{' + key + '(=)?\\}');
+        if (matches !== null) {
+            pattern = pattern.replace(matches[0], escapeVal + (matches[1] ?? ''));
+        }
+        input.value = '';
     }
 
-    if (input.dataset.strip !== undefined) {
-        value = value.replace(input.dataset.strip, '');
-    }
-
-    value = input.dataset.key + ':' + (value.indexOf(' ') === -1 ? value : '"' + value + '"');
-    emit('add', value);
+    emit('add', pattern);
 }
 
 </script>
@@ -29,62 +38,77 @@ const addFilter = (event: MouseEvent) => {
             :aria-expanded="expanded"
             @click="expanded = !expanded">Filter
     </button>
-    <div class="dropdown-menu" :class="{'d-block': expanded}">
+    <div class="dropdown-menu slv-dropdown-menu" :class="{'d-block': expanded}">
         <div class="px-2">
-            <div class="input-group mb-1">
+            <div class="input-group mb-1" data-role="filter" data-pattern="before:{value}">
                 <span class="slv-input-label input-group-text" id="filter-date-start">Before</span>
-                <input type="datetime-local" class="form-control" data-key="before" aria-label="Before" aria-describedby="filter-date-start">
+                <input name="value" type="datetime-local" class="form-control" aria-label="Before" aria-describedby="filter-date-start">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
-            <div class="input-group mb-1">
+            <div class="input-group mb-1" data-role="filter" data-pattern="after:{value}">
                 <span class="slv-input-label input-group-text" id="filter-date-end">After</span>
-                <input type="datetime-local" class="form-control" data-key="after" aria-label="After" aria-describedby="filter-date-end">
+                <input name="value" type="datetime-local" class="form-control" aria-label="After" aria-describedby="filter-date-end">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
-            <div class="input-group mb-1">
+            <div class="input-group mb-1" data-role="filter" data-pattern="severity:{value}" data-strip=" ">
                 <span class="slv-input-label input-group-text" id="filter-severity">Severity</span>
-                <input type="text"
+                <input name="value"
+                       type="text"
                        class="form-control"
                        placeholder="Separate multiple by pipe symbol"
-                       data-key="severity"
-                       data-strip=" "
                        aria-label="Severity"
                        aria-describedby="filter-severity">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
-            <div class="input-group mb-1">
+            <div class="input-group mb-1" data-role="filter" data-pattern="channel:{value}" data-strip=" ">
                 <span class="slv-input-label input-group-text" id="filter-severity">Channels</span>
-                <input type="text"
+                <input name="value"
+                       type="text"
                        class="form-control"
                        placeholder="Separate multiple by pipe symbol"
-                       data-key="channel"
-                       data-strip=" "
                        aria-label="Severity"
                        aria-describedby="filter-severity">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
-            <div class="input-group mb-1">
+            <div class="input-group mb-1" data-role="filter" data-pattern="exclude:{value}">
                 <span class="slv-input-label input-group-text" id="filter-exclude">Exclude</span>
-                <input type="text" class="form-control" data-key="exclude" aria-label="Exclude string" aria-describedby="filter-exclude">
+                <input name="value" type="text" class="form-control" aria-label="Exclude string" aria-describedby="filter-exclude">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
-            <div class="input-group mb-1">
+            <div class="input-group mb-1" data-role="filter" data-pattern="context:{key=}{value}">
                 <span class="slv-input-label input-group-text" id="filter-context">Context</span>
-                <input type="text" class="form-control" aria-label="Context key (optional)" aria-describedby="filter-context">
-                <input type="text" class="form-control" aria-label="Context" aria-describedby="filter-context">
+                <input name="key"
+                       type="text"
+                       class="form-control"
+                       placeholder="key (optional)"
+                       aria-label="Context key (optional)"
+                       aria-describedby="filter-context">
+                <input name="value" type="text" class="form-control" placeholder="search" aria-label="Context" aria-describedby="filter-context">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
-            <div class="input-group mb-1">
+            <div class="input-group mb-1" data-role="filter" data-pattern="extra:{key=}{value}">
                 <span class="slv-input-label input-group-text" id="filter-extra">Extra</span>
-                <input type="text" class="form-control" aria-label="Extra key (optional)" aria-describedby="filter-extra">
-                <input type="text" class="form-control" aria-label="Extra" aria-describedby="filter-extra">
+                <input name="key"
+                       type="text"
+                       class="form-control"
+                       placeholder="key (optional)"
+                       aria-label="Extra key (optional)"
+                       aria-describedby="filter-extra">
+                <input name=value type="text" class="form-control" placeholder="search" aria-label="Extra" aria-describedby="filter-extra">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-primary float-end" type="button" @click="expanded = !expanded">Close</button>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped>
+.slv-dropdown-menu {
+    top: 37px;
+}
+
 .slv-input-label {
     width: 100px;
 }
