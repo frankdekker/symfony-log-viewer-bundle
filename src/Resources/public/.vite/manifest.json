@@ -1,6 +1,7 @@
 {
   "src/main.ts": {
     "file": "assets/main-DmmJen3C.js",
+    "name": "main",
     "src": "src/main.ts",
     "isEntry": true
   },
