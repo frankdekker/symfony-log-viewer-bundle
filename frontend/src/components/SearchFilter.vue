@@ -1,33 +1,17 @@
 <script setup lang="ts">
+import SearchFilterService from '@/services/SearchFilterService';
 import {onMounted, onUnmounted, ref} from 'vue';
 
-const expanded = ref(false);
-const emit     = defineEmits(['add']);
+const filterService = new SearchFilterService();
+const expanded      = ref(false);
+const emit          = defineEmits(['add']);
 
 const addFilter = (event: UIEvent) => {
     const target = event.target as HTMLElement;
     const filter = target.closest('[data-role=filter]') as HTMLInputElement;
     const fields = Array.from(filter.querySelectorAll('input'));
-    let pattern  = String(filter.dataset.pattern);
-    const strip  = filter.dataset.strip;
-    let replaced = false;
 
-    for (const input of fields) {
-        const key = input.name;
-        let val   = input.value.trim();
-        if (strip !== undefined) {
-            val = val.replace(strip, '');
-        }
-
-        const escapeVal = (val.indexOf(' ') === -1 ? val : '"' + val + '"');
-        const matches   = pattern.match('\\{' + key + '(=)?\\}');
-        if (matches !== null) {
-            pattern  = pattern.replace(matches[0], val === '' ? '' : escapeVal + (matches[1] ?? ''));
-            replaced = replaced || val !== '';
-        }
-        input.value = '';
-    }
-
+    const [pattern, replaced] = filterService.createFilter(fields, filter.dataset.strip, String(filter.dataset.pattern));
     if (replaced) {
         emit('add', pattern);
     }
