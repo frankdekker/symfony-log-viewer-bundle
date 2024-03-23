@@ -71,7 +71,12 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
             </div>
             <div class="input-group mb-1" data-role="filter" data-pattern="exclude:{value}">
                 <span class="slv-input-label input-group-text" id="filter-exclude">Exclude</span>
-                <input name="value" type="text" class="form-control" aria-label="Exclude string" aria-describedby="filter-exclude">
+                <input name="value"
+                       type="text"
+                       class="form-control"
+                       @keyup.enter="addFilter"
+                       aria-label="Exclude string"
+                       aria-describedby="filter-exclude">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
             <div class="input-group mb-1" data-role="filter" data-pattern="context:{key=}{value}">
