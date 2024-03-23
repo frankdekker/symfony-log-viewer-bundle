@@ -1,37 +1,31 @@
 <script setup lang="ts">
-import {ref} from 'vue';
+import SearchFilterService from '@/services/SearchFilterService';
+import {onMounted, onUnmounted, ref} from 'vue';
 
-const expanded = ref(false);
-const emit     = defineEmits(['add']);
+const filterService = new SearchFilterService();
+const expanded      = ref(false);
+const emit          = defineEmits(['add']);
 
-const addFilter = (event: MouseEvent) => {
+const addFilter = (event: UIEvent) => {
     const target = event.target as HTMLElement;
     const filter = target.closest('[data-role=filter]') as HTMLInputElement;
     const fields = Array.from(filter.querySelectorAll('input'));
-    let pattern  = String(filter.dataset.pattern);
-    const strip  = filter.dataset.strip;
-    let replaced = false;
 
-    for (const input of fields) {
-        const key = input.name;
-        let val   = input.value.trim();
-        if (strip !== undefined) {
-            val = val.replace(strip, '');
-        }
-
-        const escapeVal = (val.indexOf(' ') === -1 ? val : '"' + val + '"');
-        const matches   = pattern.match('\\{' + key + '(=)?\\}');
-        if (matches !== null) {
-            pattern = pattern.replace(matches[0], val === '' ? '' : escapeVal + (matches[1] ?? ''));
-            replaced    = replaced || val !== '';
-        }
-        input.value = '';
-    }
-
+    const [pattern, replaced] = filterService.createFilter(fields, filter.dataset.strip, String(filter.dataset.pattern));
     if (replaced) {
         emit('add', pattern);
     }
 }
+
+// on escape, close the dropdown if visible
+const closeListener = function(event: KeyboardEvent) {
+    if (event.key === 'Escape' && expanded.value === true) {
+        event.preventDefault();
+        expanded.value = !expanded.value;
+    }
+}
+onMounted(() => document.addEventListener('keyup', closeListener));
+onUnmounted(() => document.removeEventListener('keyup', closeListener));
 </script>
 
 <template>
@@ -59,6 +53,7 @@ const addFilter = (event: MouseEvent) => {
                        type="text"
                        class="form-control"
                        placeholder="Separate multiple by pipe symbol"
+                       @keyup.enter="addFilter"
                        aria-label="Severity"
                        aria-describedby="filter-severity">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
@@ -69,13 +64,19 @@ const addFilter = (event: MouseEvent) => {
                        type="text"
                        class="form-control"
                        placeholder="Separate multiple by pipe symbol"
+                       @keyup.enter="addFilter"
                        aria-label="Severity"
                        aria-describedby="filter-severity">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
             <div class="input-group mb-1" data-role="filter" data-pattern="exclude:{value}">
                 <span class="slv-input-label input-group-text" id="filter-exclude">Exclude</span>
-                <input name="value" type="text" class="form-control" aria-label="Exclude string" aria-describedby="filter-exclude">
+                <input name="value"
+                       type="text"
+                       class="form-control"
+                       @keyup.enter="addFilter"
+                       aria-label="Exclude string"
+                       aria-describedby="filter-exclude">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
             <div class="input-group mb-1" data-role="filter" data-pattern="context:{key=}{value}">
@@ -86,7 +87,13 @@ const addFilter = (event: MouseEvent) => {
                        placeholder="key (optional)"
                        aria-label="Context key (optional)"
                        aria-describedby="filter-context">
-                <input name="value" type="text" class="form-control" placeholder="search" aria-label="Context" aria-describedby="filter-context">
+                <input name="value"
+                       type="text"
+                       class="form-control"
+                       placeholder="search"
+                       @keyup.enter="addFilter"
+                       aria-label="Context"
+                       aria-describedby="filter-context">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
             <div class="input-group mb-1" data-role="filter" data-pattern="extra:{key=}{value}">
@@ -97,7 +104,13 @@ const addFilter = (event: MouseEvent) => {
                        placeholder="key (optional)"
                        aria-label="Extra key (optional)"
                        aria-describedby="filter-extra">
-                <input name=value type="text" class="form-control" placeholder="search" aria-label="Extra" aria-describedby="filter-extra">
+                <input name=value
+                       type="text"
+                       class="form-control"
+                       placeholder="search"
+                       @keyup.enter="addFilter"
+                       aria-label="Extra"
+                       aria-describedby="filter-extra">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
             <div>
