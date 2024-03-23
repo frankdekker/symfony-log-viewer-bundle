@@ -32,6 +32,15 @@ const addFilter = (event: UIEvent) => {
         emit('add', pattern);
     }
 }
+
+// on escape, close the dropdown if visible
+document.addEventListener('keyup', function(event) {
+    if (event.key === 'Escape' && expanded.value === true) {
+        event.preventDefault();
+        expanded.value = !expanded.value;
+    }
+});
+
 </script>
 
 <template>
