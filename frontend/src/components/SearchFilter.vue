@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from 'vue';
+import {onMounted, onUnmounted, ref} from 'vue';
 
 const expanded = ref(false);
 const emit     = defineEmits(['add']);
@@ -34,13 +34,14 @@ const addFilter = (event: UIEvent) => {
 }
 
 // on escape, close the dropdown if visible
-document.addEventListener('keyup', function(event) {
+const closeListener = function(event: KeyboardEvent) {
     if (event.key === 'Escape' && expanded.value === true) {
         event.preventDefault();
         expanded.value = !expanded.value;
     }
-});
-
+}
+onMounted(() => document.addEventListener('keyup', closeListener));
+onUnmounted(() => document.removeEventListener('keyup', closeListener));
 </script>
 
 <template>
