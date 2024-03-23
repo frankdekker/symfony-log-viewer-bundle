@@ -26,7 +26,7 @@ const navigate = () => {
         .set('host', hostsStore.selected, 'localhost')
         .set('file', file.value)
         .set('query', searchStore.query, '')
-        .set('per_page', searchStore.perPage, '50')
+        .set('per_page', searchStore.perPage, '100')
         .set('sort', searchStore.sort, 'desc')
         .set('offset', fileOffset, 0);
     router.push({query: params.all()});
@@ -39,7 +39,7 @@ const load = () => {
             .set('host', hostsStore.selected, 'localhost')
             .set('file', file.value)
             .set('query', searchStore.query, '')
-            .set('per_page', searchStore.perPage, '50')
+            .set('per_page', searchStore.perPage, '100')
             .set('sort', searchStore.sort, 'desc')
             .set('offset', offset.value, 0))
         .catch((error: Error) => {
@@ -58,7 +58,7 @@ onMounted(() => {
     file.value          = String(route.query.file);
     hostsStore.selected = String(route.query.host ?? 'localhost');
     searchStore.query   = String(route.query.query ?? '');
-    searchStore.perPage = String(route.query.per_page ?? '50');
+    searchStore.perPage = String(route.query.per_page ?? '100');
     searchStore.sort    = String(route.query.sort ?? 'desc');
     offset.value        = parseInt(String(route.query.offset ?? '0'));
     load();
