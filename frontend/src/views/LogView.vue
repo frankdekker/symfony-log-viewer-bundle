@@ -90,7 +90,7 @@ onMounted(() => {
         <footer class="pt-1 pb-1 d-flex" v-show="!logRecordStore.loading">
             <button class="btn btn-sm btn-outline-secondary"
                     @click="offset = 0; navigate()"
-                    v-bind:disabled="logRecordStore.records.paginator?.first !== false">
+                    v-bind:disabled="logRecordStore.records.paginator?.first !== true">
                 First
             </button>
             <button class="ms-2 btn btn-sm btn-outline-secondary"
