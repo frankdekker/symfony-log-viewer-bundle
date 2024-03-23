@@ -29,7 +29,7 @@ defineExpose({focus});
                placeholder="Search log entries."
                aria-label="Search log entries."
                aria-describedby="button-search"
-               @change="emit('navigate')"
+               @keyup.enter="emit('navigate')"
                v-model="query">
 
         <select class="slv-menu-sort-direction form-control"
