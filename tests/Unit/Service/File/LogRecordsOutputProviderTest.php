@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\File;
 
-use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\Index\LogIndexIterator;
 use FD\LogViewer\Entity\Index\PerformanceStats;
 use FD\LogViewer\Entity\LogFile;
 use FD\LogViewer\Entity\Output\LogRecordsOutput;
@@ -41,7 +41,7 @@ class LogRecordsOutputProviderTest extends TestCase
         $logQuery    = new LogQueryDto('identifier');
         $config      = $this->createLogFileConfig();
         $file        = $this->createMock(LogFile::class);
-        $logIndex    = $this->createMock(LogIndex::class);
+        $logIndex    = $this->createMock(LogIndexIterator::class);
         $performance = new PerformanceStats('1', '2', '3');
 
         $this->logParser->expects(self::once())->method('getLevels')->willReturn(['level' => 'level']);

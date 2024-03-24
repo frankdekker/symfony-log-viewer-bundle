@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\File\Monolog;
 
-use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\Index\LogIndexIterator;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
@@ -60,7 +60,7 @@ class MonologFileParserTest extends TestCase
         $config   = $this->createLogFileConfig();
         $logQuery = new LogQueryDto('identifier');
         $file     = $this->createLogFile();
-        $index    = new LogIndex();
+        $index    = new LogIndexIterator();
 
         $this->logParser->expects(self::once())
             ->method('parse')
@@ -75,7 +75,7 @@ class MonologFileParserTest extends TestCase
         $config   = $this->createLogFileConfig();
         $logQuery = new LogQueryDto('identifier');
         $file     = $this->createLogFile();
-        $index    = new LogIndex();
+        $index    = new LogIndexIterator();
 
         $this->logParser->expects(self::once())
             ->method('parse')

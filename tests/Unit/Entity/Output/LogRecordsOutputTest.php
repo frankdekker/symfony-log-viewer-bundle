@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Entity\Output;
 
-use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\Index\LogIndexIterator;
 use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Entity\Index\Paginator;
 use FD\LogViewer\Entity\Index\PerformanceStats;
@@ -21,7 +21,7 @@ class LogRecordsOutputTest extends TestCase
         $channels  = ['channel1' => 'channel1', 'channel2' => 'channel2'];
         $paginator = new Paginator(DirectionEnum::Asc, true, true, 123);
         $record    = new LogRecord(111111, 'debug', 'request', 'message', [], []);
-        $logIndex  = new LogIndex();
+        $logIndex  = new LogIndexIterator();
         $logIndex->addLine($record);
         $logIndex->setPaginator($paginator);
         $performance = $this->createMock(PerformanceStats::class);

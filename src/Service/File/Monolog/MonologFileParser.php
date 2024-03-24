@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Service\File\Monolog;
 
 use FD\LogViewer\Entity\Config\LogFilesConfig;
-use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\Index\LogIndexIterator;
 use FD\LogViewer\Entity\LogFile;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogFileParserInterface;
@@ -60,7 +60,7 @@ class MonologFileParser implements LogFileParserInterface
         return $channels;
     }
 
-    public function getLogIndex(LogFilesConfig $config, LogFile $file, LogQueryDto $logQuery): LogIndex
+    public function getLogIndex(LogFilesConfig $config, LogFile $file, LogQueryDto $logQuery): LogIndexIterator
     {
         return match ($this->formatType) {
             self::TYPE_JSON => $this->logParser->parse(new SplFileInfo($file->path), new MonologJsonParser(), $logQuery),

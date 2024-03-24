@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\File;
 
-use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\Index\LogIndexIterator;
 use FD\LogViewer\Entity\Index\Paginator;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Iterator\LimitIterator;
@@ -27,7 +27,7 @@ class LogParser
     ) {
     }
 
-    public function parse(SplFileInfo $file, LogLineParserInterface $lineParser, LogQueryDto $logQuery): LogIndex
+    public function parse(SplFileInfo $file, LogLineParserInterface $lineParser, LogQueryDto $logQuery): LogIndexIterator
     {
         // create iterators
         $streamReader = $this->streamReaderFactory->createForFile($file, $logQuery->direction, $logQuery->offset);
@@ -39,18 +39,17 @@ class LogParser
         }
         $iterator = new LimitIterator($iterator, $logQuery->perPage);
 
-        // loop over all lines and create index
-        $index = new LogIndex();
-        foreach ($iterator as $logLine) {
-            $index->addLine($logLine);
-        }
+        return new LogIndexIterator(
+            $iterator,
+            function () use ($logQuery, $lineIterator) {
+                // create paginator
+                $hasOffset = (int)$logQuery->offset > 0;
+                if ($lineIterator->isEOF() === false || $hasOffset) {
+                    return new Paginator($logQuery->direction, $hasOffset, $lineIterator->isEOF() === false, $lineIterator->getPosition());
+                }
 
-        // create paginator
-        $hasOffset = (int)$logQuery->offset > 0;
-        if ($lineIterator->isEOF() === false || $hasOffset) {
-            $index->setPaginator(new Paginator($logQuery->direction, $hasOffset, $lineIterator->isEOF() === false, $lineIterator->getPosition()));
-        }
-
-        return $index;
+                return null;
+            }
+        );
     }
 }

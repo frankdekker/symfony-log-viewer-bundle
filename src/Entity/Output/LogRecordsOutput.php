@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Entity\Output;
 
-use FD\LogViewer\Entity\Index\LogIndex;
+use FD\LogViewer\Entity\Index\LogIndexIterator;
 use FD\LogViewer\Entity\Index\PerformanceStats;
 use JsonSerializable;
 
@@ -16,7 +16,7 @@ class LogRecordsOutput implements JsonSerializable
     public function __construct(
         private readonly array $levels,
         private readonly array $channels,
-        private readonly LogIndex $logIndex,
+        private readonly LogIndexIterator $logIndex,
         private readonly PerformanceStats $performance
     ) {
     }
