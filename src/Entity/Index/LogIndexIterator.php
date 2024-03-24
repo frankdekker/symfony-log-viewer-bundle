@@ -25,7 +25,12 @@ class LogIndexIterator implements IteratorAggregate
      */
     public function getLines(): array
     {
-        return iterator_to_array($this->lines);
+        $lines = [];
+        foreach ($this->lines as $line) {
+            $lines[] = $line;
+        }
+
+        return $lines;
     }
 
     public function getIterator(): Traversable
