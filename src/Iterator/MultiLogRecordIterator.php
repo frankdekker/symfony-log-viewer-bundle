@@ -10,6 +10,7 @@ use IteratorAggregate;
 use Traversable;
 
 use function array_fill;
+use function array_keys;
 use function count;
 
 /**
