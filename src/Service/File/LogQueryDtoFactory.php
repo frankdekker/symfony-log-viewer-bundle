@@ -25,7 +25,7 @@ class LogQueryDtoFactory
         $offset          = $request->query->get('offset');
         $offset          = $offset === null || $offset === '0' ? null : (int)$offset;
         $query           = trim($request->query->get('query', ''));
-        $direction       = DirectionEnum::from($request->query->get('direction', 'desc'));
+        $direction       = DirectionEnum::from($request->query->get('sort', 'desc'));
         $perPage         = $request->query->getInt('per_page', 100);
 
         // search expression
