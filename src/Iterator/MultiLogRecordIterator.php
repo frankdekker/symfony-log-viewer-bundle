@@ -9,6 +9,9 @@ use Iterator;
 use IteratorAggregate;
 use Traversable;
 
+use function array_fill;
+use function count;
+
 /**
  * The iterator that will:
  * - Take the first entry from each iterator and add it to the buffer
