@@ -18,19 +18,15 @@ class LogRecordsOutputTest extends TestCase
 {
     public function testJsonSerialize(): void
     {
-        $levels      = ['level1' => 'level1', 'level2' => 'level2'];
-        $channels    = ['channel1' => 'channel1', 'channel2' => 'channel2'];
         $paginator   = new Paginator(DirectionEnum::Asc, true, true, 123);
-        $record      = new LogRecord(111111, 'debug', 'request', 'message', [], []);
+        $record      = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
         $logIndex    = new LogIndexIterator(new ArrayIterator([$record]), fn() => $paginator);
         $performance = $this->createMock(PerformanceStats::class);
 
-        $logRecordsOutput = new LogRecordsOutput($levels, $channels, $logIndex, $performance);
+        $logRecordsOutput = new LogRecordsOutput($logIndex, $performance);
 
         static::assertSame(
             [
-                'levels'      => $levels,
-                'channels'    => $channels,
                 'logs'        => [$record],
                 'paginator'   => $paginator,
                 'performance' => $performance

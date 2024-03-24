@@ -38,7 +38,7 @@ class LogRecordsOutputProviderTest extends TestCase
 
     public function testProvide(): void
     {
-        $logQuery    = new LogQueryDto('identifier');
+        $logQuery    = new LogQueryDto(['identifier']);
         $config      = $this->createLogFileConfig();
         $file        = $this->createMock(LogFile::class);
         $logIndex    = $this->createMock(LogIndexIterator::class);
@@ -49,9 +49,9 @@ class LogRecordsOutputProviderTest extends TestCase
         $this->logParser->expects(self::once())->method('getLogIndex')->with($config, $file, $logQuery)->willReturn($logIndex);
         $this->performanceService->expects(self::once())->method('getPerformanceStats')->willReturn($performance);
 
-        $expected = new LogRecordsOutput(['level' => 'level'], ['channel' => 'channel'], $logIndex, $performance);
+        $expected = new LogRecordsOutput($logIndex, $performance);
 
-        $result = $this->provider->provide($config, $file, $logQuery);
+        $result = $this->provider->provide($file, $logQuery);
         static::assertEquals($expected, $result);
     }
 }

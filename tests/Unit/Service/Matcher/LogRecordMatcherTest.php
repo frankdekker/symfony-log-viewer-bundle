@@ -33,7 +33,7 @@ class LogRecordMatcherTest extends TestCase
 
     public function testMatchesMatch(): void
     {
-        $record     = new LogRecord(123, 'error', 'channel', 'message', [], []);
+        $record     = new LogRecord('id', 123, 'error', 'channel', 'message', [], []);
         $term       = new WordTerm('string', WordTerm::TYPE_INCLUDE);
         $expression = new Expression([$term]);
 
@@ -45,7 +45,7 @@ class LogRecordMatcherTest extends TestCase
 
     public function testMatchesNoMatch(): void
     {
-        $record     = new LogRecord(123, 'error', 'channel', 'message', [], []);
+        $record     = new LogRecord('id', 123, 'error', 'channel', 'message', [], []);
         $term       = new WordTerm('string', WordTerm::TYPE_INCLUDE);
         $expression = new Expression([$term]);
 
@@ -57,7 +57,7 @@ class LogRecordMatcherTest extends TestCase
 
     public function testMatchesNoSupportedMatchers(): void
     {
-        $record     = new LogRecord(123, 'error', 'channel', 'message', [], []);
+        $record     = new LogRecord('id', 123, 'error', 'channel', 'message', [], []);
         $term       = new WordTerm('string', WordTerm::TYPE_INCLUDE);
         $expression = new Expression([$term]);
 

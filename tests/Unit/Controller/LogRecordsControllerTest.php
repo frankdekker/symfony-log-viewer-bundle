@@ -62,7 +62,7 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
     public function testInvokeNotFound(): void
     {
         $request  = new Request();
-        $logQuery = new LogQueryDto('file', 123, null, DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
+        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
 
         $this->queryDtoFactory->expects(self::once())->method('create')->with($request)->willReturn($logQuery);
         $this->fileService->expects(self::once())->method('findFileByIdentifier')->with('file')->willReturn(null);
@@ -78,7 +78,7 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
     public function testInvoke(): void
     {
         $request  = new Request();
-        $logQuery = new LogQueryDto('file', 123, null, DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
+        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
 
         $logFile = $this->createLogFile();
         $output  = $this->createMock(LogRecordsOutput::class);

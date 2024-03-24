@@ -12,7 +12,7 @@ class LogRecordTest extends TestCase
 {
     public function testJsonSerialize(): void
     {
-        $record = new LogRecord(946684800, 'debug', 'request', 'message', ['context' => 'context'], ['extra' => 'extra']);
+        $record = new LogRecord('id', 946684800, 'debug', 'request', 'message', ['context' => 'context'], ['extra' => 'extra']);
 
         static::assertSame(
             [

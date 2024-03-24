@@ -26,9 +26,9 @@ class LogRecordFilterIteratorTest extends TestCase
     public function testGetIteratorShouldFilterLevel(): void
     {
         $levels         = ['debug', 'info'];
-        $debugRecord    = new LogRecord(111111, 'debug', 'request', 'message', [], []);
-        $infoRecord     = new LogRecord(222222, 'info', 'app', 'message', [], []);
-        $warningRecord  = new LogRecord(333333, 'warning', 'event', 'message', [], []);
+        $debugRecord    = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
+        $infoRecord     = new LogRecord('id', 222222, 'info', 'app', 'message', [], []);
+        $warningRecord  = new LogRecord('id', 333333, 'warning', 'event', 'message', [], []);
         $recordIterator = new ArrayIterator([$debugRecord, $infoRecord, $warningRecord]);
 
         $iterator = new LogRecordFilterIterator($this->recordMatcher, $recordIterator, null, $levels, null);
@@ -38,9 +38,9 @@ class LogRecordFilterIteratorTest extends TestCase
     public function testGetIteratorShouldFilterChannel(): void
     {
         $channels       = ['request', 'event'];
-        $debugRecord    = new LogRecord(111111, 'debug', 'request', 'message', [], []);
-        $infoRecord     = new LogRecord(222222, 'info', 'app', 'message', [], []);
-        $warningRecord  = new LogRecord(333333, 'warning', 'event', 'message', [], []);
+        $debugRecord    = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
+        $infoRecord     = new LogRecord('id', 222222, 'info', 'app', 'message', [], []);
+        $warningRecord  = new LogRecord('id', 333333, 'warning', 'event', 'message', [], []);
         $recordIterator = new ArrayIterator([$debugRecord, $infoRecord, $warningRecord]);
 
         $iterator = new LogRecordFilterIterator($this->recordMatcher, $recordIterator, null, null, $channels);
@@ -49,9 +49,9 @@ class LogRecordFilterIteratorTest extends TestCase
 
     public function testGetIteratorShouldFilterOnExpression(): void
     {
-        $debugRecord    = new LogRecord(111111, 'debug', 'request', 'message', [], []);
-        $infoRecord     = new LogRecord(222222, 'info', 'app', 'message', [], []);
-        $warningRecord  = new LogRecord(333333, 'warning', 'event', 'message', [], []);
+        $debugRecord    = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
+        $infoRecord     = new LogRecord('id', 222222, 'info', 'app', 'message', [], []);
+        $warningRecord  = new LogRecord('id', 333333, 'warning', 'event', 'message', [], []);
         $recordIterator = new ArrayIterator([$debugRecord, $infoRecord, $warningRecord]);
         $expression     = new Expression([]);
 
@@ -63,9 +63,9 @@ class LogRecordFilterIteratorTest extends TestCase
 
     public function testGetIteratorShouldNotFilter(): void
     {
-        $requestRecord  = new LogRecord(111111, 'debug', 'request', 'message', [], []);
-        $appRecord      = new LogRecord(222222, 'info', 'app', 'message', [], []);
-        $eventRecord    = new LogRecord(333333, 'warning', 'event', 'message', [], []);
+        $requestRecord  = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
+        $appRecord      = new LogRecord('id', 222222, 'info', 'app', 'message', [], []);
+        $eventRecord    = new LogRecord('id', 333333, 'warning', 'event', 'message', [], []);
         $recordIterator = new ArrayIterator([$requestRecord, $appRecord, $eventRecord]);
 
         $iterator = new LogRecordFilterIterator($this->recordMatcher, $recordIterator, null, null, null);

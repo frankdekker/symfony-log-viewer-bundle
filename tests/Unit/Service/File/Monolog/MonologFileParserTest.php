@@ -59,7 +59,7 @@ class MonologFileParserTest extends TestCase
     public function testGetLogIndexForLineParser(): void
     {
         $config   = $this->createLogFileConfig();
-        $logQuery = new LogQueryDto('identifier');
+        $logQuery = new LogQueryDto(['identifier']);
         $file     = $this->createLogFile();
         $index    = new LogIndexIterator(new ArrayIterator([]), null);
 
@@ -74,7 +74,7 @@ class MonologFileParserTest extends TestCase
     public function testGetLogIndexForJsonParser(): void
     {
         $config   = $this->createLogFileConfig();
-        $logQuery = new LogQueryDto('identifier');
+        $logQuery = new LogQueryDto(['identifier']);
         $file     = $this->createLogFile();
         $index    = new LogIndexIterator(new ArrayIterator([]), null);
 
@@ -96,6 +96,6 @@ class MonologFileParserTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid format type');
-        $parser->getLogIndex($config, $file, new LogQueryDto('identifier'));
+        $parser->getLogIndex($config, $file, new LogQueryDto(['identifier']));
     }
 }
