@@ -42,23 +42,18 @@ class MultiLogRecordIterator implements IteratorAggregate
         }
 
         while (count($this->buffer) > 0) {
-            $record = $this->takeEntryFromBuffer();
-            if ($record === null) {
-                break;
-            }
-            yield $record;
+            yield $this->takeEntryFromBuffer();
         }
     }
 
-    private function takeEntryFromBuffer(): ?LogRecord
+    private function takeEntryFromBuffer(): LogRecord
     {
         $selected = null;
         $index    = null;
 
         foreach ($this->buffer as $i => $record) {
-            if ($record === null) {
-                return null;
-            }
+            // updateBufferAt will ensure no records are null
+            assert($record !== null);
 
             if ($selected === null || $this->comparator->compare($selected, $record) === 1) {
                 $selected = $record;
@@ -71,17 +66,16 @@ class MultiLogRecordIterator implements IteratorAggregate
             $this->updateBufferAt($index);
         }
 
+        assert($selected !== null);
+
         return $selected;
     }
 
     private function updateBufferAt(int $index): void
     {
         $iterator = $this->iterators[$index];
-        if ($this->buffer[$index] !== null) {
-            return;
-        }
+        assert($this->buffer[$index] === null);
 
-        $iterator->next();
         if ($iterator->valid() === false) {
             unset($this->buffer[$index]);
 
@@ -89,5 +83,6 @@ class MultiLogRecordIterator implements IteratorAggregate
         }
 
         $this->buffer[$index] = $iterator->current();
+        $iterator->next();
     }
 }
