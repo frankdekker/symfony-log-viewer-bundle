@@ -37,6 +37,24 @@ class LogFileService
         return $collections;
     }
 
+    /**
+     * @param string[] $fileIdentifiers
+     *
+     * @return array<string, LogFile>
+     */
+    public function findFileByIdentifiers(array $fileIdentifiers): array
+    {
+        $files = [];
+        foreach ($fileIdentifiers as $identifier) {
+            $file = $this->findFileByIdentifier($identifier);
+            if ($file !== null) {
+                $files[$identifier] = $file;
+            }
+        }
+
+        return $files;
+    }
+
     public function findFileByIdentifier(string $fileIdentifier): ?LogFile
     {
         $collections = $this->getFilesAndFolders();

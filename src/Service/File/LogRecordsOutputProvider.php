@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\File;
 
-use FD\LogViewer\Entity\Config\LogFilesConfig;
+use Exception;
+use FD\LogViewer\Entity\Index\LogIndexIterator;
 use FD\LogViewer\Entity\LogFile;
 use FD\LogViewer\Entity\Output\LogRecordsOutput;
 use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Iterator\LimitIterator;
+use FD\LogViewer\Iterator\MultiLogRecordIterator;
 use FD\LogViewer\Service\PerformanceService;
 
 class LogRecordsOutputProvider
@@ -17,15 +20,32 @@ class LogRecordsOutputProvider
     ) {
     }
 
-    public function provide(LogFilesConfig $config, LogFile $file, LogQueryDto $logQuery): LogRecordsOutput
+    /**
+     * @param array<string, LogFile> $files
+     *
+     * @throws Exception
+     */
+    public function provideForFiles(array $files, LogQueryDto $logQuery): LogRecordsOutput
     {
-        $logParser = $this->logParserProvider->get($config->type);
+        $iterators = [];
 
-        return new LogRecordsOutput(
-            $logParser->getLevels(),
-            $logParser->getChannels(),
-            $logParser->getLogIndex($config, $file, $logQuery),
-            $this->performanceService->getPerformanceStats()
-        );
+        foreach ($files as $file) {
+            $config      = $file->folder->collection->config;
+            $iterators[] = $this->logParserProvider->get($config->type)->getLogIndex($config, $file, $logQuery)->getIterator();
+        }
+
+        $recordIterator   = new MultiLogRecordIterator($iterators, $logQuery->direction);
+        $recordIterator   = new LimitIterator($recordIterator, $logQuery->perPage);
+        $logIndexIterator = new LogIndexIterator($recordIterator, null);
+
+        return new LogRecordsOutput($logIndexIterator, $this->performanceService->getPerformanceStats());
+    }
+
+    public function provide(LogFile $file, LogQueryDto $logQuery): LogRecordsOutput
+    {
+        $config   = $file->folder->collection->config;
+        $logIndex = $this->logParserProvider->get($config->type)->getLogIndex($config, $file, $logQuery);
+
+        return new LogRecordsOutput($logIndex, $this->performanceService->getPerformanceStats());
     }
 }

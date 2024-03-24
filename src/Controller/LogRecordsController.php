@@ -34,12 +34,16 @@ class LogRecordsController extends AbstractController implements RemoteHostProxy
             throw new BadRequestHttpException('Invalid date.', $exception);
         }
 
-        $file = $this->fileService->findFileByIdentifier($logQuery->fileIdentifier);
-        if ($file === null) {
-            throw new NotFoundHttpException(sprintf('Log file with id `%s` not found.', $logQuery->fileIdentifier));
+        $files = $this->fileService->findFileByIdentifiers($logQuery->fileIdentifiers);
+        if (count($files) === 0) {
+            throw new NotFoundHttpException(sprintf('No log files found with id(s) `%s`.', implode(',', $logQuery->fileIdentifiers)));
         }
 
-        $output = $this->outputProvider->provide($file->folder->collection->config, $file, $logQuery);
+        if (count($files) === 1) {
+            $output = $this->outputProvider->provide(reset($files), $logQuery);
+        } else {
+            $output = $this->outputProvider->provideForFiles($files, $logQuery);
+        }
 
         return new JsonResponse($output);
     }
