@@ -22,7 +22,7 @@ class LogQueryDto
         public readonly DirectionEnum $direction = DirectionEnum::Desc,
         public readonly ?array $levels = null,
         public readonly ?array $channels = null,
-        public readonly int $perPage = 25
+        public readonly int $perPage = 100
     ) {
     }
 }
