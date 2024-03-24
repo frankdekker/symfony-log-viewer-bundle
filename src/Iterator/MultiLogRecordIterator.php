@@ -12,7 +12,7 @@ use Traversable;
 /**
  * The iterator that will:
  * - Take the first entry from each iterator and add it to the buffer
- * - Determine which entry is the newest or oldest (based on direction)
+ * - Determine which entry is the best based on LogRecordDateComparator
  * - yield the entry
  * - remove the entry from the buffer and replenish the buffer.
  * @implements IteratorAggregate<int, LogRecord>
