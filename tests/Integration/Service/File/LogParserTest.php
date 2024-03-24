@@ -34,11 +34,11 @@ class LogParserTest extends AbstractIntegrationTestCase
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
-        static::assertCount(5, $index->getLines());
+        static::assertCount(5, $index->getRecords());
         static::assertNotNull($index->getPaginator());
         static::assertSame(335, $index->getPaginator()->offset);
-        static::assertSame('Message for line 1', $index->getLines()[0]->message);
-        static::assertSame('Message for line 5', $index->getLines()[4]->message);
+        static::assertSame('Message for line 1', $index->getRecords()[0]->message);
+        static::assertSame('Message for line 5', $index->getRecords()[4]->message);
     }
 
     public function testParseWithOffset(): void
@@ -47,11 +47,11 @@ class LogParserTest extends AbstractIntegrationTestCase
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
-        static::assertCount(5, $index->getLines());
+        static::assertCount(5, $index->getRecords());
         static::assertNotNull($index->getPaginator());
         static::assertSame(671, $index->getPaginator()->offset);
-        static::assertSame('Message for line 6', $index->getLines()[0]->message);
-        static::assertSame('Message for line 10', $index->getLines()[4]->message);
+        static::assertSame('Message for line 6', $index->getRecords()[0]->message);
+        static::assertSame('Message for line 10', $index->getRecords()[4]->message);
     }
 
     public function testParseWithLevelFilter(): void
@@ -60,9 +60,9 @@ class LogParserTest extends AbstractIntegrationTestCase
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
-        static::assertCount(25, $index->getLines());
-        static::assertSame('Message for line 2', $index->getLines()[0]->message);
-        static::assertSame('Message for line 98', $index->getLines()[24]->message);
+        static::assertCount(25, $index->getRecords());
+        static::assertSame('Message for line 2', $index->getRecords()[0]->message);
+        static::assertSame('Message for line 98', $index->getRecords()[24]->message);
     }
 
     public function testParseWithChannelFilter(): void
@@ -71,9 +71,9 @@ class LogParserTest extends AbstractIntegrationTestCase
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
-        static::assertCount(34, $index->getLines());
-        static::assertSame('Message for line 1', $index->getLines()[0]->message);
-        static::assertSame('Message for line 100', $index->getLines()[33]->message);
+        static::assertCount(34, $index->getRecords());
+        static::assertSame('Message for line 1', $index->getRecords()[0]->message);
+        static::assertSame('Message for line 100', $index->getRecords()[33]->message);
     }
 
     public function testParseWithLevelAndChannelFilter(): void
@@ -82,9 +82,9 @@ class LogParserTest extends AbstractIntegrationTestCase
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
-        static::assertCount(8, $index->getLines());
-        static::assertSame('Message for line 10', $index->getLines()[0]->message);
-        static::assertSame('Message for line 94', $index->getLines()[7]->message);
+        static::assertCount(8, $index->getRecords());
+        static::assertSame('Message for line 10', $index->getRecords()[0]->message);
+        static::assertSame('Message for line 94', $index->getRecords()[7]->message);
     }
 
     public function testParseAlmostEof(): void
@@ -93,7 +93,7 @@ class LogParserTest extends AbstractIntegrationTestCase
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
-        static::assertCount(99, $index->getLines());
+        static::assertCount(99, $index->getRecords());
         static::assertNotNull($index->getPaginator());
     }
 
@@ -103,7 +103,7 @@ class LogParserTest extends AbstractIntegrationTestCase
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
-        static::assertCount(99, $index->getLines());
+        static::assertCount(99, $index->getRecords());
         static::assertNotNull($index->getPaginator());
     }
 
@@ -113,7 +113,7 @@ class LogParserTest extends AbstractIntegrationTestCase
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
-        static::assertCount(100, $index->getLines());
+        static::assertCount(100, $index->getRecords());
         static::assertNull($index->getPaginator());
     }
 }

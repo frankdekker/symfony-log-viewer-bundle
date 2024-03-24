@@ -23,7 +23,7 @@ class LogIndexTest extends TestCase
     public function testAddGetLine(): void
     {
         $record = new LogRecord(111111, 'debug', 'request', 'message', [], []);
-        $index  = new LogIndexIterator(new ArrayIterator([$record]), function () { });
-        static::assertSame([$record], $index->getLines());
+        $index  = new LogIndexIterator(new ArrayIterator([$record]), null);
+        static::assertSame([$record], $index->getRecords());
     }
 }

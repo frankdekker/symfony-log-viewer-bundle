@@ -14,45 +14,45 @@ use Traversable;
 class LogIndexIterator implements IteratorAggregate
 {
     /** @var LogRecord[]|null */
-    private ?array $lines = null;
+    private ?array $records = null;
 
     /**
-     * @param Traversable<int, LogRecord>  $lineIterator
+     * @param Traversable<int, LogRecord>  $iterator
      * @param (Closure(): ?Paginator)|null $paginatorCallback
      */
-    public function __construct(private readonly Traversable $lineIterator, private readonly ?Closure $paginatorCallback = null)
+    public function __construct(private readonly Traversable $iterator, private readonly ?Closure $paginatorCallback = null)
     {
     }
 
     /**
      * @return LogRecord[]
      */
-    public function getLines(): array
+    public function getRecords(): array
     {
-        if ($this->lines !== null) {
-            return $this->lines;
+        if ($this->records !== null) {
+            return $this->records;
         }
 
-        $lines = [];
-        foreach ($this->lineIterator as $line) {
-            $lines[] = $line;
+        $records = [];
+        foreach ($this->iterator as $record) {
+            $records[] = $record;
         }
 
-        return $this->lines = $lines;
+        return $this->records = $records;
     }
 
     public function getIterator(): Traversable
     {
-        if ($this->lines !== null) {
-            return new ArrayIterator($this->lines);
+        if ($this->records !== null) {
+            return new ArrayIterator($this->records);
         }
 
-        $lines = [];
-        foreach ($this->lineIterator as $line) {
-            $lines[] = $line;
-            yield $line;
+        $records = [];
+        foreach ($this->iterator as $record) {
+            $records[] = $record;
+            yield $record;
         }
-        $this->lines = $lines;
+        $this->records = $records;
     }
 
     public function getPaginator(): ?Paginator

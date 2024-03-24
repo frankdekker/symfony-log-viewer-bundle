@@ -29,7 +29,7 @@ class LogRecordsOutput implements JsonSerializable
         return [
             'levels'      => $this->levels,
             'channels'    => $this->channels,
-            'logs'        => $this->logIndex->getLines(),
+            'logs'        => $this->logIndex->getRecords(),
             'paginator'   => $this->logIndex->getPaginator(),
             'performance' => $this->performance
         ];
