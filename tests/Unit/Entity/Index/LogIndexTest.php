@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Entity\Index;
 
+use ArrayIterator;
 use DigitalRevolution\AccessorPairConstraint\AccessorPairAsserter;
 use FD\LogViewer\Entity\Index\LogIndexIterator;
 use FD\LogViewer\Entity\Index\LogRecord;
@@ -22,8 +23,7 @@ class LogIndexTest extends TestCase
     public function testAddGetLine(): void
     {
         $record = new LogRecord(111111, 'debug', 'request', 'message', [], []);
-        $index  = new LogIndexIterator();
-        $index->addLine($record);
+        $index  = new LogIndexIterator(new ArrayIterator([$record]), function () { });
         static::assertSame([$record], $index->getLines());
     }
 }

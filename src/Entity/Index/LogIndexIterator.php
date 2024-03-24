@@ -13,10 +13,10 @@ use Traversable;
 class LogIndexIterator implements IteratorAggregate
 {
     /**
-     * @param Traversable<int, LogRecord> $lines
-     * @param Closure(): ?Paginator       $paginatorCallback
+     * @param Traversable<int, LogRecord>  $lines
+     * @param (Closure(): ?Paginator)|null $paginatorCallback
      */
-    public function __construct(private readonly Traversable $lines, private readonly Closure $paginatorCallback)
+    public function __construct(private readonly Traversable $lines, private readonly ?Closure $paginatorCallback = null)
     {
     }
 
@@ -35,6 +35,6 @@ class LogIndexIterator implements IteratorAggregate
 
     public function getPaginator(): ?Paginator
     {
-        return ($this->paginatorCallback)();
+        return $this->paginatorCallback === null ? null : ($this->paginatorCallback)();
     }
 }
