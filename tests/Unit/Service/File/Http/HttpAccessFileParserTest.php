@@ -30,16 +30,6 @@ class HttpAccessFileParserTest extends TestCase
         $this->parser    = new HttpAccessFileParser($this->logParser);
     }
 
-    public function testGetChannels(): void
-    {
-        static::assertSame([], $this->parser->getChannels());
-    }
-
-    public function testGetLevels(): void
-    {
-        static::assertSame([], $this->parser->getLevels());
-    }
-
     public function testGetLogIndex(): void
     {
         $config   = $this->createLogFileConfig();

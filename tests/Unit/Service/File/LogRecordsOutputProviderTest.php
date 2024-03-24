@@ -43,8 +43,6 @@ class LogRecordsOutputProviderTest extends TestCase
         $logIndex    = $this->createMock(LogIndexIterator::class);
         $performance = new PerformanceStats('1', '2', '3');
 
-        $this->logParser->expects(self::once())->method('getLevels')->willReturn(['level' => 'level']);
-        $this->logParser->expects(self::once())->method('getChannels')->willReturn(['channel' => 'channel']);
         $this->logParser->expects(self::once())->method('getLogIndex')->with($config, $file, $logQuery)->willReturn($logIndex);
         $this->performanceService->expects(self::once())->method('getPerformanceStats')->willReturn($performance);
 
