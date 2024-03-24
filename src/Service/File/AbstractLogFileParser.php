@@ -8,20 +8,4 @@ abstract class AbstractLogFileParser implements LogFileParserInterface
     public function __construct(protected readonly LogParser $logParser)
     {
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getLevels(): array
-    {
-        return [];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getChannels(): array
-    {
-        return [];
-    }
 }

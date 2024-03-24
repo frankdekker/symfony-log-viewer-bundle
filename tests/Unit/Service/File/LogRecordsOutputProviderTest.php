@@ -5,7 +5,6 @@ namespace FD\LogViewer\Tests\Unit\Service\File;
 
 use FD\LogViewer\Entity\Index\LogIndexIterator;
 use FD\LogViewer\Entity\Index\PerformanceStats;
-use FD\LogViewer\Entity\LogFile;
 use FD\LogViewer\Entity\Output\LogRecordsOutput;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogFileParserInterface;
@@ -39,8 +38,8 @@ class LogRecordsOutputProviderTest extends TestCase
     public function testProvide(): void
     {
         $logQuery    = new LogQueryDto(['identifier']);
-        $config      = $this->createLogFileConfig();
-        $file        = $this->createMock(LogFile::class);
+        $file        = $this->createLogFile();
+        $config      = $file->folder->collection->config;
         $logIndex    = $this->createMock(LogIndexIterator::class);
         $performance = new PerformanceStats('1', '2', '3');
 

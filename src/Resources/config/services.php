@@ -115,12 +115,10 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogQueryDtoFactory::class);
     $services->set('fd.symfony.log.viewer.monolog_line_file_parser', MonologFileParser::class)
         ->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'monolog'])
-        ->arg('$formatType', MonologFileParser::TYPE_LINE)
-        ->arg('$loggerLocator', tagged_iterator('fd.symfony.log.viewer.logger'));
+        ->arg('$formatType', MonologFileParser::TYPE_LINE);
     $services->set('fd.symfony.log.viewer.monolog_json_file_parser', MonologFileParser::class)
         ->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'monolog.json'])
-        ->arg('$formatType', MonologFileParser::TYPE_JSON)
-        ->arg('$loggerLocator', tagged_iterator('fd.symfony.log.viewer.logger'));
+        ->arg('$formatType', MonologFileParser::TYPE_JSON);
     $services->set(HttpAccessFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'http-access']);
     $services->set(NginxErrorFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'nginx-error']);
     $services->set(ApacheErrorFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'apache-error']);
