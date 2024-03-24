@@ -49,6 +49,22 @@ class LogFileServiceTest extends TestCase
         static::assertSame([$folders], $this->service->getFilesAndFolders());
     }
 
+    public function testFindFileByIdentifiers(): void
+    {
+        $folder = $this->createLogFolder();
+        $file   = $this->createLogFile(['folder' => $folder]);
+        $folder->addFile($file);
+        $folders = new LogFolderCollection($this->config);
+        $folders->getOrAdd('folderA', static fn() => $folder);
+
+        $finder = $this->createMock(Finder::class);
+
+        $this->folderService->expects(self::once())->method('createForConfig')->with($this->finderConfig)->willReturn($finder);
+        $this->logFolderFactory->expects(self::once())->method('createFromFiles')->with($this->config, $finder)->willReturn($folders);
+
+        static::assertSame(['identifier' => $file], $this->service->findFileByIdentifiers(['identifier', 'unknown']));
+    }
+
     public function testFindFileByIdentifier(): void
     {
         $folder = $this->createLogFolder();

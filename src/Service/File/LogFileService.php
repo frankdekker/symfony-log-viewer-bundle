@@ -44,11 +44,15 @@ class LogFileService
      */
     public function findFileByIdentifiers(array $fileIdentifiers): array
     {
-        $files = [];
-        foreach ($fileIdentifiers as $identifier) {
-            $file = $this->findFileByIdentifier($identifier);
-            if ($file !== null) {
-                $files[$identifier] = $file;
+        $files       = [];
+        $collections = $this->getFilesAndFolders();
+        foreach ($collections as $collection) {
+            foreach ($fileIdentifiers as $fileIdentifier) {
+                $file = $collection->firstFile(static fn(LogFile $file) => $file->identifier === $fileIdentifier);
+                if ($file !== null) {
+                    $files[$fileIdentifier] = $file;
+                }
+                continue 2;
             }
         }
 
