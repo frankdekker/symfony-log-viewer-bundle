@@ -30,7 +30,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithPaginator(): void
     {
-        $query = new LogQueryDto('identifier', 0, null, DirectionEnum::Asc, null, null, 5);
+        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, null, null, 5);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -43,7 +43,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithOffset(): void
     {
-        $query = new LogQueryDto('identifier', 335, null, DirectionEnum::Asc, null, null, 5);
+        $query = new LogQueryDto(['identifier'], 335, null, DirectionEnum::Asc, null, null, 5);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -56,7 +56,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithLevelFilter(): void
     {
-        $query = new LogQueryDto('identifier', 0, null, DirectionEnum::Asc, ['info'], null, 100);
+        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, ['info'], null, 100);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -67,7 +67,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithChannelFilter(): void
     {
-        $query = new LogQueryDto('identifier', 0, null, DirectionEnum::Asc, null, ['app'], 100);
+        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, null, ['app'], 100);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -78,7 +78,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithLevelAndChannelFilter(): void
     {
-        $query = new LogQueryDto('identifier', 0, null, DirectionEnum::Asc, ['info'], ['app'], 100);
+        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, ['info'], ['app'], 100);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -89,7 +89,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseAlmostEof(): void
     {
-        $query = new LogQueryDto('identifier', 0, null, DirectionEnum::Asc, null, null, 99);
+        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, null, null, 99);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -99,7 +99,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParsePaginatorWithOffset(): void
     {
-        $query = new LogQueryDto('identifier', 64, null, DirectionEnum::Asc, null, null, 500);
+        $query = new LogQueryDto(['identifier'], 64, null, DirectionEnum::Asc, null, null, 500);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -109,7 +109,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseEof(): void
     {
-        $query = new LogQueryDto('identifier', null, null, DirectionEnum::Asc, null, null, 500);
+        $query = new LogQueryDto(['identifier'], null, null, DirectionEnum::Asc, null, null, 500);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
