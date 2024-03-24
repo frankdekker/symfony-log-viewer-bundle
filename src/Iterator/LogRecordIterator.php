@@ -25,13 +25,14 @@ class LogRecordIterator implements IteratorAggregate
     public function getIterator(): Traversable
     {
         foreach ($this->iterator as $message) {
-            $lineData = $this->lineParser->parse($message);
+            $lineData   = $this->lineParser->parse($message);
             if ($lineData === null) {
-                yield new LogRecord(0, 'error', 'parse', $message, [], []);
+                yield new LogRecord(md5($message), 0, 'error', 'parse', $message, [], []);
                 continue;
             }
 
             yield new LogRecord(
+                md5((string)json_encode($lineData)),
                 (int)strtotime($lineData['date']),
                 strtolower($lineData['severity']),
                 $lineData['channel'],

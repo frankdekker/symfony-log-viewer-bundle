@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Entity\Index;
 
+use FD\LogViewer\Entity\IdentifierAwareInterface;
 use JsonSerializable;
 use Psr\Log\LogLevel;
 
-class LogRecord implements JsonSerializable
+class LogRecord implements JsonSerializable, IdentifierAwareInterface
 {
     // bootstrap 5 text colors
     public const LEVEL_CLASSES = [
@@ -25,6 +26,7 @@ class LogRecord implements JsonSerializable
      * @param string|array<int|string, mixed> $extra
      */
     public function __construct(
+        private string $identifier,
         public int $date,
         public string $severity,
         public string $channel,
@@ -32,6 +34,11 @@ class LogRecord implements JsonSerializable
         public string|array $context,
         public string|array $extra
     ) {
+    }
+
+    public function getIdentifier(): string
+    {
+        return $this->identifier;
     }
 
     /**

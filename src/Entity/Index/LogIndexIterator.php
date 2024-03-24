@@ -5,6 +5,7 @@ namespace FD\LogViewer\Entity\Index;
 
 use ArrayIterator;
 use Closure;
+use Iterator;
 use IteratorAggregate;
 use Traversable;
 
@@ -41,7 +42,7 @@ class LogIndexIterator implements IteratorAggregate
         return $this->records = $records;
     }
 
-    public function getIterator(): Traversable
+    public function getIterator(): Iterator
     {
         if ($this->records !== null) {
             return new ArrayIterator($this->records);

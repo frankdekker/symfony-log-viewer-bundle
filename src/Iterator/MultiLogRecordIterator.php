@@ -4,14 +4,15 @@ declare(strict_types=1);
 namespace FD\LogViewer\Iterator;
 
 use FD\LogViewer\Entity\Index\LogRecord;
-use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Service\File\LogRecordDateComparator;
+use Iterator;
 use IteratorAggregate;
 use Traversable;
 
 /**
- * An iterator that will:
+ * The iterator that will:
  * - Take the first entry from each iterator and add it to the buffer
- * - Determine which entry is the newest or oldest (based or direction)
+ * - Determine which entry is the newest or oldest (based on direction)
  * - yield the entry
  * - remove the entry from the buffer and replenish the buffer.
  * @implements IteratorAggregate<int, LogRecord>
@@ -22,9 +23,9 @@ class MultiLogRecordIterator implements IteratorAggregate
     private array $buffer;
 
     /**
-     * @param array<int, Traversable<int, LogRecord>> $iterators
+     * @param array<int, Iterator<int, LogRecord>> $iterators
      */
-    public function __construct(private readonly array $iterators, private readonly DirectionEnum $direction)
+    public function __construct(private readonly array $iterators, private readonly LogRecordDateComparator $comparator)
     {
         // initialize buffer
         $this->buffer = array_fill(0, count($this->iterators), null);
@@ -32,54 +33,57 @@ class MultiLogRecordIterator implements IteratorAggregate
 
     public function getIterator(): Traversable
     {
-        while (count($this->buffer) > 0) {
-            $buffer = $this->createSelectionFromBuffer();
+        foreach (array_keys($this->buffer) as $index) {
+            $this->updateBufferAt($index);
+        }
 
-            $record = $this->getEntryFromBuffer($buffer);
+        while (count($this->buffer) > 0) {
+            $record = $this->takeEntryFromBuffer();
             if ($record === null) {
                 break;
             }
             yield $record;
-            $this->createSelectionFromBuffer();
         }
     }
 
-    /**
-     * @return LogRecord[];
-     */
-    private function createSelectionFromBuffer(): array
-    {
-        foreach ($this->iterators as $index => $iterator) {
-            if ($this->buffer[$index] === null) {
-                $record = next($iterator);
-                if ($record instanceof LogRecord === false) {
-                    unset($this->buffer[$index]);
-                    continue;
-                }
-                $this->buffer[$index] = $record;
-            }
-        }
-
-        /** @var array<int, LogRecord> */
-        return $this->buffer;
-    }
-
-    /**
-     * @param array<int, LogRecord> $buffer
-     */
-    private function getEntryFromBuffer(array $buffer): ?LogRecord
+    private function takeEntryFromBuffer(): ?LogRecord
     {
         $selected = null;
-        foreach ($buffer as $record) {
-            if ($selected === null) {
-                $selected = $record;
-            } elseif ($this->direction === DirectionEnum::Asc && $selected->date < $record->date) {
-                $selected = $record;
-            } elseif ($this->direction === DirectionEnum::Desc && $selected->date > $record->date) {
-                $selected = $record;
+        $index    = null;
+
+        foreach ($this->buffer as $i => $record) {
+            if ($record === null) {
+                return null;
             }
+
+            if ($selected === null || $this->comparator->compare($selected, $record) === 1) {
+                $selected = $record;
+                $index    = $i;
+            }
+        }
+
+        if ($index !== null) {
+            $this->buffer[$index] = null;
+            $this->updateBufferAt($index);
         }
 
         return $selected;
+    }
+
+    private function updateBufferAt(int $index): void
+    {
+        $iterator = $this->iterators[$index];
+        if ($this->buffer[$index] !== null) {
+            return;
+        }
+
+        $iterator->next();
+        if ($iterator->valid() === false) {
+            unset($this->buffer[$index]);
+
+            return;
+        }
+
+        $this->buffer[$index] = $iterator->current();
     }
 }
