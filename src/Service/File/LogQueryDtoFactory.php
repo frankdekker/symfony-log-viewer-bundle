@@ -21,12 +21,12 @@ class LogQueryDtoFactory
      */
     public function create(Request $request): LogQueryDto
     {
-        $fileIdentifier = $request->query->get('file', '');
-        $offset         = $request->query->get('offset');
-        $offset         = $offset === null || $offset === '0' ? null : (int)$offset;
-        $query          = trim($request->query->get('query', ''));
-        $direction      = DirectionEnum::from($request->query->get('direction', 'desc'));
-        $perPage        = $request->query->getInt('per_page', 25);
+        $fileIdentifiers = array_filter(explode(',', $request->query->get('file', '')));
+        $offset          = $request->query->get('offset');
+        $offset          = $offset === null || $offset === '0' ? null : (int)$offset;
+        $query           = trim($request->query->get('query', ''));
+        $direction       = DirectionEnum::from($request->query->get('direction', 'desc'));
+        $perPage         = $request->query->getInt('per_page', 100);
 
         // search expression
         $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query));
@@ -44,7 +44,7 @@ class LogQueryDtoFactory
         }
 
         return new LogQueryDto(
-            $fileIdentifier,
+            $fileIdentifiers,
             $offset,
             $expression,
             $direction,
