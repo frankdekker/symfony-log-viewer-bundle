@@ -46,12 +46,12 @@ class LogLineParserIterator implements IteratorAggregate
                     $this->lines[] = $line;
                     continue;
                 }
-                $this->setPosition($this->streamReader->getPosition() - strlen($line));
+                $this->position = $this->streamReader->getPosition() - strlen($line);
                 yield implode('', $this->lines);
                 $this->lines = [$line];
             } else {
                 $this->lines[]  = $line;
-                $this->setPosition($this->streamReader->getPosition());
+                $this->position = $this->streamReader->getPosition();
                 yield implode('', array_reverse($this->lines));
                 $this->lines = [];
             }
@@ -59,7 +59,7 @@ class LogLineParserIterator implements IteratorAggregate
 
         // if lines remaining we should also yield
         if ($this->direction === DirectionEnum::Asc && count($this->lines) > 0) {
-            $this->setPosition($this->streamReader->getPosition());
+            $this->position = $this->streamReader->getPosition();
             yield implode('', $this->lines);
             $this->lines = [];
         }
@@ -68,12 +68,6 @@ class LogLineParserIterator implements IteratorAggregate
     public function isEOF(): bool
     {
         return $this->streamReader->isEOF() && count($this->lines) === 0;
-    }
-
-    private function setPosition(int $position): void
-    {
-        echo "position: $position\n";
-        $this->position = $position;
     }
 
     public function getPosition(): int

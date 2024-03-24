@@ -1,0 +1,2 @@
+# To have consistent tests, force linux line endings
+monolog.log   text eol=lf

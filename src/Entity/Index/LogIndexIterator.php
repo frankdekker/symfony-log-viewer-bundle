@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Entity\Index;
 
+use ArrayIterator;
 use Closure;
 use IteratorAggregate;
 use Traversable;
@@ -12,11 +13,14 @@ use Traversable;
  */
 class LogIndexIterator implements IteratorAggregate
 {
+    /** @var LogRecord[]|null */
+    private ?array $lines = null;
+
     /**
-     * @param Traversable<int, LogRecord>  $lines
+     * @param Traversable<int, LogRecord>  $lineIterator
      * @param (Closure(): ?Paginator)|null $paginatorCallback
      */
-    public function __construct(private readonly Traversable $lines, private readonly ?Closure $paginatorCallback = null)
+    public function __construct(private readonly Traversable $lineIterator, private readonly ?Closure $paginatorCallback = null)
     {
     }
 
@@ -25,17 +29,30 @@ class LogIndexIterator implements IteratorAggregate
      */
     public function getLines(): array
     {
+        if ($this->lines !== null) {
+            return $this->lines;
+        }
+
         $lines = [];
-        foreach ($this->lines as $line) {
+        foreach ($this->lineIterator as $line) {
             $lines[] = $line;
         }
 
-        return $lines;
+        return $this->lines = $lines;
     }
 
     public function getIterator(): Traversable
     {
-        return $this->lines;
+        if ($this->lines !== null) {
+            return new ArrayIterator($this->lines);
+        }
+
+        $lines = [];
+        foreach ($this->lineIterator as $line) {
+            $lines[] = $line;
+            yield $line;
+        }
+        $this->lines = $lines;
     }
 
     public function getPaginator(): ?Paginator
