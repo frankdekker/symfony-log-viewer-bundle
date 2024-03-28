@@ -28,6 +28,10 @@ export const useSearchStore = defineStore('search', () => {
         files.value.splice(0, files.value.length, identifier);
     }
 
+    function removeFile(identifier: string) {
+        files.value = files.value.filter(file => file !== identifier);
+    }
+
     function toQueryString(): string {
         const bag = new ParameterBag();
         bag.set('file', files.value.join(','), '');
@@ -38,5 +42,5 @@ export const useSearchStore = defineStore('search', () => {
         return bag.toString();
     }
 
-    return {files, query, perPage, sort, addFile, toggleFile, setFile, toQueryString}
+    return {files, query, perPage, sort, addFile, toggleFile, setFile, removeFile, toQueryString}
 });

@@ -23,6 +23,7 @@ const deleteFile = (identifier: string) => {
     const params = new ParameterBag().set('host', hostsStore.selected, 'localhost').all();
     axios.delete('/api/file/' + encodeURI(identifier), {params: params})
         .then(() => {
+            searchStore.removeFile(identifier);
             if (searchStore.files.length === 0) {
                 router.push({name: 'home'});
             }
