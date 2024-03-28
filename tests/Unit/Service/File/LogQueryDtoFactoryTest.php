@@ -33,13 +33,13 @@ class LogQueryDtoFactoryTest extends TestCase
     {
         $request    = new Request(
             [
-                'file'      => 'file',
-                'offset'    => '54321',
-                'query'     => 'search',
-                'direction' => 'asc',
-                'per_page'  => '50',
-                'levels'    => 'debug,info',
-                'channels'  => 'app,request',
+                'file'     => 'file',
+                'offset'   => '54321',
+                'query'    => 'search',
+                'sort'     => 'asc',
+                'per_page' => '50',
+                'levels'   => 'debug,info',
+                'channels' => 'app,request',
             ]
         );
         $expression = new Expression([]);
