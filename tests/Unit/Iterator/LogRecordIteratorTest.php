@@ -30,7 +30,8 @@ class LogRecordIteratorTest extends TestCase
 
         $recordIterator = new LogRecordIterator($iterator, $this->lineParser);
 
-        static::assertEquals([new LogRecord(0, 'error', 'parse', 'message', [], [])], iterator_to_array($recordIterator));
+        $expectedRecord = new LogRecord('78e731027d8fd50ed642340b7c9a63b3', 0, 'error', 'parse', 'message', [], []);
+        static::assertEquals([$expectedRecord], iterator_to_array($recordIterator));
     }
 
     public function testGetIterator(): void
@@ -52,7 +53,7 @@ class LogRecordIteratorTest extends TestCase
             );
 
         $recordIterator = new LogRecordIterator($iterator, $this->lineParser);
-        $expectedRecord = new LogRecord(111111, 'debug', 'request', 'message', [], []);
+        $expectedRecord = new LogRecord('2d51458c3b1f974fae79ef1ce3d7e919', 111111, 'debug', 'request', 'message', [], []);
 
         static::assertEquals([$expectedRecord], iterator_to_array($recordIterator));
     }

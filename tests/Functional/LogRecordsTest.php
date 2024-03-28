@@ -13,10 +13,8 @@ class LogRecordsTest extends AbstractFunctionalTestCase
         $this->client->request('GET', '/log-viewer/api/logs?file=' . self::getShortMd5('resources/Functional/log/test.log'));
         static::assertResponseIsSuccessful();
 
-        /** @var array{channels: mixed[], levels: mixed[], logs: mixed[]} $data */
+        /** @var array{logs: mixed[]} $data */
         $data = static::responseToArray($this->client->getResponse());
-        static::assertCount(6, $data['channels']);
-        static::assertCount(8, $data['levels']);
         static::assertCount(3, $data['logs']);
     }
 }

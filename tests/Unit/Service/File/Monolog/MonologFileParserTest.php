@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\File\Monolog;
 
-use FD\LogViewer\Entity\Index\LogIndex;
+use ArrayIterator;
+use FD\LogViewer\Entity\Index\LogRecordCollection;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
@@ -11,7 +12,6 @@ use FD\LogViewer\Service\File\Monolog\MonologJsonParser;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use InvalidArgumentException;
-use Monolog\Logger;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -22,45 +22,22 @@ class MonologFileParserTest extends TestCase
 {
     use TestEntityTrait;
 
-    private Logger&MockObject $logger;
     private LogParser&MockObject $logParser;
     private MonologFileParser $parser;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->logger    = $this->createMock(Logger::class);
         $this->logParser = $this->createMock(LogParser::class);
-        $this->parser    = new MonologFileParser(MonologFileParser::TYPE_LINE, [$this->logger], $this->logParser);
-    }
-
-    public function testGetLevels(): void
-    {
-        $expected = [
-            'emergency' => 'Emergency',
-            'alert'     => 'Alert',
-            'critical'  => 'Critical',
-            'error'     => 'Error',
-            'warning'   => 'Warning',
-            'notice'    => 'Notice',
-            'info'      => 'Info',
-            'debug'     => 'Debug'
-        ];
-        static::assertSame($expected, $this->parser->getLevels());
-    }
-
-    public function testGetChannels(): void
-    {
-        $this->logger->expects(self::exactly(2))->method('getName')->willReturn('app');
-        static::assertSame(['app' => 'app'], $this->parser->getChannels());
+        $this->parser    = new MonologFileParser(MonologFileParser::TYPE_LINE, $this->logParser);
     }
 
     public function testGetLogIndexForLineParser(): void
     {
         $config   = $this->createLogFileConfig();
-        $logQuery = new LogQueryDto('identifier');
+        $logQuery = new LogQueryDto(['identifier']);
         $file     = $this->createLogFile();
-        $index    = new LogIndex();
+        $index    = new LogRecordCollection(new ArrayIterator([]), null);
 
         $this->logParser->expects(self::once())
             ->method('parse')
@@ -72,18 +49,18 @@ class MonologFileParserTest extends TestCase
 
     public function testGetLogIndexForJsonParser(): void
     {
-        $config   = $this->createLogFileConfig();
-        $logQuery = new LogQueryDto('identifier');
-        $file     = $this->createLogFile();
-        $index    = new LogIndex();
+        $config           = $this->createLogFileConfig();
+        $logQuery         = new LogQueryDto(['identifier']);
+        $file             = $this->createLogFile();
+        $recordCollection = new LogRecordCollection(new ArrayIterator([]), null);
 
         $this->logParser->expects(self::once())
             ->method('parse')
             ->with(new SplFileInfo('path'), new MonologJsonParser(), $logQuery)
-            ->willReturn($index);
+            ->willReturn($recordCollection);
 
-        $parser = new MonologFileParser(MonologFileParser::TYPE_JSON, [$this->logger], $this->logParser);
-        static::assertSame($index, $parser->getLogIndex($config, $file, $logQuery));
+        $parser = new MonologFileParser(MonologFileParser::TYPE_JSON, $this->logParser);
+        static::assertSame($recordCollection, $parser->getLogIndex($config, $file, $logQuery));
     }
 
     public function testGetLogIndexInvalidType(): void
@@ -91,10 +68,10 @@ class MonologFileParserTest extends TestCase
         $config = $this->createLogFileConfig();
         $file   = $this->createLogFile();
         // @phpstan-ignore-next-line
-        $parser = new MonologFileParser('foobar', [$this->logger], $this->logParser);
+        $parser = new MonologFileParser('foobar', $this->logParser);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid format type');
-        $parser->getLogIndex($config, $file, new LogQueryDto('identifier'));
+        $parser->getLogIndex($config, $file, new LogQueryDto(['identifier']));
     }
 }

@@ -62,30 +62,51 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
     public function testInvokeNotFound(): void
     {
         $request  = new Request();
-        $logQuery = new LogQueryDto('file', 123, null, DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
+        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, 50);
 
         $this->queryDtoFactory->expects(self::once())->method('create')->with($request)->willReturn($logQuery);
-        $this->fileService->expects(self::once())->method('findFileByIdentifier')->with('file')->willReturn(null);
+        $this->fileService->expects(self::once())->method('findFileByIdentifiers')->with(['file'])->willReturn([]);
 
         $this->expectException(NotFoundHttpException::class);
-        $this->expectExceptionMessage('Log file with id `file` not found.');
+        $this->expectExceptionMessage('No log files found with id(s) `file`.');
         ($this->controller)($request);
     }
 
     /**
      * @throws Exception
      */
-    public function testInvoke(): void
+    public function testInvokeSingleFile(): void
     {
         $request  = new Request();
-        $logQuery = new LogQueryDto('file', 123, null, DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
+        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, 50);
 
         $logFile = $this->createLogFile();
         $output  = $this->createMock(LogRecordsOutput::class);
 
         $this->queryDtoFactory->expects(self::once())->method('create')->with($request)->willReturn($logQuery);
-        $this->fileService->expects(self::once())->method('findFileByIdentifier')->with('file')->willReturn($logFile);
-        $this->outputProvider->expects(self::once())->method('provide')->with()->willReturn($output);
+        $this->fileService->expects(self::once())->method('findFileByIdentifiers')->with(['file'])->willReturn([$logFile]);
+        $this->outputProvider->expects(self::once())->method('provide')->with($logFile, $logQuery)->willReturn($output);
+
+        $expected = new JsonResponse($output);
+        $actual   = ($this->controller)($request);
+        static::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInvokeMultiFile(): void
+    {
+        $request  = new Request();
+        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, 50);
+
+        $logFileA = $this->createLogFile();
+        $logFileB = $this->createLogFile();
+        $output   = $this->createMock(LogRecordsOutput::class);
+
+        $this->queryDtoFactory->expects(self::once())->method('create')->with($request)->willReturn($logQuery);
+        $this->fileService->expects(self::once())->method('findFileByIdentifiers')->with(['file'])->willReturn([$logFileA, $logFileB]);
+        $this->outputProvider->expects(self::once())->method('provideForFiles')->with([$logFileA, $logFileB], $logQuery)->willReturn($output);
 
         $expected = new JsonResponse($output);
         $actual   = ($this->controller)($request);

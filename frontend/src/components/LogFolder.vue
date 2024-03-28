@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import ButtonGroup from '@/components/ButtonGroup.vue';
 import LogFile from '@/components/LogFile.vue';
+import type LogFileModel from '@/models/LogFile';
 import type LogFolder from '@/models/LogFolder';
 import ParameterBag from '@/models/ParameterBag';
 import bus from '@/services/EventBus';
 import {useHostsStore} from '@/stores/hosts';
+import {useSearchStore} from '@/stores/search';
 import axios from 'axios';
 import {onMounted, ref} from 'vue';
 import {useRouter} from 'vue-router';
 
-const toggleRef  = ref();
-const baseUri    = axios.defaults.baseURL;
-const router     = useRouter();
-const expanded   = ref(false);
-const hostsStore = useHostsStore();
+const toggleRef   = ref();
+const baseUri     = axios.defaults.baseURL;
+const router      = useRouter();
+const expanded    = ref(false);
+const hostsStore  = useHostsStore();
+const searchStore = useSearchStore();
 
 const props = defineProps<{
     expand: boolean,
@@ -29,8 +32,12 @@ const deleteFile = (identifier: string) => {
         });
 }
 
-onMounted(() => expanded.value = props.expand);
+const selectAll = (files: LogFileModel[]) => {
+    files.forEach(file => searchStore.addFile(file.identifier));
+    router.push('/log?' + searchStore.toQueryString());
+}
 
+onMounted(() => expanded.value = props.expand);
 </script>
 
 <template>
@@ -44,23 +51,24 @@ onMounted(() => expanded.value = props.expand);
                 </button>
             </template>
             <template v-slot:btn_right>
-                <button type="button"
-                        class="slv-toggle-btn btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
-                        @click="toggleRef.toggle"
-                        v-if="folder.can_download || folder.can_delete">
+                <button type="button" class="slv-toggle-btn btn btn-outline-primary dropdown-toggle dropdown-toggle-split" @click="toggleRef.toggle">
                     <i class="bi bi-three-dots-vertical"></i>
                 </button>
             </template>
             <template v-slot:dropdown>
                 <li>
+                    <a class="dropdown-item" href="javascript:" @click="selectAll(folder.files)">
+                        <i class="bi bi-check2-circle me-3"></i>Select all
+                    </a>
+                </li>
+                <li v-if="folder.can_download">
                     <a class="dropdown-item"
-                       :href="baseUri + 'api/folder/' + encodeURI(folder.identifier) + '?' + new ParameterBag().set('host', hostsStore.selected, 'localhost').toString()"
-                       v-if="folder.can_download">
+                       :href="baseUri + 'api/folder/' + encodeURI(folder.identifier) + '?' + new ParameterBag().set('host', hostsStore.selected, 'localhost').toString()">
                         <i class="bi bi-cloud-download me-3"></i>Download
                     </a>
                 </li>
-                <li>
-                    <a class="dropdown-item" href="javascript:" @click="deleteFile(folder.identifier)" v-if="folder.can_delete">
+                <li v-if="folder.can_delete">
+                    <a class="dropdown-item" href="javascript:" @click="deleteFile(folder.identifier)">
                         <i class="bi bi-trash3 me-3"></i>Delete
                     </a>
                 </li>

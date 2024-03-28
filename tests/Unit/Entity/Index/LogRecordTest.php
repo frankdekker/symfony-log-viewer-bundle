@@ -10,9 +10,16 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(LogRecord::class)]
 class LogRecordTest extends TestCase
 {
+    public function testGetIdentifier(): void
+    {
+        $record = new LogRecord('id', 111, 'debug', 'request', 'message', [], []);
+
+        static::assertSame('id', $record->getIdentifier());
+    }
+
     public function testJsonSerialize(): void
     {
-        $record = new LogRecord(946684800, 'debug', 'request', 'message', ['context' => 'context'], ['extra' => 'extra']);
+        $record = new LogRecord('id', 946684800, 'debug', 'request', 'message', ['context' => 'context'], ['extra' => 'extra']);
 
         static::assertSame(
             [

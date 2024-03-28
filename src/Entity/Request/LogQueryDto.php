@@ -11,17 +11,14 @@ class LogQueryDto
     /**
      * @codeCoverageIgnore - Simple DTO
      *
-     * @param string[]|null $levels
-     * @param string[]|null $channels
+     * @param string[] $fileIdentifiers
      */
     public function __construct(
-        public readonly string $fileIdentifier,
+        public readonly array $fileIdentifiers,
         public readonly ?int $offset = null,
         public readonly ?Expression $query = null,
         public readonly DirectionEnum $direction = DirectionEnum::Desc,
-        public readonly ?array $levels = null,
-        public readonly ?array $channels = null,
-        public readonly int $perPage = 25
+        public readonly int $perPage = 100
     ) {
     }
 }
