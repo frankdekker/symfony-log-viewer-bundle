@@ -58,8 +58,7 @@ onMounted(() => expanded.value = props.expand);
             <template v-slot:dropdown>
                 <li>
                     <a class="dropdown-item" href="javascript:" @click="selectAll(folder.files)">
-                        <i class="bi bi-check2-circle me-3"></i>
-                        Select all
+                        <i class="bi bi-check2-circle me-3"></i>Select all
                     </a>
                 </li>
                 <li v-if="folder.can_download">
