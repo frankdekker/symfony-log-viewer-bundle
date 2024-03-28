@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Entity\Index;
 
-use ArrayIterator;
 use Closure;
 use Iterator;
 use IteratorAggregate;
+use LogicException;
 use Traversable;
 
 /**
@@ -45,7 +45,7 @@ class LogRecordCollection implements IteratorAggregate
     public function getIterator(): Iterator
     {
         if ($this->records !== null) {
-            return new ArrayIterator($this->records);
+            return yield from $this->records;
         }
 
         $records = [];
@@ -58,6 +58,10 @@ class LogRecordCollection implements IteratorAggregate
 
     public function getPaginator(): ?Paginator
     {
+        if ($this->records === null) {
+            throw new LogicException('Cannot get paginator before records are read');
+        }
+
         return $this->paginatorCallback === null ? null : ($this->paginatorCallback)();
     }
 }
