@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Service\File;
 
 use Exception;
-use FD\LogViewer\Entity\Index\LogIndexIterator;
+use FD\LogViewer\Entity\Index\LogRecordCollection;
 use FD\LogViewer\Entity\LogFile;
 use FD\LogViewer\Entity\Output\LogRecordsOutput;
 use FD\LogViewer\Entity\Request\LogQueryDto;
@@ -34,12 +34,12 @@ class LogRecordsOutputProvider
             $iterators[] = $this->logParserProvider->get($config->type)->getLogIndex($config, $file, $logQuery)->getIterator();
         }
 
-        $recordIterator   = new MultiLogRecordIterator($iterators, new LogRecordDateComparator($logQuery->direction));
-        $recordIterator   = new DeduplicationIterator($recordIterator);
-        $recordIterator   = new LimitIterator($recordIterator, $logQuery->perPage);
-        $logIndexIterator = new LogIndexIterator($recordIterator, null);
+        $recordIterator      = new MultiLogRecordIterator($iterators, new LogRecordDateComparator($logQuery->direction));
+        $recordIterator      = new DeduplicationIterator($recordIterator);
+        $recordIterator      = new LimitIterator($recordIterator, $logQuery->perPage);
+        $logRecordCollection = new LogRecordCollection($recordIterator, null);
 
-        return new LogRecordsOutput($logIndexIterator, $this->performanceService->getPerformanceStats());
+        return new LogRecordsOutput($logRecordCollection, $this->performanceService->getPerformanceStats());
     }
 
     public function provide(LogFile $file, LogQueryDto $logQuery): LogRecordsOutput

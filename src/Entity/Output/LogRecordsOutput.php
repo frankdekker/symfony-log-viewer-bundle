@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Entity\Output;
 
-use FD\LogViewer\Entity\Index\LogIndexIterator;
+use FD\LogViewer\Entity\Index\LogRecordCollection;
 use FD\LogViewer\Entity\Index\PerformanceStats;
 use JsonSerializable;
 
 class LogRecordsOutput implements JsonSerializable
 {
-    public function __construct(private readonly LogIndexIterator $logIndex, private readonly PerformanceStats $performance)
+    public function __construct(private readonly LogRecordCollection $recordCollection, private readonly PerformanceStats $performance)
     {
     }
 
@@ -19,8 +19,8 @@ class LogRecordsOutput implements JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'logs'        => $this->logIndex->getRecords(),
-            'paginator'   => $this->logIndex->getPaginator(),
+            'logs'        => $this->recordCollection->getRecords(),
+            'paginator'   => $this->recordCollection->getPaginator(),
             'performance' => $this->performance
         ];
     }

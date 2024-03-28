@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Service\File\Monolog;
 
 use ArrayIterator;
-use FD\LogViewer\Entity\Index\LogIndexIterator;
+use FD\LogViewer\Entity\Index\LogRecordCollection;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
@@ -37,7 +37,7 @@ class MonologFileParserTest extends TestCase
         $config   = $this->createLogFileConfig();
         $logQuery = new LogQueryDto(['identifier']);
         $file     = $this->createLogFile();
-        $index    = new LogIndexIterator(new ArrayIterator([]), null);
+        $index    = new LogRecordCollection(new ArrayIterator([]), null);
 
         $this->logParser->expects(self::once())
             ->method('parse')
@@ -49,18 +49,18 @@ class MonologFileParserTest extends TestCase
 
     public function testGetLogIndexForJsonParser(): void
     {
-        $config   = $this->createLogFileConfig();
-        $logQuery = new LogQueryDto(['identifier']);
-        $file     = $this->createLogFile();
-        $index    = new LogIndexIterator(new ArrayIterator([]), null);
+        $config           = $this->createLogFileConfig();
+        $logQuery         = new LogQueryDto(['identifier']);
+        $file             = $this->createLogFile();
+        $recordCollection = new LogRecordCollection(new ArrayIterator([]), null);
 
         $this->logParser->expects(self::once())
             ->method('parse')
             ->with(new SplFileInfo('path'), new MonologJsonParser(), $logQuery)
-            ->willReturn($index);
+            ->willReturn($recordCollection);
 
         $parser = new MonologFileParser(MonologFileParser::TYPE_JSON, $this->logParser);
-        static::assertSame($index, $parser->getLogIndex($config, $file, $logQuery));
+        static::assertSame($recordCollection, $parser->getLogIndex($config, $file, $logQuery));
     }
 
     public function testGetLogIndexInvalidType(): void

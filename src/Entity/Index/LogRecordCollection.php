@@ -12,7 +12,7 @@ use Traversable;
 /**
  * @implements IteratorAggregate<int, LogRecord>
  */
-class LogIndexIterator implements IteratorAggregate
+class LogRecordCollection implements IteratorAggregate
 {
     /** @var LogRecord[]|null */
     private ?array $records = null;

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\File;
 
-use FD\LogViewer\Entity\Index\LogIndexIterator;
+use FD\LogViewer\Entity\Index\LogRecordCollection;
 use FD\LogViewer\Entity\Index\Paginator;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Iterator\LimitIterator;
@@ -27,7 +27,7 @@ class LogParser
     ) {
     }
 
-    public function parse(SplFileInfo $file, LogLineParserInterface $lineParser, LogQueryDto $logQuery): LogIndexIterator
+    public function parse(SplFileInfo $file, LogLineParserInterface $lineParser, LogQueryDto $logQuery): LogRecordCollection
     {
         // create iterators
         $streamReader = $this->streamReaderFactory->createForFile($file, $logQuery->direction, $logQuery->offset);
@@ -39,7 +39,7 @@ class LogParser
         }
         $iterator = new LimitIterator($iterator, $logQuery->perPage);
 
-        return new LogIndexIterator(
+        return new LogRecordCollection(
             $iterator,
             function () use ($logQuery, $lineIterator) {
                 // create paginator

@@ -5,7 +5,7 @@ namespace FD\LogViewer\Tests\Unit\Service\File;
 
 use ArrayIterator;
 use Exception;
-use FD\LogViewer\Entity\Index\LogIndexIterator;
+use FD\LogViewer\Entity\Index\LogRecordCollection;
 use FD\LogViewer\Entity\Index\PerformanceStats;
 use FD\LogViewer\Entity\Output\LogRecordsOutput;
 use FD\LogViewer\Entity\Request\LogQueryDto;
@@ -43,16 +43,16 @@ class LogRecordsOutputProviderTest extends TestCase
 
     public function testProvide(): void
     {
-        $logQuery    = new LogQueryDto(['identifier']);
-        $file        = $this->createLogFile();
-        $config      = $file->folder->collection->config;
-        $logIndex    = $this->createMock(LogIndexIterator::class);
-        $performance = new PerformanceStats('1', '2', '3');
+        $logQuery         = new LogQueryDto(['identifier']);
+        $file             = $this->createLogFile();
+        $config           = $file->folder->collection->config;
+        $recordCollection = $this->createMock(LogRecordCollection::class);
+        $performance      = new PerformanceStats('1', '2', '3');
 
-        $this->logParser->expects(self::once())->method('getLogIndex')->with($config, $file, $logQuery)->willReturn($logIndex);
+        $this->logParser->expects(self::once())->method('getLogIndex')->with($config, $file, $logQuery)->willReturn($recordCollection);
         $this->performanceService->expects(self::once())->method('getPerformanceStats')->willReturn($performance);
 
-        $expected = new LogRecordsOutput($logIndex, $performance);
+        $expected = new LogRecordsOutput($recordCollection, $performance);
 
         $result = $this->provider->provide($file, $logQuery);
         static::assertEquals($expected, $result);
@@ -63,19 +63,19 @@ class LogRecordsOutputProviderTest extends TestCase
      */
     public function testProvideForFiles(): void
     {
-        $logQuery    = new LogQueryDto(['identifier']);
-        $file        = $this->createLogFile();
-        $config      = $file->folder->collection->config;
-        $logIndex    = $this->createMock(LogIndexIterator::class);
-        $iterator    = new ArrayIterator([]);
-        $performance = new PerformanceStats('1', '2', '3');
+        $logQuery         = new LogQueryDto(['identifier']);
+        $file             = $this->createLogFile();
+        $config           = $file->folder->collection->config;
+        $recordCollection = $this->createMock(LogRecordCollection::class);
+        $iterator         = new ArrayIterator([]);
+        $performance      = new PerformanceStats('1', '2', '3');
 
-        $this->logParser->expects(self::once())->method('getLogIndex')->with($config, $file, $logQuery)->willReturn($logIndex);
-        $logIndex->expects(self::once())->method('getIterator')->willReturn($iterator);
+        $this->logParser->expects(self::once())->method('getLogIndex')->with($config, $file, $logQuery)->willReturn($recordCollection);
+        $recordCollection->expects(self::once())->method('getIterator')->willReturn($iterator);
         $this->performanceService->expects(self::once())->method('getPerformanceStats')->willReturn($performance);
 
         $expected = new LogRecordsOutput(
-            new LogIndexIterator(
+            new LogRecordCollection(
                 new LimitIterator(
                     new DeduplicationIterator(new MultiLogRecordIterator([$iterator], new LogRecordDateComparator($logQuery->direction))),
                     $logQuery->perPage
