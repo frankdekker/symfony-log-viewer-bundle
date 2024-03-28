@@ -57,7 +57,7 @@ onMounted(() => expanded.value = props.expand);
             </template>
             <template v-slot:dropdown>
                 <li>
-                    <a class="dropdown-item" href="#" @click="(event) => {event.preventDefault(); selectAll(folder.files)}">
+                    <a class="dropdown-item" href="javascript:" @click="selectAll(folder.files)">
                         <i class="bi bi-check2-circle me-3"></i>
                         Select all
                     </a>

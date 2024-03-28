@@ -49,8 +49,8 @@ const navigate = (identifier: string, multiSelect: boolean) => {
     <!-- LogFile -->
     <button-group ref="toggleRef" alignment="right" :split="file.can_download || file.can_delete" class="mb-1" :hide-on-selected="true">
         <template v-slot:btn_left>
-            <a @click="(event) => {event.preventDefault(); navigate(file.identifier, event.ctrlKey || event.metaKey)}"
-               href="#"
+            <a @click="(event) => {navigate(file.identifier, event.ctrlKey || event.metaKey)}"
+               href="javascript:"
                class="btn btn-file text-start btn-outline-primary w-100"
                v-bind:class="{'btn-outline-primary-active': searchStore.files.includes(file.identifier) }"
                :title="file.name">
@@ -68,7 +68,7 @@ const navigate = (identifier: string, multiSelect: boolean) => {
         </template>
         <template v-slot:dropdown>
             <li>
-                <a class="dropdown-item" href="#" @click="(event) => {event.preventDefault(); navigate(file.identifier, true)}">
+                <a class="dropdown-item" href="javascript:" @click="navigate(file.identifier, true)">
                     <i class="bi bi-check2-circle me-3"></i>
                     {{ searchStore.files.includes(file.identifier) ? 'Deselect' : 'Select' }}
                     <code>(ctrl+click)</code>
