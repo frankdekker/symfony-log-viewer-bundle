@@ -10,6 +10,12 @@ export const useSearchStore = defineStore('search', () => {
     const files      = ref([] as string[]);
     const hostsStore = useHostsStore();
 
+    function addFile(identifier: string) {
+        if (files.value.includes(identifier) === false) {
+            files.value.push(identifier);
+        }
+    }
+
     function toggleFile(identifier: string) {
         if (files.value.includes(identifier)) {
             files.value = files.value.filter(file => file !== identifier);
@@ -32,5 +38,5 @@ export const useSearchStore = defineStore('search', () => {
         return bag.toString();
     }
 
-    return {files, query, perPage, sort, toggleFile, setFile, toQueryString}
+    return {files, query, perPage, sort, addFile, toggleFile, setFile, toQueryString}
 });
