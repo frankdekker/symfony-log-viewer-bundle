@@ -46,13 +46,13 @@ class LogFileService
     {
         $files       = [];
         $collections = $this->getFilesAndFolders();
-        foreach ($collections as $collection) {
-            foreach ($fileIdentifiers as $fileIdentifier) {
+        foreach ($fileIdentifiers as $fileIdentifier) {
+            foreach ($collections as $collection) {
                 $file = $collection->firstFile(static fn(LogFile $file) => $file->identifier === $fileIdentifier);
                 if ($file !== null) {
                     $files[$fileIdentifier] = $file;
+                    continue 2;
                 }
-                continue 2;
             }
         }
 

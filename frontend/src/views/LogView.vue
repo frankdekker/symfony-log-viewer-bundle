@@ -16,7 +16,6 @@ const hostsStore     = useHostsStore();
 const searchStore    = useSearchStore();
 
 const searchRef  = ref<InstanceType<typeof SearchForm>>()
-const file       = ref('');
 const offset     = ref(0);
 const badRequest = ref(false);
 
@@ -24,7 +23,7 @@ const navigate = () => {
     const fileOffset = offset.value > 0 && logRecordStore.records.paginator?.direction !== searchStore.sort ? 0 : offset.value;
     const params     = new ParameterBag()
         .set('host', hostsStore.selected, 'localhost')
-        .set('file', file.value)
+        .set('file', searchStore.files.join(','))
         .set('query', searchStore.query, '')
         .set('per_page', searchStore.perPage, '100')
         .set('sort', searchStore.sort, 'desc')
@@ -37,7 +36,7 @@ const load = () => {
     logRecordStore
         .fetch(new ParameterBag()
             .set('host', hostsStore.selected, 'localhost')
-            .set('file', file.value)
+            .set('file', searchStore.files.join(','))
             .set('query', searchStore.query, '')
             .set('per_page', searchStore.perPage, '100')
             .set('sort', searchStore.sort, 'desc')
@@ -55,8 +54,8 @@ const load = () => {
 }
 
 onMounted(() => {
-    file.value          = String(route.query.file);
     hostsStore.selected = String(route.query.host ?? 'localhost');
+    searchStore.files   = String(route.query.file).split(',');
     searchStore.query   = String(route.query.query ?? '');
     searchStore.perPage = String(route.query.per_page ?? '100');
     searchStore.sort    = String(route.query.sort ?? 'desc');
