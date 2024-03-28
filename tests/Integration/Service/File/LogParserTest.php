@@ -30,7 +30,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithPaginator(): void
     {
-        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, null, null, 5);
+        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, 5);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -43,7 +43,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithOffset(): void
     {
-        $query = new LogQueryDto(['identifier'], 335, null, DirectionEnum::Asc, null, null, 5);
+        $query = new LogQueryDto(['identifier'], 335, null, DirectionEnum::Asc, 5);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -54,42 +54,9 @@ class LogParserTest extends AbstractIntegrationTestCase
         static::assertSame('Message for line 10', $index->getRecords()[4]->message);
     }
 
-    public function testParseWithLevelFilter(): void
-    {
-        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, ['info'], null, 100);
-        $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
-        $index = $this->parser->parse($file, $this->lineParser, $query);
-
-        static::assertCount(25, $index->getRecords());
-        static::assertSame('Message for line 2', $index->getRecords()[0]->message);
-        static::assertSame('Message for line 98', $index->getRecords()[24]->message);
-    }
-
-    public function testParseWithChannelFilter(): void
-    {
-        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, null, ['app'], 100);
-        $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
-        $index = $this->parser->parse($file, $this->lineParser, $query);
-
-        static::assertCount(34, $index->getRecords());
-        static::assertSame('Message for line 1', $index->getRecords()[0]->message);
-        static::assertSame('Message for line 100', $index->getRecords()[33]->message);
-    }
-
-    public function testParseWithLevelAndChannelFilter(): void
-    {
-        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, ['info'], ['app'], 100);
-        $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
-        $index = $this->parser->parse($file, $this->lineParser, $query);
-
-        static::assertCount(8, $index->getRecords());
-        static::assertSame('Message for line 10', $index->getRecords()[0]->message);
-        static::assertSame('Message for line 94', $index->getRecords()[7]->message);
-    }
-
     public function testParseAlmostEof(): void
     {
-        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, null, null, 99);
+        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, 99);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -99,7 +66,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParsePaginatorWithOffset(): void
     {
-        $query = new LogQueryDto(['identifier'], 64, null, DirectionEnum::Asc, null, null, 500);
+        $query = new LogQueryDto(['identifier'], 64, null, DirectionEnum::Asc, 500);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -109,7 +76,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseEof(): void
     {
-        $query = new LogQueryDto(['identifier'], null, null, DirectionEnum::Asc, null, null, 500);
+        $query = new LogQueryDto(['identifier'], null, null, DirectionEnum::Asc, 500);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 

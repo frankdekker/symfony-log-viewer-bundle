@@ -62,7 +62,7 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
     public function testInvokeNotFound(): void
     {
         $request  = new Request();
-        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
+        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, 50);
 
         $this->queryDtoFactory->expects(self::once())->method('create')->with($request)->willReturn($logQuery);
         $this->fileService->expects(self::once())->method('findFileByIdentifiers')->with(['file'])->willReturn([]);
@@ -78,7 +78,7 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
     public function testInvokeSingleFile(): void
     {
         $request  = new Request();
-        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
+        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, 50);
 
         $logFile = $this->createLogFile();
         $output  = $this->createMock(LogRecordsOutput::class);
@@ -98,11 +98,11 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
     public function testInvokeMultiFile(): void
     {
         $request  = new Request();
-        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, ['foo' => 'foo'], ['bar' => 'bar'], 50);
+        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, 50);
 
         $logFileA = $this->createLogFile();
         $logFileB = $this->createLogFile();
-        $output  = $this->createMock(LogRecordsOutput::class);
+        $output   = $this->createMock(LogRecordsOutput::class);
 
         $this->queryDtoFactory->expects(self::once())->method('create')->with($request)->willReturn($logQuery);
         $this->fileService->expects(self::once())->method('findFileByIdentifiers')->with(['file'])->willReturn([$logFileA, $logFileB]);

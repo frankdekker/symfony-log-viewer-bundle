@@ -37,16 +37,14 @@ class LogQueryDtoFactoryTest extends TestCase
                 'offset'   => '54321',
                 'query'    => 'search',
                 'sort'     => 'asc',
-                'per_page' => '50',
-                'levels'   => 'debug,info',
-                'channels' => 'app,request',
+                'per_page' => '50'
             ]
         );
         $expression = new Expression([]);
 
         $this->expressionParser->expects(self::once())->method('parse')->with(new StringReader('search'))->willReturn($expression);
 
-        $expected = new LogQueryDto(['file'], 54321, $expression, DirectionEnum::Asc, ['debug', 'info'], ['app', 'request'], 50);
+        $expected = new LogQueryDto(['file'], 54321, $expression, DirectionEnum::Asc, 50);
         static::assertEquals($expected, (new LogQueryDtoFactory($this->expressionParser))->create($request));
     }
 
@@ -56,7 +54,7 @@ class LogQueryDtoFactoryTest extends TestCase
     public function testCreateWithDefaults(): void
     {
         $request  = new Request(['file' => 'file']);
-        $expected = new LogQueryDto(['file'], null, null, DirectionEnum::Desc, null, null, 100);
+        $expected = new LogQueryDto(['file'], null, null, DirectionEnum::Desc, 100);
 
         $this->expressionParser->expects(self::never())->method('parse');
 
