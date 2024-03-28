@@ -34,12 +34,10 @@ const deleteFile = (identifier: string) => {
 
 const selectAll = (files: LogFileModel[]) => {
     files.forEach(file => searchStore.addFile(file.identifier));
-    console.log(searchStore.files);
     router.push('/log?' + searchStore.toQueryString());
 }
 
 onMounted(() => expanded.value = props.expand);
-
 </script>
 
 <template>

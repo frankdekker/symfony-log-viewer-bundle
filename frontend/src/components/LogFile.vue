@@ -70,7 +70,7 @@ const navigate = (identifier: string, multiSelect: boolean) => {
             <li>
                 <a class="dropdown-item" href="#" @click="(event) => {event.preventDefault(); navigate(file.identifier, true)}">
                     <i class="bi bi-check2-circle me-3"></i>
-                    {{ searchStore.files.includes(file.identifier) ? 'Remove from selection' : 'Add to selection' }}
+                    {{ searchStore.files.includes(file.identifier) ? 'Deselect' : 'Select' }}
                     <code>(ctrl+click)</code>
                 </a>
             </li>
