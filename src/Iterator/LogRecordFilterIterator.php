@@ -20,14 +20,14 @@ class LogRecordFilterIterator implements IteratorAggregate
     public function __construct(
         private readonly LogRecordMatcher $matcher,
         private readonly iterable $iterator,
-        private readonly ?Expression $query,
+        private readonly Expression $query,
     ) {
     }
 
     public function getIterator(): Traversable
     {
         foreach ($this->iterator as $key => $record) {
-            if ($this->query !== null && $this->matcher->matches($record, $this->query) === false) {
+            if ($this->matcher->matches($record, $this->query) === false) {
                 continue;
             }
 

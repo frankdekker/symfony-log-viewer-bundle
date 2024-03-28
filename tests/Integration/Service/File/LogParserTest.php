@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Integration\Service\File;
 
+use FD\LogViewer\Entity\Expression\Expression;
+use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Reader\Stream\StreamReaderFactory;
@@ -11,21 +13,23 @@ use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
 use FD\LogViewer\Tests\Integration\AbstractIntegrationTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
 #[CoversClass(LogParser::class)]
 class LogParserTest extends AbstractIntegrationTestCase
 {
+    private MockObject&LogRecordMatcher $logRecordMatcher;
     private MonologLineParser $lineParser;
     private LogParser $parser;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->lineParser = new MonologLineParser(MonologLineParser::START_OF_MESSAGE_PATTERN, MonologLineParser::LOG_LINE_PATTERN);
-        $logRecordMatcher = $this->createMock(LogRecordMatcher::class);
-        $this->parser     = new LogParser($this->createMock(ClockInterface::class), $logRecordMatcher, new StreamReaderFactory());
+        $this->lineParser       = new MonologLineParser(MonologLineParser::START_OF_MESSAGE_PATTERN, MonologLineParser::LOG_LINE_PATTERN);
+        $this->logRecordMatcher = $this->createMock(LogRecordMatcher::class);
+        $this->parser           = new LogParser($this->createMock(ClockInterface::class), $this->logRecordMatcher, new StreamReaderFactory());
     }
 
     public function testParseWithPaginator(): void
@@ -52,6 +56,20 @@ class LogParserTest extends AbstractIntegrationTestCase
         static::assertSame(671, $index->getPaginator()->offset);
         static::assertSame('Message for line 6', $index->getRecords()[0]->message);
         static::assertSame('Message for line 10', $index->getRecords()[4]->message);
+    }
+
+    public function testParseWithExpressionFilter(): void
+    {
+        $expression = new Expression([]);
+        $query      = new LogQueryDto(['identifier'], 0, $expression, DirectionEnum::Asc, 100);
+        $file       = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
+        $index      = $this->parser->parse($file, $this->lineParser, $query);
+
+        $this->logRecordMatcher->method('matches')->willReturnCallback(fn(LogRecord $record) => $record->severity === 'info');
+
+        static::assertCount(25, $index->getRecords());
+        static::assertSame('Message for line 2', $index->getRecords()[0]->message);
+        static::assertSame('Message for line 98', $index->getRecords()[24]->message);
     }
 
     public function testParseAlmostEof(): void

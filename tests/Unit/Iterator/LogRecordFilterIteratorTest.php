@@ -36,15 +36,4 @@ class LogRecordFilterIteratorTest extends TestCase
         $iterator = new LogRecordFilterIterator($this->recordMatcher, $recordIterator, $expression);
         static::assertSame([$debugRecord], array_values(iterator_to_array($iterator)));
     }
-
-    public function testGetIteratorShouldNotFilter(): void
-    {
-        $requestRecord  = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
-        $appRecord      = new LogRecord('id', 222222, 'info', 'app', 'message', [], []);
-        $eventRecord    = new LogRecord('id', 333333, 'warning', 'event', 'message', [], []);
-        $recordIterator = new ArrayIterator([$requestRecord, $appRecord, $eventRecord]);
-
-        $iterator = new LogRecordFilterIterator($this->recordMatcher, $recordIterator, null);
-        static::assertSame([$requestRecord, $appRecord, $eventRecord], iterator_to_array($iterator));
-    }
 }
