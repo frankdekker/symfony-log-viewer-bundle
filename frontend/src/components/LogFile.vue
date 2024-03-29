@@ -47,7 +47,7 @@ const navigate = (identifier: string, multiSelect: boolean) => {
 
 <template>
     <!-- LogFile -->
-    <button-group ref="toggleRef" alignment="right" :split="file.can_download || file.can_delete" class="mb-1" :hide-on-selected="true">
+    <button-group ref="toggleRef" alignment="right" :split="true" class="mb-1" :hide-on-selected="true">
         <template v-slot:btn_left>
             <a @click="(event) => {event.preventDefault(); navigate(file.identifier, event.ctrlKey || event.metaKey)}"
                href="javascript:"
