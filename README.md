@@ -80,6 +80,34 @@ Once the installation is complete, you will be able to access **Log Viewer** dir
 By default, it is available at: `/log-viewer` on your domain.
 
 ## Configuration
+Default configuration: [(Configuration reference)](docs/configuration-reference.md)
+```yaml
+fd_log_viewer:
+    home_route: null
+
+    log_files:
+        monolog:
+            type: monolog
+            name: Monolog
+            finder:
+                in: "%kernel.logs_dir%"
+                name: "*.log"
+                depth: '== 0'
+                ignoreUnreadableDirs: true
+                followLinks: false
+            downloadable: false
+            deletable: false
+            start_of_line_pattern: '/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/'
+            log_message_pattern: '/^\[(?P<date>[^\]]+)\]\s+(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+(?P<message>.*)\s+(?P<context>[[{].*?[\]}])\s+(?P<extra>[[{].*?[\]}])\s+$/s'
+            date_format: "Y-m-d H:i:s"
+
+    hosts:
+        localhost:
+            name: Local
+            host: null
+```
+
+Read more:
 - [Adding more monolog directories](docs/adding-more-monolog-directories.md)
 - [Modifying monolog configuration](docs/modifying-monolog-configuration.md)
 - [Disabling the default monolog configuration](docs/disabling-default-monolog-configuration.md)
@@ -89,4 +117,3 @@ By default, it is available at: `/log-viewer` on your domain.
 - [Adding remote hosts](docs/adding-remote-hosts.md)
 - [Configuring the back home url](docs/configuring-the-back-home-route.md)
 - [Advanced search queries](docs/advanced-search-queries.md)
-- [Full configuration reference](docs/configuration-reference.md)
