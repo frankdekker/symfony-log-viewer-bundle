@@ -37,16 +37,18 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
     </button>
     <div class="dropdown-menu slv-dropdown-menu" :class="{'d-block': expanded}">
         <div class="px-2">
-            <div class="input-group mb-1" data-role="filter" data-pattern="before:{value}">
-                <span class="slv-input-label input-group-text" id="filter-date-start">Before</span>
-                <input name="value" type="datetime-local" class="form-control" aria-label="Before" aria-describedby="filter-date-start">
-                <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
-            </div>
             <div class="input-group mb-1" data-role="filter" data-pattern="after:{value}">
                 <span class="slv-input-label input-group-text" id="filter-date-end">After</span>
                 <input name="value" type="datetime-local" class="form-control" aria-label="After" aria-describedby="filter-date-end">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
+
+            <div class="input-group mb-1" data-role="filter" data-pattern="before:{value}">
+                <span class="slv-input-label input-group-text" id="filter-date-start">Before</span>
+                <input name="value" type="datetime-local" class="form-control" aria-label="Before" aria-describedby="filter-date-start">
+                <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
+            </div>
+
             <div class="input-group mb-1" data-role="filter" data-pattern="severity:{value}" data-strip=" ">
                 <span class="slv-input-label input-group-text" id="filter-severity">Severity</span>
                 <input name="value"
@@ -58,6 +60,7 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
                        aria-describedby="filter-severity">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
+
             <div class="input-group mb-1" data-role="filter" data-pattern="channel:{value}" data-strip=" ">
                 <span class="slv-input-label input-group-text" id="filter-severity">Channels</span>
                 <input name="value"
