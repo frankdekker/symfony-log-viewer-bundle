@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Iterator;
 
 use FD\LogViewer\Entity\Index\LogRecord;
+use FD\LogViewer\Service\File\DateTimeParser;
 use FD\LogViewer\Service\File\LogLineParserInterface;
 use IteratorAggregate;
 use Traversable;
@@ -18,6 +19,7 @@ class LogRecordIterator implements IteratorAggregate
      */
     public function __construct(
         private readonly Traversable $iterator,
+        private readonly DateTimeParser $dateTimeParser,
         private readonly LogLineParserInterface $lineParser,
     ) {
     }
@@ -25,15 +27,21 @@ class LogRecordIterator implements IteratorAggregate
     public function getIterator(): Traversable
     {
         foreach ($this->iterator as $message) {
-            $lineData   = $this->lineParser->parse($message);
+            $lineData = $this->lineParser->parse($message);
             if ($lineData === null) {
                 yield new LogRecord(md5($message), 0, 'error', 'parse', $message, [], []);
                 continue;
             }
 
+            $date = $this->dateTimeParser->parse($lineData['date']);
+            if ($date === null) {
+                yield new LogRecord(md5($message), 0, 'error', 'bad-date', $message, [], []);
+                continue;
+            }
+
             yield new LogRecord(
                 md5((string)json_encode($lineData)),
-                (int)strtotime($lineData['date']),
+                $date,
                 strtolower($lineData['severity']),
                 $lineData['channel'],
                 $lineData['message'],

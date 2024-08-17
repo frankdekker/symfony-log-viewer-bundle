@@ -14,6 +14,6 @@ class ApacheErrorFileParser extends AbstractLogFileParser
 {
     public function getLogIndex(LogFilesConfig $config, LogFile $file, LogQueryDto $logQuery): LogRecordCollection
     {
-        return $this->logParser->parse(new SplFileInfo($file->path), new ApacheErrorLineParser($config->logMessagePattern), $logQuery);
+        return $this->logParser->parse(new SplFileInfo($file->path), new ApacheErrorLineParser($config->logMessagePattern), $config, $logQuery);
     }
 }

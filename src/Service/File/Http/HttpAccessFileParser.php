@@ -14,6 +14,6 @@ class HttpAccessFileParser extends AbstractLogFileParser
 {
     public function getLogIndex(LogFilesConfig $config, LogFile $file, LogQueryDto $logQuery): LogRecordCollection
     {
-        return $this->logParser->parse(new SplFileInfo($file->path), new HttpAccessLineParser($config->logMessagePattern), $logQuery);
+        return $this->logParser->parse(new SplFileInfo($file->path), new HttpAccessLineParser($config->logMessagePattern), $config, $logQuery);
     }
 }
