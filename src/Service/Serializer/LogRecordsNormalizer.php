@@ -32,8 +32,8 @@ class LogRecordsNormalizer
      *     level_class: string,
      *     channel: string,
      *     text: string,
-     *     context: string|array<int|string, mixed>,
-     *     extra: string|array<int|string, mixed>
+     *     context: string|array<array-key, mixed>,
+     *     extra: string|array<array-key, mixed>
      * }[]
      */
     public function normalize(array $records, DateTimeZone $timeZone): array
