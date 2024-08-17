@@ -29,7 +29,7 @@ class LogQueryDtoFactory
         $query           = trim($request->query->get('query', ''));
         $direction       = DirectionEnum::from($request->query->get('sort', 'desc'));
         $perPage         = $request->query->getInt('per_page', 100);
-        $timeZone        = DateUtil::tryParseTimezone($request->query->getString('timezone'), date_default_timezone_get());
+        $timeZone        = DateUtil::tryParseTimezone($request->query->get('timezone', ''), date_default_timezone_get());
 
         // search expression
         $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query));
