@@ -35,12 +35,12 @@ class LogQueryDtoFactoryTest extends TestCase
     {
         $request    = new Request(
             [
-                'file'     => 'file',
-                'offset'   => '54321',
-                'query'    => 'search',
-                'sort'     => 'asc',
-                'per_page' => '50',
-                'timezone' => 'America/New_York',
+                'file'      => 'file',
+                'offset'    => '54321',
+                'query'     => 'search',
+                'sort'      => 'asc',
+                'per_page'  => '50',
+                'time_zone' => 'America/New_York',
             ]
         );
         $expression = new Expression([]);
