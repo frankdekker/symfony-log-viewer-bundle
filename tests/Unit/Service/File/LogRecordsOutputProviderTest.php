@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Service\File;
 
 use ArrayIterator;
+use DateTimeZone;
 use Exception;
 use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Entity\Index\LogRecordCollection;
@@ -40,7 +41,7 @@ class LogRecordsOutputProviderTest extends TestCase
 
     public function testProvide(): void
     {
-        $logQuery         = new LogQueryDto(['identifier']);
+        $logQuery         = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'));
         $file             = $this->createLogFile();
         $config           = $file->folder->collection->config;
         $record           = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
@@ -63,7 +64,7 @@ class LogRecordsOutputProviderTest extends TestCase
      */
     public function testProvideForFiles(): void
     {
-        $logQuery         = new LogQueryDto(['identifier']);
+        $logQuery         = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'));
         $file             = $this->createLogFile();
         $config           = $file->folder->collection->config;
         $record           = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);

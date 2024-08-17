@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Service\File\Monolog;
 
 use ArrayIterator;
+use DateTimeZone;
 use FD\LogViewer\Entity\Index\LogRecordCollection;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Service\File\LogParser;
@@ -35,7 +36,7 @@ class MonologFileParserTest extends TestCase
     public function testGetLogIndexForLineParser(): void
     {
         $config   = $this->createLogFileConfig();
-        $logQuery = new LogQueryDto(['identifier']);
+        $logQuery = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'));
         $file     = $this->createLogFile();
         $index    = new LogRecordCollection(new ArrayIterator([]), null);
 
@@ -50,7 +51,7 @@ class MonologFileParserTest extends TestCase
     public function testGetLogIndexForJsonParser(): void
     {
         $config           = $this->createLogFileConfig();
-        $logQuery         = new LogQueryDto(['identifier']);
+        $logQuery         = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'));
         $file             = $this->createLogFile();
         $recordCollection = new LogRecordCollection(new ArrayIterator([]), null);
 
@@ -72,6 +73,6 @@ class MonologFileParserTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid format type');
-        $parser->getLogIndex($config, $file, new LogQueryDto(['identifier']));
+        $parser->getLogIndex($config, $file, new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam')));
     }
 }

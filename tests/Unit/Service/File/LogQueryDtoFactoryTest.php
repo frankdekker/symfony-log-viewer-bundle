@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\File;
 
+use DateTimeZone;
 use Exception;
 use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Entity\Output\DirectionEnum;
@@ -44,7 +45,7 @@ class LogQueryDtoFactoryTest extends TestCase
 
         $this->expressionParser->expects(self::once())->method('parse')->with(new StringReader('search'))->willReturn($expression);
 
-        $expected = new LogQueryDto(['file'], 54321, $expression, DirectionEnum::Asc, 50);
+        $expected = new LogQueryDto(['file'], new DateTimeZone('Europe/Amsterdam'), 54321, $expression, DirectionEnum::Asc, 50);
         static::assertEquals($expected, (new LogQueryDtoFactory($this->expressionParser))->create($request));
     }
 
@@ -54,7 +55,7 @@ class LogQueryDtoFactoryTest extends TestCase
     public function testCreateWithDefaults(): void
     {
         $request  = new Request(['file' => 'file']);
-        $expected = new LogQueryDto(['file'], null, null, DirectionEnum::Desc, 100);
+        $expected = new LogQueryDto(['file'], new DateTimeZone('Europe/Amsterdam'), null, null, DirectionEnum::Desc, 100);
 
         $this->expressionParser->expects(self::never())->method('parse');
 
