@@ -32,7 +32,7 @@ class LogQueryDtoFactory
         $timeZone        = DateUtil::tryParseTimezone($request->query->get('timezone', ''), date_default_timezone_get());
 
         // search expression
-        $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query));
+        $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query), $timeZone);
 
         return new LogQueryDto($fileIdentifiers, $timeZone, $offset, $expression, $direction, $perPage);
     }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\Parser;
 
+use DateTime;
+use DateTimeZone;
 use FD\LogViewer\Entity\Expression\ChannelTerm;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
 use FD\LogViewer\Entity\Expression\DateBeforeTerm;
@@ -30,16 +32,16 @@ class TermParser
     /**
      * @throws InvalidDateTimeException
      */
-    public function parse(StringReader $string): TermInterface
+    public function parse(StringReader $string, DateTimeZone $timeZone): TermInterface
     {
         $string->skipWhitespace();
 
         if ($string->read('before:') || $string->read('b:')) {
-            return new DateBeforeTerm($this->dateParser->toDateTimeImmutable($this->stringParser->parse($string)));
+            return new DateBeforeTerm($this->dateParser->toDateTimeImmutable($this->stringParser->parse($string), $timeZone));
         }
 
         if ($string->read('after:') || $string->read('a:')) {
-            return new DateAfterTerm($this->dateParser->toDateTimeImmutable($this->stringParser->parse($string)));
+            return new DateAfterTerm($this->dateParser->toDateTimeImmutable($this->stringParser->parse($string), $timeZone));
         }
 
         if ($string->read('severity:') || $string->read('s:')) {
