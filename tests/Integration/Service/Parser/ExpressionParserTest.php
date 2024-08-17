@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Integration\Service\Parser;
 
 use DateTimeImmutable;
+use DateTimeZone;
 use Exception;
 use FD\LogViewer\Entity\Expression\ChannelTerm;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
@@ -41,7 +42,7 @@ class ExpressionParserTest extends TestCase
     public function testParseSingleWord(): void
     {
         $expected = new Expression([new WordTerm('foobar', WordTerm::TYPE_INCLUDE)]);
-        $actual   = $this->parser->parse(new StringReader('foobar'));
+        $actual   = $this->parser->parse(new StringReader('foobar'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -57,7 +58,7 @@ class ExpressionParserTest extends TestCase
                 new WordTerm('bar', WordTerm::TYPE_INCLUDE)
             ]
         );
-        $actual   = $this->parser->parse(new StringReader('"foo" bar'));
+        $actual   = $this->parser->parse(new StringReader('"foo" bar'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -68,7 +69,7 @@ class ExpressionParserTest extends TestCase
     public function testParseQuotedString(): void
     {
         $expected = new Expression([new WordTerm('foo bar', WordTerm::TYPE_INCLUDE)]);
-        $actual   = $this->parser->parse(new StringReader('"foo bar"'));
+        $actual   = $this->parser->parse(new StringReader('"foo bar"'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -80,11 +81,11 @@ class ExpressionParserTest extends TestCase
     {
         $expected = new Expression(
             [
-                new DateAfterTerm(new DateTimeImmutable('2020-01-10T00:00')),
-                new DateBeforeTerm(new DateTimeImmutable('2020-01-10T10:00'))
+                new DateAfterTerm(new DateTimeImmutable('2020-01-10T00:00', new DateTimeZone('America/New_York'))),
+                new DateBeforeTerm(new DateTimeImmutable('2020-01-10T10:00', new DateTimeZone('America/New_York')))
             ]
         );
-        $actual   = $this->parser->parse(new StringReader('after:2020-01-10T00:00 before:"2020-01-10 10:00"'));
+        $actual   = $this->parser->parse(new StringReader('after:2020-01-10T00:00 before:"2020-01-10 10:00"'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -95,7 +96,7 @@ class ExpressionParserTest extends TestCase
     public function testParseChannels(): void
     {
         $expected = new Expression([new ChannelTerm(['app', 'request'])]);
-        $actual   = $this->parser->parse(new StringReader('channel:app|request'));
+        $actual   = $this->parser->parse(new StringReader('channel:app|request'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -106,7 +107,7 @@ class ExpressionParserTest extends TestCase
     public function testParseSeverity(): void
     {
         $expected = new Expression([new SeverityTerm(['warning', 'error'])]);
-        $actual   = $this->parser->parse(new StringReader('severity:warning|error'));
+        $actual   = $this->parser->parse(new StringReader('severity:warning|error'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -122,7 +123,7 @@ class ExpressionParserTest extends TestCase
                 new WordTerm('bar', WordTerm::TYPE_INCLUDE),
             ]
         );
-        $actual   = $this->parser->parse(new StringReader('exclude:"foo" bar'));
+        $actual   = $this->parser->parse(new StringReader('exclude:"foo" bar'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -138,7 +139,7 @@ class ExpressionParserTest extends TestCase
                 new KeyValueTerm(KeyValueTerm::TYPE_CONTEXT, ['foo'], 'bar'),
             ]
         );
-        $actual   = $this->parser->parse(new StringReader('context:baz context:foo="bar"'));
+        $actual   = $this->parser->parse(new StringReader('context:baz context:foo="bar"'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -154,7 +155,7 @@ class ExpressionParserTest extends TestCase
                 new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, ['foo'], 'bar'),
             ]
         );
-        $actual   = $this->parser->parse(new StringReader('extra:baz extra:foo="bar"'));
+        $actual   = $this->parser->parse(new StringReader('extra:baz extra:foo="bar"'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
