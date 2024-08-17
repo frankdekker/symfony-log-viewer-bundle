@@ -42,7 +42,7 @@ class MonologFileParserTest extends TestCase
 
         $this->logParser->expects(self::once())
             ->method('parse')
-            ->with(new SplFileInfo('path'), new MonologLineParser('patternA', 'patternB'), $logQuery)
+            ->with(new SplFileInfo('path'), new MonologLineParser('patternA', 'patternB'), $config, $logQuery)
             ->willReturn($index);
 
         static::assertSame($index, $this->parser->getLogIndex($config, $file, $logQuery));
@@ -57,7 +57,7 @@ class MonologFileParserTest extends TestCase
 
         $this->logParser->expects(self::once())
             ->method('parse')
-            ->with(new SplFileInfo('path'), new MonologJsonParser(), $logQuery)
+            ->with(new SplFileInfo('path'), new MonologJsonParser(), $config, $logQuery)
             ->willReturn($recordCollection);
 
         $parser = new MonologFileParser(MonologFileParser::TYPE_JSON, $this->logParser);

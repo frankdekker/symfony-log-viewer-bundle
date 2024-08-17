@@ -27,10 +27,11 @@ class MonologFileParser implements LogFileParserInterface
     public function getLogIndex(LogFilesConfig $config, LogFile $file, LogQueryDto $logQuery): LogRecordCollection
     {
         return match ($this->formatType) {
-            self::TYPE_JSON => $this->logParser->parse(new SplFileInfo($file->path), new MonologJsonParser(), $logQuery),
+            self::TYPE_JSON => $this->logParser->parse(new SplFileInfo($file->path), new MonologJsonParser(), $config, $logQuery),
             self::TYPE_LINE => $this->logParser->parse(
                 new SplFileInfo($file->path),
                 new MonologLineParser($config->startOfLinePattern, $config->logMessagePattern),
+                $config,
                 $logQuery
             ),
             default         => throw new InvalidArgumentException('Invalid format type: ' . $this->formatType),

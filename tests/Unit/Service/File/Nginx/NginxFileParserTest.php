@@ -40,6 +40,7 @@ class NginxFileParserTest extends TestCase
             ->with(
                 new SplFileInfo('path'),
                 new NginxErrorLineParser('patternB'),
+                $config,
                 $logQuery
             );
 

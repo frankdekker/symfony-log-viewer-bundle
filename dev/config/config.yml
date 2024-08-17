@@ -77,6 +77,7 @@ fd_log_viewer:
         name: "nginx.access.log"
       downloadable: true
       deletable: true
+      date_format: 'd/M/Y:H:i:s O'
     nginx-error:
       type: nginx-error
       name: Nginx error

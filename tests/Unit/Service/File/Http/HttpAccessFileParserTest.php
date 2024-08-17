@@ -40,6 +40,7 @@ class HttpAccessFileParserTest extends TestCase
             ->with(
                 new SplFileInfo('path'),
                 new HttpAccessLineParser('patternB'),
+                $config,
                 $logQuery
             );
 

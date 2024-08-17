@@ -38,6 +38,7 @@ class ApacheErrorFileParserTest extends TestCase
             ->with(
                 new SplFileInfo('path'),
                 new ApacheErrorLineParser('patternB'),
+                $config,
                 $logQuery
             );
 

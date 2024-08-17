@@ -22,7 +22,7 @@ fd_log_viewer:
             deletable: false
             start_of_line_pattern: '/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/'
             log_message_pattern: '/^\[(?P<date>[^\]]+)\]\s+(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+(?P<message>.*)\s+(?P<context>[[{].*?[\]}])\s+(?P<extra>[[{].*?[\]}])\s+$/s'
-            date_format: "Y-m-d H:i:s"
+            date_format: null
 
     hosts:
         localhost:
@@ -183,9 +183,9 @@ If you use a custom monolog format, adjust this pattern to your needs.
 
 ### log_files.date_format
 
-**type**: `string`. Default: `Y-m-d H:i:s`
+**type**: `string`. Default: `null`
 
-This is the date format that will be used to format the date in frontend.
+The date format to parse the date from the log entry. If set to `null`, the format will be guessed by `strtotime`.
 <br><br>
 
 ### hosts

@@ -14,7 +14,7 @@
         {
             "name": "Frank Dekker",
             "email": "fdekker@gmail.com",
-            "role": "Developer"
+            "role": "Maintainer"
         }
     ],
     "minimum-stability": "stable",

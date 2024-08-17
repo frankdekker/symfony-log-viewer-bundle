@@ -19,9 +19,9 @@ trait TestEntityTrait
      *     finderConfig?: FinderConfig,
      *     downloadable?: bool,
      *     deletable?: bool,
-     *     startOfLinePattern?: string,
-     *     logMessagePattern?: string,
-     *     dateFormat?: string
+     *     startOfLinePattern?: string|null,
+     *     logMessagePattern?: string|null,
+     *     dateFormat?: string|null
      * } $arguments
      */
     public function createLogFileConfig(array $arguments = []): LogFilesConfig

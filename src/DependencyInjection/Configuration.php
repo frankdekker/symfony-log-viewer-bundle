@@ -60,7 +60,7 @@ final class Configuration implements ConfigurationInterface
                         'deletable'             => false,
                         'start_of_line_pattern' => null,
                         'log_message_pattern'   => null,
-                        'date_format'           => 'Y-m-d H:i:s',
+                        'date_format'           => null,
                     ]
                 ]
             )
@@ -105,8 +105,8 @@ final class Configuration implements ConfigurationInterface
                         ->defaultNull()
                     ->end()
                     ->scalarNode('date_format')
-                        ->info('The date format of how to present the date in the frontend.')
-                        ->defaultValue('Y-m-d H:i:s')
+                        ->info('The date format to parse the date from the log entry. If set to `null`, the format will be guessed by `strtotime`')
+                        ->defaultNull()
                     ->end()
                 ->end()
             ->end();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Integration\Service\File;
 
 use DateTimeZone;
+use FD\LogViewer\Entity\Config\LogFilesConfig;
 use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Entity\Output\DirectionEnum;
@@ -13,6 +14,7 @@ use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
 use FD\LogViewer\Tests\Integration\AbstractIntegrationTestCase;
+use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Clock\ClockInterface;
@@ -21,6 +23,9 @@ use Symfony\Component\Finder\SplFileInfo;
 #[CoversClass(LogParser::class)]
 class LogParserTest extends AbstractIntegrationTestCase
 {
+    use TestEntityTrait;
+
+    private LogFilesConfig $config;
     private MockObject&LogRecordMatcher $logRecordMatcher;
     private MonologLineParser $lineParser;
     private LogParser $parser;
@@ -28,6 +33,7 @@ class LogParserTest extends AbstractIntegrationTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->config           = $this->createLogFileConfig(['dateFormat' => null]);
         $this->lineParser       = new MonologLineParser(MonologLineParser::START_OF_MESSAGE_PATTERN, MonologLineParser::LOG_LINE_PATTERN);
         $this->logRecordMatcher = $this->createMock(LogRecordMatcher::class);
         $this->parser           = new LogParser($this->createMock(ClockInterface::class), $this->logRecordMatcher, new StreamReaderFactory());
@@ -37,7 +43,7 @@ class LogParserTest extends AbstractIntegrationTestCase
     {
         $query = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 0, null, DirectionEnum::Asc, 5);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
-        $index = $this->parser->parse($file, $this->lineParser, $query);
+        $index = $this->parser->parse($file, $this->lineParser, $this->config, $query);
 
         static::assertCount(5, $index->getRecords());
         static::assertNotNull($index->getPaginator());
@@ -50,7 +56,7 @@ class LogParserTest extends AbstractIntegrationTestCase
     {
         $query = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 335, null, DirectionEnum::Asc, 5);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
-        $index = $this->parser->parse($file, $this->lineParser, $query);
+        $index = $this->parser->parse($file, $this->lineParser, $this->config, $query);
 
         static::assertCount(5, $index->getRecords());
         static::assertNotNull($index->getPaginator());
@@ -64,7 +70,7 @@ class LogParserTest extends AbstractIntegrationTestCase
         $expression = new Expression([]);
         $query      = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 0, $expression, DirectionEnum::Asc, 100);
         $file       = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
-        $index      = $this->parser->parse($file, $this->lineParser, $query);
+        $index      = $this->parser->parse($file, $this->lineParser, $this->config, $query);
 
         $this->logRecordMatcher->method('matches')->willReturnCallback(fn(LogRecord $record) => $record->severity === 'info');
 
@@ -77,7 +83,7 @@ class LogParserTest extends AbstractIntegrationTestCase
     {
         $query = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 0, null, DirectionEnum::Asc, 99);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
-        $index = $this->parser->parse($file, $this->lineParser, $query);
+        $index = $this->parser->parse($file, $this->lineParser, $this->config, $query);
 
         static::assertCount(99, $index->getRecords());
         static::assertNotNull($index->getPaginator());
@@ -87,7 +93,7 @@ class LogParserTest extends AbstractIntegrationTestCase
     {
         $query = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 64, null, DirectionEnum::Asc, 500);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
-        $index = $this->parser->parse($file, $this->lineParser, $query);
+        $index = $this->parser->parse($file, $this->lineParser, $this->config, $query);
 
         static::assertCount(99, $index->getRecords());
         static::assertNotNull($index->getPaginator());
@@ -97,7 +103,7 @@ class LogParserTest extends AbstractIntegrationTestCase
     {
         $query = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), null, null, DirectionEnum::Asc, 500);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
-        $index = $this->parser->parse($file, $this->lineParser, $query);
+        $index = $this->parser->parse($file, $this->lineParser, $this->config, $query);
 
         static::assertCount(100, $index->getRecords());
         static::assertNull($index->getPaginator());

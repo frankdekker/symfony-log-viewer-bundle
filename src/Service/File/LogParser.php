@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\File;
 
+use FD\LogViewer\Entity\Config\LogFilesConfig;
 use FD\LogViewer\Entity\Index\LogRecordCollection;
 use FD\LogViewer\Entity\Index\Paginator;
 use FD\LogViewer\Entity\Request\LogQueryDto;
@@ -27,13 +28,13 @@ class LogParser
     ) {
     }
 
-    public function parse(SplFileInfo $file, LogLineParserInterface $lineParser, LogQueryDto $logQuery): LogRecordCollection
+    public function parse(SplFileInfo $file, LogLineParserInterface $lineParser, LogFilesConfig $config, LogQueryDto $logQuery): LogRecordCollection
     {
         // create iterators
         $streamReader = $this->streamReaderFactory->createForFile($file, $logQuery->direction, $logQuery->offset);
         $lineIterator = new LogLineParserIterator($streamReader, $lineParser, $logQuery->direction);
         $iterator     = new MaxRuntimeIterator($this->clock, $lineIterator, self::MAX_RUNTIME_IN_SECONDS, false);
-        $iterator     = new LogRecordIterator($iterator, $lineParser);
+        $iterator     = new LogRecordIterator($iterator, new DateTimeParser($config->dateFormat), $lineParser);
         if ($logQuery->query !== null) {
             $iterator = new LogRecordFilterIterator($this->logRecordMatcher, $iterator, $logQuery->query);
         }
