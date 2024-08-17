@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Integration\Service\File;
 
+use DateTimeZone;
 use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Entity\Output\DirectionEnum;
@@ -34,7 +35,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithPaginator(): void
     {
-        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, 5);
+        $query = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 0, null, DirectionEnum::Asc, 5);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -47,7 +48,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithOffset(): void
     {
-        $query = new LogQueryDto(['identifier'], 335, null, DirectionEnum::Asc, 5);
+        $query = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 335, null, DirectionEnum::Asc, 5);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -61,7 +62,7 @@ class LogParserTest extends AbstractIntegrationTestCase
     public function testParseWithExpressionFilter(): void
     {
         $expression = new Expression([]);
-        $query      = new LogQueryDto(['identifier'], 0, $expression, DirectionEnum::Asc, 100);
+        $query      = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 0, $expression, DirectionEnum::Asc, 100);
         $file       = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index      = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -74,7 +75,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseAlmostEof(): void
     {
-        $query = new LogQueryDto(['identifier'], 0, null, DirectionEnum::Asc, 99);
+        $query = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 0, null, DirectionEnum::Asc, 99);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -84,7 +85,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParsePaginatorWithOffset(): void
     {
-        $query = new LogQueryDto(['identifier'], 64, null, DirectionEnum::Asc, 500);
+        $query = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 64, null, DirectionEnum::Asc, 500);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 
@@ -94,7 +95,7 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseEof(): void
     {
-        $query = new LogQueryDto(['identifier'], null, null, DirectionEnum::Asc, 500);
+        $query = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), null, null, DirectionEnum::Asc, 500);
         $file  = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index = $this->parser->parse($file, $this->lineParser, $query);
 

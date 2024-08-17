@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Service\Parser;
 
 use DateTimeImmutable;
+use DateTimeZone;
 use Exception;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
 use FD\LogViewer\Entity\Expression\DateBeforeTerm;
@@ -42,10 +43,12 @@ class ExpressionParserTest extends TestCase
 
         $string->expects(self::exactly(4))->method('eol')->willReturn(false, false, false, true);
         $string->expects(self::exactly(6))->method('skipWhitespace');
-        $this->termParser->expects(self::exactly(3))->method('parse')->with($string)->willReturn($termA, $termB, $termC);
+        $this->termParser->expects(self::exactly(3))->method('parse')
+            ->with($string, new DateTimeZone('America/New_York'))
+            ->willReturn($termA, $termB, $termC);
 
         $expected = new Expression([$termA, $termB, $termC]);
-        $actual   = $this->parser->parse($string);
+        $actual   = $this->parser->parse($string, new DateTimeZone('America/New_York'));
         static::assertEquals($expected, $actual);
     }
 }

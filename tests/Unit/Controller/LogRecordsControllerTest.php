@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Controller;
 
+use DateTimeZone;
 use DR\PHPUnitExtensions\Symfony\AbstractControllerTestCase;
 use Exception;
 use FD\LogViewer\Controller\LogRecordsController;
@@ -62,7 +63,7 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
     public function testInvokeNotFound(): void
     {
         $request  = new Request();
-        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, 50);
+        $logQuery = new LogQueryDto(['file'], new DateTimeZone('Europe/Amsterdam'), 123, null, DirectionEnum::Asc, 50);
 
         $this->queryDtoFactory->expects(self::once())->method('create')->with($request)->willReturn($logQuery);
         $this->fileService->expects(self::once())->method('findFileByIdentifiers')->with(['file'])->willReturn([]);
@@ -78,7 +79,7 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
     public function testInvokeSingleFile(): void
     {
         $request  = new Request();
-        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, 50);
+        $logQuery = new LogQueryDto(['file'], new DateTimeZone('Europe/Amsterdam'), 123, null, DirectionEnum::Asc, 50);
 
         $logFile = $this->createLogFile();
         $output  = $this->createMock(LogRecordsOutput::class);
@@ -98,7 +99,7 @@ class LogRecordsControllerTest extends AbstractControllerTestCase
     public function testInvokeMultiFile(): void
     {
         $request  = new Request();
-        $logQuery = new LogQueryDto(['file'], 123, null, DirectionEnum::Asc, 50);
+        $logQuery = new LogQueryDto(['file'], new DateTimeZone('Europe/Amsterdam'), 123, null, DirectionEnum::Asc, 50);
 
         $logFileA = $this->createLogFile();
         $logFileB = $this->createLogFile();

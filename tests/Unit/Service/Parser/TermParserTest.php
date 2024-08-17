@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Service\Parser;
 
 use DateTimeImmutable;
+use DateTimeZone;
 use Exception;
 use FD\LogViewer\Entity\Expression\ChannelTerm;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
@@ -45,9 +46,11 @@ class TermParserTest extends TestCase
         $string = new StringReader("   before:2020-01-01");
 
         $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('2020-01-01');
-        $this->dateParser->expects(self::once())->method('toDateTimeImmutable')->with('2020-01-01')->willReturn(new DateTimeImmutable('2020-01-01'));
+        $this->dateParser->expects(self::once())->method('toDateTimeImmutable')
+            ->with('2020-01-01', new DateTimeZone('America/New_York'))
+            ->willReturn(new DateTimeImmutable('2020-01-01'));
 
-        $term = $this->parser->parse($string);
+        $term = $this->parser->parse($string, new DateTimeZone('America/New_York'));
         static::assertInstanceOf(DateBeforeTerm::class, $term);
         static::assertSame('2020-01-01', $term->date->format('Y-m-d'));
     }
@@ -60,9 +63,11 @@ class TermParserTest extends TestCase
         $string = new StringReader("   after:2020-01-01");
 
         $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('2020-01-01');
-        $this->dateParser->expects(self::once())->method('toDateTimeImmutable')->with('2020-01-01')->willReturn(new DateTimeImmutable('2020-01-01'));
+        $this->dateParser->expects(self::once())->method('toDateTimeImmutable')
+            ->with('2020-01-01', new DateTimeZone('America/New_York'))
+            ->willReturn(new DateTimeImmutable('2020-01-01'));
 
-        $term = $this->parser->parse($string);
+        $term = $this->parser->parse($string, new DateTimeZone('America/New_York'));
         static::assertInstanceOf(DateAfterTerm::class, $term);
         static::assertSame('2020-01-01', $term->date->format('Y-m-d'));
     }
@@ -76,7 +81,7 @@ class TermParserTest extends TestCase
 
         $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('info|error');
 
-        $term = $this->parser->parse($string);
+        $term = $this->parser->parse($string, new DateTimeZone('America/New_York'));
         static::assertInstanceOf(SeverityTerm::class, $term);
         static::assertSame(['info', 'error'], $term->severities);
     }
@@ -90,7 +95,7 @@ class TermParserTest extends TestCase
 
         $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('app|request');
 
-        $term = $this->parser->parse($string);
+        $term = $this->parser->parse($string, new DateTimeZone('America/New_York'));
         static::assertInstanceOf(ChannelTerm::class, $term);
         static::assertSame(['app', 'request'], $term->channels);
     }
@@ -104,7 +109,7 @@ class TermParserTest extends TestCase
 
         $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('foobar');
 
-        $term = $this->parser->parse($string);
+        $term = $this->parser->parse($string, new DateTimeZone('America/New_York'));
         static::assertInstanceOf(WordTerm::class, $term);
         static::assertSame('foobar', $term->string);
         static::assertSame(WordTerm::TYPE_EXCLUDE, $term->type);
@@ -119,7 +124,7 @@ class TermParserTest extends TestCase
 
         $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('foobar');
 
-        $term = $this->parser->parse($string);
+        $term = $this->parser->parse($string, new DateTimeZone('America/New_York'));
         static::assertInstanceOf(WordTerm::class, $term);
         static::assertSame('foobar', $term->string);
         static::assertSame(WordTerm::TYPE_INCLUDE, $term->type);
@@ -135,7 +140,7 @@ class TermParserTest extends TestCase
 
         $this->keyValueParser->expects(self::once())->method('parse')->with('context', $string)->willReturn($term);
 
-        static::assertSame($term, $this->parser->parse($string));
+        static::assertSame($term, $this->parser->parse($string, new DateTimeZone('America/New_York')));
     }
 
     /**
@@ -148,6 +153,6 @@ class TermParserTest extends TestCase
 
         $this->keyValueParser->expects(self::once())->method('parse')->with('extra', $string)->willReturn($term);
 
-        static::assertSame($term, $this->parser->parse($string));
+        static::assertSame($term, $this->parser->parse($string, new DateTimeZone('America/New_York')));
     }
 }

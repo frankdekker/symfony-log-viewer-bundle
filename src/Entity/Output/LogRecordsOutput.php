@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Entity\Output;
 
-use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Entity\Index\Paginator;
 use FD\LogViewer\Entity\Index\PerformanceStats;
 use JsonSerializable;
@@ -11,7 +10,7 @@ use JsonSerializable;
 class LogRecordsOutput implements JsonSerializable
 {
     /**
-     * @param LogRecord[] $records
+     * @param array<array-key, mixed> $records
      */
     public function __construct(
         private readonly array $records,

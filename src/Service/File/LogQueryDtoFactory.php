@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\File;
 
+use Exception;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Reader\String\StringReader;
 use FD\LogViewer\Service\Parser\ExpressionParser;
 use FD\LogViewer\Service\Parser\InvalidDateTimeException;
+use FD\LogViewer\Util\DateUtil;
 use Symfony\Component\HttpFoundation\Request;
 
 class LogQueryDtoFactory
@@ -17,7 +19,7 @@ class LogQueryDtoFactory
     }
 
     /**
-     * @throws InvalidDateTimeException
+     * @throws InvalidDateTimeException|Exception
      */
     public function create(Request $request): LogQueryDto
     {
@@ -27,10 +29,11 @@ class LogQueryDtoFactory
         $query           = trim($request->query->get('query', ''));
         $direction       = DirectionEnum::from($request->query->get('sort', 'desc'));
         $perPage         = $request->query->getInt('per_page', 100);
+        $timeZone        = DateUtil::tryParseTimezone($request->query->get('time_zone', ''), date_default_timezone_get());
 
         // search expression
-        $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query));
+        $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query), $timeZone);
 
-        return new LogQueryDto($fileIdentifiers, $offset, $expression, $direction, $perPage);
+        return new LogQueryDto($fileIdentifiers, $timeZone, $offset, $expression, $direction, $perPage);
     }
 }

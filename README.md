@@ -25,6 +25,7 @@ read logs from any directory.
 - 🔍 **Filter** by log level (error, info, debug, etc.), by channel, date range or log content inclusion or exclusion,
 - 🔍 **Search** multiple log files at once,
 - 🌑 **Dark mode**,
+- 🕑 **Present log entries in your local timezone**,
 - 🖥️ **Multiple host** support,
 - 💾 **Download** or **delete** log files from the UI,
 - ☎️ **API access** for folders, files & log entries,
