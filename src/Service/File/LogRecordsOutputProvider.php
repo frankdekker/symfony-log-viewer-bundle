@@ -12,11 +12,13 @@ use FD\LogViewer\Iterator\DeduplicationIterator;
 use FD\LogViewer\Iterator\LimitIterator;
 use FD\LogViewer\Iterator\MultiLogRecordIterator;
 use FD\LogViewer\Service\PerformanceService;
+use FD\LogViewer\Service\Serializer\LogRecordsNormalizer;
 
 class LogRecordsOutputProvider
 {
     public function __construct(
         private readonly LogFileParserProvider $logParserProvider,
+        private readonly LogRecordsNormalizer $logRecordsNormalizer,
         private readonly PerformanceService $performanceService,
     ) {
     }
@@ -40,7 +42,7 @@ class LogRecordsOutputProvider
         $logRecordCollection = new LogRecordCollection($recordIterator, null);
 
         return new LogRecordsOutput(
-            $logRecordCollection->getRecords(),
+            $this->logRecordsNormalizer->normalize($logRecordCollection->getRecords(), $logQuery->timeZone),
             $logRecordCollection->getPaginator(),
             $this->performanceService->getPerformanceStats()
         );
@@ -52,7 +54,7 @@ class LogRecordsOutputProvider
         $logRecordCollection = $this->logParserProvider->get($config->type)->getLogIndex($config, $file, $logQuery);
 
         return new LogRecordsOutput(
-            $logRecordCollection->getRecords(),
+            $this->logRecordsNormalizer->normalize($logRecordCollection->getRecords(), $logQuery->timeZone),
             $logRecordCollection->getPaginator(),
             $this->performanceService->getPerformanceStats()
         );

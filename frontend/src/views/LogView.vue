@@ -40,7 +40,8 @@ const load = () => {
             .set('query', searchStore.query, '')
             .set('per_page', searchStore.perPage, '100')
             .set('sort', searchStore.sort, 'desc')
-            .set('offset', offset.value, 0))
+            .set('offset', offset.value, 0)
+            .set('timezone', Intl.DateTimeFormat().resolvedOptions().timeZone))
         .catch((error: Error) => {
             if (error.message === 'bad-request') {
                 badRequest.value = true;

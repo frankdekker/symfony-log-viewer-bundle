@@ -48,6 +48,7 @@ use FD\LogViewer\Service\Parser\TermParser;
 use FD\LogViewer\Service\Parser\WordParser;
 use FD\LogViewer\Service\PerformanceService;
 use FD\LogViewer\Service\RemoteHost\Authenticator\AuthenticatorFactory;
+use FD\LogViewer\Service\Serializer\LogRecordsNormalizer;
 use FD\LogViewer\Service\VersionService;
 use FD\LogViewer\Util\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -109,6 +110,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogFolderOutputProvider::class);
     $services->set(LogFolderOutputSorter::class);
     $services->set(LogRecordsOutputProvider::class);
+    $services->set(LogRecordsNormalizer::class);
     $services->set(LogParser::class)->arg('$clock', inline_service(Clock::class));
     $services->set(LogFileParserProvider::class)
         ->arg('$logParsers', tagged_iterator('fd.symfony.log.viewer.log_file_parser', 'name'));
