@@ -17,7 +17,7 @@ class LogFilesConfig
         public readonly bool $deletable,
         public readonly ?string $startOfLinePattern,
         public readonly ?string $logMessagePattern,
-        public readonly string $dateFormat
+        public readonly ?string $dateFormat
     ) {
     }
 }

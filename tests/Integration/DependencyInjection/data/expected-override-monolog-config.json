@@ -13,7 +13,7 @@
             "deletable": false,
             "start_of_line_pattern": null,
             "log_message_pattern": null,
-            "date_format": "Y-m-d H:i:s"
+            "date_format": null
         }
     },
     "hosts": {
