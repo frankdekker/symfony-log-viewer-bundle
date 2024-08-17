@@ -15,6 +15,7 @@ use FD\LogViewer\Service\File\LogFileParserInterface;
 use FD\LogViewer\Service\File\LogFileParserProvider;
 use FD\LogViewer\Service\File\LogRecordsOutputProvider;
 use FD\LogViewer\Service\PerformanceService;
+use FD\LogViewer\Service\Serializer\LogRecordsNormalizer;
 use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -26,6 +27,7 @@ class LogRecordsOutputProviderTest extends TestCase
     use TestEntityTrait;
 
     private LogFileParserInterface&MockObject $logParser;
+    private LogRecordsNormalizer&MockObject $logRecordsNormalizer;
     private PerformanceService&MockObject $performanceService;
     private LogRecordsOutputProvider $provider;
 
@@ -35,8 +37,9 @@ class LogRecordsOutputProviderTest extends TestCase
         $this->logParser   = $this->createMock(LogFileParserInterface::class);
         $logParserProvider = $this->createMock(LogFileParserProvider::class);
         $logParserProvider->expects(self::once())->method('get')->with('monolog')->willReturn($this->logParser);
-        $this->performanceService = $this->createMock(PerformanceService::class);
-        $this->provider           = new LogRecordsOutputProvider($logParserProvider, $this->performanceService);
+        $this->logRecordsNormalizer = $this->createMock(LogRecordsNormalizer::class);
+        $this->performanceService   = $this->createMock(PerformanceService::class);
+        $this->provider             = new LogRecordsOutputProvider($logParserProvider, $this->logRecordsNormalizer, $this->performanceService);
     }
 
     public function testProvide(): void
@@ -51,9 +54,12 @@ class LogRecordsOutputProviderTest extends TestCase
         $performance = new PerformanceStats('1', '2', '3');
 
         $this->logParser->expects(self::once())->method('getLogIndex')->with($config, $file, $logQuery)->willReturn($recordCollection);
+        $this->logRecordsNormalizer->expects(self::once())->method('normalize')
+            ->with([$record], new DateTimeZone('Europe/Amsterdam'))
+            ->willReturn(['records']);
         $this->performanceService->expects(self::once())->method('getPerformanceStats')->willReturn($performance);
 
-        $expected = new LogRecordsOutput([$record], null, $performance);
+        $expected = new LogRecordsOutput(['records'], null, $performance);
 
         $result = $this->provider->provide($file, $logQuery);
         static::assertEquals($expected, $result);
@@ -74,9 +80,12 @@ class LogRecordsOutputProviderTest extends TestCase
         $performance = new PerformanceStats('1', '2', '3');
 
         $this->logParser->expects(self::once())->method('getLogIndex')->with($config, $file, $logQuery)->willReturn($recordCollection);
+        $this->logRecordsNormalizer->expects(self::once())->method('normalize')
+            ->with([$record], new DateTimeZone('Europe/Amsterdam'))
+            ->willReturn(['records']);
         $this->performanceService->expects(self::once())->method('getPerformanceStats')->willReturn($performance);
 
-        $expected = new LogRecordsOutput([$record], null, $performance);
+        $expected = new LogRecordsOutput(['records'], null, $performance);
 
         $result = $this->provider->provideForFiles(['foo' => $file], $logQuery);
         static::assertEquals($expected, $result);
