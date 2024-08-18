@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DatePicker from '@/components/datepicker/DatePicker.vue';
 import SearchFilter from '@/components/SearchFilter.vue';
 import {ref} from 'vue';
 
@@ -20,7 +21,7 @@ defineExpose({focus});
 
 <template>
     <div class="input-group">
-        <SearchFilter @add="(value) => query = (query === '' ? value : query + ' ' + value)"/>
+        <search-filter @add="(value) => query = (query === '' ? value : query + ' ' + value)"/>
 
         <input type="text"
                class="form-control"
@@ -31,6 +32,8 @@ defineExpose({focus});
                aria-describedby="button-search"
                @keyup.enter="emit('navigate')"
                v-model="query">
+
+        <date-picker class="slv-date-picker" value="foo" @input="console.log('click')"/>
 
         <select class="slv-menu-sort-direction form-control"
                 aria-label="Sort direction"
@@ -59,7 +62,7 @@ defineExpose({focus});
 </template>
 
 <style scoped>
-.slv-menu-sort-direction, .slv-menu-page-size, .slv-log-search-btn {
+.slv-menu-sort-direction, .slv-menu-page-size, .slv-log-search-btn, .slv-date-picker {
     max-width: fit-content;
 }
 </style>
