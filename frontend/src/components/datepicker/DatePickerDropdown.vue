@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import AbsoluteDatePicker from '@/components/datepicker/AbsoluteDatePicker.vue';
+import NowDatePicker from '@/components/datepicker/NowDatePicker.vue';
 import RelativeDatePicker from '@/components/datepicker/RelativeDatePicker.vue';
 import {ref} from 'vue';
 
@@ -23,13 +25,16 @@ const activeTab = ref('relative');
         </ul>
 
         <div class="panel1" v-show="activeTab === 'relative'">
-            <relative-date-picker :date="date" label="Start date"/>
+            <relative-date-picker :date="date" label="Start date" @change="val => date = val"/>
         </div>
         <div class="panel2" v-show="activeTab === 'absolute'">
-            <h2>Absolute</h2>
+            <absolute-date-picker :date="date" label="Start date" @change="val => date = val"/>
         </div>
         <div class="panel3" v-show="activeTab === 'now'">
-            Now
+            <now-date-picker label="Start date" @change="val => date = val"/>
+        </div>
+        <div>
+            {{ date.toLocaleDateString() }} @ {{ date.toLocaleTimeString() }}
         </div>
     </div>
 </template>
