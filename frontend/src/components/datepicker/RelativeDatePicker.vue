@@ -5,9 +5,10 @@ import {ref} from 'vue';
 
 const dateModel = defineModel<Date>();
 defineProps<{ label: string }>();
+const emit = defineEmits(['change']);
 
-const valueRef  = ref<HTMLInputElement>();
-const unitRef   = ref<HTMLSelectElement>();
+const valueRef = ref<HTMLInputElement>();
+const unitRef  = ref<HTMLSelectElement>();
 
 function validate(payload: Event): void {
     const el = <HTMLInputElement>payload.target;
@@ -22,6 +23,7 @@ function onValueChanged(): void {
     }
 
     dateModel.value = getRelativeDate(Numbers.parseInt(valueInput.value), unitInput.value, true);
+    emit('change', dateModel.value);
 }
 
 </script>
@@ -30,7 +32,7 @@ function onValueChanged(): void {
     <div class="d-flex flex-row mt-3" @input="onValueChanged" @change="onValueChanged">
         <input type="number"
                ref="valueRef"
-               class="flex-fill form-control me-1"
+               class="flex-fill form-control"
                value="1"
                min="0"
                pattern="^[1-9][0-9]*$"
