@@ -12,7 +12,7 @@ const activeTab = ref('relative');
 
 <template>
     <div class="dropdown-menu p-2 slv-dropdown-menu">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" style="width: 300px">
             <li class="nav-item">
                 <a class="nav-link" :class="{'active': activeTab === 'relative'}" href="javascript:" @click="activeTab='relative'">Relative</a>
             </li>
