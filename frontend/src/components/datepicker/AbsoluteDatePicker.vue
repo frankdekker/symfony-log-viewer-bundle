@@ -10,7 +10,6 @@ function getFirstDayOfMonth(date: Date): Date {
 
 function getFirstDayOfWeek(date: Date): Date {
     const newDate = new Date();
-    console.log(date.getDay());
     date.setDate(date.getDate() - date.getDay());
     return newDate;
 }
@@ -30,10 +29,17 @@ function getMonthCalendarDates(monthDate: Date | undefined): Date[] {
 
 <template>
     <div>
+        <div class="week-days">
+            <button v-for="day in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" class="btn btn-outline-primary border-0">
+                {{ day }}
+                d
+            </button>
+        </div>
+
         <div class="day-of-the-month">
-            <div v-for="date in getMonthCalendarDates(dateModel)">
+            <button v-for="date in getMonthCalendarDates(dateModel)" class="btn btn-outline-primary border-0">
                 {{ date.getDate() }}
-            </div>
+            </button>
         </div>
 
         <div class="input-group mt-3">
