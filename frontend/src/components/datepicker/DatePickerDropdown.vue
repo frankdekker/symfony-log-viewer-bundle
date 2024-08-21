@@ -25,10 +25,10 @@ const activeTab = ref('relative');
         </ul>
 
         <div class="panel1" v-show="activeTab === 'relative'">
-            <relative-date-picker :date="date" label="Start date" @change="val => date = val"/>
+            <relative-date-picker v-model="date" label="Start date" @change="val => date = val"/>
         </div>
         <div class="panel2" v-show="activeTab === 'absolute'">
-            <absolute-date-picker :date="date" label="Start date" @change="val => date = val"/>
+            <absolute-date-picker v-model="date" label="Start date" @change="val => date = val"/>
         </div>
         <div class="panel3" v-show="activeTab === 'now'">
             <now-date-picker label="Start date" @change="val => date = val"/>

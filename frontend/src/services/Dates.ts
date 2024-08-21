@@ -76,7 +76,7 @@ export function formatDateTime(date: Date | undefined): string {
 }
 
 export function getFirstDayOfWeek(date: Date): Date {
-    const firstDayOfWeek = new Date();
+    const firstDayOfWeek = new Date(date);
     firstDayOfWeek.setHours(12, 0, 0, 0);
     firstDayOfWeek.setDate(date.getDate() - date.getDay() + 1);
     return firstDayOfWeek;
@@ -87,11 +87,12 @@ export function getFirstDayOfMonth(date: Date): Date {
 }
 
 export function getMonthCalendarDates(monthDate: Date | undefined): Date[] {
-    const date          = getFirstDayOfWeek(getFirstDayOfMonth(monthDate ?? new Date()));
-    const dates: Date[] = [];
+    const firstDayOfMonth = getFirstDayOfMonth(monthDate ?? new Date());
+    const firstDayOfWeek  = getFirstDayOfWeek(firstDayOfMonth);
+    const dates: Date[]   = [];
     for (let i = 0; i < 35; i++) {
-        const nextDate = new Date(date);
-        nextDate.setDate(date.getDate() + i);
+        const nextDate = new Date(firstDayOfWeek);
+        nextDate.setDate(firstDayOfWeek.getDate() + i);
         dates.push(nextDate);
     }
     return dates;
@@ -105,9 +106,34 @@ export function isSameDay(date1: Date | undefined, date2: Date | undefined): boo
 }
 
 export function isSameMonth(date1: Date | undefined, date2: Date | undefined): boolean {
-    console.log(date1, date2);
     if (date1 === undefined || date2 === undefined) {
         return false;
     }
     return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth();
+}
+
+export function getMonths(): string[] {
+    return [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+    ];
+}
+
+export function getYears(range: number): number[] {
+    const year            = new Date().getFullYear();
+    const years: number[] = [];
+    for (let i = 0; i < range; i++) {
+        years.push(year - i);
+    }
+    return years;
 }
