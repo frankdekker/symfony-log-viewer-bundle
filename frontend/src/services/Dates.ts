@@ -74,3 +74,40 @@ export function formatDateTime(date: Date | undefined): string {
 
     return `${formattedDate} @ ${formattedTime}`;
 }
+
+export function getFirstDayOfWeek(date: Date): Date {
+    const firstDayOfWeek = new Date();
+    firstDayOfWeek.setHours(12, 0, 0, 0);
+    firstDayOfWeek.setDate(date.getDate() - date.getDay() + 1);
+    return firstDayOfWeek;
+}
+
+export function getFirstDayOfMonth(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), 1, 12, 0, 0, 0);
+}
+
+export function getMonthCalendarDates(monthDate: Date | undefined): Date[] {
+    const date          = getFirstDayOfWeek(getFirstDayOfMonth(monthDate ?? new Date()));
+    const dates: Date[] = [];
+    for (let i = 0; i < 35; i++) {
+        const nextDate = new Date(date);
+        nextDate.setDate(date.getDate() + i);
+        dates.push(nextDate);
+    }
+    return dates;
+}
+
+export function isSameDay(date1: Date | undefined, date2: Date | undefined): boolean {
+    if (date1 === undefined || date2 === undefined) {
+        return false;
+    }
+    return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate();
+}
+
+export function isSameMonth(date1: Date | undefined, date2: Date | undefined): boolean {
+    console.log(date1, date2);
+    if (date1 === undefined || date2 === undefined) {
+        return false;
+    }
+    return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth();
+}

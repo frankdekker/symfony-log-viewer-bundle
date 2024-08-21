@@ -1,43 +1,25 @@
 <script setup lang="ts">
+import {getMonthCalendarDates, isSameDay, isSameMonth} from '@/services/Dates';
 
 const dateModel = defineModel<Date>();
+dateModel.value ??= new Date();
 defineProps<{ label: string }>();
 const emit = defineEmits(['change']);
-
-function getFirstDayOfMonth(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth(), 1);
-}
-
-function getFirstDayOfWeek(date: Date): Date {
-    const newDate = new Date();
-    date.setDate(date.getDate() - date.getDay());
-    return newDate;
-}
-
-function getMonthCalendarDates(monthDate: Date | undefined): Date[] {
-    const date          = getFirstDayOfWeek(getFirstDayOfMonth(monthDate ?? new Date()));
-    const dates: Date[] = [];
-    for (let i = 0; i < 35; i++) {
-        const nextDate = new Date(date);
-        nextDate.setDate(date.getDate() + i);
-        dates.push(nextDate);
-    }
-    return dates;
-}
 
 </script>
 
 <template>
     <div>
         <div class="week-days">
-            <button v-for="day in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" class="btn btn-outline-primary border-0">
+            <div v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" class="text-center">
                 {{ day }}
-                d
-            </button>
+            </div>
         </div>
 
         <div class="day-of-the-month">
-            <button v-for="date in getMonthCalendarDates(dateModel)" class="btn btn-outline-primary border-0">
+            <button v-for="date in getMonthCalendarDates(dateModel)"
+                    class="btn btn-outline-primary border-0"
+                    :class="{'btn-outline-primary-active': isSameDay(date, dateModel), 'opacity-50': isSameMonth(date, dateModel) === false}">
                 {{ date.getDate() }}
             </button>
         </div>
@@ -50,7 +32,7 @@ function getMonthCalendarDates(monthDate: Date | undefined): Date[] {
 </template>
 
 <style scoped>
-.day-of-the-month {
+.day-of-the-month, .week-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 }
