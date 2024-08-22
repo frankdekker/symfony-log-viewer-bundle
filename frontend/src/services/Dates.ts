@@ -141,7 +141,7 @@ export function isSameMonth(date1: Date | undefined, date2: Date | undefined): b
 }
 
 export function getHours(): Date[] {
-    const date = new Date().setHours(0, 0, 0, 0);
+    const date  = new Date().setHours(0, 0, 0, 0);
     const hours = [];
     for (let i = 0; i < 24 * 4; i++) {
         hours.push(new Date(date + i * 15 * 60 * 1000));
@@ -173,4 +173,12 @@ export function getYears(range: number): number[] {
         years.push(year - i);
     }
     return years;
+}
+
+export function setDayOfTheYear(date: Date, year: number, month: number, day: number): Date {
+    const newDate = new Date(date);
+    newDate.setFullYear(year);
+    newDate.setMonth(month);
+    newDate.setDate(day);
+    return newDate;
 }

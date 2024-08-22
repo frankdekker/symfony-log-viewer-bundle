@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {format, getHours, getMonthCalendarDates, getMonths, getYears, isSameDay, isSameMonth} from '@/services/Dates';
+import TimeSelect from '@/components/datepicker/TimeSelect.vue';
+import {format, getHours, getMonthCalendarDates, getMonths, getYears, isSameDay, isSameMonth, setDayOfTheYear, setTime} from '@/services/Dates';
 import {ref, watch} from 'vue';
 
 const currentDate  = ref(new Date());
@@ -9,13 +10,8 @@ const emit = defineEmits(['change']);
 
 watch(selectedDate, () => currentDate.value = new Date(selectedDate.value));
 
-function updateModel(event: Event, field: 'time' | 'month' | 'year'): void {
+function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): void {
     switch (field) {
-        case 'time':
-            const hour   = parseInt((<HTMLButtonElement>event.target).dataset.hour ?? '0');
-            const minute = parseInt((<HTMLButtonElement>event.target).dataset.minute ?? '0');
-            currentDate.value!.setHours(hour, minute, 0, 0);
-            break;
         case 'month':
             currentDate.value!.setMonth(parseInt((<HTMLSelectElement>event.target).value));
             break;
@@ -61,20 +57,12 @@ function updateModel(event: Event, field: 'time' | 'month' | 'year'): void {
                     <button v-for="date in getMonthCalendarDates(currentDate)"
                             class="btn btn-outline-primary border-0"
                             :class="{'btn-outline-primary-active': isSameDay(date, selectedDate), 'opacity-50': isSameMonth(date, currentDate) === false}"
-                            @click="selectedDate = date">
+                            @click="selectedDate = setDayOfTheYear(selectedDate, date.getFullYear(), date.getMonth(), date.getDate())">
                         {{ date.getDate() }}
                     </button>
                 </div>
             </div>
-            <div class="time overflow-auto">
-                <button class="btn btn-outline-primary btn-sm border-0 d-block"
-                        v-for="hour in getHours()"
-                        :data-hour="hour.getHours()"
-                        :data-minute="hour.getMinutes()"
-                        @click="evt => updateModel(evt, 'time')">
-                    {{ hour.getHours().toString().padStart(2, '0') }}:{{ hour.getMinutes().toString().padStart(2, '0') }}
-                </button>
-            </div>
+            <time-select class="time" v-model="selectedDate" />
         </div>
 
         <div class="input-group mt-3">
