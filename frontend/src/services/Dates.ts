@@ -112,6 +112,16 @@ export function isSameMonth(date1: Date | undefined, date2: Date | undefined): b
     return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth();
 }
 
+export function getHours(): string[] {
+    const hours = [];
+    for (let i = 0; i < 24 * 4; i++) {
+        const hour   = Math.floor(i / 4);
+        const minute = i % 4 * 15;
+        hours.push(`${hour < 10 ? '0' : ''}${hour}:${minute < 10 ? '0' : ''}${minute}`);
+    }
+    return hours;
+}
+
 export function getMonths(): string[] {
     return [
         'January',

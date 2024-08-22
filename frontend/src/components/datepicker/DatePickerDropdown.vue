@@ -6,7 +6,7 @@ import RelativeDatePicker from '@/components/datepicker/RelativeDatePicker.vue';
 import {ref} from 'vue';
 
 const date      = ref(new Date());
-const activeTab = ref('relative');
+const activeTab = ref('absolute');
 
 </script>
 
@@ -14,21 +14,21 @@ const activeTab = ref('relative');
     <div class="dropdown-menu p-2 slv-dropdown-menu">
         <ul class="nav nav-tabs" style="width: 300px">
             <li class="nav-item">
-                <a class="nav-link" :class="{'active': activeTab === 'relative'}" href="javascript:" @click="activeTab='relative'">Relative</a>
+                <a class="nav-link" :class="{'active': activeTab === 'absolute'}" href="javascript:" @click="activeTab='absolute'">Absolute</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" :class="{'active': activeTab === 'absolute'}" href="javascript:" @click="activeTab='absolute'">Absolute</a>
+                <a class="nav-link" :class="{'active': activeTab === 'relative'}" href="javascript:" @click="activeTab='relative'">Relative</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" :class="{'active': activeTab === 'now'}" href="javascript:" @click="activeTab='now'">Now</a>
             </li>
         </ul>
 
-        <div class="panel1" v-show="activeTab === 'relative'">
-            <relative-date-picker v-model="date" label="Start date" @change="val => date = val"/>
-        </div>
-        <div class="panel2" v-show="activeTab === 'absolute'">
+        <div class="panel1" v-show="activeTab === 'absolute'">
             <absolute-date-picker v-model="date" label="Start date" @change="val => date = val"/>
+        </div>
+        <div class="panel2" v-show="activeTab === 'relative'">
+            <relative-date-picker v-model="date" label="Start date" @change="val => date = val"/>
         </div>
         <div class="panel3" v-show="activeTab === 'now'">
             <now-date-picker label="Start date" @change="val => date = val"/>
@@ -42,5 +42,6 @@ const activeTab = ref('relative');
 <style scoped>
 .slv-dropdown-menu {
     top: 37px;
+    right: 200px;
 }
 </style>

@@ -33,7 +33,7 @@ function onValueChanged(): void {
         <input type="number"
                ref="valueRef"
                class="flex-fill form-control"
-               value="1"
+               value="15"
                min="0"
                pattern="^[1-9][0-9]*$"
                @input="validate"
@@ -41,7 +41,7 @@ function onValueChanged(): void {
                aria-required="true">
         <select class="flex-fill form-control" ref="unitRef">
             <option value="s">Seconds ago</option>
-            <option value="i">Minutes ago</option>
+            <option value="i" selected>Minutes ago</option>
             <option value="h">Hours ago</option>
             <option value="d">Days ago</option>
             <option value="w">Weeks ago</option>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {getMonthCalendarDates, getMonths, getYears, isSameDay, isSameMonth} from '@/services/Dates';
+import {getHours, getMonthCalendarDates, getMonths, getYears, isSameDay, isSameMonth} from '@/services/Dates';
 import {ref, watch} from 'vue';
 
 const currentDate  = ref(new Date());
@@ -9,7 +9,7 @@ const emit = defineEmits(['change']);
 
 watch(selectedDate, () => currentDate.value = new Date(selectedDate.value));
 
-function updateModel(event: Event, field: 'month' | 'year'): void {
+function updateModel(event: Event, field: 'time' | 'month' | 'year'): void {
     switch (field) {
         case 'month':
             currentDate.value!.setMonth(parseInt((<HTMLSelectElement>event.target).value));
@@ -45,19 +45,31 @@ function updateModel(event: Event, field: 'month' | 'year'): void {
             </button>
         </div>
 
-        <div class="week-days">
-            <div v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" class="text-center">
-                {{ day }}
+        <div class="days-time">
+            <div class="days">
+                <div class="week-days">
+                    <div v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" class="text-center">
+                        {{ day }}
+                    </div>
+                </div>
+                <div class="day-of-the-month">
+                    <button v-for="date in getMonthCalendarDates(currentDate)"
+                            class="btn btn-outline-primary border-0"
+                            :class="{'btn-outline-primary-active': isSameDay(date, selectedDate), 'opacity-50': isSameMonth(date, currentDate) === false}"
+                            @click="selectedDate = date">
+                        {{ date.getDate() }}
+                    </button>
+                </div>
             </div>
-        </div>
-
-        <div class="day-of-the-month">
-            <button v-for="date in getMonthCalendarDates(currentDate)"
-                    class="btn btn-outline-primary border-0"
-                    :class="{'btn-outline-primary-active': isSameDay(date, selectedDate), 'opacity-50': isSameMonth(date, currentDate) === false}"
-                    @click="selectedDate = date">
-                {{ date.getDate() }}
-            </button>
+            <div class="time overflow-auto">
+                <button class="btn btn-outline-primary btn-sm border-0 d-block"
+                        v-for="hour in getHours()"
+                        :data-time="hour"
+                        @click="evt => updateModel(evt, 'time')"
+                >
+                    {{ hour }}
+                </button>
+            </div>
         </div>
 
         <div class="input-group mt-3">
@@ -68,6 +80,16 @@ function updateModel(event: Event, field: 'month' | 'year'): void {
 </template>
 
 <style scoped>
+.time {
+    max-height: 204px;
+}
+
+.days-time {
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    grid-gap: 5px;
+}
+
 .month-year {
     display: grid;
     grid-gap: 5px;
