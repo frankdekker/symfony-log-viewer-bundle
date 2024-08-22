@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {getHours, getMonthCalendarDates, getMonths, getYears, isSameDay, isSameMonth} from '@/services/Dates';
+import {format, getHours, getMonthCalendarDates, getMonths, getYears, isSameDay, isSameMonth} from '@/services/Dates';
 import {ref, watch} from 'vue';
 
 const currentDate  = ref(new Date());
@@ -11,6 +11,11 @@ watch(selectedDate, () => currentDate.value = new Date(selectedDate.value));
 
 function updateModel(event: Event, field: 'time' | 'month' | 'year'): void {
     switch (field) {
+        case 'time':
+            const hour   = parseInt((<HTMLButtonElement>event.target).dataset.hour ?? '0');
+            const minute = parseInt((<HTMLButtonElement>event.target).dataset.minute ?? '0');
+            currentDate.value!.setHours(hour, minute, 0, 0);
+            break;
         case 'month':
             currentDate.value!.setMonth(parseInt((<HTMLSelectElement>event.target).value));
             break;
@@ -64,17 +69,20 @@ function updateModel(event: Event, field: 'time' | 'month' | 'year'): void {
             <div class="time overflow-auto">
                 <button class="btn btn-outline-primary btn-sm border-0 d-block"
                         v-for="hour in getHours()"
-                        :data-time="hour"
-                        @click="evt => updateModel(evt, 'time')"
-                >
-                    {{ hour }}
+                        :data-hour="hour.getHours()"
+                        :data-minute="hour.getMinutes()"
+                        @click="evt => updateModel(evt, 'time')">
+                    {{ hour.getHours().toString().padStart(2, '0') }}:{{ hour.getMinutes().toString().padStart(2, '0') }}
                 </button>
             </div>
         </div>
 
         <div class="input-group mt-3">
             <span class="input-group-text" id="absolute-date">{{ label }}</span>
-            <input type="datetime-local" class="form-control" aria-describedby="absolute-date" value="06-12-2018T19:30">
+            <input type="datetime-local"
+                   class="form-control form-control-sm"
+                   aria-describedby="absolute-date"
+                   :value="format('Y-m-dTH:i', selectedDate)">
         </div>
     </div>
 </template>

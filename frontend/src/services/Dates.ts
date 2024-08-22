@@ -75,6 +75,34 @@ export function formatDateTime(date: Date | undefined): string {
     return `${formattedDate} @ ${formattedTime}`;
 }
 
+export function format(format: string, date: Date | undefined): string {
+    if (date === undefined) {
+        return '';
+    }
+
+    let result = '';
+    for (let i = 0; i < format.length; i++) {
+        const char = format[i];
+        if (char === 'Y') {
+            result += date.getFullYear();
+        } else if (char === 'm') {
+            result += (date.getMonth() + 1).toString().padStart(2, '0');
+        } else if (char === 'd') {
+            result += date.getDate().toString().padStart(2, '0');
+        } else if (char === 'H') {
+            result += date.getHours();
+        } else if (char === 'i') {
+            result += date.getMinutes().toString().padStart(2, '0');
+        } else if (char === 's') {
+            result += date.getSeconds().toString().padStart(2, '0');
+        } else {
+            result += char;
+        }
+    }
+
+    return result;
+}
+
 export function getFirstDayOfWeek(date: Date): Date {
     const firstDayOfWeek = new Date(date);
     firstDayOfWeek.setHours(12, 0, 0, 0);
@@ -112,12 +140,11 @@ export function isSameMonth(date1: Date | undefined, date2: Date | undefined): b
     return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth();
 }
 
-export function getHours(): string[] {
+export function getHours(): Date[] {
+    const date = new Date().setHours(0, 0, 0, 0);
     const hours = [];
     for (let i = 0; i < 24 * 4; i++) {
-        const hour   = Math.floor(i / 4);
-        const minute = i % 4 * 15;
-        hours.push(`${hour < 10 ? '0' : ''}${hour}:${minute < 10 ? '0' : ''}${minute}`);
+        hours.push(new Date(date + i * 15 * 60 * 1000));
     }
     return hours;
 }

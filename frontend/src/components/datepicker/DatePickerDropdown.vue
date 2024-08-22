@@ -12,7 +12,7 @@ const activeTab = ref('absolute');
 
 <template>
     <div class="dropdown-menu p-2 slv-dropdown-menu">
-        <ul class="nav nav-tabs" style="width: 300px">
+        <ul class="nav nav-tabs w-100">
             <li class="nav-item">
                 <a class="nav-link" :class="{'active': activeTab === 'absolute'}" href="javascript:" @click="activeTab='absolute'">Absolute</a>
             </li>
