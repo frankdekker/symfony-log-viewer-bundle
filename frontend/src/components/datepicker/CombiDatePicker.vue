@@ -2,31 +2,16 @@
 import AbsoluteDatePicker from '@/components/datepicker/AbsoluteDatePicker.vue';
 import NowDatePicker from '@/components/datepicker/NowDatePicker.vue';
 import RelativeDatePicker from '@/components/datepicker/RelativeDatePicker.vue';
-import {formatDateTime} from '@/services/Dates';
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 
-const date = defineModel<Date>({required: true});
-defineProps<{ label: string }>();
+const date      = defineModel<Date>({required: true});
+const props     = defineProps<{ label: string, activeTab: 'absolute' | 'relative' | 'now' }>();
 const activeTab = ref('absolute');
 
-function parseDate(evt: Event, update: boolean): void {
-    const el         = <HTMLInputElement>evt.target;
-    const dateString = el.value.trim();
-    const timestamp  = Date.parse(dateString.replace(/\s*@\s*/, ' '));
-
-    if (isNaN(timestamp)) {
-        el.classList.toggle('is-invalid', true);
-        el.setCustomValidity('Invalid date');
-        el.reportValidity();
-        return;
-    }
-
-    el.classList.toggle('is-invalid', false);
-    el.setCustomValidity('');
-    if (update) {
-        date.value = new Date(timestamp);
-    }
-}
+onMounted(() => {
+    activeTab.value = props.activeTab;
+    console.log('setting props.activeTab', props.activeTab);
+});
 </script>
 
 <template>
@@ -51,15 +36,6 @@ function parseDate(evt: Event, update: boolean): void {
         </div>
         <div class="panel3" v-show="activeTab === 'now'">
             <now-date-picker v-model="date" :label="label"/>
-        </div>
-        <div class="input-group mb-2 mt-3">
-            <span class="input-group-text" id="label-date">{{ label }}</span>
-            <input type="text"
-                   class="form-control"
-                   :value="formatDateTime(date)"
-                   aria-describedby="label-date"
-                   @change="evt => parseDate(evt, true)"
-                   @input="evt => parseDate(evt, false)">
         </div>
     </div>
 </template>
