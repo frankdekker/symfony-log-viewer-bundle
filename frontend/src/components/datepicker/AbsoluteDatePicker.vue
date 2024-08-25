@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import TimeSelect from '@/components/datepicker/TimeSelect.vue';
-import {format, getMonthCalendarDates, getMonths, isSameDay, isSameMonth, setDayOfTheYear} from '@/services/Dates';
+import {getMonthCalendarDates, getMonths, isSameDay, isSameMonth, setDayOfTheYear} from '@/services/Dates';
 import {ref, watch} from 'vue';
 
 const selectedDate = defineModel<Date>({required: true});
-defineProps<{ label: string }>();
-
 const currentDate   = ref(new Date());
 const calendarDates = ref<Date[]>(getMonthCalendarDates(currentDate.value));
 

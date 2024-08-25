@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import {formatDateTime, getRelativeDate} from '@/services/Dates';
+import {getRelativeDate} from '@/services/Dates';
 import Numbers from '@/services/Numbers';
 import {ref} from 'vue';
 
 const dateModel = defineModel<Date>();
-defineProps<{ label: string }>();
-const emit = defineEmits(['change']);
-
-const valueRef = ref<HTMLInputElement>();
-const unitRef  = ref<HTMLSelectElement>();
+const valueRef  = ref<HTMLInputElement>();
+const unitRef   = ref<HTMLSelectElement>();
 
 function validate(payload: Event): void {
     const el = <HTMLInputElement>payload.target;
@@ -23,16 +20,15 @@ function onValueChanged(): void {
     }
 
     dateModel.value = getRelativeDate(Numbers.parseInt(valueInput.value), unitInput.value, true);
-    emit('change', dateModel.value);
 }
 
 </script>
 
 <template>
-    <div class="d-flex flex-row mt-3" @input="onValueChanged" @change="onValueChanged">
+    <div class="d-flex flex-row mt-5 mb-5" @input="onValueChanged" @change="onValueChanged">
         <input type="number"
                ref="valueRef"
-               class="flex-fill form-control"
+               class="flex-fill form-control me-1 value-input"
                value="15"
                min="0"
                pattern="^[1-9][0-9]*$"
@@ -50,3 +46,9 @@ function onValueChanged(): void {
         </select>
     </div>
 </template>
+
+<style scoped>
+.value-input {
+    width: 100px;
+}
+</style>
