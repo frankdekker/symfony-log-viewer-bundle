@@ -97,6 +97,9 @@ jobs:
       - name: Run eslint
         run: cd frontend && npm run lint
 
+      - name: Run tests
+        run: cd frontend && npm run test:unit
+
   build-assets-check:
     name: Build assets
     runs-on: ubuntu-latest
