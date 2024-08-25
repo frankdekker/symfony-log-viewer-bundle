@@ -12,16 +12,9 @@ use Throwable;
 class ResponseFactory
 {
     private const ALLOWED_HEADERS = [
-        'accept-ranges',
-        'cache-control',
-        'connection',
         'content-disposition',
         'content-length',
-        'content-type',
-        'date',
-        'expires',
-        'last-modified',
-        'transfer-encoding',
+        'content-type'
     ];
 
     /**
