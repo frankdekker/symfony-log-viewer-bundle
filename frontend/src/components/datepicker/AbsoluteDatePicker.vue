@@ -41,12 +41,13 @@ function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): vo
                     {{ monthName }}
                 </option>
             </select>
-            <input type="number" class="form-control form-control-sm"
+            <input type="number"
+                   class="form-control form-control-sm"
                    @input="evt => updateModel(evt, 'year')"
                    required
                    min="1000"
                    max="9999"
-                   :value="currentDate.getFullYear()" />
+                   :value="currentDate.getFullYear()"/>
             <button class="btn btn-outline-primary btn-sm border-0"
                     @click="currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1, 12, 0 ,0)">
                 <i class="bi bi-chevron-right"></i>
@@ -56,7 +57,7 @@ function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): vo
         <div class="days-time">
             <div class="days">
                 <div class="week-days">
-                    <div v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" class="text-center">
+                    <div v-for="day in ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']" class="text-center">
                         {{ day }}
                     </div>
                 </div>
@@ -70,14 +71,6 @@ function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): vo
                 </div>
             </div>
             <time-select class="time" :class="{'time-6-weeks': calendarDates.length > 35}" v-model="selectedDate"/>
-        </div>
-
-        <div class="input-group mt-3">
-            <span class="input-group-text" id="absolute-date">{{ label }}</span>
-            <input type="datetime-local"
-                   class="form-control form-control-sm"
-                   aria-describedby="absolute-date"
-                   :value="format('Y-m-dTH:i', selectedDate)">
         </div>
     </div>
 </template>

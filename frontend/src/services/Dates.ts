@@ -69,8 +69,8 @@ export function formatDateTime(date: Date | undefined): string {
         return '';
     }
 
-    const formattedDate = date.toLocaleDateString(undefined, {year: 'numeric', month: 'short', day: 'numeric'})
-    const formattedTime = date.toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit', second: '2-digit'})
+    const formattedDate = date.toLocaleDateString(undefined, {year: 'numeric', month: 'short', day: 'numeric'});
+    const formattedTime = format('H:i:s.u', date);
 
     return `${formattedDate} @ ${formattedTime}`;
 }
@@ -95,6 +95,8 @@ export function format(format: string, date: Date | undefined): string {
             result += date.getMinutes().toString().padStart(2, '0');
         } else if (char === 's') {
             result += date.getSeconds().toString().padStart(2, '0');
+        } else if (char === 'u') {
+            result += date.getMilliseconds().toString().padStart(3, '0');
         } else {
             result += char;
         }
@@ -133,7 +135,7 @@ export function getMonthCalendarDates(monthDate: Date | undefined): Date[] {
     const days            = getDaysInMonth(monthDate) + getDayOfWeek(firstDayOfMonth) - getDayOfWeek(firstDayOfWeek);
     const calendarDays    = days <= 35 ? 35 : 42;
 
-    const dates: Date[]   = [];
+    const dates: Date[] = [];
     for (let i = 0; i < calendarDays; i++) {
         const nextDate = new Date(firstDayOfWeek);
         nextDate.setDate(firstDayOfWeek.getDate() + i);

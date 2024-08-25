@@ -49,8 +49,4 @@ function onValueChanged(): void {
             <option value="y">Years ago</option>
         </select>
     </div>
-    <div class="input-group mb-2 mt-3">
-        <span class="input-group-text" id="relative-date">{{ label }}</span>
-        <input type="text" class="form-control" readonly aria-readonly="true" :value="formatDateTime(dateModel)" aria-describedby="relative-date">
-    </div>
 </template>

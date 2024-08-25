@@ -7,6 +7,7 @@ function onUpdate(date: Date): void {
     selectedDate.value.setHours(date.getHours());
     selectedDate.value.setMinutes(date.getMinutes());
     selectedDate.value.setSeconds(0);
+    selectedDate.value.setMilliseconds(0);
     selectedDate.value = new Date(selectedDate.value);
 }
 </script>
