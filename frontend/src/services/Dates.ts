@@ -115,15 +115,25 @@ export function getFirstDayOfMonth(date: Date): Date {
 }
 
 export function getMonthCalendarDates(monthDate: Date | undefined): Date[] {
+    const daysInMonth     = getDaysInMonth(monthDate ?? new Date());
     const firstDayOfMonth = getFirstDayOfMonth(monthDate ?? new Date());
     const firstDayOfWeek  = getFirstDayOfWeek(firstDayOfMonth);
     const dates: Date[]   = [];
+    const days = daysInMonth + (firstDayOfMonth.getDay() - firstDayOfWeek.getDay());
+    console.log('daysInMonth', daysInMonth);
+    console.log('firstDayOfMonth', firstDayOfMonth.getDay());
+    console.log('firstDayOfWeek', firstDayOfWeek.getDay());
+    console.log('days', days);
     for (let i = 0; i < 35; i++) {
         const nextDate = new Date(firstDayOfWeek);
         nextDate.setDate(firstDayOfWeek.getDate() + i);
         dates.push(nextDate);
     }
     return dates;
+}
+
+export function getDaysInMonth(date: Date): number {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 }
 
 export function isSameDay(date1: Date | undefined, date2: Date | undefined): boolean {
@@ -164,15 +174,6 @@ export function getMonths(): string[] {
         'November',
         'December'
     ];
-}
-
-export function getYears(range: number): number[] {
-    const year            = new Date().getFullYear();
-    const years: number[] = [];
-    for (let i = 0; i < range; i++) {
-        years.push(year - i);
-    }
-    return years;
 }
 
 export function setDayOfTheYear(date: Date, year: number, month: number, day: number): Date {

@@ -14,6 +14,7 @@ function onUpdate(date: Date): void {
 <template>
     <div class="overflow-auto">
         <button class="btn btn-outline-primary btn-sm border-0 d-block"
+                :class="{'btn-outline-primary-active': selectedDate.getHours() === hour.getHours() && selectedDate.getMinutes() === hour.getMinutes()}"
                 v-for="hour in getHours()"
                 :data-hour="hour.getHours()"
                 :data-minute="hour.getMinutes()"

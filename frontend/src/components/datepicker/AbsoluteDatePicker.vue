@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TimeSelect from '@/components/datepicker/TimeSelect.vue';
-import {format, getHours, getMonthCalendarDates, getMonths, getYears, isSameDay, isSameMonth, setDayOfTheYear, setTime} from '@/services/Dates';
+import {format, getMonthCalendarDates, getMonths, isSameDay, isSameMonth, setDayOfTheYear} from '@/services/Dates';
 import {ref, watch} from 'vue';
 
 const currentDate  = ref(new Date());
@@ -35,11 +35,9 @@ function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): vo
                     {{ monthName }}
                 </option>
             </select>
-            <select class="form-control form-control-sm" @change="evt => updateModel(evt, 'year')">
-                <option v-for="year in getYears(10)" :value="year" :selected="year === currentDate.getFullYear()">
-                    {{ year }}
-                </option>
-            </select>
+            <input type="number" class="form-control form-control-sm"
+                   @input="evt => updateModel(evt, 'year')"
+                   :value="currentDate.getFullYear()" />
             <button class="btn btn-outline-primary btn-sm border-0"
                     @click="currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1, 12, 0 ,0)">
                 <i class="bi bi-chevron-right"></i>
@@ -76,10 +74,6 @@ function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): vo
 </template>
 
 <style scoped>
-.time {
-    max-height: 204px;
-}
-
 .days-time {
     display: grid;
     grid-template-columns: 1fr 60px;
@@ -90,6 +84,7 @@ function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): vo
     display: grid;
     grid-gap: 5px;
     grid-template-columns: auto 1fr auto auto;
+    grid-template-rows: 1fr minmax(0, 1fr);
 }
 
 .day-of-the-month, .week-days {
