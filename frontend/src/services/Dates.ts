@@ -103,10 +103,22 @@ export function format(format: string, date: Date | undefined): string {
     return result;
 }
 
+/**
+ * Get the day of the week, offset as monday as first day of the week
+ */
+export function getDayOfWeek(date: Date): number {
+    return (date.getDay() + 6) % 7;
+}
+
 export function getFirstDayOfWeek(date: Date): Date {
     const firstDayOfWeek = new Date(date);
     firstDayOfWeek.setHours(12, 0, 0, 0);
-    firstDayOfWeek.setDate(date.getDate() - date.getDay() + 1);
+    // sunday
+    if (date.getDay() === 0) {
+        firstDayOfWeek.setDate(date.getDate() - 6);
+    } else {
+        firstDayOfWeek.setDate(date.getDate() - date.getDay() + 1);
+    }
     return firstDayOfWeek;
 }
 
@@ -115,16 +127,14 @@ export function getFirstDayOfMonth(date: Date): Date {
 }
 
 export function getMonthCalendarDates(monthDate: Date | undefined): Date[] {
-    const daysInMonth     = getDaysInMonth(monthDate ?? new Date());
-    const firstDayOfMonth = getFirstDayOfMonth(monthDate ?? new Date());
+    monthDate ??= new Date();
+    const firstDayOfMonth = getFirstDayOfMonth(monthDate);
     const firstDayOfWeek  = getFirstDayOfWeek(firstDayOfMonth);
+    const days            = getDaysInMonth(monthDate) + getDayOfWeek(firstDayOfMonth) - getDayOfWeek(firstDayOfWeek);
+    const calendarDays    = days <= 35 ? 35 : 42;
+
     const dates: Date[]   = [];
-    const days = daysInMonth + (firstDayOfMonth.getDay() - firstDayOfWeek.getDay());
-    console.log('daysInMonth', daysInMonth);
-    console.log('firstDayOfMonth', firstDayOfMonth.getDay());
-    console.log('firstDayOfWeek', firstDayOfWeek.getDay());
-    console.log('days', days);
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < calendarDays; i++) {
         const nextDate = new Date(firstDayOfWeek);
         nextDate.setDate(firstDayOfWeek.getDate() + i);
         dates.push(nextDate);
