@@ -16,7 +16,7 @@ describe('Dates', () => {
         test.each(
             [[0, 31], [1, 28], [2, 31], [3, 30], [4, 31], [5, 30], [6, 31], [7, 31], [8, 30], [9, 31], [10, 30], [11, 31]]
         )('should days in the month (%i/%i)', (month, days) => {
-            const date     = new Date(2021, month, 15, 12, 0, 0, 0);
+            const date     = new Date(2021, month, 1, 12, 0, 0, 0);
             expect(getDaysInMonth(date)).toEqual(days);
         });
     });
