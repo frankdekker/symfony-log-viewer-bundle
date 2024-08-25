@@ -47,6 +47,7 @@ describe('Dates', () => {
             expect(dates.length).toEqual(35);
             // 29-jul-2024
             expect(dates[0]).toEqual(new Date(2024, 6, 29, 12, 0, 0, 0));
+            // 2-sep-2024
             expect(dates[34]).toEqual(new Date(2024, 8, 1, 12, 0, 0, 0));
         });
         test('get days in the month (september 2024)', () => {
