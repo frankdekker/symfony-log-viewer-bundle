@@ -7,12 +7,11 @@ import {reactive, ref, watch} from 'vue';
 const expanded = ref(false);
 defineProps<{ value: string }>();
 const emit    = defineEmits(['input']);
-const endDate = reactive<DateSelection>({mode: 'now', date: new Date(), formatted: 'now'});
+const endDate = reactive<DateSelection>({date: new Date(), formatted: 'now'});
 
 watch(endDate, () => {
-    console.log('selection', endDate.date, endDate.mode, endDate.formatted);
+    console.log('selection', endDate.date, endDate.formatted);
 });
-
 </script>
 
 <template>
@@ -21,7 +20,7 @@ watch(endDate, () => {
             <i class="bi bi-calendar3"></i>
             {{ value }}
         </button>
-        <date-picker-dropdown v-show="expanded" v-model="endDate" label="End date"/>
+        <date-picker-dropdown v-show="expanded" active-tab="now" v-model="endDate" label="End date"/>
     </div>
 </template>
 

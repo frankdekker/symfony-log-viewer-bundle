@@ -3,9 +3,13 @@ import AbsoluteDatePicker from '@/components/datepicker/AbsoluteDatePicker.vue';
 import NowDatePicker from '@/components/datepicker/NowDatePicker.vue';
 import RelativeDatePicker from '@/components/datepicker/RelativeDatePicker.vue';
 import type DateSelection from '@/models/DateSelection';
+import {onMounted, ref} from 'vue';
 
 const selection = defineModel<DateSelection>({required: true});
-defineProps<{ label: string }>();
+const props     = defineProps<{ label: string, activeTab: 'absolute' | 'relative' | 'now' }>();
+const activeTab = ref<'absolute' | 'relative' | 'now'>('absolute');
+
+onMounted(() => activeTab.value = props.activeTab);
 
 </script>
 
@@ -13,30 +17,24 @@ defineProps<{ label: string }>();
     <div class="combi-date-picker">
         <ul class="nav nav-tabs w-100">
             <li class="nav-item">
-                <a class="nav-link"
-                   :class="{'active': selection.mode === 'absolute'}"
-                   href="javascript:"
-                   @click="selection.mode='absolute'">Absolute</a>
+                <a class="nav-link" :class="{'active': activeTab === 'absolute'}" href="javascript:" @click="activeTab='absolute'">Absolute</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"
-                   :class="{'active': selection.mode === 'relative'}"
-                   href="javascript:"
-                   @click="selection.mode='relative'">Relative</a>
+                <a class="nav-link" :class="{'active': activeTab === 'relative'}" href="javascript:" @click="activeTab='relative'">Relative</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" :class="{'active': selection.mode === 'now'}" href="javascript:" @click="selection.mode='now'">Now</a>
+                <a class="nav-link" :class="{'active': activeTab === 'now'}" href="javascript:" @click="activeTab='now'">Now</a>
             </li>
         </ul>
 
-        <div class="panel1" v-show="selection.mode === 'absolute'">
-            <absolute-date-picker v-model="selection.date"/>
+        <div class="panel1" v-if="activeTab === 'absolute'">
+            <absolute-date-picker v-model="selection"/>
         </div>
-        <div class="panel2" v-show="selection.mode === 'relative'">
-            <relative-date-picker v-model="selection.date"/>
+        <div class="panel2" v-if="activeTab === 'relative'">
+            <relative-date-picker v-model="selection"/>
         </div>
-        <div class="panel3" v-show="selection.mode === 'now'">
-            <now-date-picker v-model="selection.date" :label="label"/>
+        <div class="panel3" v-if="activeTab === 'now'">
+            <now-date-picker v-model="selection" :label="label"/>
         </div>
     </div>
 </template>

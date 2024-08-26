@@ -1,16 +1,22 @@
 <script setup lang="ts">
 import TimeSelect from '@/components/datepicker/TimeSelect.vue';
-import {getMonthCalendarDates, getMonths, isSameDay, isSameMonth, setDayOfTheYear} from '@/services/Dates';
-import {ref, watch} from 'vue';
+import type DateSelection from '@/models/DateSelection';
+import {formatDateTime, getMonthCalendarDates, getMonths, isSameDay, isSameMonth, setDayOfTheYear} from '@/services/Dates';
+import {onMounted, ref, watch} from 'vue';
 
-const selectedDate = defineModel<Date>({required: true});
-const currentDate   = ref(new Date());
+const selected      = defineModel<DateSelection>({required: true});
+const currentDate   = ref(new Date()); // the current date for the month and year selection
+const preselected   = ref(new Date()); // an internal watch when "selected" date is set
 const calendarDates = ref<Date[]>(getMonthCalendarDates(currentDate.value));
 
-watch(selectedDate, () => currentDate.value = new Date(selectedDate.value));
+watch(selected, () => currentDate.value = new Date(selected.value.date));
 watch(currentDate, () => calendarDates.value = getMonthCalendarDates(currentDate.value));
+watch(preselected, () => {
+    selected.value.date      = preselected.value;
+    selected.value.formatted = formatDateTime(preselected.value)
+});
 
-function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): void {
+function update(event: Event, field: 'month' | 'year'): void {
     switch (field) {
         case 'month':
             currentDate.value!.setMonth(parseInt((<HTMLSelectElement>event.target).value));
@@ -25,6 +31,8 @@ function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): vo
     }
     currentDate.value = new Date(currentDate.value!);
 }
+// when tab is activated, set the format to the current selected date
+onMounted(() => selected.value.formatted = formatDateTime(selected.value.date));
 </script>
 
 <template>
@@ -34,14 +42,14 @@ function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): vo
                     @click="currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1, 12, 0 ,0)">
                 <i class="bi bi-chevron-left"></i>
             </button>
-            <select class="form-control form-control-sm" @change="evt => updateModel(evt, 'month')">
+            <select class="form-control form-control-sm" @change="evt => update(evt, 'month')">
                 <option v-for="(monthName, month) in getMonths()" :value="month" :selected="month === currentDate.getMonth()">
                     {{ monthName }}
                 </option>
             </select>
             <input type="number"
                    class="form-control form-control-sm"
-                   @input="evt => updateModel(evt, 'year')"
+                   @input="evt => update(evt, 'year')"
                    required
                    min="1000"
                    max="9999"
@@ -62,13 +70,13 @@ function updateModel(event: Event, field: 'time' | 'day' | 'month' | 'year'): vo
                 <div class="day-of-the-month">
                     <button v-for="date in calendarDates"
                             class="btn btn-outline-primary border-0"
-                            :class="{'btn-outline-primary-active': isSameDay(date, selectedDate), 'opacity-50': isSameMonth(date, currentDate) === false}"
-                            @click="selectedDate = setDayOfTheYear(selectedDate, date.getFullYear(), date.getMonth(), date.getDate())">
+                            :class="{'btn-outline-primary-active': isSameDay(date, selected.date), 'opacity-50': isSameMonth(date, currentDate) === false}"
+                            @click="preselected = setDayOfTheYear(selected.date, date.getFullYear(), date.getMonth(), date.getDate())">
                         {{ date.getDate() }}
                     </button>
                 </div>
             </div>
-            <time-select class="time" :class="{'time-6-weeks': calendarDates.length > 35}" v-model="selectedDate"/>
+            <time-select class="time" :class="{'time-6-weeks': calendarDates.length > 35}" v-model="preselected"/>
         </div>
     </div>
 </template>
