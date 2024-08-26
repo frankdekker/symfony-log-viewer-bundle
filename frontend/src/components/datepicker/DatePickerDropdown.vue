@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import CombiDatePicker from '@/components/datepicker/CombiDatePicker.vue';
 import DateInput from '@/components/datepicker/DateInput.vue';
-import {ref} from 'vue';
+import type DateSelection from '@/models/DateSelection';
 
-const endDate = ref<Date>(new Date());
+const selection = defineModel<DateSelection>({required: true});
+defineProps<{ label: string }>();
+
 </script>
 
 <template>
     <div class="dropdown-menu p-2 slv-dropdown-menu">
-        <combi-date-picker label="End date" active-tab="now" v-model="endDate"/>
-        <date-input label="End date" v-model="endDate"/>
+        <combi-date-picker :label="label" :active-tab="selection.mode" v-model="selection"/>
+        <date-input :label="label" v-model="selection.date"/>
     </div>
 </template>
 

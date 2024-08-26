@@ -1,11 +1,17 @@
 <script setup lang="ts">
 
 import DatePickerDropdown from '@/components/datepicker/DatePickerDropdown.vue';
-import {ref} from 'vue';
+import type DateSelection from '@/models/DateSelection';
+import {reactive, ref, watch} from 'vue';
 
 const expanded = ref(false);
 defineProps<{ value: string }>();
-const emit = defineEmits(['input']);
+const emit    = defineEmits(['input']);
+const endDate = reactive<DateSelection>({mode: 'now', date: new Date(), formatted: 'now'});
+
+watch(endDate, () => {
+    console.log('selection', endDate.date, endDate.mode, endDate.formatted);
+});
 
 </script>
 
@@ -15,7 +21,7 @@ const emit = defineEmits(['input']);
             <i class="bi bi-calendar3"></i>
             {{ value }}
         </button>
-        <date-picker-dropdown v-show="expanded"/>
+        <date-picker-dropdown v-show="expanded" v-model="endDate" label="End date"/>
     </div>
 </template>
 
