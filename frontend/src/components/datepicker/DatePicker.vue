@@ -7,10 +7,10 @@ import {reactive, ref, watch} from 'vue';
 const expanded = ref(false);
 defineProps<{ value: string }>();
 const emit    = defineEmits(['input']);
-const endDate = reactive<DateSelection>({date: new Date(), formatted: 'now'});
+const startDate = reactive<DateSelection>({date: new Date(), formatted: ''});
 
-watch(endDate, () => {
-    console.log('selection', endDate.date, endDate.formatted);
+watch(startDate, () => {
+    console.log('selection', startDate.date, startDate.formatted);
 });
 </script>
 
@@ -18,9 +18,9 @@ watch(endDate, () => {
     <div>
         <button class="slv-date-picker-btn form-control dropdown-toggle" type="button" :aria-expanded="expanded" @click="expanded = !expanded">
             <i class="bi bi-calendar3"></i>
-            {{ value }}
+            {{ startDate.formatted }}
         </button>
-        <date-picker-dropdown v-show="expanded" active-tab="now" v-model="endDate" label="End date"/>
+        <date-picker-dropdown v-if="expanded" :class="{'d-block': expanded}" active-tab="relative" v-model="startDate" label="Start date"/>
     </div>
 </template>
 
