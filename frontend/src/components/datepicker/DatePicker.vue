@@ -15,7 +15,7 @@ const emit = defineEmits(['input']);
             <i class="bi bi-calendar3"></i>
             {{ value }}
         </button>
-        <date-picker-dropdown :class="{'d-block': expanded}"/>
+        <date-picker-dropdown v-show="expanded"/>
     </div>
 </template>
 
