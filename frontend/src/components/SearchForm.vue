@@ -5,6 +5,7 @@ import {ref} from 'vue';
 
 const searchRef = ref<HTMLInputElement>();
 const query     = defineModel<string>('query');
+const between   = defineModel<string>('between', {default: ''});
 const sort      = defineModel<string>('sort');
 const perPage   = defineModel<string>('perPage');
 const emit      = defineEmits(['navigate']);
@@ -33,7 +34,7 @@ defineExpose({focus});
                @keyup.enter="emit('navigate')"
                v-model="query">
 
-        <date-picker class="slv-date-picker" value="foo" @change="emit('navigate')"/>
+        <date-picker class="slv-date-picker" v-model="between" @change="emit('navigate')"/>
 
         <select class="slv-menu-sort-direction form-control"
                 aria-label="Sort direction"

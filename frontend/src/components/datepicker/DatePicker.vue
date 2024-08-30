@@ -3,30 +3,45 @@
 import DatePickerDropdown from '@/components/datepicker/DatePickerDropdown.vue';
 import type DateSelection from '@/models/DateSelection';
 import {format} from '@/services/Dates';
-import {reactive, ref} from 'vue';
+import {reactive, ref, watch} from 'vue';
+
+const between = defineModel<string>();
+const emit    = defineEmits(['change']);
 
 const active       = ref(false);
 const dateExpanded = ref<'none' | 'startDate' | 'endDate'>('none');
-defineProps<{ value: string }>();
-const emit    = defineEmits(['change']);
-let startDate = reactive<DateSelection>({date: new Date(), formatted: ''});
-let endDate   = reactive<DateSelection>({date: new Date(), formatted: 'now'});
+let startDate      = reactive<DateSelection>({date: new Date(), formatted: ''});
+let endDate        = reactive<DateSelection>({date: new Date(), formatted: 'now'});
+
+watch(between, () => {
+    const match = (between.value ?? '').match(/(.*)~(.*)/);
+    if (match !== null && match.length === 3) {
+        const start         = match[1];
+        const end           = match[2];
+        startDate.date      = start === 'now' ? new Date() : new Date(start);
+        startDate.formatted = start === 'now' ? 'now' : 'absolute';
+        endDate.date        = end === 'now' ? new Date() : new Date(end);
+        endDate.formatted   = end === 'now' ? 'now' : 'absolute';
+    }
+});
 
 function onApply(): void {
     dateExpanded.value   = 'none';
     const formattedStart = startDate.formatted === 'now' ? 'now' : format('Y-m-d H:i:s', startDate.date);
     const formattedEnd   = startDate.formatted === 'now' ? 'now' : format('Y-m-d H:i:s', endDate.date);
-    emit('change', `${formattedStart}~${formattedEnd}`);
+    between.value        = `${formattedStart}~${formattedEnd}`;
+    emit('change');
 }
 
 function onClear(): void {
-    dateExpanded.value = 'none';
-    startDate.date = new Date();
+    dateExpanded.value  = 'none';
+    startDate.date      = new Date();
     startDate.formatted = '';
-    endDate.date = new Date();
-    endDate.formatted = 'now';
-    active.value       = false;
-    emit('change', '');
+    endDate.date        = new Date();
+    endDate.formatted   = 'now';
+    active.value        = false;
+    between.value       = '';
+    emit('change');
 }
 </script>
 
