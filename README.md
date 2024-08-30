@@ -81,7 +81,7 @@ Once the installation is complete, you will be able to access **Log Viewer** dir
 By default, it is available at: `/log-viewer` on your domain.
 
 ## Configuration
-Default configuration: [(Configuration reference)](docs/configuration-reference.md)
+Default configuration: [(Configuration reference)](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuration-reference.md)
 ```yaml
 fd_log_viewer:
     home_route: null
@@ -109,12 +109,12 @@ fd_log_viewer:
 ```
 
 Read more:
-- [Adding more monolog directories](docs/adding-more-monolog-directories.md)
-- [Modifying monolog configuration](docs/modifying-monolog-configuration.md)
-- [Disabling the default monolog configuration](docs/disabling-default-monolog-configuration.md)
-- [Adding additional log files](docs/adding-additional-log-files.md)
-- [Adding apache logs](docs/configuring-apache-logs.md)
-- [Adding nginx logs](docs/configuring-nginx-logs.md)
-- [Adding remote hosts](docs/adding-remote-hosts.md)
-- [Configuring the back home url](docs/configuring-the-back-home-route.md)
-- [Advanced search queries](docs/advanced-search-queries.md)
+- [Adding more monolog directories](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/adding-more-monolog-directories.md)
+- [Modifying monolog configuration](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/modifying-monolog-configuration.md)
+- [Disabling the default monolog configuration](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/disabling-default-monolog-configuration.md)
+- [Adding additional log files](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/adding-additional-log-files.md)
+- [Adding apache logs](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-apache-logs.md)
+- [Adding nginx logs](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-nginx-logs.md)
+- [Adding remote hosts](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/adding-remote-hosts.md)
+- [Configuring the back home url](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-the-back-home-route.md)
+- [Advanced search queries](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/advanced-search-queries.md)

@@ -40,10 +40,15 @@ class ResponseFactoryTest extends TestCase
         })());
 
         $this->httpResponse->expects(self::once())->method('getStatusCode')->willReturn(200);
-        $this->httpResponse->expects(self::once())->method('getHeaders')->willReturn(['content-type' => 'application/json']);
+        $this->httpResponse->expects(self::once())
+            ->method('getHeaders')
+            ->willReturn(['content-type' => 'application/json', 'set-cookie' => 'cookie']);
         $this->httpClient->expects(self::once())->method('stream')->with($this->httpResponse)->willReturn($stream);
 
         $response = $this->factory->toStreamedResponse($this->httpClient, $this->httpResponse);
+
+        static::assertArrayHasKey('content-type', $response->headers->all());
+        static::assertArrayNotHasKey('set-cookie', $response->headers->all());
 
         ob_start();
         $response->sendContent();
