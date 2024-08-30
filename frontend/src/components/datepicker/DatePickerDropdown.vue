@@ -5,6 +5,7 @@ import type DateSelection from '@/models/DateSelection';
 
 const selection = defineModel<DateSelection>({required: true});
 defineProps<{ label: string, activeTab: 'absolute' | 'relative' | 'now' }>();
+const emit = defineEmits(['clear']);
 </script>
 
 <template>
@@ -14,6 +15,7 @@ defineProps<{ label: string, activeTab: 'absolute' | 'relative' | 'now' }>();
             <date-input :label="label" v-model="selection.date"/>
         </div>
         <div class="d-flex justify-content-end mt-3">
+            <button class="btn btn-secondary btn-sm me-2" @click="emit('clear')">Clear</button>
             <button class="btn btn-primary btn-sm">Apply</button>
         </div>
     </div>
@@ -22,7 +24,6 @@ defineProps<{ label: string, activeTab: 'absolute' | 'relative' | 'now' }>();
 <style scoped>
 .slv-dropdown-menu {
     top: 37px;
-    right: 200px;
 }
 
 .calendar {

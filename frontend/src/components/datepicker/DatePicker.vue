@@ -17,28 +17,34 @@ watch(startDate, () => {
 </script>
 
 <template>
-    <div>
-        <button class="slv-date-picker-btn form-control dropdown-toggle"
-                type="button"
-                @click="dateExpanded = 'startDate';active = true"
-                v-if="!active">
+    <div class="form-control position-relative">
+        <button class="slv-date-picker-btn border-0 bg-transparent" type="button" @click="dateExpanded = 'startDate';active = true">
             <i class="bi bi-calendar3"></i>
         </button>
-        <button class="slv-date-picker-btn form-control dropdown-toggle" type="button" v-if="active">
-            <i class="bi bi-calendar3"></i>
-            <span class="ms-1" @click="dateExpanded = 'startDate' ? 'none' : 'startDate'">{{ startDate.formatted }}</span>
-            ~
-            <span @click="dateExpanded = dateExpanded === 'endDate' ? 'none' : 'endDate'">{{ endDate.formatted }}</span>
-        </button>
+
+        <button v-if="active"
+              class="ms-1 slv-btn-input"
+              :class="{'slv-btn-input-focus': dateExpanded === 'startDate'}"
+              @click="dateExpanded = dateExpanded === 'startDate' ? 'none' : 'startDate'">{{ startDate.formatted }}</button>
+        <span v-if="active" class="ms-1 me-1">~</span>
+        <button v-if="active"
+              class="slv-btn-input"
+              :class="{'slv-btn-input-focus': dateExpanded === 'endDate'}"
+              @click="dateExpanded = dateExpanded === 'endDate' ? 'none' : 'endDate'">{{ endDate.formatted }}</button>
+
         <date-picker-dropdown v-if="dateExpanded === 'startDate'"
+                              class="slv-start-date"
                               :class="{'d-block': dateExpanded === 'startDate'}"
                               active-tab="relative"
                               v-model="startDate"
+                              @clear="dateExpanded = 'none';active = false"
                               label="Start date"/>
         <date-picker-dropdown v-if="dateExpanded === 'endDate'"
+                              class="slv-end-date"
                               :class="{'d-block': dateExpanded === 'endDate'}"
                               active-tab="now"
                               v-model="endDate"
+                              @clear="dateExpanded = 'none';active = false"
                               label="End date"/>
     </div>
 </template>
@@ -46,5 +52,19 @@ watch(startDate, () => {
 <style scoped>
 .slv-date-picker-btn {
     --bs-border-radius: 0;
+}
+.slv-btn-input {
+    border: 0;
+    background-color: transparent;
+}
+.slv-btn-input-focus {
+    text-decoration-line: underline;
+    text-decoration-color: #86b7fe;
+}
+.slv-start-date {
+    left: 0;
+}
+.slv-end-date {
+    right: 0;
 }
 </style>
