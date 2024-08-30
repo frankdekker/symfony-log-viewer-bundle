@@ -5,7 +5,7 @@ import type DateSelection from '@/models/DateSelection';
 
 const selection = defineModel<DateSelection>({required: true});
 defineProps<{ label: string, activeTab: 'absolute' | 'relative' | 'now' }>();
-const emit = defineEmits(['clear']);
+const emit = defineEmits(['clear', 'apply']);
 </script>
 
 <template>
@@ -16,7 +16,7 @@ const emit = defineEmits(['clear']);
         </div>
         <div class="d-flex justify-content-end mt-3">
             <button class="btn btn-secondary btn-sm me-2" @click="emit('clear')">Clear</button>
-            <button class="btn btn-primary btn-sm">Apply</button>
+            <button class="btn btn-primary btn-sm" @click="emit('apply')">Apply</button>
         </div>
     </div>
 </template>

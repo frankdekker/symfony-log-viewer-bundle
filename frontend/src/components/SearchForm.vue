@@ -33,7 +33,7 @@ defineExpose({focus});
                @keyup.enter="emit('navigate')"
                v-model="query">
 
-        <date-picker class="slv-date-picker" value="foo" @input="console.log('click')"/>
+        <date-picker class="slv-date-picker" value="foo" @change="emit('navigate')"/>
 
         <select class="slv-menu-sort-direction form-control"
                 aria-label="Sort direction"
