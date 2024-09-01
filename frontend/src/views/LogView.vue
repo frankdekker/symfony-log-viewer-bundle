@@ -25,6 +25,7 @@ const navigate = () => {
         .set('host', hostsStore.selected, 'localhost')
         .set('file', searchStore.files.join(','))
         .set('query', searchStore.query, '')
+        .set('between', searchStore.between, '')
         .set('per_page', searchStore.perPage, '100')
         .set('sort', searchStore.sort, 'desc')
         .set('offset', fileOffset, 0);
@@ -38,6 +39,7 @@ const load = () => {
             .set('host', hostsStore.selected, 'localhost')
             .set('file', searchStore.files.join(','))
             .set('query', searchStore.query, '')
+            .set('between', searchStore.between, '')
             .set('per_page', searchStore.perPage, '100')
             .set('sort', searchStore.sort, 'desc')
             .set('offset', offset.value, 0)
@@ -58,6 +60,7 @@ onMounted(() => {
     hostsStore.selected = String(route.query.host ?? 'localhost');
     searchStore.files   = String(route.query.file).split(',');
     searchStore.query   = String(route.query.query ?? '');
+    searchStore.between = String(route.query.between ?? '');
     searchStore.perPage = String(route.query.per_page ?? '100');
     searchStore.sort    = String(route.query.sort ?? 'desc');
     offset.value        = parseInt(String(route.query.offset ?? '0'));
@@ -72,6 +75,7 @@ onMounted(() => {
                          ref="searchRef"
                          :bad-request="badRequest"
                          v-model:query="searchStore.query"
+                         v-model:between="searchStore.between"
                          v-model:sort="searchStore.sort"
                          v-model:perPage="searchStore.perPage"
                          @navigate="navigate"></search-form>
