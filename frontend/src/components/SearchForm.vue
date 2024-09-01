@@ -9,14 +9,8 @@ const between   = defineModel<string>('between', {default: ''});
 const sort      = defineModel<string>('sort');
 const perPage   = defineModel<string>('perPage');
 const emit      = defineEmits(['navigate']);
-
-const focus = (): void => {
-    searchRef.value?.focus();
-}
-
-defineProps<{
-    badRequest: boolean,
-}>();
+defineProps<{ badRequest: boolean }>();
+const focus = (): void => searchRef.value?.focus()
 defineExpose({focus});
 </script>
 

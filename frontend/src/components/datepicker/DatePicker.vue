@@ -27,6 +27,13 @@ watch(between, () => {
     currentValue = result === false ? null : between.value ?? null;
 });
 
+function onExpand(): void {
+    if (active.value !== true) {
+        dateExpanded.value = 'startDate';
+        active.value       = true
+    }
+}
+
 function onApply(): void {
     dateExpanded.value = 'none';
     setBetween(formatSelection(startDate, endDate));
@@ -58,22 +65,24 @@ function setBetween(value: string): void {
 </script>
 
 <template>
-    <div class="form-control position-relative">
-        <button class="slv-date-picker-btn border-0 bg-transparent" type="button" @click="dateExpanded = 'startDate';active = true">
-            <i class="bi bi-calendar3"></i>
-        </button>
+    <div class="position-relative">
+        <div class="slv-date-picker-btn form-control" @click="onExpand">
+            <button class="border-0 bg-transparent" type="button">
+                <i class="bi bi-calendar3"></i>
+            </button>
 
-        <button v-if="active"
-                class="ms-1 slv-btn-input"
-                :class="{'slv-btn-input-focus': dateExpanded === 'startDate'}"
-                @click="dateExpanded = dateExpanded === 'startDate' ? 'none' : 'startDate'">{{ startDate.formatted }}
-        </button>
-        <span v-if="active" class="ms-1 me-1">~</span>
-        <button v-if="active"
-                class="slv-btn-input"
-                :class="{'slv-btn-input-focus': dateExpanded === 'endDate'}"
-                @click="dateExpanded = dateExpanded === 'endDate' ? 'none' : 'endDate'">{{ endDate.formatted }}
-        </button>
+            <button v-if="active"
+                    class="ms-1 slv-btn-input"
+                    :class="{'slv-btn-input-focus': dateExpanded === 'startDate'}"
+                    @click="dateExpanded = dateExpanded === 'startDate' ? 'none' : 'startDate'">{{ startDate.formatted }}
+            </button>
+            <span v-if="active" class="ms-1 me-1">~</span>
+            <button v-if="active"
+                    class="slv-btn-input"
+                    :class="{'slv-btn-input-focus': dateExpanded === 'endDate'}"
+                    @click="dateExpanded = dateExpanded === 'endDate' ? 'none' : 'endDate'">{{ endDate.formatted }}
+            </button>
+        </div>
 
         <date-picker-dropdown v-if="dateExpanded === 'startDate'"
                               class="slv-start-date"
