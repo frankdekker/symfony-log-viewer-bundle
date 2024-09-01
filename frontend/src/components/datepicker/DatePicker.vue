@@ -7,12 +7,16 @@ import {reactive, ref, watch} from 'vue';
 const between = defineModel<string>();
 const emit    = defineEmits(['change']);
 
-const active       = ref(false);
-const dateExpanded = ref<'none' | 'startDate' | 'endDate'>('none');
-let startDate      = reactive<DateSelection>({date: new Date(), mode: 'relative', formatted: ''});
-let endDate        = reactive<DateSelection>({date: new Date(), mode: 'now', formatted: 'now'});
+const active                    = ref(false);
+const dateExpanded              = ref<'none' | 'startDate' | 'endDate'>('none');
+let startDate                   = reactive<DateSelection>({date: new Date(), mode: 'relative', formatted: ''});
+let endDate                     = reactive<DateSelection>({date: new Date(), mode: 'now', formatted: 'now'});
+let currentValue: string | null = null;
 
 watch(between, () => {
+    if (between.value === currentValue) {
+        return;
+    }
     const match = (between.value ?? '').match(/(.*)~(.*)/);
     if (match !== null && match.length === 3) {
         const start         = match[1];
@@ -23,17 +27,15 @@ watch(between, () => {
         endDate.date        = end === 'now' ? new Date() : new Date(end);
         endDate.mode        = start === 'now' ? 'now' : 'absolute';
         endDate.formatted   = end === 'now' ? 'now' : formatDateTime(endDate.date);
+        currentValue        = between.value ?? null;
     }
-});
+}, {immediate: true});
 
 function onApply(): void {
     dateExpanded.value   = 'none';
     const formattedStart = startDate.mode === 'now' ? 'now' : format('Y-m-d H:i:s', startDate.date);
-    const formattedEnd   = startDate.mode === 'now' ? 'now' : format('Y-m-d H:i:s', endDate.date);
-    if (between.value !== `${formattedStart}~${formattedEnd}`) {
-        between.value = `${formattedStart}~${formattedEnd}`;
-        emit('change');
-    }
+    const formattedEnd   = endDate.mode === 'now' ? 'now' : format('Y-m-d H:i:s', endDate.date);
+    setBetween(`${formattedStart}~${formattedEnd}`);
 }
 
 function onClear(): void {
@@ -45,10 +47,17 @@ function onClear(): void {
     endDate.mode        = 'now';
     endDate.formatted   = 'now';
     active.value        = false;
-    if (between.value !== '') {
-        between.value = '';
-        emit('change');
+    setBetween('');
+}
+
+function setBetween(value: string): void {
+    if (between.value === value) {
+        return;
     }
+
+    currentValue  = value;
+    between.value = value;
+    emit('change');
 }
 </script>
 
