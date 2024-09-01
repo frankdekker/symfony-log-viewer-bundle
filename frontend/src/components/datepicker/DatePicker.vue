@@ -2,7 +2,7 @@
 import DatePickerDropdown from '@/components/datepicker/DatePickerDropdown.vue';
 import type DateSelection from '@/models/DateSelection';
 import {formatSelection, parseSelection} from '@/services/DatePickerService';
-import {format, formatRelativeDate, getRelativeDate} from '@/services/Dates';
+import {formatRelativeDate, getRelativeDate} from '@/services/Dates';
 import {reactive, ref, watch} from 'vue';
 
 const between = defineModel<string>();
@@ -11,10 +11,10 @@ const emit    = defineEmits(['change']);
 const active                    = ref(false);
 const dateExpanded              = ref<'none' | 'startDate' | 'endDate'>('none');
 let startDate                   = reactive<DateSelection>({
-    date: getRelativeDate(15, 'm', true),
+    date: getRelativeDate(15, 'i', true),
     mode: 'relative',
-    value: '15m',
-    formatted: formatRelativeDate(15, 'm')
+    value: '15i',
+    formatted: formatRelativeDate(15, 'i')
 });
 let endDate                     = reactive<DateSelection>({date: new Date(), mode: 'now', value: null, formatted: 'now'});
 let currentValue: string | null = null;
@@ -24,25 +24,25 @@ watch(between, () => {
         return;
     }
     const result = parseSelection(between.value ?? '', startDate, endDate);
-    currentValue = result ? '' : between.value ?? null;
+    currentValue = result === false ? null : between.value ?? null;
 });
 
 function onApply(): void {
-    dateExpanded.value   = 'none';
+    dateExpanded.value = 'none';
     setBetween(formatSelection(startDate, endDate));
 }
 
 function onClear(): void {
     dateExpanded.value  = 'none';
-    startDate.date      = getRelativeDate(15, 'm', true);
+    startDate.date      = getRelativeDate(15, 'i', true);
     startDate.mode      = 'relative';
-    startDate.value     = '15m';
-    startDate.formatted = formatRelativeDate(15, 'm');
+    startDate.value     = '15i';
+    startDate.formatted = formatRelativeDate(15, 'i');
     endDate.date        = new Date();
     endDate.mode        = 'now';
     endDate.value       = null;
     endDate.formatted   = 'now';
-    active.value = false;
+    active.value        = false;
     setBetween('');
 }
 
@@ -54,8 +54,6 @@ function setBetween(value: string): void {
     currentValue  = value;
     between.value = value;
     emit('change');
-
-    console.log('between', between.value);
 }
 </script>
 
