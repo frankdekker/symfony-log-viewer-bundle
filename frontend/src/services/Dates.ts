@@ -75,6 +75,27 @@ export function formatDateTime(date: Date | undefined): string {
     return `${formattedDate} @ ${formattedTime}`;
 }
 
+export function formatRelativeDate(value: number, unit: string): string {
+    switch (unit) {
+        case 's':
+            return `~${value} seconds ago`;
+        case 'i':
+            return `~${value} minutes ago`;
+        case 'h':
+            return `~${value} hours ago`;
+        case 'd':
+            return `~${value} days ago`;
+        case 'w':
+            return `~${value} weeks ago`;
+        case 'm':
+            return `~${value} months ago`;
+        case 'y':
+            return `~${value} years ago`;
+        default:
+            return String(value);
+    }
+}
+
 export function format(format: string, date: Date | undefined): string {
     if (date === undefined) {
         return '';

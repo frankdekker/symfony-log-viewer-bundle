@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import DatePickerDropdown from '@/components/datepicker/DatePickerDropdown.vue';
 import type DateSelection from '@/models/DateSelection';
-import {format, formatDateTime} from '@/services/Dates';
+import {formatSelection, parseSelection} from '@/services/DatePickerService';
+import {format, formatRelativeDate, getRelativeDate} from '@/services/Dates';
 import {reactive, ref, watch} from 'vue';
 
 const between = defineModel<string>();
@@ -9,44 +10,39 @@ const emit    = defineEmits(['change']);
 
 const active                    = ref(false);
 const dateExpanded              = ref<'none' | 'startDate' | 'endDate'>('none');
-let startDate                   = reactive<DateSelection>({date: new Date(), mode: 'relative', formatted: ''});
-let endDate                     = reactive<DateSelection>({date: new Date(), mode: 'now', formatted: 'now'});
+let startDate                   = reactive<DateSelection>({
+    date: getRelativeDate(15, 'm', true),
+    mode: 'relative',
+    value: '15m',
+    formatted: formatRelativeDate(15, 'm')
+});
+let endDate                     = reactive<DateSelection>({date: new Date(), mode: 'now', value: null, formatted: 'now'});
 let currentValue: string | null = null;
 
 watch(between, () => {
     if (between.value === currentValue) {
         return;
     }
-    const match = (between.value ?? '').match(/(.*)~(.*)/);
-    if (match !== null && match.length === 3) {
-        const start         = match[1];
-        const end           = match[2];
-        startDate.date      = start === 'now' ? new Date() : new Date(start);
-        startDate.mode      = start === 'now' ? 'now' : 'absolute';
-        startDate.formatted = start === 'now' ? 'now' : formatDateTime(startDate.date);
-        endDate.date        = end === 'now' ? new Date() : new Date(end);
-        endDate.mode        = start === 'now' ? 'now' : 'absolute';
-        endDate.formatted   = end === 'now' ? 'now' : formatDateTime(endDate.date);
-        currentValue        = between.value ?? null;
-    }
-}, {immediate: true});
+    const result = parseSelection(between.value ?? '', startDate, endDate);
+    currentValue = result ? '' : between.value ?? null;
+});
 
 function onApply(): void {
     dateExpanded.value   = 'none';
-    const formattedStart = startDate.mode === 'now' ? 'now' : format('Y-m-d H:i:s', startDate.date);
-    const formattedEnd   = endDate.mode === 'now' ? 'now' : format('Y-m-d H:i:s', endDate.date);
-    setBetween(`${formattedStart}~${formattedEnd}`);
+    setBetween(formatSelection(startDate, endDate));
 }
 
 function onClear(): void {
     dateExpanded.value  = 'none';
-    startDate.date      = new Date();
+    startDate.date      = getRelativeDate(15, 'm', true);
     startDate.mode      = 'relative';
-    startDate.formatted = '';
+    startDate.value     = '15m';
+    startDate.formatted = formatRelativeDate(15, 'm');
     endDate.date        = new Date();
     endDate.mode        = 'now';
+    endDate.value       = null;
     endDate.formatted   = 'now';
-    active.value        = false;
+    active.value = false;
     setBetween('');
 }
 
@@ -58,6 +54,8 @@ function setBetween(value: string): void {
     currentValue  = value;
     between.value = value;
     emit('change');
+
+    console.log('between', between.value);
 }
 </script>
 

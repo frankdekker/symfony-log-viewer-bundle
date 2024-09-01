@@ -14,6 +14,8 @@ watch(selected, () => currentDate.value = new Date(selected.value.date));
 watch(currentDate, () => calendarDates.value = getMonthCalendarDates(currentDate.value));
 watch(preselected, () => {
     selected.value.date      = preselected.value;
+    selected.value.value     = null;
+    selected.value.mode      = 'absolute';
     selected.value.formatted = formatDateTime(preselected.value)
 });
 /*
@@ -23,6 +25,7 @@ watch(() => props.activated, () => {
     if (props.activated) {
         selected.value.formatted = formatDateTime(selected.value.date);
         selected.value.mode      = 'absolute';
+        selected.value.value     = null;
     }
 });
 

@@ -7,6 +7,7 @@ defineProps<{ label: string }>();
 function update(): void {
     selected.value.date      = new Date();
     selected.value.mode      = 'now';
+    selected.value.value     = null;
     selected.value.formatted = 'now';
 }
 </script>

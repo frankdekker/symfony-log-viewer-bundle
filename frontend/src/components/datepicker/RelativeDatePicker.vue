@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type DateSelection from '@/models/DateSelection';
-import {getRelativeDate} from '@/services/Dates';
+import {formatRelativeDate, getRelativeDate} from '@/services/Dates';
 import Numbers from '@/services/Numbers';
 import {ref, watch} from 'vue';
 
@@ -23,13 +23,13 @@ function validate(): void {
 function update(): void {
     const valueInput = <HTMLInputElement>valueRef.value;
     const unitInput  = <HTMLSelectElement>unitRef.value;
-    const unitText   = unitInput.options[unitInput.selectedIndex].text;
     if (valueInput.checkValidity() === false) {
         return;
     }
 
     selected.value.date      = getRelativeDate(Numbers.parseInt(valueInput.value), unitInput.value, true);
-    selected.value.formatted = valueInput.value + ' ' + unitText;
+    selected.value.formatted = formatRelativeDate(Numbers.parseInt(valueInput.value), unitInput.value);
+    selected.value.value     = valueInput.value + unitInput.value;
     selected.value.mode      = 'relative';
 }
 </script>
