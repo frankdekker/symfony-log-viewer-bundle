@@ -2,9 +2,10 @@
 import TimeSelect from '@/components/datepicker/TimeSelect.vue';
 import type DateSelection from '@/models/DateSelection';
 import {formatDateTime, getMonthCalendarDates, getMonths, isSameDay, isSameMonth, setDayOfTheYear} from '@/services/Dates';
-import {onMounted, ref, watch} from 'vue';
+import {ref, watch} from 'vue';
 
 const selected      = defineModel<DateSelection>({required: true});
+const props         = defineProps<{ activated: boolean }>();
 const currentDate   = ref(new Date()); // the current date for the month and year selection
 const preselected   = ref(new Date()); // an internal watch when "selected" date is set
 const calendarDates = ref<Date[]>(getMonthCalendarDates(currentDate.value));
@@ -14,6 +15,15 @@ watch(currentDate, () => calendarDates.value = getMonthCalendarDates(currentDate
 watch(preselected, () => {
     selected.value.date      = preselected.value;
     selected.value.formatted = formatDateTime(preselected.value)
+});
+/*
+ * When the absolute date picker is activated, update the format to absolute
+ */
+watch(() => props.activated, () => {
+    if (props.activated) {
+        selected.value.formatted = formatDateTime(selected.value.date);
+        selected.value.mode      = 'absolute';
+    }
 });
 
 function update(event: Event, field: 'month' | 'year'): void {
@@ -31,8 +41,6 @@ function update(event: Event, field: 'month' | 'year'): void {
     }
     currentDate.value = new Date(currentDate.value!);
 }
-// when tab is activated, set the format to the current selected date
-onMounted(() => selected.value.formatted = formatDateTime(selected.value.date));
 </script>
 
 <template>

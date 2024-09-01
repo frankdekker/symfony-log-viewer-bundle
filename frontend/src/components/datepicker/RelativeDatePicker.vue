@@ -2,12 +2,18 @@
 import type DateSelection from '@/models/DateSelection';
 import {getRelativeDate} from '@/services/Dates';
 import Numbers from '@/services/Numbers';
-import {onMounted, ref} from 'vue';
+import {ref, watch} from 'vue';
 
 const selected = defineModel<DateSelection>({required: true});
-
+const props    = defineProps<{ activated: boolean }>();
 const valueRef = ref<HTMLInputElement>();
 const unitRef  = ref<HTMLSelectElement>();
+
+watch(() => props.activated, () => {
+    if (props.activated) {
+        update();
+    }
+});
 
 function validate(): void {
     const valueInput = <HTMLInputElement>valueRef.value;
@@ -24,9 +30,8 @@ function update(): void {
 
     selected.value.date      = getRelativeDate(Numbers.parseInt(valueInput.value), unitInput.value, true);
     selected.value.formatted = valueInput.value + ' ' + unitText;
+    selected.value.mode      = 'relative';
 }
-// when tab is activated, set the value to the current relative date
-onMounted(() => update());
 </script>
 
 <template>

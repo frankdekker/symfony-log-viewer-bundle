@@ -1,8 +1,7 @@
 <script setup lang="ts">
-
 import DatePickerDropdown from '@/components/datepicker/DatePickerDropdown.vue';
 import type DateSelection from '@/models/DateSelection';
-import {format} from '@/services/Dates';
+import {format, formatDateTime} from '@/services/Dates';
 import {reactive, ref, watch} from 'vue';
 
 const between = defineModel<string>();
@@ -10,8 +9,8 @@ const emit    = defineEmits(['change']);
 
 const active       = ref(false);
 const dateExpanded = ref<'none' | 'startDate' | 'endDate'>('none');
-let startDate      = reactive<DateSelection>({date: new Date(), formatted: ''});
-let endDate        = reactive<DateSelection>({date: new Date(), formatted: 'now'});
+let startDate      = reactive<DateSelection>({date: new Date(), mode: 'relative', formatted: ''});
+let endDate        = reactive<DateSelection>({date: new Date(), mode: 'now', formatted: 'now'});
 
 watch(between, () => {
     const match = (between.value ?? '').match(/(.*)~(.*)/);
@@ -19,29 +18,37 @@ watch(between, () => {
         const start         = match[1];
         const end           = match[2];
         startDate.date      = start === 'now' ? new Date() : new Date(start);
-        startDate.formatted = start === 'now' ? 'now' : 'absolute';
+        startDate.mode      = start === 'now' ? 'now' : 'absolute';
+        startDate.formatted = start === 'now' ? 'now' : formatDateTime(startDate.date);
         endDate.date        = end === 'now' ? new Date() : new Date(end);
-        endDate.formatted   = end === 'now' ? 'now' : 'absolute';
+        endDate.mode        = start === 'now' ? 'now' : 'absolute';
+        endDate.formatted   = end === 'now' ? 'now' : formatDateTime(endDate.date);
     }
 });
 
 function onApply(): void {
     dateExpanded.value   = 'none';
-    const formattedStart = startDate.formatted === 'now' ? 'now' : format('Y-m-d H:i:s', startDate.date);
-    const formattedEnd   = startDate.formatted === 'now' ? 'now' : format('Y-m-d H:i:s', endDate.date);
-    between.value        = `${formattedStart}~${formattedEnd}`;
-    emit('change');
+    const formattedStart = startDate.mode === 'now' ? 'now' : format('Y-m-d H:i:s', startDate.date);
+    const formattedEnd   = startDate.mode === 'now' ? 'now' : format('Y-m-d H:i:s', endDate.date);
+    if (between.value !== `${formattedStart}~${formattedEnd}`) {
+        between.value = `${formattedStart}~${formattedEnd}`;
+        emit('change');
+    }
 }
 
 function onClear(): void {
     dateExpanded.value  = 'none';
     startDate.date      = new Date();
+    startDate.mode      = 'relative';
     startDate.formatted = '';
     endDate.date        = new Date();
+    endDate.mode        = 'now';
     endDate.formatted   = 'now';
     active.value        = false;
-    between.value       = '';
-    emit('change');
+    if (between.value !== '') {
+        between.value = '';
+        emit('change');
+    }
 }
 </script>
 
@@ -66,7 +73,6 @@ function onClear(): void {
         <date-picker-dropdown v-if="dateExpanded === 'startDate'"
                               class="slv-start-date"
                               :class="{'d-block': dateExpanded === 'startDate'}"
-                              active-tab="relative"
                               v-model="startDate"
                               @clear="onClear"
                               @apply="onApply"
