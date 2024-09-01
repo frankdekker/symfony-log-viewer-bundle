@@ -29,7 +29,7 @@ function parseDate(value: string, date: DateSelection): boolean {
         date.formatted = formatDateTime(date.date);
         return true;
     }
-    if (value.match(/^\d+[smhdwMy]$/)) {
+    if (value.match(/^\d+[sihdwmy]$/)) {
         const unit     = value[value.length - 1];
         const val      = Numbers.parseInt(value.substring(0, value.length - 1));
         date.date      = getRelativeDate(val, unit, false);
