@@ -37,7 +37,7 @@ class PhpErrorLogLineParser implements LogLineParserInterface
         return [
             'date'     => $matches['date'],
             'severity' => $matches['severity'] ?? 'error',
-            'channel'  => $matches['channel'] ?? 'error_log',
+            'channel'  => $matches['channel'] ?? '',
             'message'  => $matches['message'],
             'context'  => $matches['context'] ?? '',
             'extra'    => $matches['extra'] ?? '',
