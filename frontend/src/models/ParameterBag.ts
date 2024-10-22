@@ -1,8 +1,8 @@
 export default class ParameterBag {
-    constructor(private parameters: { [key: string]: any } = {}) {
+    constructor(private parameters: { [key: string]: unknown } = {}) {
     }
 
-    public set<T = any>(key: string, value: T | null, defaultVal: T | null = null): ParameterBag {
+    public set<T = unknown>(key: string, value: T | null, defaultVal: T | null = null): ParameterBag {
         if (value === defaultVal) {
             value = null;
         }
@@ -13,7 +13,7 @@ export default class ParameterBag {
         return this;
     }
 
-    public all(): { [key: string]: any } {
+    public all(): { [key: string]: unknown } {
         return this.parameters;
     }
 
