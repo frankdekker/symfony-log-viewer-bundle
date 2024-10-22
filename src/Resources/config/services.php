@@ -14,6 +14,7 @@ use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use FD\LogViewer\Routing\RouteLoader;
 use FD\LogViewer\Routing\RouteService;
 use FD\LogViewer\Service\File\Apache\ApacheErrorFileParser;
+use FD\LogViewer\Service\File\ErrorLog\PhpErrorLogFileParser;
 use FD\LogViewer\Service\File\Http\HttpAccessFileParser;
 use FD\LogViewer\Service\File\LogFileParserProvider;
 use FD\LogViewer\Service\File\LogFileService;
@@ -124,6 +125,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(HttpAccessFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'http-access']);
     $services->set(NginxErrorFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'nginx-error']);
     $services->set(ApacheErrorFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'apache-error']);
+    $services->set(PhpErrorLogFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'php-error-log']);
     $services->set(PerformanceService::class);
     $services->set(StreamReaderFactory::class);
     $services->set(VersionService::class);
