@@ -1,19 +1,20 @@
-# Configuring Apache2 logs
+# Configuring PHP error logs
 
-To add apache2 logs to the Log Viewer, add the following to your `config/packages/fd_log_viewer.yaml` file:
+To add php error logs to the Log Viewer, add the following to your `config/packages/fd_log_viewer.yaml` file:
 
 ```yaml
 fd_log_viewer:
     log_files:
-        apache-access:
+        error-log:
             type: php-error-log
             name: PHP error log
             finder:
                 in: "/var/log/php/"
                 name: "error.log"
 ```
+_Change the path to your php error log path_
 
-## Access logs
+## Error logs
 
 The `log_message_pattern`-regex that is used for the **error_log** is:
 
