@@ -69,6 +69,13 @@ fd_log_viewer:
         in: "%kernel.logs_dir%/json"
       downloadable: true
       deletable: true
+    error-log:
+      type: php-error-log
+      name: PHP error_log
+      finder:
+        in: "%kernel.logs_dir%/php_error"
+      downloadable: true
+      deletable: true
     nginx-access:
       type: http-access
       name: Nginx access
