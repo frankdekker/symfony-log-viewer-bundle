@@ -30,7 +30,7 @@
         "@vue/tsconfig": "^0.5.1",
         "eslint": "^8.57.0",
         "eslint-plugin-vue": "^9.23.0",
-        "npm-run-all2": "^6.1.2",
+        "npm-run-all2": "^7.0.0",
         "prettier": "^3.2.5",
         "sass": "^1.69.7",
         "typescript": "^5.4.0",
