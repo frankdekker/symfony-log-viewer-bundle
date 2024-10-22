@@ -4,6 +4,6 @@ export default interface LogRecord {
     level_class: string;
     channel: string;
     text: string;
-    context: object|string;
-    extra: object|string;
+    context: { [key: string]: unknown; }|string;
+    extra: { [key: string]: unknown; }|string;
 }

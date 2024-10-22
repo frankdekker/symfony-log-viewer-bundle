@@ -18,6 +18,6 @@ export default class ParameterBag {
     }
 
     public toString(): string {
-        return new URLSearchParams(this.parameters).toString();
+        return new URLSearchParams(<Record<string, string>>this.parameters).toString();
     }
 }

@@ -10,6 +10,13 @@ export default defineConfig((options) => {
             vue(),
             vueJsx()
         ],
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    api: 'modern'
+                }
+            }
+        },
         base: '/bundles/fdlogviewer/',
         build: {
             sourcemap: options.mode === 'development',
