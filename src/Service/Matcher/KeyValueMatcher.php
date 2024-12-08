@@ -37,7 +37,7 @@ class KeyValueMatcher implements TermMatcherInterface
         array_walk_recursive(
             $data,
             function ($value) use (&$match, $term) {
-                $match = $match || stripos((string)$value, $term) !== false;
+                $match = $match || is_string($value) && stripos($value, $term) !== false;
             }
         );
 
