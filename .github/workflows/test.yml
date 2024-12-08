@@ -54,7 +54,7 @@ jobs:
         run: php -dpcov.enabled=1 -dpcov.exclude="~vendor~" vendor/bin/phpunit --testsuite unit,integration --coverage-clover ./.coverage/coverage.xml
 
       - name: Upload coverage to codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./.coverage/coverage.xml
