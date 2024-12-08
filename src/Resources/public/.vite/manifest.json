@@ -1,12 +1,12 @@
 {
+  "_style-CZPPg_wi.css": {
+    "file": "assets/style-CZPPg_wi.css",
+    "src": "_style-CZPPg_wi.css"
+  },
   "src/main.ts": {
     "file": "assets/main-DIy7nyom.js",
     "name": "main",
     "src": "src/main.ts",
     "isEntry": true
-  },
-  "style.css": {
-    "file": "assets/style-DC31T78J.css",
-    "src": "style.css"
   }
 }
