@@ -23,7 +23,7 @@ class LogQueryDtoFactory
      */
     public function create(Request $request): LogQueryDto
     {
-        $fileIdentifiers = array_filter(explode(',', $request->query->get('file', '')));
+        $fileIdentifiers = array_filter(explode(',', $request->query->get('file', '')), static fn(string $value): bool => trim($value) !== '');
         $offset          = $request->query->get('offset');
         $offset          = $offset === null || $offset === '0' ? null : (int)$offset;
         $query           = trim($request->query->get('query', ''));

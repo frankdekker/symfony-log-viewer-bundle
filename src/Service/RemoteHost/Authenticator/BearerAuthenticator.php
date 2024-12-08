@@ -13,7 +13,7 @@ class BearerAuthenticator implements AuthenticatorInterface
         assert(array_key_exists('token', $hostOptions));
         assert(is_string($hostOptions['token']));
 
-        $requestOptions['headers']['Authorization'] = 'Bearer ' . $hostOptions['token']; // @phpstan-ignore-line
+        $requestOptions['headers']['Authorization'] = 'Bearer ' . $hostOptions['token'];
 
         return $requestOptions;
     }

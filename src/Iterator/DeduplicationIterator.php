@@ -11,7 +11,7 @@ use Traversable;
 /**
  * @template K of int|string
  * @template V of IdentifierAwareInterface
- * @implements IteratorAggregate<K, V>
+ * @implements IteratorAggregate<int, V>
  */
 class DeduplicationIterator implements IteratorAggregate
 {
