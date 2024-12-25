@@ -54,7 +54,7 @@ class LogQueryDtoFactoryTest extends TestCase
         $expression = new Expression([]);
 
         $this->expressionParser->expects(self::once())->method('parse')->with(new StringReader('search'))->willReturn($expression);
-        $this->dateRangeParser->expects(self::once())->method('parseDateRange')->with('15i~now')->willReturn([$dateAfter, $dateBefore]);
+        $this->dateRangeParser->expects(self::once())->method('parse')->with('15i~now')->willReturn([$dateAfter, $dateBefore]);
 
         $expected = new LogQueryDto(
             ['file'],
@@ -76,7 +76,7 @@ class LogQueryDtoFactoryTest extends TestCase
         $expected = new LogQueryDto(['file'], (new DateTime())->getTimezone(), null, null, DirectionEnum::Desc, 100);
 
         $this->expressionParser->expects(self::never())->method('parse');
-        $this->dateRangeParser->expects(self::once())->method('parseDateRange')->with('')->willReturn([null, null]);
+        $this->dateRangeParser->expects(self::once())->method('parse')->with('')->willReturn([null, null]);
 
         static::assertEquals($expected, (new LogQueryDtoFactory($this->dateRangeParser, $this->expressionParser))->create($request));
     }

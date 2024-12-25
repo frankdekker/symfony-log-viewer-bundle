@@ -7,12 +7,17 @@ namespace FD\LogViewer\Service\Parser;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use DateTimeZone;
+use Psr\Clock\ClockInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 
 class DateRangeParser implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
+
+    public function __construct(private readonly ClockInterface $clock)
+    {
+    }
 
     /**
      * Format: <date>~<date>
@@ -23,7 +28,7 @@ class DateRangeParser implements LoggerAwareInterface
      * @return array{?DateTimeImmutable, ?DateTimeImmutable}
      * @throws DateMalformedStringException
      */
-    public function parseDateRange(string $range, DateTimeZone $timeZone): array
+    public function parse(string $range, DateTimeZone $timeZone): array
     {
         if (preg_match('/^(.*)~(.*)$/', $range, $matches) === 1) {
             return [$this->parseDate($matches[1], $timeZone), $this->parseDate($matches[2], $timeZone)];
@@ -41,8 +46,9 @@ class DateRangeParser implements LoggerAwareInterface
      */
     private function parseDate(string $date, DateTimeZone $timeZone): DateTimeImmutable
     {
+        $now = $this->clock->now()->setTimezone($timeZone);
         if ($date === 'now') {
-            return new DateTimeImmutable('now', $timeZone);
+            return $now;
         }
 
         if (preg_match('/(\d+)([sihdwmy])/', $date, $matches) === 1) {
@@ -56,7 +62,7 @@ class DateRangeParser implements LoggerAwareInterface
                 'y' => "years"
             };
 
-            return new DateTimeImmutable("-" . $matches[1] . " " . $interval, $timeZone);
+            return $now->modify("-" . $matches[1] . " " . $interval);
         }
 
         return new DateTimeImmutable($date, $timeZone);

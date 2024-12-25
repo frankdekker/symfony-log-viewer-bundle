@@ -33,7 +33,7 @@ class LogQueryDtoFactory
         $timeZone        = DateUtil::tryParseTimezone($request->query->get('time_zone', ''), date_default_timezone_get());
 
         // date range
-        [$afterDate, $beforeDate] = $this->dateRangeParser->parseDateRange($request->query->getString('between'), $timeZone);
+        [$afterDate, $beforeDate] = $this->dateRangeParser->parse($request->query->getString('between'), $timeZone);
 
         // search expression
         $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query));
