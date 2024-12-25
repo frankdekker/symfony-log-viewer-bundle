@@ -33,6 +33,15 @@ class LogRecordMatcherTest extends TestCase
         $this->matcher = new LogRecordMatcher($iterator);
     }
 
+    public function testMatchesEmpty(): void
+    {
+        $record = new LogRecord('id', 123, 'error', 'channel', 'message', [], []);
+
+        $this->termMatcher->expects(self::never())->method('supports');
+
+        static::assertTrue($this->matcher->matches($record, new SearchQuery()));
+    }
+
     public function testMatchesAfterDate(): void
     {
         $record      = new LogRecord('id', 55555, 'error', 'channel', 'message', [], []);

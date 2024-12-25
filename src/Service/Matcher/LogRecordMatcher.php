@@ -27,12 +27,10 @@ class LogRecordMatcher
             return false;
         }
 
-        if ($searchQuery->query !== null) {
-            foreach ($searchQuery->query->terms as $term) {
-                foreach ($this->termMatchers as $termMatcher) {
-                    if ($termMatcher->supports($term) && $termMatcher->matches($term, $record) === false) {
-                        return false;
-                    }
+        foreach ($searchQuery->query->terms ?? [] as $term) {
+            foreach ($this->termMatchers as $termMatcher) {
+                if ($termMatcher->supports($term) && $termMatcher->matches($term, $record) === false) {
+                    return false;
                 }
             }
         }
