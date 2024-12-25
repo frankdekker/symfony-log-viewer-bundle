@@ -8,13 +8,14 @@ use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Entity\Request\SearchQuery;
 use FD\LogViewer\Reader\String\StringReader;
+use FD\LogViewer\Service\Parser\DateRangeParser;
 use FD\LogViewer\Service\Parser\ExpressionParser;
 use FD\LogViewer\Util\DateUtil;
 use Symfony\Component\HttpFoundation\Request;
 
 class LogQueryDtoFactory
 {
-    public function __construct(private readonly ExpressionParser $expressionParser)
+    public function __construct(private readonly DateRangeParser $dateRangeParser, private readonly ExpressionParser $expressionParser)
     {
     }
 
@@ -32,7 +33,7 @@ class LogQueryDtoFactory
         $timeZone        = DateUtil::tryParseTimezone($request->query->get('time_zone', ''), date_default_timezone_get());
 
         // date range
-        [$afterDate, $beforeDate] = DateUtil::parseDateRange($request->query->getString('between'), $timeZone);
+        [$afterDate, $beforeDate] = $this->dateRangeParser->parseDateRange($request->query->getString('between'), $timeZone);
 
         // search expression
         $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query));
