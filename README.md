@@ -115,6 +115,7 @@ Read more:
 - [Adding additional log files](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/adding-additional-log-files.md)
 - [Adding apache logs](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-apache-logs.md)
 - [Adding nginx logs](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-nginx-logs.md)
+- [Adding php error_log](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-php-error-log.md)
 - [Adding remote hosts](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/adding-remote-hosts.md)
 - [Configuring the back home url](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-the-back-home-route.md)
 - [Advanced search queries](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/advanced-search-queries.md)

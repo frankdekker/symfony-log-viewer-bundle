@@ -10,7 +10,7 @@ export function prettyFormatJson(data: {[key: string]: unknown} | string): strin
     if (typeof data === 'string') {
         try {
             json = JSON.parse(data);
-        } catch (_) {
+        } catch (exception) {
             return data;
         }
     }

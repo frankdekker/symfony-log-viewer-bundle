@@ -7,7 +7,7 @@ import {useHostsStore} from '@/stores/hosts';
 import {useLogRecordStore} from '@/stores/log_records';
 import {useSearchStore} from '@/stores/search';
 import {onMounted, ref} from 'vue';
-import {useRoute, useRouter} from 'vue-router';
+import {type LocationQueryValueRaw, useRoute, useRouter} from 'vue-router';
 
 const router         = useRouter();
 const route          = useRoute();
@@ -29,7 +29,7 @@ const navigate = () => {
         .set('per_page', searchStore.perPage, '100')
         .set('sort', searchStore.sort, 'desc')
         .set('offset', fileOffset, 0);
-    router.push({query: params.all()});
+    router.push({query: <Record<string, LocationQueryValueRaw>>params.all()});
 }
 
 const load = () => {

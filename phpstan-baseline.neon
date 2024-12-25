@@ -1,0 +1,169 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 2
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Binary operation "\." between ''fd\.symfony\.log…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 6
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''auth'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''date_format'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''deletable'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''depth'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''downloadable'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''finder'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 5
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''followLinks'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''host'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''ignoreUnreadableDirs'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''in'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''log_message_pattern'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''name'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''options'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''start_of_line_pattern'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Cannot access offset ''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Symfony\\Component\\DependencyInjection\\Container\:\:setParameter\(\) expects array\|bool\|float\|int\|string\|UnitEnum\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Method FD\\LogViewer\\Reader\\String\\StringReader\:\:eol\(\) is marked as impure but does not have any side effects\.$#'
+			identifier: impureMethod.pure
+			count: 1
+			path: src/Reader/String/StringReader.php
+
+		-
+			message: '#^Method FD\\LogViewer\\Service\\File\\Monolog\\MonologJsonParser\:\:parse\(\) should return array\{date\: string, severity\: string, channel\: string, message\: string, context\: array\<int\|string, mixed\>\|string, extra\: array\<int\|string, mixed\>\|string\}\|null but returns array\{date\: mixed, severity\: mixed, channel\: mixed, message\: mixed, context\: mixed, extra\: mixed\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Service/File/Monolog/MonologJsonParser.php
+
+		-
+			message: '#^Binary operation "\." between ''/bundles…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Service/JsonManifestAssetLoader.php
+
+		-
+			message: '#^Cannot access offset ''file'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Service/JsonManifestAssetLoader.php
+
+		-
+			message: '#^Cannot access offset ''Authorization'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Service/RemoteHost/Authenticator/BasicAuthAuthenticator.php
+
+		-
+			message: '#^Method FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\BasicAuthAuthenticator\:\:authenticate\(\) should return T of array\<''auth_basic''\|''auth_bearer''\|''base_uri''\|''bindto''\|''body''\|''buffer''\|''cafile''\|''capath''\|''capture_peer_cert…''\|''ciphers''\|''crypto_method''\|''extra''\|''headers''\|''http_version''\|''json''\|''local_cert''\|''local_pk''\|''max_duration''\|''max_redirects''\|''no_proxy''\|''on_progress''\|''passphrase''\|''peer_fingerprint''\|''proxy''\|''query''\|''resolve''\|''timeout''\|''user_data''\|''verify_host''\|''verify_peer'', mixed\> but returns non\-empty\-array\<''auth_basic''\|''auth_bearer''\|''base_uri''\|''bindto''\|''body''\|''buffer''\|''cafile''\|''capath''\|''capture_peer_cert…''\|''ciphers''\|''crypto_method''\|''extra''\|''headers''\|''http_version''\|''json''\|''local_cert''\|''local_pk''\|''max_duration''\|''max_redirects''\|''no_proxy''\|''on_progress''\|''passphrase''\|''peer_fingerprint''\|''proxy''\|''query''\|''resolve''\|''timeout''\|''user_data''\|''verify_host''\|''verify_peer'', mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Service/RemoteHost/Authenticator/BasicAuthAuthenticator.php
+
+		-
+			message: '#^Cannot access offset ''Authorization'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Service/RemoteHost/Authenticator/BearerAuthenticator.php
+
+		-
+			message: '#^Method FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\BearerAuthenticator\:\:authenticate\(\) should return T of array\<''auth_basic''\|''auth_bearer''\|''base_uri''\|''bindto''\|''body''\|''buffer''\|''cafile''\|''capath''\|''capture_peer_cert…''\|''ciphers''\|''crypto_method''\|''extra''\|''headers''\|''http_version''\|''json''\|''local_cert''\|''local_pk''\|''max_duration''\|''max_redirects''\|''no_proxy''\|''on_progress''\|''passphrase''\|''peer_fingerprint''\|''proxy''\|''query''\|''resolve''\|''timeout''\|''user_data''\|''verify_host''\|''verify_peer'', mixed\> but returns non\-empty\-array\<''auth_basic''\|''auth_bearer''\|''base_uri''\|''bindto''\|''body''\|''buffer''\|''cafile''\|''capath''\|''capture_peer_cert…''\|''ciphers''\|''crypto_method''\|''extra''\|''headers''\|''http_version''\|''json''\|''local_cert''\|''local_pk''\|''max_duration''\|''max_redirects''\|''no_proxy''\|''on_progress''\|''passphrase''\|''peer_fingerprint''\|''proxy''\|''query''\|''resolve''\|''timeout''\|''user_data''\|''verify_host''\|''verify_peer'', mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Service/RemoteHost/Authenticator/BearerAuthenticator.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Service/RemoteHost/Authenticator/HeaderAuthenticator.php
+
+		-
+			message: '#^Method FD\\LogViewer\\Service\\RemoteHost\\Authenticator\\HeaderAuthenticator\:\:authenticate\(\) should return T of array\<''auth_basic''\|''auth_bearer''\|''base_uri''\|''bindto''\|''body''\|''buffer''\|''cafile''\|''capath''\|''capture_peer_cert…''\|''ciphers''\|''crypto_method''\|''extra''\|''headers''\|''http_version''\|''json''\|''local_cert''\|''local_pk''\|''max_duration''\|''max_redirects''\|''no_proxy''\|''on_progress''\|''passphrase''\|''peer_fingerprint''\|''proxy''\|''query''\|''resolve''\|''timeout''\|''user_data''\|''verify_host''\|''verify_peer'', mixed\> but returns array\<''auth_basic''\|''auth_bearer''\|''base_uri''\|''bindto''\|''body''\|''buffer''\|''cafile''\|''capath''\|''capture_peer_cert…''\|''ciphers''\|''crypto_method''\|''extra''\|''headers''\|''http_version''\|''json''\|''local_cert''\|''local_pk''\|''max_duration''\|''max_redirects''\|''no_proxy''\|''on_progress''\|''passphrase''\|''peer_fingerprint''\|''proxy''\|''query''\|''resolve''\|''timeout''\|''user_data''\|''verify_host''\|''verify_peer'', mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Service/RemoteHost/Authenticator/HeaderAuthenticator.php
