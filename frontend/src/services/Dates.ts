@@ -4,7 +4,9 @@ export function getRelativeDate(value: number, unit: string, floor: boolean): Da
     switch (unit) {
         case 's':
             date.setSeconds(date.getSeconds() - value);
-            floor ? date.setMilliseconds(0) : null;
+            if (floor) {
+                date.setMilliseconds(0);
+            }
             break;
         case 'i':
             date.setMinutes(date.getMinutes() - value);
