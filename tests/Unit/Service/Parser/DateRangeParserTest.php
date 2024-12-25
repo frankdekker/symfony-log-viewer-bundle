@@ -92,4 +92,19 @@ class DateRangeParserTest extends TestCase
         self::assertSame($date1->setTimezone(new DateTimeZone('Europe/Athens'))->modify($offset)->getTimestamp(), $result1->getTimestamp());
         self::assertEquals(new DateTimeZone('Europe/Athens'), $result1->getTimezone());
     }
+
+    /**
+     * @throws DateMalformedStringException
+     */
+    public function testParseAbsoluteTime(): void
+    {
+        $date1 = new DateTimeImmutable();
+        $date2 = new DateTimeImmutable();
+
+        $this->clock->expects(self::exactly(2))->method('now')->willReturn($date1, $date2);
+        [$result1] = $this->parser->parse('2024-12-12 12:34:56~now', new DateTimeZone('Europe/Athens'));
+        self::assertNotNull($result1);
+        self::assertSame((new DateTimeImmutable('2024-12-12 12:34:56', new DateTimeZone('Europe/Athens')))->getTimestamp(), $result1->getTimestamp());
+        self::assertEquals(new DateTimeZone('Europe/Athens'), $result1->getTimezone());
+    }
 }
