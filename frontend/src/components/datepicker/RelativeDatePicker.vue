@@ -10,7 +10,15 @@ const valueRef = ref<HTMLInputElement>();
 const unitRef  = ref<HTMLSelectElement>();
 
 watch(() => props.activated, () => {
-    if (props.activated) {
+    if (props.activated === false) {
+        return;
+    }
+
+    if (selected.value.mode === 'relative' && selected.value.value !== null) {
+        const value           = selected.value.value;
+        valueRef.value!.value = value.substring(0, value.length - 1);
+        unitRef.value!.value  = value.substring(value.length - 1);
+    } else {
         update();
     }
 });
