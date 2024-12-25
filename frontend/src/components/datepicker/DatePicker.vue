@@ -3,7 +3,7 @@ import DatePickerDropdown from '@/components/datepicker/DatePickerDropdown.vue';
 import type DateSelection from '@/models/DateSelection';
 import {formatSelection, parseSelection} from '@/services/DatePickerService';
 import {formatRelativeDate, getRelativeDate} from '@/services/Dates';
-import {reactive, ref, watch} from 'vue';
+import {onMounted, reactive, ref, watch} from 'vue';
 
 const between = defineModel<string>();
 const emit    = defineEmits(['change']);
@@ -19,13 +19,18 @@ let startDate                   = reactive<DateSelection>({
 let endDate                     = reactive<DateSelection>({date: new Date(), mode: 'now', value: null, formatted: 'now'});
 let currentValue: string | null = null;
 
-watch(between, () => {
+onMounted(() => onBetweenChanged());
+watch(between, () => onBetweenChanged());
+
+function onBetweenChanged(): void {
     if (between.value === currentValue) {
         return;
     }
+
     const result = parseSelection(between.value ?? '', startDate, endDate);
     currentValue = result === false ? null : between.value ?? null;
-});
+    active.value = result !== false;
+}
 
 function onExpand(): void {
     if (active.value !== true) {
