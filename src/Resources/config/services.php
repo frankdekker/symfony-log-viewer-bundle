@@ -38,6 +38,7 @@ use FD\LogViewer\Service\Matcher\KeyValueMatcher;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
 use FD\LogViewer\Service\Matcher\SeverityTermMatcher;
 use FD\LogViewer\Service\Matcher\WordTermMatcher;
+use FD\LogViewer\Service\Parser\DateRangeParser;
 use FD\LogViewer\Service\Parser\ExpressionParser;
 use FD\LogViewer\Service\Parser\KeyValueParser;
 use FD\LogViewer\Service\Parser\QuotedStringParser;
@@ -95,6 +96,7 @@ return static function (ContainerConfigurator $container): void {
                     ]
                 )
         );
+    $services->set(DateRangeParser::class)->arg('$clock', inline_service(Clock::class));
 
     $services->set(FinderFactory::class);
     $services->set(HostInvokeService::class);

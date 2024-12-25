@@ -9,6 +9,9 @@ use FD\LogViewer\Entity\Expression\Expression;
 
 class SearchQuery
 {
+    /**
+     * @codeCoverageIgnore - Simple DTO
+     */
     public function __construct(
         public readonly ?Expression $query = null,
         public readonly ?DateTimeImmutable $afterDate = null,
