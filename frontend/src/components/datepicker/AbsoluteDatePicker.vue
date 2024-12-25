@@ -54,7 +54,7 @@ function update(event: Event, field: 'month' | 'year'): void {
                 <i class="bi bi-chevron-left"></i>
             </button>
             <select class="form-control form-control-sm" @change="evt => update(evt, 'month')">
-                <option v-key="month" v-for="(monthName, month) in getMonths()" :value="month" :selected="month === currentDate.getMonth()">
+                <option v-bind:key="month" v-for="(monthName, month) in getMonths()" :value="month" :selected="month === currentDate.getMonth()">
                     {{ monthName }}
                 </option>
             </select>
@@ -74,12 +74,12 @@ function update(event: Event, field: 'month' | 'year'): void {
         <div class="days-time">
             <div class="days">
                 <div class="week-days">
-                    <div v-key="day" v-for="day in ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']" class="text-center">
+                    <div v-bind:key="day" v-for="day in ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']" class="text-center">
                         {{ day }}
                     </div>
                 </div>
                 <div class="day-of-the-month">
-                    <button v-key="date.toDateString()"
+                    <button v-bind:key="date.toDateString()"
                             v-for="date in calendarDates"
                             class="btn btn-outline-primary border-0"
                             :class="{'btn-outline-primary-active': isSameDay(date, selected.date), 'opacity-50': isSameMonth(date, currentDate) === false}"
