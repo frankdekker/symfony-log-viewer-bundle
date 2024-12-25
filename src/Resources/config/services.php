@@ -34,13 +34,10 @@ use FD\LogViewer\Service\Host\HostProvider;
 use FD\LogViewer\Service\Host\ResponseFactory;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
 use FD\LogViewer\Service\Matcher\ChannelTermMatcher;
-use FD\LogViewer\Service\Matcher\DateAfterTermMatcher;
-use FD\LogViewer\Service\Matcher\DateBeforeTermMatcher;
 use FD\LogViewer\Service\Matcher\KeyValueMatcher;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
 use FD\LogViewer\Service\Matcher\SeverityTermMatcher;
 use FD\LogViewer\Service\Matcher\WordTermMatcher;
-use FD\LogViewer\Service\Parser\DateParser;
 use FD\LogViewer\Service\Parser\ExpressionParser;
 use FD\LogViewer\Service\Parser\KeyValueParser;
 use FD\LogViewer\Service\Parser\QuotedStringParser;
@@ -94,7 +91,6 @@ return static function (ContainerConfigurator $container): void {
                 ->args(
                     [
                         service(StringParser::class),
-                        inline_service(DateParser::class),
                         inline_service(KeyValueParser::class)->args([service(StringParser::class)])
                     ]
                 )
@@ -131,8 +127,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(VersionService::class);
     $services->set(ZipArchiveFactory::class);
 
-    $services->set(DateBeforeTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
-    $services->set(DateAfterTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
     $services->set(SeverityTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
     $services->set(ChannelTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
     $services->set(KeyValueMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');

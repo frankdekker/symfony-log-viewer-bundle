@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\Matcher;
 
-use DateTimeImmutable;
-use FD\LogViewer\Entity\Expression\DateAfterTerm;
+use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Service\Matcher\WordTermMatcher;
@@ -25,7 +24,7 @@ class WordTermMatcherTest extends TestCase
     public function testSupports(): void
     {
         static::assertTrue($this->matcher->supports(new WordTerm('string', WordTerm::TYPE_INCLUDE)));
-        static::assertFalse($this->matcher->supports(new DateAfterTerm(new DateTimeImmutable())));
+        static::assertFalse($this->matcher->supports(new SeverityTerm(['error'])));
     }
 
     public function testMatchesIncludes(): void

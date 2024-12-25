@@ -3,15 +3,13 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\Parser;
 
-use DateTimeZone;
 use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Reader\String\StringReader;
 
 /**
  * BNF:
  * <expression> ::= <term> | <term> <expression>
- * <term> ::= <date-term> | <exclude-term> | <severity-term> | <channel-term> <string> | <context-term> | <extra-term>
- * <date-term> ::= before:<string> | af
+ * <term> ::= <exclude-term> | <severity-term> | <channel-term> <string> | <context-term> | <extra-term>
  * <severity-term> ::= severity:<string>
  * <channel-term> ::= channel:<string>
  * <exclude-term> ::= exclude:<string>
@@ -25,16 +23,13 @@ class ExpressionParser
     {
     }
 
-    /**
-     * @throws InvalidDateTimeException
-     */
-    public function parse(StringReader $string, DateTimeZone $timeZone): Expression
+    public function parse(StringReader $string): Expression
     {
         $terms = [];
 
         while ($string->eol() === false) {
             $string->skipWhitespace();
-            $terms[] = $this->termParser->parse($string, $timeZone);
+            $terms[] = $this->termParser->parse($string);
             $string->skipWhitespace();
         }
 

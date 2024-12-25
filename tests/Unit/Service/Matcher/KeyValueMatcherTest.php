@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\Matcher;
 
-use DateTimeImmutable;
-use FD\LogViewer\Entity\Expression\DateBeforeTerm;
 use FD\LogViewer\Entity\Expression\KeyValueTerm;
+use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Service\Matcher\KeyValueMatcher;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -25,7 +24,7 @@ class KeyValueMatcherTest extends TestCase
 
     public function testSupports(): void
     {
-        static::assertFalse($this->matcher->supports(new DateBeforeTerm(new DateTimeImmutable())));
+        static::assertFalse($this->matcher->supports(new SeverityTerm(['error'])));
         static::assertTrue($this->matcher->supports(new KeyValueTerm(KeyValueTerm::TYPE_CONTEXT, null, 'value')));
     }
 
