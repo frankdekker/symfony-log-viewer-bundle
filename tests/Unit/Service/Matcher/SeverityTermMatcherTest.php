@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Unit\Service\Matcher;
 
-use FD\LogViewer\Entity\Expression\ChannelTerm;
+use DateTimeImmutable;
+use FD\LogViewer\Entity\Expression\DateBeforeTerm;
 use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Service\Matcher\SeverityTermMatcher;
@@ -23,7 +24,7 @@ class SeverityTermMatcherTest extends TestCase
 
     public function testSupports(): void
     {
-        static::assertFalse($this->matcher->supports(new ChannelTerm(['app'])));
+        static::assertFalse($this->matcher->supports(new DateBeforeTerm(new DateTimeImmutable())));
         static::assertTrue($this->matcher->supports(new SeverityTerm(['warning'])));
     }
 

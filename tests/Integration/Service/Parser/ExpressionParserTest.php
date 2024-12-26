@@ -3,13 +3,18 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Tests\Integration\Service\Parser;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Exception;
 use FD\LogViewer\Entity\Expression\ChannelTerm;
+use FD\LogViewer\Entity\Expression\DateAfterTerm;
+use FD\LogViewer\Entity\Expression\DateBeforeTerm;
 use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Entity\Expression\KeyValueTerm;
 use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
+use FD\LogViewer\Service\Parser\DateParser;
 use FD\LogViewer\Service\Parser\ExpressionParser;
 use FD\LogViewer\Service\Parser\KeyValueParser;
 use FD\LogViewer\Service\Parser\QuotedStringParser;
@@ -28,7 +33,7 @@ class ExpressionParserTest extends TestCase
     {
         parent::setUp();
         $stringParser = new StringParser(new QuotedStringParser(), new WordParser());
-        $this->parser = new ExpressionParser(new TermParser($stringParser, new KeyValueParser($stringParser)));
+        $this->parser = new ExpressionParser(new TermParser($stringParser, new DateParser(), new KeyValueParser($stringParser)));
     }
 
     /**
@@ -65,6 +70,22 @@ class ExpressionParserTest extends TestCase
     {
         $expected = new Expression([new WordTerm('foo bar', WordTerm::TYPE_INCLUDE)]);
         $actual   = $this->parser->parse(new StringReader('"foo bar"'));
+
+        static::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testParseDateRange(): void
+    {
+        $expected = new Expression(
+            [
+                new DateAfterTerm(new DateTimeImmutable('2020-01-10T00:00', new DateTimeZone('America/New_York'))),
+                new DateBeforeTerm(new DateTimeImmutable('2020-01-10T10:00', new DateTimeZone('America/New_York')))
+            ]
+        );
+        $actual   = $this->parser->parse(new StringReader('after:2020-01-10T00:00 before:"2020-01-10 10:00"'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
