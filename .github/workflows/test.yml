@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: [ '8.1', '8.2', '8.3' ]
+        php-versions: [ '8.1', '8.2', '8.3', '8.4' ]
         composer-flags: [ '', '--prefer-lowest' ]
     steps:
       - uses: actions/checkout@v4
@@ -86,10 +86,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js 21.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 21.x
+          node-version: 22.x
 
       - name: Install dependencies
         run: cd frontend && npm install
@@ -112,10 +112,10 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Use Node.js 21.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 21.x
+          node-version: 22.x
 
       - name: Install dependencies
         run: cd frontend && npm install
