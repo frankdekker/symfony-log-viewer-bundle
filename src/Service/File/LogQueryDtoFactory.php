@@ -36,7 +36,7 @@ class LogQueryDtoFactory
         [$afterDate, $beforeDate] = $this->dateRangeParser->parse($request->query->getString('between'), $timeZone);
 
         // search expression
-        $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query));
+        $expression = $query === '' ? null : $this->expressionParser->parse(new StringReader($query), $timeZone);
 
         $searchQuery = null;
         if ($expression !== null || $afterDate !== null || $beforeDate !== null) {

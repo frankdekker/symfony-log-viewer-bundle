@@ -42,7 +42,7 @@ class ExpressionParserTest extends TestCase
     public function testParseSingleWord(): void
     {
         $expected = new Expression([new WordTerm('foobar', WordTerm::TYPE_INCLUDE)]);
-        $actual   = $this->parser->parse(new StringReader('foobar'));
+        $actual   = $this->parser->parse(new StringReader('foobar'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -58,7 +58,7 @@ class ExpressionParserTest extends TestCase
                 new WordTerm('bar', WordTerm::TYPE_INCLUDE)
             ]
         );
-        $actual   = $this->parser->parse(new StringReader('"foo" bar'));
+        $actual   = $this->parser->parse(new StringReader('"foo" bar'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -69,7 +69,7 @@ class ExpressionParserTest extends TestCase
     public function testParseQuotedString(): void
     {
         $expected = new Expression([new WordTerm('foo bar', WordTerm::TYPE_INCLUDE)]);
-        $actual   = $this->parser->parse(new StringReader('"foo bar"'));
+        $actual   = $this->parser->parse(new StringReader('"foo bar"'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -96,7 +96,7 @@ class ExpressionParserTest extends TestCase
     public function testParseChannels(): void
     {
         $expected = new Expression([new ChannelTerm(['app', 'request'])]);
-        $actual   = $this->parser->parse(new StringReader('channel:app|request'));
+        $actual   = $this->parser->parse(new StringReader('channel:app|request'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -107,7 +107,7 @@ class ExpressionParserTest extends TestCase
     public function testParseSeverity(): void
     {
         $expected = new Expression([new SeverityTerm(['warning', 'error'])]);
-        $actual   = $this->parser->parse(new StringReader('severity:warning|error'));
+        $actual   = $this->parser->parse(new StringReader('severity:warning|error'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -123,7 +123,7 @@ class ExpressionParserTest extends TestCase
                 new WordTerm('bar', WordTerm::TYPE_INCLUDE),
             ]
         );
-        $actual   = $this->parser->parse(new StringReader('exclude:"foo" bar'));
+        $actual   = $this->parser->parse(new StringReader('exclude:"foo" bar'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -139,7 +139,7 @@ class ExpressionParserTest extends TestCase
                 new KeyValueTerm(KeyValueTerm::TYPE_CONTEXT, ['foo'], 'bar'),
             ]
         );
-        $actual   = $this->parser->parse(new StringReader('context:baz context:foo="bar"'));
+        $actual   = $this->parser->parse(new StringReader('context:baz context:foo="bar"'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
@@ -155,7 +155,7 @@ class ExpressionParserTest extends TestCase
                 new KeyValueTerm(KeyValueTerm::TYPE_EXTRA, ['foo'], 'bar'),
             ]
         );
-        $actual   = $this->parser->parse(new StringReader('extra:baz extra:foo="bar"'));
+        $actual   = $this->parser->parse(new StringReader('extra:baz extra:foo="bar"'), new DateTimeZone('America/New_York'));
 
         static::assertEquals($expected, $actual);
     }
