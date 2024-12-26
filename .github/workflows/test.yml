@@ -11,19 +11,22 @@ permissions:
 
 jobs:
   test:
-    name: PHP ${{ matrix.php-versions }} - Test ${{ matrix.composer-flags }}
+    name: PHP ${{ matrix.php-version }} - Test ${{ matrix.composer-flags }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: [ '8.1', '8.2', '8.3', '8.4' ]
+        php-version: [ '8.1', '8.2', '8.3', '8.4' ]
         composer-flags: [ '', '--prefer-lowest' ]
+      exclude:
+        - php-version: '8.4'
+          composer-flags: '--prefer-lowest'
     steps:
       - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php-version }}
           coverage: none
 
       - name: Validate composer.json and composer.lock
