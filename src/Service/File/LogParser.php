@@ -35,8 +35,8 @@ class LogParser
         $lineIterator = new LogLineParserIterator($streamReader, $lineParser, $logQuery->direction);
         $iterator     = new MaxRuntimeIterator($this->clock, $lineIterator, self::MAX_RUNTIME_IN_SECONDS, false);
         $iterator     = new LogRecordIterator($iterator, new DateTimeParser($config->dateFormat), $lineParser);
-        if ($logQuery->query !== null) {
-            $iterator = new LogRecordFilterIterator($this->logRecordMatcher, $iterator, $logQuery->query);
+        if ($logQuery->searchQuery !== null) {
+            $iterator = new LogRecordFilterIterator($this->logRecordMatcher, $iterator, $logQuery->searchQuery);
         }
         $iterator = new LimitIterator($iterator, $logQuery->perPage);
 

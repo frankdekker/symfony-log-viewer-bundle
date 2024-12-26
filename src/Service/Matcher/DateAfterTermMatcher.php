@@ -8,6 +8,7 @@ use FD\LogViewer\Entity\Expression\TermInterface;
 use FD\LogViewer\Entity\Index\LogRecord;
 
 /**
+ * @deprecated will be removed in v3.0
  * @implements TermMatcherInterface<DateAfterTerm>
  */
 class DateAfterTermMatcher implements TermMatcherInterface

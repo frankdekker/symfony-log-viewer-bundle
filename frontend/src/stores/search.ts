@@ -5,6 +5,7 @@ import {ref} from 'vue'
 
 export const useSearchStore = defineStore('search', () => {
     const query      = ref('');
+    const between    = ref('');
     const perPage    = ref('100');
     const sort       = ref('desc');
     const files      = ref([] as string[]);
@@ -36,11 +37,12 @@ export const useSearchStore = defineStore('search', () => {
         const bag = new ParameterBag();
         bag.set('file', files.value.join(','), '');
         bag.set('query', query.value, '');
+        bag.set('between', between.value, '');
         bag.set('per_page', perPage.value, '100');
         bag.set('sort', sort.value, 'desc');
         bag.set('host', hostsStore.selected, 'localhost');
         return bag.toString();
     }
 
-    return {files, query, perPage, sort, addFile, toggleFile, setFile, removeFile, toQueryString}
+    return {files, query, between, perPage, sort, addFile, toggleFile, setFile, removeFile, toQueryString}
 });

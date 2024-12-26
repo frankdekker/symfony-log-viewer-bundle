@@ -9,7 +9,6 @@
          failOnEmptyTestSuite="true"
          beStrictAboutChangesToGlobalState="true"
          beStrictAboutOutputDuringTests="true"
-         beStrictAboutTodoAnnotatedTests="true"
          executionOrder="defects"
 >
     <php>

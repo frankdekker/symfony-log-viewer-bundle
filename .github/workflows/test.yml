@@ -86,16 +86,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js 21.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 21.x
+          node-version: 22.x
 
       - name: Install dependencies
         run: cd frontend && npm install
 
       - name: Run eslint
         run: cd frontend && npm run lint
+
+      - name: Run tests
+        run: cd frontend && npm run test:unit
 
   build-assets-check:
     name: Build assets
@@ -109,10 +112,10 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Use Node.js 21.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 21.x
+          node-version: 22.x
 
       - name: Install dependencies
         run: cd frontend && npm install

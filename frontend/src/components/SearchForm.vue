@@ -1,26 +1,22 @@
 <script setup lang="ts">
+import DatePicker from '@/components/datepicker/DatePicker.vue';
 import SearchFilter from '@/components/SearchFilter.vue';
 import {ref} from 'vue';
 
 const searchRef = ref<HTMLInputElement>();
 const query     = defineModel<string>('query');
+const between   = defineModel<string>('between', {default: ''});
 const sort      = defineModel<string>('sort');
 const perPage   = defineModel<string>('perPage');
 const emit      = defineEmits(['navigate']);
-
-const focus = (): void => {
-    searchRef.value?.focus();
-}
-
-defineProps<{
-    badRequest: boolean,
-}>();
+defineProps<{ badRequest: boolean }>();
+const focus = (): void => searchRef.value?.focus()
 defineExpose({focus});
 </script>
 
 <template>
     <div class="input-group">
-        <SearchFilter @add="(value) => query = (query === '' ? value : query + ' ' + value)"/>
+        <search-filter @add="(value) => query = (query === '' ? value : query + ' ' + value)"/>
 
         <input type="text"
                class="form-control"
@@ -31,6 +27,8 @@ defineExpose({focus});
                aria-describedby="button-search"
                @keyup.enter="emit('navigate')"
                v-model="query">
+
+        <date-picker class="slv-date-picker" v-model="between" @change="emit('navigate')"/>
 
         <select class="slv-menu-sort-direction form-control"
                 aria-label="Sort direction"
@@ -59,7 +57,7 @@ defineExpose({focus});
 </template>
 
 <style scoped>
-.slv-menu-sort-direction, .slv-menu-page-size, .slv-log-search-btn {
+.slv-menu-sort-direction, .slv-menu-page-size, .slv-log-search-btn, .slv-date-picker {
     max-width: fit-content;
 }
 </style>

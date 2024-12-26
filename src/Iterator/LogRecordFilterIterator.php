@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Iterator;
 
-use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Entity\Index\LogRecord;
+use FD\LogViewer\Entity\Request\SearchQuery;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
 use IteratorAggregate;
 use Traversable;
@@ -17,11 +17,8 @@ class LogRecordFilterIterator implements IteratorAggregate
     /**
      * @param iterable<int, LogRecord> $iterator
      */
-    public function __construct(
-        private readonly LogRecordMatcher $matcher,
-        private readonly iterable $iterator,
-        private readonly Expression $query,
-    ) {
+    public function __construct(private readonly LogRecordMatcher $matcher, private readonly iterable $iterator, private readonly SearchQuery $query)
+    {
     }
 
     public function getIterator(): Traversable

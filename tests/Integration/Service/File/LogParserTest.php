@@ -9,6 +9,7 @@ use FD\LogViewer\Entity\Expression\Expression;
 use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Request\LogQueryDto;
+use FD\LogViewer\Entity\Request\SearchQuery;
 use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
@@ -67,8 +68,8 @@ class LogParserTest extends AbstractIntegrationTestCase
 
     public function testParseWithExpressionFilter(): void
     {
-        $expression = new Expression([]);
-        $query      = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 0, $expression, DirectionEnum::Asc, 100);
+        $searchQuery = new SearchQuery(new Expression([]));
+        $query      = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'), 0, $searchQuery, DirectionEnum::Asc, 100);
         $file       = new SplFileInfo($this->getResourcePath('Integration/Service/LogParser/monolog.log'), '', '');
         $index      = $this->parser->parse($file, $this->lineParser, $this->config, $query);
 
