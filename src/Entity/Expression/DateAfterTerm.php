@@ -5,6 +5,9 @@ namespace FD\LogViewer\Entity\Expression;
 
 use DateTimeImmutable;
 
+/**
+ * @deprecated will be removed in v3.0
+ */
 class DateAfterTerm implements TermInterface
 {
     /**
