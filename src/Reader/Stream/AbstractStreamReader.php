@@ -28,7 +28,7 @@ abstract class AbstractStreamReader implements IteratorAggregate
 
     public function __destruct()
     {
-        if (isset($this->autoClose) && $this->autoClose) {
+        if ($this->autoClose) {
             fclose($this->handle);
         }
     }
