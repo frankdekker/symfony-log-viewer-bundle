@@ -109,6 +109,12 @@ parameters:
 			path: src/DependencyInjection/Extension.php
 
 		-
+			message: '#^Property FD\\LogViewer\\Reader\\Stream\\AbstractStreamReader\:\:\$autoClose in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: src/Reader/Stream/AbstractStreamReader.php
+
+		-
 			message: '#^Method FD\\LogViewer\\Reader\\String\\StringReader\:\:eol\(\) is marked as impure but does not have any side effects\.$#'
 			identifier: impureMethod.pure
 			count: 1
