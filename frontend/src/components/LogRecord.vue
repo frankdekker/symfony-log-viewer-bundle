@@ -10,7 +10,9 @@ defineProps<{
 </script>
 
 <template>
-    <div class="slv-list-group-item list-group-item list-group-item-action" :aria-expanded="expanded">
+    <div class="slv-list-group-item list-group-item list-group-item-action"
+         :class="{'opacity-50': logRecord.context_line && !expanded}"
+         :aria-expanded="expanded">
         <div class="slv-list-link" :class="{ 'text-nowrap': !expanded, 'overflow-hidden': !expanded }" @click="expanded = !expanded">
             <i class="slv-indicator bi bi-chevron-right me-1"></i>
             <span class="pe-2 text-secondary">{{ logRecord.datetime }}</span>

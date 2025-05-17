@@ -6,4 +6,5 @@ export default interface LogRecord {
     text: string;
     context: { [key: string]: unknown; }|string;
     extra: { [key: string]: unknown; }|string;
+    context_line?: boolean;
 }
