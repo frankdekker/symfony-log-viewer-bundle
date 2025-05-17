@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FD\LogViewer\Tests\Util;
+namespace FD\LogViewer\Tests\Unit\Util;
 
 use FD\LogViewer\Util\RotatingList;
 use PHPUnit\Framework\Attributes\CoversClass;
