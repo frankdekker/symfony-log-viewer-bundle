@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace FD\LogViewer\Entity\Index;
 
 use FD\LogViewer\Entity\IdentifierAwareInterface;
-use JsonSerializable;
-use Psr\Log\LogLevel;
 
 class LogRecord implements IdentifierAwareInterface
 {
+    private bool $contextLine = false;
+
     /**
      * @param string|array<int|string, mixed> $context
      * @param string|array<int|string, mixed> $extra
@@ -22,6 +22,18 @@ class LogRecord implements IdentifierAwareInterface
         public string|array $context,
         public string|array $extra
     ) {
+    }
+
+    public function isContextLine(): bool
+    {
+        return $this->contextLine;
+    }
+
+    public function setContextLine(bool $contextLine): self
+    {
+        $this->contextLine = $contextLine;
+
+        return $this;
     }
 
     public function getIdentifier(): string

@@ -40,7 +40,7 @@ class LogQueryDtoFactory
 
         $searchQuery = null;
         if ($expression !== null || $afterDate !== null || $beforeDate !== null) {
-            $searchQuery = new SearchQuery($expression, $afterDate, $beforeDate);
+            $searchQuery = new SearchQuery($expression, $afterDate, $beforeDate, 5, 5);
         }
 
         return new LogQueryDto($fileIdentifiers, $timeZone, $offset, $searchQuery, $direction, $perPage);

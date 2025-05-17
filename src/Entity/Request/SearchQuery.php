@@ -16,6 +16,8 @@ class SearchQuery
         public readonly ?Expression $query = null,
         public readonly ?DateTimeImmutable $afterDate = null,
         public readonly ?DateTimeImmutable $beforeDate = null,
+        public readonly int $linesBefore = 0,
+        public readonly int $linesAfter = 0,
     ) {
     }
 }
