@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Iterator;
 
-use FD\LogViewer\Entity\Expression\LineAfterTerm;
-use FD\LogViewer\Entity\Expression\LineBeforeTerm;
 use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Entity\Request\SearchQuery;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
@@ -19,16 +17,16 @@ class LogRecordFilterIterator implements IteratorAggregate
 {
     /** @var RotatingList<LogRecord> */
     private RotatingList $linesBeforeList;
-    private LineAfterTerm|null $lineAfterTerm;
-    private int $linesAfter = 0;
+    private int $linesAfter;
+    private int $showLinesAfter = 0;
 
     /**
      * @param iterable<int, LogRecord> $iterator
      */
     public function __construct(private readonly LogRecordMatcher $matcher, private readonly iterable $iterator, private readonly SearchQuery $query)
     {
-        $this->linesBeforeList = new RotatingList($query->query?->getTerm(LineBeforeTerm::class)->lines ?? 0);
-        $this->lineAfterTerm   = $query->query?->getTerm(LineAfterTerm::class);
+        $this->linesBeforeList = new RotatingList($query->getLinesBefore());
+        $this->linesAfter      = $query->getLinesAfter();
     }
 
     public function getIterator(): Traversable
@@ -41,10 +39,10 @@ class LogRecordFilterIterator implements IteratorAggregate
                     yield $contextLine;
                 }
                 $this->linesBeforeList->clear();
-                $this->linesAfter = $this->lineAfterTerm->lines ?? 0;
+                $this->showLinesAfter = $this->linesAfter;
                 yield $record;
             } elseif ($this->linesAfter > 0) {
-                $this->linesAfter--;
+                --$this->showLinesAfter;
                 $record->setContextLine(true);
                 yield $record;
             } else {
