@@ -41,7 +41,7 @@ class LogRecordFilterIterator implements IteratorAggregate
                 $this->linesBeforeList->clear();
                 $this->showLinesAfter = $this->linesAfter;
                 yield $record;
-            } elseif ($this->linesAfter > 0) {
+            } elseif ($this->showLinesAfter > 0) {
                 --$this->showLinesAfter;
                 $record->setContextLine(true);
                 yield $record;
