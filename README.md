@@ -23,6 +23,7 @@ read logs from any directory.
 - 📂 **View other types of logs** - Apache, Nginx, or custom logs,
 - 🔍 **Search** the logs,
 - 🔍 **Filter** by log level (error, info, debug, etc.), by channel, date range or log content inclusion or exclusion,
+- 🔍 Show **context lines** before and/or after the log entry matches,
 - 🔍 **Search** multiple log files at once,
 - 🌑 **Dark mode**,
 - 🕑 **Present log entries in your local timezone**,
