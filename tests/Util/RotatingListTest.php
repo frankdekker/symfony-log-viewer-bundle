@@ -19,13 +19,13 @@ class RotatingListTest extends TestCase
         $obj2 = new stdClass();
 
         $list->add($obj1);
-        $this->assertSame([$obj1], $list->getAll());
+        static::assertSame([$obj1], $list->getAll());
 
         $list->add($obj2);
-        $this->assertSame([$obj2], $list->getAll());
+        static::assertSame([$obj2], $list->getAll());
 
         $list->clear();
-        $this->assertSame([], $list->getAll());
+        static::assertSame([], $list->getAll());
     }
 
     public function testListSizeZero(): void
@@ -34,6 +34,6 @@ class RotatingListTest extends TestCase
         $obj1 = new stdClass();
 
         $list->add($obj1);
-        $this->assertSame([], $list->getAll());
+        static::assertSame([], $list->getAll());
     }
 }
