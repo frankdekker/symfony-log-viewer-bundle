@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import SearchFilterService from '@/services/SearchFilterService';
-import {onMounted, onUnmounted, ref} from 'vue';
+import {useSearchFilterStore} from '@/stores/search_filter.ts';
+import {onMounted, onUnmounted} from 'vue';
 
 const filterService = new SearchFilterService();
-const expanded      = ref(false);
-const emit          = defineEmits(['add']);
+const store         = useSearchFilterStore();
+const emit     = defineEmits(['add']);
 
 const addFilter = (event: UIEvent) => {
     const target = event.target as HTMLElement;
@@ -19,9 +20,9 @@ const addFilter = (event: UIEvent) => {
 
 // on escape, close the dropdown if visible
 const closeListener = function(event: KeyboardEvent) {
-    if (event.key === 'Escape' && expanded.value === true) {
+    if (event.key === 'Escape' && store.expanded === true) {
         event.preventDefault();
-        expanded.value = !expanded.value;
+        store.toggle();
     }
 }
 onMounted(() => document.addEventListener('keyup', closeListener));
@@ -32,10 +33,10 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
     <button ref="filterButton"
             class="btn btn-outline-secondary dropdown-toggle"
             type="button"
-            :aria-expanded="expanded"
-            @click="expanded = !expanded">Filter
+            :aria-expanded="store.expanded"
+            @click="store.toggle()">Filter
     </button>
-    <div class="dropdown-menu slv-dropdown-menu" :class="{'d-block': expanded}">
+    <div class="dropdown-menu slv-dropdown-menu" :class="{'d-block': store.expanded}">
         <div class="px-2">
             <div class="input-group mb-1" data-role="filter" data-pattern="severity:{value}" data-strip=" ">
                 <span class="slv-input-label input-group-text" id="filter-severity">Severity</span>
@@ -105,7 +106,7 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
             <div>
-                <button class="btn btn-sm btn-primary float-end" type="button" @click="expanded = !expanded">Close</button>
+                <button class="btn btn-sm btn-primary float-end" type="button" @click="store.toggle()">Close</button>
             </div>
         </div>
     </div>

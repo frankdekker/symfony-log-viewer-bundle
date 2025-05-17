@@ -16,7 +16,7 @@ defineExpose({focus});
 
 <template>
     <div class="input-group">
-        <search-filter @add="(value) => query = (query === '' ? value : query + ' ' + value)"/>
+        <search-filter @add="(value) => { query = (query === '' ? value : query + ' ' + value); emit('navigate'); }"/>
 
         <input type="text"
                class="form-control"
