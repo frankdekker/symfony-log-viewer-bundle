@@ -18,11 +18,15 @@ class RotatingList
 
     public function add(mixed $item): void
     {
-        if (count($this->items) >= $this->maxSize) {
-            array_shift($this->items);
+        if ($this->maxSize === 0) {
+            return;
         }
 
         $this->items[] = $item;
+
+        if (count($this->items) > $this->maxSize) {
+            array_shift($this->items);
+        }
     }
 
     /**
