@@ -37,4 +37,36 @@ class LogRecordFilterIteratorTest extends TestCase
         $iterator = new LogRecordFilterIterator($this->recordMatcher, $recordIterator, $searchQuery);
         static::assertSame([$debugRecord], array_values(iterator_to_array($iterator)));
     }
+
+    public function testGetIteratorShouldFilterWithBeforeLines(): void
+    {
+        $record1        = new LogRecord('id', 111111, 'info', 'request', 'message', [], []);
+        $record2        = new LogRecord('id', 222222, 'info', 'app', 'message', [], []);
+        $record3        = new LogRecord('id', 333333, 'info', 'event', 'message', [], []);
+        $recordIterator = new ArrayIterator([$record1, $record2, $record3]);
+
+        $this->recordMatcher->expects(self::exactly(3))->method('matches')->with()->willReturn(false, true, false);
+
+        $searchQuery = $this->createMock(SearchQuery::class);
+        $searchQuery->method('getLinesBefore')->willReturn(1);
+        $searchQuery->method('getLinesAfter')->willReturn(0);
+        $iterator = new LogRecordFilterIterator($this->recordMatcher, $recordIterator, $searchQuery);
+        static::assertSame([$record1, $record2], array_values(iterator_to_array($iterator)));
+    }
+
+    public function testGetIteratorShouldFilterWithAfterLines(): void
+    {
+        $record1        = new LogRecord('id', 111111, 'info', 'request', 'message', [], []);
+        $record2        = new LogRecord('id', 222222, 'info', 'app', 'message', [], []);
+        $record3        = new LogRecord('id', 333333, 'info', 'event', 'message', [], []);
+        $recordIterator = new ArrayIterator([$record1, $record2, $record3]);
+
+        $this->recordMatcher->expects(self::exactly(3))->method('matches')->with()->willReturn(false, true, false);
+
+        $searchQuery = $this->createMock(SearchQuery::class);
+        $searchQuery->method('getLinesBefore')->willReturn(0);
+        $searchQuery->method('getLinesAfter')->willReturn(1);
+        $iterator = new LogRecordFilterIterator($this->recordMatcher, $recordIterator, $searchQuery);
+        static::assertSame([$record2, $record3], array_values(iterator_to_array($iterator)));
+    }
 }

@@ -10,6 +10,8 @@ use FD\LogViewer\Entity\Expression\ChannelTerm;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
 use FD\LogViewer\Entity\Expression\DateBeforeTerm;
 use FD\LogViewer\Entity\Expression\KeyValueTerm;
+use FD\LogViewer\Entity\Expression\LineAfterTerm;
+use FD\LogViewer\Entity\Expression\LineBeforeTerm;
 use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
@@ -154,5 +156,33 @@ class TermParserTest extends TestCase
         $this->keyValueParser->expects(self::once())->method('parse')->with('extra', $string)->willReturn($term);
 
         static::assertSame($term, $this->parser->parse($string, new DateTimeZone('America/New_York')));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testParseLineBefore(): void
+    {
+        $string = new StringReader("   line-before:5");
+
+        $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('5');
+
+        $term = $this->parser->parse($string, new DateTimeZone('America/New_York'));
+        static::assertInstanceOf(LineBeforeTerm::class, $term);
+        static::assertSame(5, $term->lines);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testParseLineAfter(): void
+    {
+        $string = new StringReader("   line-after:5");
+
+        $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('5');
+
+        $term = $this->parser->parse($string, new DateTimeZone('America/New_York'));
+        static::assertInstanceOf(LineAfterTerm::class, $term);
+        static::assertSame(5, $term->lines);
     }
 }

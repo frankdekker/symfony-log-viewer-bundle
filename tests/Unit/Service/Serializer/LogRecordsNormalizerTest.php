@@ -34,7 +34,8 @@ class LogRecordsNormalizerTest extends TestCase
                 'channel'     => 'request',
                 'text'        => 'message',
                 'context'     => ['context'],
-                'extra'       => ['extra']
+                'extra'       => ['extra'],
+                'context_line' => false
             ]
         ];
         $result   = $this->normalizer->normalize([$record], $timeZone);
