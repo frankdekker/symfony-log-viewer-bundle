@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\Util;
 
 /**
+ * A list that only keeps the last N items.
  * @template T
  */
 class RotatingList
