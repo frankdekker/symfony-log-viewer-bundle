@@ -38,6 +38,34 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
     </button>
     <div class="dropdown-menu slv-dropdown-menu" :class="{'d-block': store.expanded}">
         <div class="px-2">
+            <!-- lines before filter -->
+            <div class="input-group mb-1" data-role="filter" data-pattern="lb:{value}" data-strip=" ">
+                <span class="slv-input-label input-group-text" id="lines-before">Lines before</span>
+                <input name="value"
+                       min="0"
+                       type="number"
+                       class="form-control"
+                       placeholder="0"
+                       @keyup.enter="addFilter"
+                       aria-label="Lines before"
+                       aria-describedby="lines-before">
+                <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
+            </div>
+
+            <!-- lines after filter -->
+            <div class="input-group mb-1" data-role="filter" data-pattern="la:{value}" data-strip=" ">
+                <span class="slv-input-label input-group-text" id="lines-before">Lines after</span>
+                <input name="value"
+                       min="0"
+                       type="number"
+                       class="form-control"
+                       @keyup.enter="addFilter"
+                       aria-label="Lines after"
+                       aria-describedby="lines-after">
+                <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
+            </div>
+
+            <!-- severity filter -->
             <div class="input-group mb-1" data-role="filter" data-pattern="severity:{value}" data-strip=" ">
                 <span class="slv-input-label input-group-text" id="filter-severity">Severity</span>
                 <input name="value"
@@ -50,6 +78,7 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
 
+            <!-- channel filter -->
             <div class="input-group mb-1" data-role="filter" data-pattern="channel:{value}" data-strip=" ">
                 <span class="slv-input-label input-group-text" id="filter-severity">Channels</span>
                 <input name="value"
@@ -61,6 +90,8 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
                        aria-describedby="filter-severity">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
+
+            <!-- exclude filter -->
             <div class="input-group mb-1" data-role="filter" data-pattern="exclude:{value}">
                 <span class="slv-input-label input-group-text" id="filter-exclude">Exclude</span>
                 <input name="value"
@@ -71,6 +102,8 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
                        aria-describedby="filter-exclude">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
+
+            <!-- context filter -->
             <div class="input-group mb-1" data-role="filter" data-pattern="context:{key=}{value}">
                 <span class="slv-input-label input-group-text" id="filter-context">Context</span>
                 <input name="key"
@@ -88,6 +121,8 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
                        aria-describedby="filter-context">
                 <button class="btn btn-outline-primary" type="button" @click="addFilter">Add</button>
             </div>
+
+            <!-- extra filter -->
             <div class="input-group mb-1" data-role="filter" data-pattern="extra:{key=}{value}">
                 <span class="slv-input-label input-group-text" id="filter-extra">Extra</span>
                 <input name="key"
@@ -118,6 +153,6 @@ onUnmounted(() => document.removeEventListener('keyup', closeListener));
 }
 
 .slv-input-label {
-    width: 100px;
+    width: 110px;
 }
 </style>
