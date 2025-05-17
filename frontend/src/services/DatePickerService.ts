@@ -22,7 +22,7 @@ function parseDate(value: string, date: DateSelection): boolean {
         date.formatted = 'now';
         return true;
     }
-    if (value.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/)) {
+    if (value.match(/^\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}$/)) {
         date.date      = new Date(value);
         date.mode      = 'absolute';
         date.value     = null;
