@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Service\Parser;
 
-use DateTime;
 use DateTimeZone;
 use FD\LogViewer\Entity\Expression\ChannelTerm;
 use FD\LogViewer\Entity\Expression\DateAfterTerm;
 use FD\LogViewer\Entity\Expression\DateBeforeTerm;
 use FD\LogViewer\Entity\Expression\KeyValueTerm;
+use FD\LogViewer\Entity\Expression\LineAfterTerm;
+use FD\LogViewer\Entity\Expression\LineBeforeTerm;
 use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\TermInterface;
 use FD\LogViewer\Entity\Expression\WordTerm;
@@ -62,6 +63,14 @@ class TermParser
 
         if ($string->read('extra:')) {
             return $this->keyValueParser->parse(KeyValueTerm::TYPE_EXTRA, $string);
+        }
+
+        if ($string->read('line-before:') || $string->read('lb:')) {
+            return new LineBeforeTerm((int)$this->stringParser->parse($string));
+        }
+
+        if ($string->read('line-after:') || $string->read('la:')) {
+            return new LineAfterTerm((int)$this->stringParser->parse($string));
         }
 
         return new WordTerm($this->stringParser->parse($string), WordTerm::TYPE_INCLUDE);
