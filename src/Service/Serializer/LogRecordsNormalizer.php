@@ -33,7 +33,8 @@ class LogRecordsNormalizer
      *     channel: string,
      *     text: string,
      *     context: string|array<array-key, mixed>,
-     *     extra: string|array<array-key, mixed>
+     *     extra: string|array<array-key, mixed>,
+     *     context_line: bool
      * }[]
      */
     public function normalize(array $records, DateTimeZone $timeZone): array
@@ -42,13 +43,14 @@ class LogRecordsNormalizer
         $result = [];
         foreach ($records as $record) {
             $result[] = [
-                'datetime'    => $date->setTimestamp($record->date)->format('Y-m-d H:i:s'),
-                'level_name'  => ucfirst($record->severity),
-                'level_class' => self::LEVEL_CLASSES[$record->severity] ?? 'text-info',
-                'channel'     => $record->channel,
-                'text'        => $record->message,
-                'context'     => $record->context,
-                'extra'       => $record->extra,
+                'datetime'     => $date->setTimestamp($record->date)->format('Y-m-d H:i:s'),
+                'level_name'   => ucfirst($record->severity),
+                'level_class'  => self::LEVEL_CLASSES[$record->severity] ?? 'text-info',
+                'channel'      => $record->channel,
+                'text'         => $record->message,
+                'context'      => $record->context,
+                'extra'        => $record->extra,
+                'context_line' => $record->isContextLine(),
             ];
         }
 
