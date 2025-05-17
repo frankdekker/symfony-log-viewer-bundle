@@ -4,6 +4,8 @@ The search query allows for more fine-grained control over the search results. T
 
 | Operator                                    | Short | Description                                                                     |
 |---------------------------------------------|-------|---------------------------------------------------------------------------------|
+| `line-before:<number>`                      | `lb`  | Show the number of context lines before the search result.                      | 
+| `line-after:<number>`                       | `la`  | Show the number of context lines after the search result.                       | 
 | `severity:<pipe-separated-string>`          | `s`   | Show all logs messages that match the given severity/severities.                |
 | `channel:<pipe-separated-string>`           | `c`   | Show all logs messages that match the given channel(s).                         |
 | `exclude:<word>`,`exclude:"<words>"`        | `-`   | Exclude the specific sentence from the results. Can be specified multiple times |
