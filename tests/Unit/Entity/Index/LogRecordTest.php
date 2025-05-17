@@ -13,9 +13,13 @@ class LogRecordTest extends TestCase
 {
     use AccessorPairAsserter;
 
-    public function testAccessorPairs(): void
+    public function testContextLine(): void
     {
-        static::assertAccessorPairs(LogRecord::class);
+        $record = new LogRecord('identifier', 123, 'warn', 'app', 'message', [], []);
+        static::assertFalse($record->isContextLine());
+
+        $record->setContextLine(true);
+        static::assertTrue($record->isContextLine());
     }
 
     public function testGetIdentifier(): void
