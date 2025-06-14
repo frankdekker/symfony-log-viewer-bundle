@@ -14,10 +14,10 @@ class DeduplicationIteratorTest extends TestCase
 {
     public function testWithDeduplication(): void
     {
-        $recordA1 = new LogRecord('id1', 111, 'debug', 'request', 'message', [], []);
-        $recordB1 = new LogRecord('id2', 111, 'debug', 'request', 'message', [], []);
-        $recordA2 = new LogRecord('id1', 111, 'debug', 'request', 'message', [], []);
-        $recordB2 = new LogRecord('id2', 111, 'debug', 'request', 'message', [], []);
+        $recordA1 = new LogRecord('id1', 'record', 111, 'debug', 'request', 'message', [], []);
+        $recordB1 = new LogRecord('id2', 'record', 111, 'debug', 'request', 'message', [], []);
+        $recordA2 = new LogRecord('id1', 'record', 111, 'debug', 'request', 'message', [], []);
+        $recordB2 = new LogRecord('id2', 'record', 111, 'debug', 'request', 'message', [], []);
 
         $iterator = new DeduplicationIterator(new ArrayIterator([$recordA1, $recordB1, $recordA2, $recordB2]));
 
@@ -26,10 +26,10 @@ class DeduplicationIteratorTest extends TestCase
 
     public function testWithoutDeduplication(): void
     {
-        $recordA = new LogRecord('id1', 111, 'debug', 'request', 'message', [], []);
-        $recordB = new LogRecord('id2', 111, 'debug', 'request', 'message', [], []);
-        $recordC = new LogRecord('id3', 111, 'debug', 'request', 'message', [], []);
-        $recordD = new LogRecord('id4', 111, 'debug', 'request', 'message', [], []);
+        $recordA = new LogRecord('id1', 'record', 111, 'debug', 'request', 'message', [], []);
+        $recordB = new LogRecord('id2', 'record', 111, 'debug', 'request', 'message', [], []);
+        $recordC = new LogRecord('id3', 'record', 111, 'debug', 'request', 'message', [], []);
+        $recordD = new LogRecord('id4', 'record', 111, 'debug', 'request', 'message', [], []);
 
         $iterator = new DeduplicationIterator(new ArrayIterator([$recordA, $recordB, $recordC, $recordD]));
 

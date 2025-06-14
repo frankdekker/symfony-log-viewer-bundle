@@ -35,7 +35,7 @@ class LogRecordMatcherTest extends TestCase
 
     public function testMatchesEmpty(): void
     {
-        $record = new LogRecord('id', 123, 'error', 'channel', 'message', [], []);
+        $record = new LogRecord('id', 'record', 123, 'error', 'channel', 'message', [], []);
 
         $this->termMatcher->expects(self::never())->method('supports');
 
@@ -44,7 +44,7 @@ class LogRecordMatcherTest extends TestCase
 
     public function testMatchesAfterDate(): void
     {
-        $record      = new LogRecord('id', 55555, 'error', 'channel', 'message', [], []);
+        $record      = new LogRecord('id', 'record', 55555, 'error', 'channel', 'message', [], []);
         $searchQuery = new SearchQuery(afterDate: (new DateTimeImmutable())->setTimestamp(55560));
 
         $this->termMatcher->expects(self::never())->method('supports');
@@ -54,7 +54,7 @@ class LogRecordMatcherTest extends TestCase
 
     public function testMatchesBeforeDate(): void
     {
-        $record      = new LogRecord('id', 55555, 'error', 'channel', 'message', [], []);
+        $record      = new LogRecord('id', 'record', 55555, 'error', 'channel', 'message', [], []);
         $searchQuery = new SearchQuery(beforeDate: (new DateTimeImmutable())->setTimestamp(55550));
 
         $this->termMatcher->expects(self::never())->method('supports');
@@ -64,7 +64,7 @@ class LogRecordMatcherTest extends TestCase
 
     public function testMatchesMatch(): void
     {
-        $record      = new LogRecord('id', 123, 'error', 'channel', 'message', [], []);
+        $record      = new LogRecord('id', 'record', 123, 'error', 'channel', 'message', [], []);
         $term        = new WordTerm('string', WordTerm::TYPE_INCLUDE);
         $searchQuery = new SearchQuery(new Expression([$term]));
 
@@ -76,7 +76,7 @@ class LogRecordMatcherTest extends TestCase
 
     public function testMatchesNoMatch(): void
     {
-        $record      = new LogRecord('id', 123, 'error', 'channel', 'message', [], []);
+        $record      = new LogRecord('id', 'record', 123, 'error', 'channel', 'message', [], []);
         $term        = new WordTerm('string', WordTerm::TYPE_INCLUDE);
         $searchQuery = new SearchQuery(new Expression([$term]));
 
@@ -88,7 +88,7 @@ class LogRecordMatcherTest extends TestCase
 
     public function testMatchesNoSupportedMatchers(): void
     {
-        $record      = new LogRecord('id', 123, 'error', 'channel', 'message', [], []);
+        $record      = new LogRecord('id', 'record', 123, 'error', 'channel', 'message', [], []);
         $term        = new WordTerm('string', WordTerm::TYPE_INCLUDE);
         $searchQuery = new SearchQuery(new Expression([$term]));
 

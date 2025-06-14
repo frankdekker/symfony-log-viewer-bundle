@@ -30,7 +30,7 @@ class ChannelTermMatcherTest extends TestCase
 
     public function testMatches(): void
     {
-        $record = new LogRecord('id', 2000000, 'Warning', 'app', 'message', [], []);
+        $record = new LogRecord('id', 'record', 2000000, 'Warning', 'app', 'message', [], []);
 
         static::assertTrue($this->matcher->matches(new ChannelTerm(['app']), $record));
         static::assertTrue($this->matcher->matches(new ChannelTerm(['app', 'request']), $record));

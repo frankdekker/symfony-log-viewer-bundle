@@ -17,7 +17,7 @@ class LogRecordsOutputTest extends TestCase
     public function testJsonSerialize(): void
     {
         $paginator   = new Paginator(DirectionEnum::Asc, true, true, 123);
-        $record      = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
+        $record      = new LogRecord('id', 'record', 111111, 'debug', 'request', 'message', [], []);
         $performance = $this->createMock(PerformanceStats::class);
 
         $logRecordsOutput = new LogRecordsOutput([$record], $paginator, $performance);

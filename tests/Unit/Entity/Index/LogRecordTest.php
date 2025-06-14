@@ -15,7 +15,7 @@ class LogRecordTest extends TestCase
 
     public function testContextLine(): void
     {
-        $record = new LogRecord('identifier', 123, 'warn', 'app', 'message', [], []);
+        $record = new LogRecord('identifier', 'record', 123, 'warn', 'app', 'message', [], []);
         static::assertFalse($record->isContextLine());
 
         $record->setContextLine(true);
@@ -24,7 +24,7 @@ class LogRecordTest extends TestCase
 
     public function testGetIdentifier(): void
     {
-        $record = new LogRecord('id', 111, 'debug', 'request', 'message', [], []);
+        $record = new LogRecord('id', 'record', 111, 'debug', 'request', 'message', [], []);
 
         static::assertSame('id', $record->getIdentifier());
     }

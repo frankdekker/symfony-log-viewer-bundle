@@ -14,9 +14,9 @@ class LogRecordDateComparatorTest extends TestCase
 {
     public function testCompareAscending(): void
     {
-        $recordA = new LogRecord('id', 333333, 'debug', 'request', 'message', [], []);
-        $recordB = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
-        $recordC = new LogRecord('id', 222222, 'debug', 'request', 'message', [], []);
+        $recordA = new LogRecord('id', 'record', 333333, 'debug', 'request', 'message', [], []);
+        $recordB = new LogRecord('id', 'record', 111111, 'debug', 'request', 'message', [], []);
+        $recordC = new LogRecord('id', 'record', 222222, 'debug', 'request', 'message', [], []);
         $records = [$recordA, $recordB, $recordC];
 
         $comparator = new LogRecordDateComparator(DirectionEnum::Asc);
@@ -27,9 +27,9 @@ class LogRecordDateComparatorTest extends TestCase
 
     public function testCompareDescending(): void
     {
-        $recordA = new LogRecord('id', 333333, 'debug', 'request', 'message', [], []);
-        $recordB = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
-        $recordC = new LogRecord('id', 222222, 'debug', 'request', 'message', [], []);
+        $recordA = new LogRecord('id', 'record', 333333, 'debug', 'request', 'message', [], []);
+        $recordB = new LogRecord('id', 'record', 111111, 'debug', 'request', 'message', [], []);
+        $recordC = new LogRecord('id', 'record', 222222, 'debug', 'request', 'message', [], []);
         $records = [$recordA, $recordB, $recordC];
 
         $comparator = new LogRecordDateComparator(DirectionEnum::Desc);

@@ -25,7 +25,7 @@ class LogRecordCollectionTest extends TestCase
 
     public function testGetRecords(): void
     {
-        $record     = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
+        $record     = new LogRecord('id', 'record', 111111, 'debug', 'request', 'message', [], []);
         $collection = new LogRecordCollection(new ArrayIterator([$record]), null);
         static::assertSame([$record], $collection->getRecords());
 
@@ -35,7 +35,7 @@ class LogRecordCollectionTest extends TestCase
 
     public function testGetRecordsViaIterator(): void
     {
-        $record     = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
+        $record     = new LogRecord('id', 'record', 111111, 'debug', 'request', 'message', [], []);
         $collection = new LogRecordCollection(new ArrayIterator([$record]), null);
         static::assertSame([$record], iterator_to_array($collection));
 

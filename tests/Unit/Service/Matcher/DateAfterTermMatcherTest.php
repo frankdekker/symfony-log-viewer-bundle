@@ -32,7 +32,7 @@ class DateAfterTermMatcherTest extends TestCase
     {
         $dateBefore = new DateTimeImmutable('@1500000');
         $dateAfter  = new DateTimeImmutable('@2500000');
-        $record     = new LogRecord('id', 2000000, 'error', 'channel', 'message', [], []);
+        $record     = new LogRecord('id', 'record', 2000000, 'error', 'channel', 'message', [], []);
 
         static::assertTrue($this->matcher->matches(new DateAfterTerm($dateBefore), $record));
         static::assertFalse($this->matcher->matches(new DateAfterTerm($dateAfter), $record));

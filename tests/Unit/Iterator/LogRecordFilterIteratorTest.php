@@ -26,9 +26,9 @@ class LogRecordFilterIteratorTest extends TestCase
 
     public function testGetIteratorShouldFilterOnExpression(): void
     {
-        $debugRecord    = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
-        $infoRecord     = new LogRecord('id', 222222, 'info', 'app', 'message', [], []);
-        $warningRecord  = new LogRecord('id', 333333, 'warning', 'event', 'message', [], []);
+        $debugRecord    = new LogRecord('id', 'record', 111111, 'debug', 'request', 'message', [], []);
+        $infoRecord     = new LogRecord('id', 'record', 222222, 'info', 'app', 'message', [], []);
+        $warningRecord  = new LogRecord('id', 'record', 333333, 'warning', 'event', 'message', [], []);
         $recordIterator = new ArrayIterator([$debugRecord, $infoRecord, $warningRecord]);
         $searchQuery    = new SearchQuery(new Expression([]));
 
@@ -40,9 +40,9 @@ class LogRecordFilterIteratorTest extends TestCase
 
     public function testGetIteratorShouldFilterWithBeforeLines(): void
     {
-        $record1        = new LogRecord('id', 111111, 'info', 'request', 'message', [], []);
-        $record2        = new LogRecord('id', 222222, 'info', 'app', 'message', [], []);
-        $record3        = new LogRecord('id', 333333, 'info', 'event', 'message', [], []);
+        $record1        = new LogRecord('id', 'record', 111111, 'info', 'request', 'message', [], []);
+        $record2        = new LogRecord('id', 'record', 222222, 'info', 'app', 'message', [], []);
+        $record3        = new LogRecord('id', 'record', 333333, 'info', 'event', 'message', [], []);
         $recordIterator = new ArrayIterator([$record1, $record2, $record3]);
 
         $this->recordMatcher->expects(self::exactly(3))->method('matches')->with()->willReturn(false, true, false);
@@ -56,9 +56,9 @@ class LogRecordFilterIteratorTest extends TestCase
 
     public function testGetIteratorShouldFilterWithAfterLines(): void
     {
-        $record1        = new LogRecord('id', 111111, 'info', 'request', 'message', [], []);
-        $record2        = new LogRecord('id', 222222, 'info', 'app', 'message', [], []);
-        $record3        = new LogRecord('id', 333333, 'info', 'event', 'message', [], []);
+        $record1        = new LogRecord('id', 'record', 111111, 'info', 'request', 'message', [], []);
+        $record2        = new LogRecord('id', 'record', 222222, 'info', 'app', 'message', [], []);
+        $record3        = new LogRecord('id', 'record', 333333, 'info', 'event', 'message', [], []);
         $recordIterator = new ArrayIterator([$record1, $record2, $record3]);
 
         $this->recordMatcher->expects(self::exactly(3))->method('matches')->with()->willReturn(false, true, false);

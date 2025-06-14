@@ -23,7 +23,7 @@ class LogRecordsNormalizerTest extends TestCase
 
     public function testNormalize(): void
     {
-        $record   = new LogRecord('id', 1234567890, 'debug', 'request', 'message', ['context'], ['extra']);
+        $record   = new LogRecord('id', 'record', 1234567890, 'debug', 'request', 'message', ['context'], ['extra']);
         $timeZone = new DateTimeZone('America/New_York');
 
         $expected = [
