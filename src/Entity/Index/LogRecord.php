@@ -14,13 +14,14 @@ class LogRecord implements IdentifierAwareInterface
      * @param string|array<int|string, mixed> $extra
      */
     public function __construct(
-        private string $identifier,
-        public int $date,
-        public string $severity,
-        public string $channel,
-        public string $message,
-        public string|array $context,
-        public string|array $extra
+        private readonly string $identifier,
+        public readonly string $originalRecord,
+        public readonly int $date,
+        public readonly string $severity,
+        public readonly string $channel,
+        public readonly string $message,
+        public readonly string|array $context,
+        public readonly string|array $extra
     ) {
     }
 
