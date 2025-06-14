@@ -24,8 +24,8 @@ class MultiLogRecordIteratorTest extends TestCase
 
     public function testTwoStreamsSingleItem(): void
     {
-        $recordA = new LogRecord('id', 1000, 'error', 'channel', 'message', [], []);
-        $recordB = new LogRecord('id', 2000, 'error', 'channel', 'message', [], []);
+        $recordA = new LogRecord('id', 'record', 1000, 'error', 'channel', 'message', [], []);
+        $recordB = new LogRecord('id', 'record', 2000, 'error', 'channel', 'message', [], []);
 
         $iteratorA = new ArrayIterator([$recordA]);
         $iteratorB = new ArrayIterator([$recordB]);
@@ -38,10 +38,10 @@ class MultiLogRecordIteratorTest extends TestCase
 
     public function testTwoEqualSizedIterators(): void
     {
-        $recordA = new LogRecord('id', 1000, 'error', 'channel', 'message', [], []);
-        $recordB = new LogRecord('id', 2000, 'error', 'channel', 'message', [], []);
-        $recordC = new LogRecord('id', 3000, 'error', 'channel', 'message', [], []);
-        $recordD = new LogRecord('id', 4000, 'error', 'channel', 'message', [], []);
+        $recordA = new LogRecord('id', 'record', 1000, 'error', 'channel', 'message', [], []);
+        $recordB = new LogRecord('id', 'record', 2000, 'error', 'channel', 'message', [], []);
+        $recordC = new LogRecord('id', 'record', 3000, 'error', 'channel', 'message', [], []);
+        $recordD = new LogRecord('id', 'record', 4000, 'error', 'channel', 'message', [], []);
 
         $iteratorA = new ArrayIterator([$recordA, $recordC]);
         $iteratorB = new ArrayIterator([$recordB, $recordD]);
@@ -54,10 +54,10 @@ class MultiLogRecordIteratorTest extends TestCase
 
     public function testTwoUnevenSizedIterators(): void
     {
-        $recordA = new LogRecord('id', 1000, 'error', 'channel', 'message', [], []);
-        $recordB = new LogRecord('id', 2000, 'error', 'channel', 'message', [], []);
-        $recordC = new LogRecord('id', 3000, 'error', 'channel', 'message', [], []);
-        $recordD = new LogRecord('id', 4000, 'error', 'channel', 'message', [], []);
+        $recordA = new LogRecord('id', 'record', 1000, 'error', 'channel', 'message', [], []);
+        $recordB = new LogRecord('id', 'record', 2000, 'error', 'channel', 'message', [], []);
+        $recordC = new LogRecord('id', 'record', 3000, 'error', 'channel', 'message', [], []);
+        $recordD = new LogRecord('id', 'record', 4000, 'error', 'channel', 'message', [], []);
 
         $iteratorA = new ArrayIterator([$recordB]);
         $iteratorB = new ArrayIterator([$recordA, $recordC, $recordD]);
