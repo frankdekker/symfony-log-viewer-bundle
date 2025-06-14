@@ -10,6 +10,7 @@ use FD\LogViewer\Entity\Expression\DateBeforeTerm;
 use FD\LogViewer\Entity\Expression\KeyValueTerm;
 use FD\LogViewer\Entity\Expression\LineAfterTerm;
 use FD\LogViewer\Entity\Expression\LineBeforeTerm;
+use FD\LogViewer\Entity\Expression\MessageTerm;
 use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\TermInterface;
 use FD\LogViewer\Entity\Expression\WordTerm;
@@ -51,6 +52,10 @@ class TermParser
 
         if ($string->read('channel:') || $string->read('c:')) {
             return new ChannelTerm(array_map('trim', explode('|', $this->stringParser->parse($string))));
+        }
+
+        if ($string->read('message:') || $string->read('m:')) {
+            return new MessageTerm($this->stringParser->parse($string));
         }
 
         if ($string->read('exclude:') || $string->read('-:')) {
