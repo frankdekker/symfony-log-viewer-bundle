@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DatePicker from '@/components/datepicker/DatePicker.vue';
 import SearchFilter from '@/components/SearchFilter.vue';
+import SearchInput from '@/components/SearchInput.vue';
 import {ref} from 'vue';
 
 const searchRef = ref<HTMLInputElement>();
@@ -17,17 +18,7 @@ defineExpose({focus});
 <template>
     <div class="input-group">
         <search-filter @add="(value) => { query = (query === '' ? value : query + ' ' + value); emit('navigate'); }"/>
-
-        <input type="text"
-               class="form-control"
-               :class="{'is-invalid': badRequest}"
-               ref="searchRef"
-               placeholder="Search log entries."
-               aria-label="Search log entries."
-               aria-describedby="button-search"
-               @keyup.enter="emit('navigate')"
-               v-model="query">
-
+        <search-input :invalid=badRequest @search="emit('navigate')" v-model="query" />
         <date-picker class="slv-date-picker" v-model="between" @change="emit('navigate')"/>
 
         <select class="slv-menu-sort-direction form-control"
