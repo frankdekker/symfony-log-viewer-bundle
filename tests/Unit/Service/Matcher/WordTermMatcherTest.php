@@ -30,9 +30,9 @@ class WordTermMatcherTest extends TestCase
 
     public function testMatchesIncludes(): void
     {
-        $wordTerm = new WordTerm('string', WordTerm::TYPE_INCLUDE);
-        $recordA  = new LogRecord('id', 2000000, 'error', 'channel', 'message', [], []);
-        $recordB  = new LogRecord('id', 2000000, 'error', 'channel', 'string string', [], []);
+        $wordTerm = new WordTerm('record', WordTerm::TYPE_INCLUDE);
+        $recordA  = new LogRecord('id', 'foobar', 2000000, 'error', 'channel', 'message', [], []);
+        $recordB  = new LogRecord('id', 'record', 2000000, 'error', 'channel', 'message', [], []);
 
         static::assertFalse($this->matcher->matches($wordTerm, $recordA));
         static::assertTrue($this->matcher->matches($wordTerm, $recordB));
@@ -40,9 +40,9 @@ class WordTermMatcherTest extends TestCase
 
     public function testMatchesExcludes(): void
     {
-        $wordTerm = new WordTerm('string', WordTerm::TYPE_EXCLUDE);
-        $recordA  = new LogRecord('id', 2000000, 'error', 'channel', 'message', [], []);
-        $recordB  = new LogRecord('id', 2000000, 'error', 'channel', 'string string', [], []);
+        $wordTerm = new WordTerm('foobar', WordTerm::TYPE_EXCLUDE);
+        $recordA  = new LogRecord('id', 'record', 2000000, 'error', 'channel', 'message', [], []);
+        $recordB  = new LogRecord('id', 'foobar', 2000000, 'error', 'channel', 'message', [], []);
 
         static::assertTrue($this->matcher->matches($wordTerm, $recordA));
         static::assertFalse($this->matcher->matches($wordTerm, $recordB));

@@ -38,10 +38,11 @@ use FD\LogViewer\Service\Matcher\DateAfterTermMatcher;
 use FD\LogViewer\Service\Matcher\DateBeforeTermMatcher;
 use FD\LogViewer\Service\Matcher\KeyValueMatcher;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
+use FD\LogViewer\Service\Matcher\MessageTermMatcher;
 use FD\LogViewer\Service\Matcher\SeverityTermMatcher;
 use FD\LogViewer\Service\Matcher\WordTermMatcher;
-use FD\LogViewer\Service\Parser\DateRangeParser;
 use FD\LogViewer\Service\Parser\DateParser;
+use FD\LogViewer\Service\Parser\DateRangeParser;
 use FD\LogViewer\Service\Parser\ExpressionParser;
 use FD\LogViewer\Service\Parser\KeyValueParser;
 use FD\LogViewer\Service\Parser\QuotedStringParser;
@@ -54,7 +55,6 @@ use FD\LogViewer\Service\Serializer\LogRecordsNormalizer;
 use FD\LogViewer\Service\VersionService;
 use FD\LogViewer\Util\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
 use function Symfony\Component\DependencyInjection\Loader\Configurator\inline_service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
@@ -139,5 +139,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ChannelTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
     $services->set(KeyValueMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
     $services->set(WordTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
+    $services->set(MessageTermMatcher::class)->tag('fd.symfony.log.viewer.term_matcher');
     $services->set(LogRecordMatcher::class)->arg('$termMatchers', tagged_iterator('fd.symfony.log.viewer.term_matcher'));
 };

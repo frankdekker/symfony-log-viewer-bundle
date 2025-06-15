@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(LogRecordIterator::class)]
 class LogRecordIteratorTest extends TestCase
 {
-    private DateTimeParser&MockObject $dateTimeParser;
+    private DateTimeParser&MockObject         $dateTimeParser;
     private LogLineParserInterface&MockObject $lineParser;
 
     protected function setUp(): void
@@ -32,7 +32,7 @@ class LogRecordIteratorTest extends TestCase
         $this->lineParser->expects(self::once())->method('parse')->with('message')->willReturn(null);
 
         $recordIterator = new LogRecordIterator($iterator, $this->dateTimeParser, $this->lineParser);
-        $expectedRecord = new LogRecord('78e731027d8fd50ed642340b7c9a63b3', 0, 'error', 'parse', 'message', [], []);
+        $expectedRecord = $this->createRecord('78e731027d8fd50ed642340b7c9a63b3', severity: 'error', channel: 'parse');
         static::assertEquals([$expectedRecord], iterator_to_array($recordIterator));
     }
 
@@ -56,7 +56,7 @@ class LogRecordIteratorTest extends TestCase
             );
 
         $recordIterator = new LogRecordIterator($iterator, $this->dateTimeParser, $this->lineParser);
-        $expectedRecord = new LogRecord('78e731027d8fd50ed642340b7c9a63b3', 0, 'error', 'bad-date', 'message', [], []);
+        $expectedRecord = $this->createRecord('78e731027d8fd50ed642340b7c9a63b3', severity: 'error', channel: 'bad-date');
 
         static::assertEquals([$expectedRecord], iterator_to_array($recordIterator));
     }
@@ -81,8 +81,18 @@ class LogRecordIteratorTest extends TestCase
             );
 
         $recordIterator = new LogRecordIterator($iterator, $this->dateTimeParser, $this->lineParser);
-        $expectedRecord = new LogRecord('ef088a39731e4d450d8692fdcc811415', 1234567890, 'debug', 'request', 'message', [], []);
+        $expectedRecord = $this->createRecord('cb5892023c894331a55de5ac7f64582d', 'message', 1234567890);
 
         static::assertEquals([$expectedRecord], iterator_to_array($recordIterator));
+    }
+
+    private function createRecord(
+        string $identifier,
+        string $originalRecord = '',
+        int $date = 0,
+        string $severity = 'debug',
+        string $channel = 'request'
+    ): LogRecord {
+        return new LogRecord($identifier, $originalRecord, $date, $severity, $channel, 'message', [], []);
     }
 }

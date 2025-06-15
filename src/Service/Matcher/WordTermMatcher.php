@@ -20,11 +20,11 @@ class WordTermMatcher implements TermMatcherInterface
     public function matches(TermInterface $term, LogRecord $record): bool
     {
         if ($term->type === WordTerm::TYPE_INCLUDE) {
-            if (stripos($record->message, $term->string) === false) {
+            if (stripos($record->originalRecord, $term->string) === false) {
                 return false;
             }
         } elseif ($term->type === WordTerm::TYPE_EXCLUDE) {
-            if (stripos($record->message, $term->string) !== false) {
+            if (stripos($record->originalRecord, $term->string) !== false) {
                 return false;
             }
         }

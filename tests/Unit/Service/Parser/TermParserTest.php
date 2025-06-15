@@ -12,6 +12,7 @@ use FD\LogViewer\Entity\Expression\DateBeforeTerm;
 use FD\LogViewer\Entity\Expression\KeyValueTerm;
 use FD\LogViewer\Entity\Expression\LineAfterTerm;
 use FD\LogViewer\Entity\Expression\LineBeforeTerm;
+use FD\LogViewer\Entity\Expression\MessageTerm;
 use FD\LogViewer\Entity\Expression\SeverityTerm;
 use FD\LogViewer\Entity\Expression\WordTerm;
 use FD\LogViewer\Reader\String\StringReader;
@@ -26,10 +27,10 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(TermParser::class)]
 class TermParserTest extends TestCase
 {
-    private StringParser&MockObject $stringParser;
-    private DateParser&MockObject $dateParser;
+    private StringParser&MockObject   $stringParser;
+    private DateParser&MockObject     $dateParser;
     private KeyValueParser&MockObject $keyValueParser;
-    private TermParser $parser;
+    private TermParser                $parser;
 
     protected function setUp(): void
     {
@@ -100,6 +101,20 @@ class TermParserTest extends TestCase
         $term = $this->parser->parse($string, new DateTimeZone('America/New_York'));
         static::assertInstanceOf(ChannelTerm::class, $term);
         static::assertSame(['app', 'request'], $term->channels);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testParseMessage(): void
+    {
+        $string = new StringReader("   message:foobar");
+
+        $this->stringParser->expects(self::once())->method('parse')->with($string)->willReturn('foobar');
+
+        $term = $this->parser->parse($string, new DateTimeZone('America/New_York'));
+        static::assertInstanceOf(MessageTerm::class, $term);
+        static::assertSame('foobar', $term->searchQuery);
     }
 
     /**

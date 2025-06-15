@@ -47,7 +47,7 @@ class LogRecordsOutputProviderTest extends TestCase
         $logQuery         = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'));
         $file             = $this->createLogFile();
         $config           = $file->folder->collection->config;
-        $record           = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
+        $record           = new LogRecord('id', 'record', 111111, 'debug', 'request', 'message', [], []);
         $recordCollection = $this->createMock(LogRecordCollection::class);
         $recordCollection->method('getRecords')->willReturn([$record]);
         $recordCollection->method('getPaginator')->willReturn(null);
@@ -73,7 +73,7 @@ class LogRecordsOutputProviderTest extends TestCase
         $logQuery         = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'));
         $file             = $this->createLogFile();
         $config           = $file->folder->collection->config;
-        $record           = new LogRecord('id', 111111, 'debug', 'request', 'message', [], []);
+        $record           = new LogRecord('id', 'record', 111111, 'debug', 'request', 'message', [], []);
         $recordCollection = $this->createMock(LogRecordCollection::class);
         $recordCollection->method('getIterator')->willReturn(new ArrayIterator([$record]));
         $recordCollection->method('getPaginator')->willReturn(null);

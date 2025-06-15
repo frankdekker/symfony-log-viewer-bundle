@@ -30,7 +30,7 @@ class SeverityTermMatcherTest extends TestCase
 
     public function testMatches(): void
     {
-        $record = new LogRecord('id', 2000000, 'Warning', 'channel', 'message', [], []);
+        $record = new LogRecord('id', 'record', 2000000, 'Warning', 'channel', 'message', [], []);
 
         static::assertTrue($this->matcher->matches(new SeverityTerm(['warning']), $record));
         static::assertTrue($this->matcher->matches(new SeverityTerm(['warning', 'error']), $record));
