@@ -18,18 +18,17 @@ class LogRecordIterator implements IteratorAggregate
      * @param Traversable<int, string> $iterator
      */
     public function __construct(
-        private readonly Traversable            $iterator,
-        private readonly DateTimeParser         $dateTimeParser,
+        private readonly Traversable $iterator,
+        private readonly DateTimeParser $dateTimeParser,
         private readonly LogLineParserInterface $lineParser,
-    )
-    {
+    ) {
     }
 
     public function getIterator(): Traversable
     {
         foreach ($this->iterator as $message) {
             $identifier = md5($message);
-            $lineData = $this->lineParser->parse($message);
+            $lineData   = $this->lineParser->parse($message);
             if ($lineData === null) {
                 yield new LogRecord($identifier, '', 0, 'error', 'parse', $message, [], []);
                 continue;

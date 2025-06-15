@@ -15,14 +15,14 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(LogRecordIterator::class)]
 class LogRecordIteratorTest extends TestCase
 {
-    private DateTimeParser&MockObject $dateTimeParser;
+    private DateTimeParser&MockObject         $dateTimeParser;
     private LogLineParserInterface&MockObject $lineParser;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->dateTimeParser = $this->createMock(DateTimeParser::class);
-        $this->lineParser = $this->createMock(LogLineParserInterface::class);
+        $this->lineParser     = $this->createMock(LogLineParserInterface::class);
     }
 
     public function testGetIteratorShouldYieldErrorFromParser(): void
@@ -46,12 +46,12 @@ class LogRecordIteratorTest extends TestCase
             ->with('message')
             ->willReturn(
                 [
-                    'date' => '2009-02-13 23:31:30',
+                    'date'     => '2009-02-13 23:31:30',
                     'severity' => 'debug',
-                    'channel' => 'request',
-                    'message' => 'message',
-                    'context' => [],
-                    'extra' => [],
+                    'channel'  => 'request',
+                    'message'  => 'message',
+                    'context'  => [],
+                    'extra'    => [],
                 ]
             );
 
@@ -71,12 +71,12 @@ class LogRecordIteratorTest extends TestCase
             ->with('message')
             ->willReturn(
                 [
-                    'date' => '2009-02-13 23:31:30',
+                    'date'     => '2009-02-13 23:31:30',
                     'severity' => 'debug',
-                    'channel' => 'request',
-                    'message' => 'message',
-                    'context' => [],
-                    'extra' => [],
+                    'channel'  => 'request',
+                    'message'  => 'message',
+                    'context'  => [],
+                    'extra'    => [],
                 ]
             );
 
@@ -86,8 +86,13 @@ class LogRecordIteratorTest extends TestCase
         static::assertEquals([$expectedRecord], iterator_to_array($recordIterator));
     }
 
-    private function createRecord(string $identifier, string $originalRecord = '', int $date = 0, string $severity = 'debug', string $channel = 'request'): LogRecord
-    {
+    private function createRecord(
+        string $identifier,
+        string $originalRecord = '',
+        int $date = 0,
+        string $severity = 'debug',
+        string $channel = 'request'
+    ): LogRecord {
         return new LogRecord($identifier, $originalRecord, $date, $severity, $channel, 'message', [], []);
     }
 }
