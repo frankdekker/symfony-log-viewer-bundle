@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FD\LogViewer\Tests\Unit\Service\Matcher;
 
 use DateTimeImmutable;
