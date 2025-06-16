@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import Json from '@/components/Json.vue';
 import type LogRecord from '@/models/LogRecord';
-import {isEmptyJson, prettyFormatJson} from '@/services/JsonFormatter';
+import {isEmptyJson} from '@/services/JsonFormatter';
 import {ref} from 'vue';
 
 const expanded = ref(false);
@@ -22,12 +23,12 @@ defineProps<{
         </div>
         <div class="border-top pt-2 ps-4 mb-2" v-bind:class="{'d-block': expanded, 'd-none': !expanded}" v-if="expanded">
             <div v-if="!isEmptyJson(logRecord.context)">
-                <div class="fw-bold">Context</div>
-                <pre class="m-0"><code>{{ prettyFormatJson(logRecord.context) }}</code></pre>
+                <div class="fw-bold">Context.</div>
+                <json :data=logRecord.context></json>
             </div>
             <div v-if="!isEmptyJson(logRecord.extra)">
                 <div class="fw-bold">Extra</div>
-                <pre class="m-0"><code>{{ prettyFormatJson(logRecord.extra) }}</code></pre>
+                <json :data=logRecord.extra></json>
             </div>
         </div>
     </div>
