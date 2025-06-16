@@ -11,7 +11,8 @@ const props = defineProps<{ value: unknown }>();
     <div v-if="Array.isArray(props.value)">
         <ul class="m-0 slv-array-list">
             <li v-for="val in props.value">
-                <json-value :value=val></json-value>
+                <json v-if="Objects.isObject(val)" :data=val></json>
+                <json-value v-else :value=val></json-value>
             </li>
         </ul>
     </div>
