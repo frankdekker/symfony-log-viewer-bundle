@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Json from '@/components/Json.vue';
+import Json from '@/components/json/Json.vue';
 import type LogRecord from '@/models/LogRecord';
 import {isEmptyJson} from '@/services/JsonFormatter';
 import {ref} from 'vue';
@@ -23,11 +23,11 @@ defineProps<{
         </div>
         <div class="border-top pt-2 ps-4 mb-2" v-bind:class="{'d-block': expanded, 'd-none': !expanded}" v-if="expanded">
             <div v-if="!isEmptyJson(logRecord.context)">
-                <div class="fw-bold">Context.</div>
+                <div class="fw-bold">Context:</div>
                 <json :data=logRecord.context></json>
             </div>
             <div v-if="!isEmptyJson(logRecord.extra)">
-                <div class="fw-bold">Extra</div>
+                <div class="fw-bold">Extra:</div>
                 <json :data=logRecord.extra></json>
             </div>
         </div>
