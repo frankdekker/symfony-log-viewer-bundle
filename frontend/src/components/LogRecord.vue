@@ -5,7 +5,7 @@ import {isEmptyJson, prettyFormatJson} from '@/services/JsonFormatter';
 import {ref} from 'vue';
 
 const expanded = ref(false);
-const styled = ref(true);
+const styled   = ref(true);
 defineProps<{
     logRecord: LogRecord
 }>()
@@ -22,17 +22,21 @@ defineProps<{
             <span :class="['pe-2', logRecord.level_class ]">{{ logRecord.level_name }}</span>
             <span>{{ logRecord.text }}</span>
         </div>
-        <div class="border-top pt-2 ps-4 mb-2" v-bind:class="{'d-block': expanded, 'd-none': !expanded}" v-if="expanded">
-            <button class="btn btn-sm btn-outline-secondary ms-2" @click="styled = !styled">{{ styled ? 'raw' : 'styled' }}</button>
+        <div class="border-top pt-2 ps-2 mb-2 position-relative" v-bind:class="{'d-block': expanded, 'd-none': !expanded}" v-if="expanded">
+            <button class="btn btn-outline-secondary slv-btn-raw" @click="styled = !styled">{{ styled ? 'raw' : 'styled' }}</button>
             <div v-if="!isEmptyJson(logRecord.context)">
                 <div class="fw-bold">Context:</div>
                 <json v-if="styled" :data=logRecord.context></json>
-                <div v-else><pre class="ms-0"><code>{{ prettyFormatJson(logRecord.context )}}</code></pre></div>
+                <div v-else>
+                    <pre class="ms-0"><code>{{ prettyFormatJson(logRecord.context) }}</code></pre>
+                </div>
             </div>
             <div v-if="!isEmptyJson(logRecord.extra)">
                 <div class="fw-bold">Extra:</div>
                 <json v-if="styled" :data=logRecord.extra></json>
-                <div v-else><pre class="ms-0"><code>{{ prettyFormatJson(logRecord.extra )}}</code></pre></div>
+                <div v-else>
+                    <pre class="ms-0"><code>{{ prettyFormatJson(logRecord.extra) }}</code></pre>
+                </div>
             </div>
         </div>
     </div>
@@ -46,5 +50,14 @@ defineProps<{
 
 .slv-list-link {
     cursor: pointer;
+}
+
+.slv-btn-raw {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    --bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .75rem;
 }
 </style>
