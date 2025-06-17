@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Json from '@/components/json/Json.vue';
 import type LogRecord from '@/models/LogRecord';
-import {isEmptyJson} from '@/services/JsonFormatter';
+import {isEmptyJson, prettyFormatJson} from '@/services/JsonFormatter';
 import {ref} from 'vue';
 
 const expanded = ref(false);
+const styled = ref(true);
 defineProps<{
     logRecord: LogRecord
 }>()
@@ -22,13 +23,16 @@ defineProps<{
             <span>{{ logRecord.text }}</span>
         </div>
         <div class="border-top pt-2 ps-4 mb-2" v-bind:class="{'d-block': expanded, 'd-none': !expanded}" v-if="expanded">
+            <button class="btn btn-sm btn-outline-secondary ms-2" @click="styled = !styled">{{ styled ? 'raw' : 'styled' }}</button>
             <div v-if="!isEmptyJson(logRecord.context)">
                 <div class="fw-bold">Context:</div>
-                <json :data=logRecord.context></json>
+                <json v-if="styled" :data=logRecord.context></json>
+                <div v-else><pre class="ms-0"><code>{{ prettyFormatJson(logRecord.context )}}</code></pre></div>
             </div>
             <div v-if="!isEmptyJson(logRecord.extra)">
                 <div class="fw-bold">Extra:</div>
-                <json :data=logRecord.extra></json>
+                <json v-if="styled" :data=logRecord.extra></json>
+                <div v-else><pre class="ms-0"><code>{{ prettyFormatJson(logRecord.extra )}}</code></pre></div>
             </div>
         </div>
     </div>
