@@ -6,13 +6,14 @@ const props = defineProps<{ data: { [key: string]: unknown } | string }>();
 </script>
 
 <template>
-    <div v-for="(value, key) in props.data"
+    <div v-if="Objects.isObject(props.data)" v-for="(value, key) in props.data"
          v-bind:key="key"
          class="slv-indent"
          :class="{'slv-key-value': Objects.isObject(value) === false && Array.isArray(value) === false }">
         <div class="text-warning">{{ key }}:</div>
-        <json-value :value=value></json-value>
+        <json-value :data=value></json-value>
     </div>
+    <json-value v-else :data=props.data></json-value>
 </template>
 
 <style scoped>

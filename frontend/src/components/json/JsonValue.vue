@@ -4,20 +4,20 @@ import JsonScalarValue from '@/components/json/JsonScalarValue.vue';
 import JsonValue from '@/components/json/JsonValue.vue';
 import Objects from '@/services/Objects.ts';
 
-const props = defineProps<{ value: unknown }>();
+const props = defineProps<{ data: unknown }>();
 </script>
 
 <template>
-    <div v-if="Array.isArray(props.value)">
+    <div v-if="Array.isArray(props.data)">
         <ul class="m-0 slv-array-list">
-            <li v-for="val in props.value">
+            <li v-for="val in props.data">
                 <json v-if="Objects.isObject(val)" :data=val></json>
-                <json-value v-else :value=val></json-value>
+                <json-value v-else :data=val></json-value>
             </li>
         </ul>
     </div>
-    <json v-else-if="Objects.isObject(props.value)" :data="props.value"></json>
-    <json-scalar-value v-else :value=props.value></json-scalar-value>
+    <json v-else-if="Objects.isObject(props.data)" :data="props.data"></json>
+    <json-scalar-value v-else :data=props.data></json-scalar-value>
 </template>
 
 <style scoped>

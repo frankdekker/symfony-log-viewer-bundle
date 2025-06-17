@@ -28,7 +28,7 @@ defineProps<{
                 <div class="fw-bold">Context:</div>
                 <json v-if="styled" :data=logRecord.context></json>
                 <div v-else>
-                    <pre class="ms-0"><code>{{ prettyFormatJson(logRecord.context) }}</code></pre>
+                    <pre class="ms-0"><code>{{ prettyFormatJson(logRecord) }}</code></pre>
                 </div>
             </div>
             <div v-if="!isEmptyJson(logRecord.extra)">
