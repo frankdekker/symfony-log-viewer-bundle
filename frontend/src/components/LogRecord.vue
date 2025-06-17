@@ -6,14 +6,12 @@ import {ref} from 'vue';
 
 const expanded = ref(false);
 const styled   = ref(true);
-defineProps<{
-    logRecord: LogRecord
-}>()
+defineProps<{ logRecord: LogRecord }>()
+const emit = defineEmits(['search']);
 
-function click(value: unknown): void {
-    console.log('record', value);
+function click(value: string) {
+    emit('search', value);
 }
-
 </script>
 
 <template>

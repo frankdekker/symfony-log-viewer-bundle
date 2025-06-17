@@ -22,38 +22,38 @@ const badRequest = ref(false);
 const navigate = () => {
     const fileOffset = offset.value > 0 && logRecordStore.records.paginator?.direction !== searchStore.sort ? 0 : offset.value;
     const params     = new ParameterBag()
-        .set('host', hostsStore.selected, 'localhost')
-        .set('file', searchStore.files.join(','))
-        .set('query', searchStore.query, '')
-        .set('between', searchStore.between, '')
-        .set('per_page', searchStore.perPage, '100')
-        .set('sort', searchStore.sort, 'desc')
-        .set('offset', fileOffset, 0);
-    router.push({query: <Record<string, LocationQueryValueRaw>>params.all()});
-}
-
-const load = () => {
-    badRequest.value = false;
-    logRecordStore
-        .fetch(new ParameterBag()
             .set('host', hostsStore.selected, 'localhost')
             .set('file', searchStore.files.join(','))
             .set('query', searchStore.query, '')
             .set('between', searchStore.between, '')
             .set('per_page', searchStore.perPage, '100')
             .set('sort', searchStore.sort, 'desc')
-            .set('offset', offset.value, 0)
-            .set('time_zone', Intl.DateTimeFormat().resolvedOptions().timeZone))
-        .catch((error: Error) => {
-            if (error.message === 'bad-request') {
-                badRequest.value = true;
-                return;
-            }
-            router.push({name: error.message});
-        })
-        .finally(() => {
-            searchRef.value?.focus();
-        });
+            .set('offset', fileOffset, 0);
+    router.push({query: <Record<string, LocationQueryValueRaw>>params.all()});
+}
+
+const load = () => {
+    badRequest.value = false;
+    logRecordStore
+            .fetch(new ParameterBag()
+                    .set('host', hostsStore.selected, 'localhost')
+                    .set('file', searchStore.files.join(','))
+                    .set('query', searchStore.query, '')
+                    .set('between', searchStore.between, '')
+                    .set('per_page', searchStore.perPage, '100')
+                    .set('sort', searchStore.sort, 'desc')
+                    .set('offset', offset.value, 0)
+                    .set('time_zone', Intl.DateTimeFormat().resolvedOptions().timeZone))
+            .catch((error: Error) => {
+                if (error.message === 'bad-request') {
+                    badRequest.value = true;
+                    return;
+                }
+                router.push({name: error.message});
+            })
+            .finally(() => {
+                searchRef.value?.focus();
+            });
 }
 
 onMounted(() => {
@@ -66,6 +66,11 @@ onMounted(() => {
     offset.value        = parseInt(String(route.query.offset ?? '0'));
     load();
 });
+
+function onSearchRequest(value: string) {
+    searchStore.query = value;
+    navigate();
+}
 </script>
 
 <template>
@@ -87,7 +92,10 @@ onMounted(() => {
 
         <main class="overflow-auto d-none d-md-block slv-loadable" v-bind:class="{ 'slv-loading': logRecordStore.loading }">
             <div class="slv-entries list-group pt-1 pe-1 pb-3">
-                <log-record :logRecord="record" v-for="(record, index) in logRecordStore.records.logs ?? []" v-bind:key="index"></log-record>
+                <log-record :logRecord="record"
+                            v-for="(record, index) in logRecordStore.records.logs ?? []"
+                            v-bind:key="index"
+                            @search="onSearchRequest"></log-record>
             </div>
         </main>
 
