@@ -26,14 +26,14 @@ defineProps<{
             <button class="btn btn-outline-secondary slv-btn-raw" @click="styled = !styled">{{ styled ? 'raw' : 'styled' }}</button>
             <div v-if="!isEmptyJson(logRecord.context)">
                 <div class="fw-bold">Context:</div>
-                <json v-if="styled" :data=logRecord.context></json>
+                <json v-if="styled" path="context:" :data=logRecord.context></json>
                 <div v-else>
-                    <pre class="ms-0"><code>{{ prettyFormatJson(logRecord) }}</code></pre>
+                    <pre class="ms-0"><code>{{ prettyFormatJson(logRecord.context) }}</code></pre>
                 </div>
             </div>
             <div v-if="!isEmptyJson(logRecord.extra)">
                 <div class="fw-bold">Extra:</div>
-                <json v-if="styled" :data=logRecord.extra></json>
+                <json v-if="styled" path="extra:" :data=logRecord.extra></json>
                 <div v-else>
                     <pre class="ms-0"><code>{{ prettyFormatJson(logRecord.extra) }}</code></pre>
                 </div>

@@ -2,7 +2,7 @@
 import JsonValue from '@/components/json/JsonValue.vue';
 import Objects from '@/services/Objects.ts';
 
-const props = defineProps<{ data: { [key: string]: unknown } | string }>();
+const props = defineProps<{path: string, data: { [key: string]: unknown } | string}>();
 </script>
 
 <template>
@@ -11,9 +11,9 @@ const props = defineProps<{ data: { [key: string]: unknown } | string }>();
          class="slv-indent"
          :class="{'slv-key-value': Objects.isObject(value) === false && Array.isArray(value) === false }">
         <div class="text-warning">{{ key }}:</div>
-        <json-value :data=value></json-value>
+        <json-value :path="props.path + key + '.'" :data=value></json-value>
     </div>
-    <json-value v-else :data=props.data></json-value>
+    <json-value v-else :path=props.path :data=props.data></json-value>
 </template>
 
 <style scoped>
