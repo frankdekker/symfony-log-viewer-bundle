@@ -9,6 +9,11 @@ const styled   = ref(true);
 defineProps<{
     logRecord: LogRecord
 }>()
+
+function click(value: unknown): void {
+    console.log('record', value);
+}
+
 </script>
 
 <template>
@@ -26,14 +31,14 @@ defineProps<{
             <button class="btn btn-outline-secondary slv-btn-raw" @click="styled = !styled">{{ styled ? 'raw' : 'styled' }}</button>
             <div v-if="!isEmptyJson(logRecord.context)">
                 <div class="fw-bold">Context:</div>
-                <json v-if="styled" path="context:" :data=logRecord.context></json>
+                <json v-if="styled" path="context:" :data=logRecord.context @click="click"></json>
                 <div v-else>
                     <pre class="ms-0"><code>{{ prettyFormatJson(logRecord.context) }}</code></pre>
                 </div>
             </div>
             <div v-if="!isEmptyJson(logRecord.extra)">
                 <div class="fw-bold">Extra:</div>
-                <json v-if="styled" path="extra:" :data=logRecord.extra></json>
+                <json v-if="styled" path="extra:" :data=logRecord.extra @click="click"></json>
                 <div v-else>
                     <pre class="ms-0"><code>{{ prettyFormatJson(logRecord.extra) }}</code></pre>
                 </div>

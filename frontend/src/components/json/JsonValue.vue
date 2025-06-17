@@ -5,19 +5,24 @@ import JsonValue from '@/components/json/JsonValue.vue';
 import Objects from '@/services/Objects.ts';
 
 const props = defineProps<{ path: string, data: unknown }>();
+const emit  = defineEmits(['click']);
+
+function click(value: string) {
+    emit('click', value);
+}
 </script>
 
 <template>
     <div v-if="Array.isArray(props.data)">
         <ul class="m-0 slv-array-list">
             <li v-for="(val, key) in props.data">
-                <json v-if="Objects.isObject(val)" :path="props.path + key + '.'" :data=val></json>
-                <json-value v-else :path="props.path + key + '.'" :data=val></json-value>
+                <json v-if="Objects.isObject(val)" :path="props.path + key + '.'" :data=val @click=click></json>
+                <json-value v-else :path="props.path + key + '.'" :data=val @click=click></json-value>
             </li>
         </ul>
     </div>
-    <json v-else-if="Objects.isObject(props.data)" :path=props.path :data="props.data"></json>
-    <json-scalar-value v-else :path=props.path :data=props.data></json-scalar-value>
+    <json v-else-if="Objects.isObject(props.data)" :path=props.path :data="props.data" @click=click></json>
+    <json-scalar-value v-else :path=props.path :data=props.data @click=click></json-scalar-value>
 </template>
 
 <style scoped>
