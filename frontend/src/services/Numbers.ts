@@ -9,4 +9,14 @@ export default class Numbers {
         }
         return number;
     }
+
+    public static numeric(value: unknown): boolean {
+        if (typeof value === 'number') {
+            return true;
+        }
+        if (typeof value === 'string') {
+            return isNaN(Number(value)) === false;
+        }
+        return false;
+    }
 }

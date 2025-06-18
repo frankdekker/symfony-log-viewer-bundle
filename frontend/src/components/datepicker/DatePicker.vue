@@ -10,13 +10,13 @@ const emit    = defineEmits(['change']);
 
 const active                    = ref(false);
 const dateExpanded              = ref<'none' | 'startDate' | 'endDate'>('none');
-let startDate                   = reactive<DateSelection>({
+const startDate                   = reactive<DateSelection>({
     date: getRelativeDate(15, 'i', true),
     mode: 'relative',
     value: '15i',
     formatted: formatRelativeDate(15, 'i')
 });
-let endDate                     = reactive<DateSelection>({date: new Date(), mode: 'now', value: null, formatted: 'now'});
+const endDate                     = reactive<DateSelection>({date: new Date(), mode: 'now', value: null, formatted: 'now'});
 let currentValue: string | null = null;
 
 onMounted(() => onBetweenChanged());
