@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Json from '@/components/json/Json.vue';
+import JsonData from '@/components/json/JsonData.vue';
 import type LogRecord from '@/models/LogRecord';
 import {isEmptyJson, prettyFormatJson} from '@/services/JsonFormatter';
 import {ref} from 'vue';
@@ -29,14 +29,14 @@ function click(value: string) {
             <button class="btn btn-outline-secondary slv-btn-raw" @click="styled = !styled">{{ styled ? 'raw' : 'styled' }}</button>
             <div v-if="!isEmptyJson(logRecord.context)">
                 <div class="fw-bold">Context:</div>
-                <json v-if="styled" path="context:" :data=logRecord.context @click="click"></json>
+                <json-data v-if="styled" path="context:" :data=logRecord.context @click="click"></json-data>
                 <div v-else>
                     <pre class="ms-0"><code>{{ prettyFormatJson(logRecord.context) }}</code></pre>
                 </div>
             </div>
             <div v-if="!isEmptyJson(logRecord.extra)">
                 <div class="fw-bold">Extra:</div>
-                <json v-if="styled" path="extra:" :data=logRecord.extra @click="click"></json>
+                <json-data v-if="styled" path="extra:" :data=logRecord.extra @click="click"></json-data>
                 <div v-else>
                     <pre class="ms-0"><code>{{ prettyFormatJson(logRecord.extra) }}</code></pre>
                 </div>

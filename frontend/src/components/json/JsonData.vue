@@ -2,7 +2,7 @@
 import JsonValue from '@/components/json/JsonValue.vue';
 import Objects from '@/services/Objects.ts';
 
-const props = defineProps<{path: string, data: { [key: string]: unknown } | string}>();
+const props = defineProps<{ path: string, data: { [key: string]: unknown } | string }>();
 const emit  = defineEmits(['click']);
 
 function click(value: string) {
@@ -11,12 +11,14 @@ function click(value: string) {
 </script>
 
 <template>
-    <div v-if="Objects.isObject(props.data)" v-for="(value, key) in props.data"
-         v-bind:key="key"
-         class="slv-indent"
-         :class="{'slv-key-value': Objects.isObject(value) === false && Array.isArray(value) === false }">
-        <div class="text-warning">{{ key }}:</div>
-        <json-value :path="props.path + key + '.'" :data=value @click=click></json-value>
+    <div v-if="Objects.isObject(props.data)">
+        <div v-for="(value, key) in props.data"
+             v-bind:key="key"
+             class="slv-indent"
+             :class="{'slv-key-value': Objects.isObject(value) === false && Array.isArray(value) === false }">
+            <div class="text-warning">{{ key }}:</div>
+            <json-value :path="props.path + key + '.'" :data=value @click=click></json-value>
+        </div>
     </div>
     <json-value v-else :path=props.path :data=props.data @click=click></json-value>
 </template>

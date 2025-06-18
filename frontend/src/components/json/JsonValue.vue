@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Json from '@/components/json/Json.vue';
+import JsonData from '@/components/json/JsonData.vue';
 import JsonScalarValue from '@/components/json/JsonScalarValue.vue';
 import JsonValue from '@/components/json/JsonValue.vue';
 import Objects from '@/services/Objects.ts';
@@ -15,13 +15,13 @@ function click(value: string) {
 <template>
     <div v-if="Array.isArray(props.data)">
         <ul class="m-0 slv-array-list">
-            <li v-for="(val, key) in props.data">
-                <json v-if="Objects.isObject(val)" :path="props.path + key + '.'" :data=val @click=click></json>
+            <li v-for="(val, key) in props.data" :key=key>
+                <json-data v-if="Objects.isObject(val)" :path="props.path + key + '.'" :data=val @click=click></json-data>
                 <json-value v-else :path="props.path + key + '.'" :data=val @click=click></json-value>
             </li>
         </ul>
     </div>
-    <json v-else-if="Objects.isObject(props.data)" :path=props.path :data="props.data" @click=click></json>
+    <json-data v-else-if="Objects.isObject(props.data)" :path=props.path :data="props.data" @click=click></json-data>
     <json-scalar-value v-else :path=props.path :data=props.data @click=click></json-scalar-value>
 </template>
 
