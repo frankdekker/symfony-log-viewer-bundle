@@ -100,7 +100,7 @@ fd_log_viewer:
             downloadable: false
             deletable: false
             start_of_line_pattern: '/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/'
-            log_message_pattern: '/^\[(?P<date>[^\]]+)\]\s+(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+(?P<message>.*)\s+(?P<context>[[{].*?[\]}])\s+(?P<extra>[[{].*?[\]}])\s+$/s'
+            log_message_pattern: '/^\[(?P<date>[^\]]+)\]\s+(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+(?P<message>.*)\s+(?P<context>(?:{.*?}|\[.*?]))\s+(?P<extra>(?:{.*?}|\[.*?]))\s+$/s'
             date_format: null
 
     hosts:

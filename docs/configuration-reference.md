@@ -21,7 +21,7 @@ fd_log_viewer:
             downloadable: false
             deletable: false
             start_of_line_pattern: '/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/'
-            log_message_pattern: '/^\[(?P<date>[^\]]+)\]\s+(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+(?P<message>.*)\s+(?P<context>[[{].*?[\]}])\s+(?P<extra>[[{].*?[\]}])\s+$/s'
+            log_message_pattern: '/^\[(?P<date>[^\]]+)\]\s+(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+(?P<message>.*)\s+(?P<context>(?:{.*?}|\[.*?]))\s+(?P<extra>(?:{.*?}|\[.*?]))\s+$/s'
             date_format: null
 
     hosts:
@@ -172,7 +172,7 @@ This regex pattern is used to parse the log entry into the following named group
 - `extra`
 
 The default monolog regex
-pattern `/^\[(?P<date>[^\]]+)\]\s+(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+(?P<message>.*)\s+(?P<context>[[{].*?[\]}])\s+(?P<extra>[[{].*?[\]}])\s+$/s`
+pattern `/^\[(?P<date>[^\]]+)\]\s+(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+(?P<message>.*)\s+(?P<context>(?:{.*?}|\[.*?]))\s+(?P<extra>(?:{.*?}|\[.*?]))\s+$/s`
 matches:
 
 ```text
