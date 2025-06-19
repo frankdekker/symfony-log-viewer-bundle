@@ -15,10 +15,10 @@ function click(value: string) {
 </script>
 
 <template>
-    <div class="slv-list-group-item list-group-item list-group-item-action"
-         :class="{'opacity-50': logRecord.context_line && !expanded}"
-         :aria-expanded="expanded">
-        <div class="slv-list-link" :class="{ 'text-nowrap': !expanded, 'overflow-hidden': !expanded }" @click="expanded = !expanded">
+    <div class="slv-log-record" :class="{'opacity-50': logRecord.context_line && !expanded}" :aria-expanded="expanded">
+        <div class="slv-list-link list-group-item list-group-item-action border-0 p-0"
+             :class="{ 'text-nowrap': !expanded, 'overflow-hidden': !expanded }"
+             @click="expanded = !expanded">
             <i class="slv-indicator bi bi-chevron-right me-1"></i>
             <span class="pe-2 text-secondary">{{ logRecord.datetime }}</span>
             <span class="text-primary pe-2" v-if="logRecord.channel.length > 0">{{ logRecord.channel }}</span>
@@ -46,9 +46,13 @@ function click(value: string) {
 </template>
 
 <style scoped>
-.slv-list-group-item {
-    --bs-list-group-item-padding-x: 0px;
-    --bs-list-group-item-padding-y: 0px;
+.slv-log-record {
+    border: 1px solid var(--bs-border-color);
+    border-bottom-width: 0;
+}
+
+.slv-log-record:last-child {
+    border-bottom-width: 1px;
 }
 
 .slv-list-link {
