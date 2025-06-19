@@ -42,11 +42,11 @@ class MonologLineParserTest extends TestCase
             'severity' => 'DEBUG',
             'channel'  => 'app',
             'message'  => 'message',
-            'context'  => ['context' => 'context'],
-            'extra'    => ['extra' => 'extra'],
+            'context'  => ['context' => '[object]context'],
+            'extra'    => ['extra' => '[object]extra'],
         ];
 
-        $result = $this->parser->parse('[2000-01-01T00:00:00.000] app.DEBUG: message {"context":"context"} {"extra":"extra"}' . "\n");
+        $result = $this->parser->parse('[2000-01-01T00:00:00.000] app.DEBUG: message {"context":"[object]context"} {"extra":"[object]extra"}' . "\n");
         static::assertSame($expected, $result);
     }
 

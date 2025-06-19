@@ -16,8 +16,8 @@ class MonologLineParser implements LogLineParserInterface
         '/^\[(?P<date>[^\]]+)\]\s+' .
         '(?P<channel>[^\.]+)\.(?P<severity>[^:]+):\s+' .
         '(?P<message>.*)\s+' .
-        '(?P<context>[[{].*?[\]}])\s+' .
-        '(?P<extra>[[{].*?[\]}])\s+$/s';
+        '(?P<context>(?:{.*?}|\[.*?]))\s+' .
+        '(?P<extra>(?:{.*?}|\[.*?]))\s+$/s';
 
     private readonly string $logLinePattern;
 
