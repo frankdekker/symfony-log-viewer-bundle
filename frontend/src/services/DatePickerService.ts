@@ -1,13 +1,14 @@
 import type DateSelection from '@/models/DateSelection';
 import {format, formatDateTime, formatRelativeDate, getRelativeDate} from '@/services/Dates';
 import Numbers from '@/services/Numbers';
+import Assert from '@/services/Assert.ts'
 
 export function parseSelection(value: string, startDate: DateSelection, endDate: DateSelection): boolean {
-    const match = (value ?? '').trim().match(/^(.*)~(.*)$/);
+    const match: string[]|null = (value ?? '').trim().match(/^(.*)~(.*)$/);
     if (match === null || match.length !== 3) {
         return false;
     }
-    return parseDate(match[1], startDate) && parseDate(match[2], endDate);
+    return parseDate(Assert.string(match[1]), startDate) && parseDate(Assert.string(match[2]), endDate);
 }
 
 export function formatSelection(startDate: DateSelection, endDate: DateSelection): string {
@@ -30,7 +31,7 @@ function parseDate(value: string, date: DateSelection): boolean {
         return true;
     }
     if (value.match(/^\d+[sihdwmy]$/)) {
-        const unit     = value[value.length - 1];
+        const unit     = Assert.string(value[value.length - 1]);
         const val      = Numbers.parseInt(value.substring(0, value.length - 1));
         date.date      = getRelativeDate(val, unit, false);
         date.mode      = 'relative';
