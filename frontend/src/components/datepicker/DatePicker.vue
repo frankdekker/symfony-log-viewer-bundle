@@ -3,20 +3,20 @@ import DatePickerDropdown from '@/components/datepicker/DatePickerDropdown.vue';
 import type DateSelection from '@/models/DateSelection';
 import {formatSelection, parseSelection} from '@/services/DatePickerService';
 import {formatRelativeDate, getRelativeDate} from '@/services/Dates';
-import {onMounted, reactive, ref, watch} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 
 const between = defineModel<string>();
 const emit    = defineEmits(['change']);
 
 const active                    = ref(false);
 const dateExpanded              = ref<'none' | 'startDate' | 'endDate'>('none');
-const startDate                   = reactive<DateSelection>({
+const startDate                   = ref<DateSelection>({
     date: getRelativeDate(15, 'i', true),
     mode: 'relative',
     value: '15i',
     formatted: formatRelativeDate(15, 'i')
 });
-const endDate                     = reactive<DateSelection>({date: new Date(), mode: 'now', value: null, formatted: 'now'});
+const endDate                     = ref<DateSelection>({date: new Date(), mode: 'now', value: null, formatted: 'now'});
 let currentValue: string | null = null;
 
 onMounted(() => onBetweenChanged());
@@ -27,7 +27,7 @@ function onBetweenChanged(): void {
         return;
     }
 
-    const result = parseSelection(between.value ?? '', startDate, endDate);
+    const result = parseSelection(between.value ?? '', startDate.value, endDate.value);
     currentValue = result === false ? null : between.value ?? null;
     active.value = result !== false;
 }
@@ -41,19 +41,19 @@ function onExpand(): void {
 
 function onApply(): void {
     dateExpanded.value = 'none';
-    setBetween(formatSelection(startDate, endDate));
+    setBetween(formatSelection(startDate.value, endDate.value));
 }
 
 function onClear(): void {
     dateExpanded.value  = 'none';
-    startDate.date      = getRelativeDate(15, 'i', true);
-    startDate.mode      = 'relative';
-    startDate.value     = '15i';
-    startDate.formatted = formatRelativeDate(15, 'i');
-    endDate.date        = new Date();
-    endDate.mode        = 'now';
-    endDate.value       = null;
-    endDate.formatted   = 'now';
+    startDate.value.date      = getRelativeDate(15, 'i', true);
+    startDate.value.mode      = 'relative';
+    startDate.value.value     = '15i';
+    startDate.value.formatted = formatRelativeDate(15, 'i');
+    endDate.value.date        = new Date();
+    endDate.value.mode        = 'now';
+    endDate.value.value       = null;
+    endDate.value.formatted   = 'now';
     active.value        = false;
     setBetween('');
 }
