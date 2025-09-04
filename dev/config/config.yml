@@ -45,6 +45,12 @@ monolog:
       formatter: 'monolog.formatter.json'
       level: debug
       channels: [ "!event", "!deprecation" ]
+    logstash:
+      type: stream
+      path: "%kernel.logs_dir%/logstash/%kernel.environment%.log"
+      formatter: 'monolog.formatter.logstash'
+      level: debug
+      channels: [ "!event", "!deprecation" ]
     error:
       type: stream
       path: "%kernel.logs_dir%/error.log"
@@ -67,6 +73,13 @@ fd_log_viewer:
       name: Json monolog
       finder:
         in: "%kernel.logs_dir%/json"
+      downloadable: true
+      deletable: true
+    monolog-logstash:
+      type: monolog.logstash
+      name: Logstash monolog
+      finder:
+        in: "%kernel.logs_dir%/logstash"
       downloadable: true
       deletable: true
     error-log:

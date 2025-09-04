@@ -121,6 +121,12 @@ parameters:
 			path: src/Service/File/Monolog/MonologJsonParser.php
 
 		-
+			message: '#^Method FD\\LogViewer\\Service\\File\\Monolog\\MonologLogstashParser\:\:parse\(\) should return array\{date\: string, severity\: string, channel\: string, message\: string, context\: array\<int\|string, mixed\>\|string, extra\: array\<int\|string, mixed\>\|string\}\|null but returns array\{date\: mixed, severity\: mixed, channel\: mixed, message\: mixed, context\: mixed, extra\: mixed\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Service/File/Monolog/MonologLogstashParser.php
+
+		-
 			message: '#^Binary operation "\." between ''/bundles…'' and mixed results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1

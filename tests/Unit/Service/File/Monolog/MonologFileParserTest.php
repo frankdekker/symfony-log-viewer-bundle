@@ -11,6 +11,7 @@ use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologFileParser;
 use FD\LogViewer\Service\File\Monolog\MonologJsonParser;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
+use FD\LogViewer\Service\File\Monolog\MonologLogstashParser;
 use FD\LogViewer\Tests\Utility\TestEntityTrait;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -61,6 +62,22 @@ class MonologFileParserTest extends TestCase
             ->willReturn($recordCollection);
 
         $parser = new MonologFileParser(MonologFileParser::TYPE_JSON, $this->logParser);
+        static::assertSame($recordCollection, $parser->getLogIndex($config, $file, $logQuery));
+    }
+
+    public function testGetLogIndexForLogstashParser(): void
+    {
+        $config           = $this->createLogFileConfig();
+        $logQuery         = new LogQueryDto(['identifier'], new DateTimeZone('Europe/Amsterdam'));
+        $file             = $this->createLogFile();
+        $recordCollection = new LogRecordCollection(new ArrayIterator([]), null);
+
+        $this->logParser->expects(self::once())
+            ->method('parse')
+            ->with(new SplFileInfo('path'), new MonologLogstashParser(), $config, $logQuery)
+            ->willReturn($recordCollection);
+
+        $parser = new MonologFileParser(MonologFileParser::TYPE_LOGSTASH, $this->logParser);
         static::assertSame($recordCollection, $parser->getLogIndex($config, $file, $logQuery));
     }
 

@@ -124,6 +124,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set('fd.symfony.log.viewer.monolog_json_file_parser', MonologFileParser::class)
         ->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'monolog.json'])
         ->arg('$formatType', MonologFileParser::TYPE_JSON);
+    $services->set('fd.symfony.log.viewer.monolog_logstash_file_parser', MonologFileParser::class)
+        ->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'monolog.logstash'])
+        ->arg('$formatType', MonologFileParser::TYPE_LOGSTASH);
     $services->set(HttpAccessFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'http-access']);
     $services->set(NginxErrorFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'nginx-error']);
     $services->set(ApacheErrorFileParser::class)->tag('fd.symfony.log.viewer.log_file_parser', ['name' => 'apache-error']);
