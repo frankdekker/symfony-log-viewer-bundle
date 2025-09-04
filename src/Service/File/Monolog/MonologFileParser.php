@@ -16,6 +16,7 @@ class MonologFileParser implements LogFileParserInterface
 {
     public const TYPE_LINE = 'line';
     public const TYPE_JSON = 'json';
+    public const TYPE_LOGSTASH = 'logstash';
 
     /**
      * @param self::TYPE_* $formatType
@@ -27,6 +28,7 @@ class MonologFileParser implements LogFileParserInterface
     public function getLogIndex(LogFilesConfig $config, LogFile $file, LogQueryDto $logQuery): LogRecordCollection
     {
         return match ($this->formatType) {
+            self::TYPE_LOGSTASH => $this->logParser->parse(new SplFileInfo($file->path), new MonologLogstashParser(), $config, $logQuery),
             self::TYPE_JSON => $this->logParser->parse(new SplFileInfo($file->path), new MonologJsonParser(), $config, $logQuery),
             self::TYPE_LINE => $this->logParser->parse(
                 new SplFileInfo($file->path),
