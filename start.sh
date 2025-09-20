@@ -20,7 +20,15 @@ do
            FOLLOW_LOG='1';;
         "-p" | "--port" )
            PORT="$1"; shift;;
-        *) echo -e >&2 "Invalid option: $opt\nUsage: bin/start.sh [-f|--follow-log] [-p|--port <port_number>]"; exit 1;;
+        "-?" | "--help" )
+           echo "Usage: start.sh [OPTIONS]";
+           echo "";
+           echo "Options:";
+           echo "  -f, --follow-log          Follow the docker container log output after starting the containers";
+           echo "  -p, --port <port_number>  Specify the port for the Nginx server (default: 8888)";
+           echo "";
+           exit 0;;
+        *) echo >&2 "Invalid option: $opt. See --help for available options"; exit 1;;
    esac
 done
 
