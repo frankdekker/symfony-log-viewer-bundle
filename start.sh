@@ -16,16 +16,16 @@ do
     opt="$1";
     shift;
     case "$opt" in
-        "--follow-log" )
+        "-f" | "--follow-log" )
            FOLLOW_LOG='1';;
-        "--port" )
+        "-p" | "--port" )
            PORT="$1"; shift;;
-        *) echo -e >&2 "Invalid option: $opt\nUsage:  start.sh  [--follow-log] [--port <port_number>]"; exit 1;;
+        *) echo -e >&2 "Invalid option: $opt\nUsage: bin/start.sh [-f|--follow-log] [-p|--port <port_number>]"; exit 1;;
    esac
 done
 
 if [ "$PORT" == '8888' ]; then
-    echo "[PORT]: ${PORT}. Use '--port' flag to change the default port."
+    echo "[PORT]: ${PORT}. Use '-p' or '--port' flag to change the default port."
 else
     echo "[PORT]: ${PORT}"
 fi
@@ -33,7 +33,7 @@ fi
 if [ "$FOLLOW_LOG" == '1' ]; then
     echo "[FOLLOW_LOG]: yes"
 else
-    echo "[FOLLOW_LOG]: no. Use '--follow-log' flag to show docker container logs after startup."
+    echo "[FOLLOW_LOG]: no. Use '-f' or '--follow-log' flag to show docker container logs after startup."
 fi
 echo ""
 
