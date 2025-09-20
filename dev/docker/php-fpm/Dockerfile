@@ -21,7 +21,7 @@ COPY ./docker/php-fpm/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ## Copy composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app/dev
+WORKDIR /app
 
 COPY ./docker/php-fpm/entrypoint.sh /run/entrypoint.sh
 RUN chmod +x /run/entrypoint.sh
