@@ -3,10 +3,12 @@ import LogRecord from '@/components/LogRecord.vue';
 import PerformanceDetails from '@/components/PerformanceDetails.vue';
 import SearchForm from '@/components/SearchForm.vue';
 import ParameterBag from '@/models/ParameterBag';
+import Repeater from '@/services/Repeater.ts';
+import {useBrowserStore} from '@/stores/browser.ts';
 import {useHostsStore} from '@/stores/hosts';
 import {useLogRecordStore} from '@/stores/log_records';
 import {useSearchStore} from '@/stores/search';
-import {onMounted, ref} from 'vue';
+import {onMounted, onUnmounted, ref} from 'vue';
 import {type LocationQueryValueRaw, useRoute, useRouter} from 'vue-router';
 
 const router         = useRouter();
@@ -14,10 +16,12 @@ const route          = useRoute();
 const logRecordStore = useLogRecordStore();
 const hostsStore     = useHostsStore();
 const searchStore    = useSearchStore();
+const browserStore   = useBrowserStore();
+const repeater       = new Repeater(5000, () => load(false));
 
-const searchRef  = ref<InstanceType<typeof SearchForm>>()
-const offset     = ref(0);
-const badRequest = ref(false);
+const searchRef   = ref<InstanceType<typeof SearchForm>>()
+const offset      = ref(0);
+const badRequest  = ref(false);
 
 const navigate = () => {
     const fileOffset = offset.value > 0 && logRecordStore.records.paginator?.direction !== searchStore.sort ? 0 : offset.value;
@@ -32,18 +36,21 @@ const navigate = () => {
     router.push({query: <Record<string, LocationQueryValueRaw>>params.all()});
 }
 
-const load = () => {
+const load = (loadingIndicator: boolean) => {
     badRequest.value = false;
     logRecordStore
-            .fetch(new ParameterBag()
-                    .set('host', hostsStore.selected, 'localhost')
-                    .set('file', searchStore.files.join(','))
-                    .set('query', searchStore.query, '')
-                    .set('between', searchStore.between, '')
-                    .set('per_page', searchStore.perPage, '100')
-                    .set('sort', searchStore.sort, 'desc')
-                    .set('offset', offset.value, 0)
-                    .set('time_zone', Intl.DateTimeFormat().resolvedOptions().timeZone))
+            .fetch(
+                    new ParameterBag()
+                            .set('host', hostsStore.selected, 'localhost')
+                            .set('file', searchStore.files.join(','))
+                            .set('query', searchStore.query, '')
+                            .set('between', searchStore.between, '')
+                            .set('per_page', searchStore.perPage, '100')
+                            .set('sort', searchStore.sort, 'desc')
+                            .set('offset', offset.value, 0)
+                            .set('time_zone', Intl.DateTimeFormat().resolvedOptions().timeZone),
+                    loadingIndicator
+            )
             .catch((error: Error) => {
                 if (error.message === 'bad-request') {
                     badRequest.value = true;
@@ -57,6 +64,7 @@ const load = () => {
 }
 
 onMounted(() => {
+    repeater.start(browserStore.autorefresh);
     hostsStore.selected = String(route.query.host ?? 'localhost');
     searchStore.files   = String(route.query.file).split(',');
     searchStore.query   = String(route.query.query ?? '');
@@ -64,8 +72,12 @@ onMounted(() => {
     searchStore.perPage = String(route.query.per_page ?? '100');
     searchStore.sort    = String(route.query.sort ?? 'desc');
     offset.value        = parseInt(String(route.query.offset ?? '0'));
-    load();
+    load(true);
 });
+
+onUnmounted(() => {
+    repeater.stop();
+})
 
 function onSearchRequest(value: string) {
     searchStore.query = value;
@@ -85,7 +97,14 @@ function onSearchRequest(value: string) {
                          v-model:perPage="searchStore.perPage"
                          @navigate="navigate"></search-form>
 
-            <button class="btn btn-dark ms-1 me-1" type="button" aria-label="Refresh" title="Refresh" @click="load">
+            <button class="btn btn-dark ms-1"
+                    type="button"
+                    aria-label="Auto refresh every 5 seconds"
+                    title="Auto refresh every 5 seconds"
+                    @click="browserStore.autorefresh = !browserStore.autorefresh; repeater.start(browserStore.autorefresh)">
+                <i class="bi" :class="{'bi-play-fill': !browserStore.autorefresh, 'bi-pause-fill': browserStore.autorefresh}"></i>
+            </button>
+            <button class="btn btn-dark ms-1 me-1" type="button" aria-label="Refresh" title="Refresh" @click="load(true)">
                 <i class="bi bi-arrow-clockwise"></i>
             </button>
         </div>
