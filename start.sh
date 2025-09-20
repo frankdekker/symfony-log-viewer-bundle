@@ -20,7 +20,7 @@ do
            FOLLOW_LOG='1';;
         "--port" )
            PORT="$1"; shift;;
-        *) echo >&2 "Invalid option: $opt"; exit 1;;
+        *) echo -e >&2 "Invalid option: $opt\nUsage:  start.sh  [--follow-log] [--port <port_number>]"; exit 1;;
    esac
 done
 
