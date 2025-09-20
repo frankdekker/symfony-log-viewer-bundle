@@ -36,7 +36,7 @@ const navigate = () => {
     router.push({query: <Record<string, LocationQueryValueRaw>>params.all()});
 }
 
-const load = (loadingIndicator: boolean = true) => {
+const load = (loadingIndicator: boolean) => {
     badRequest.value = false;
     logRecordStore
             .fetch(
@@ -72,7 +72,7 @@ onMounted(() => {
     searchStore.perPage = String(route.query.per_page ?? '100');
     searchStore.sort    = String(route.query.sort ?? 'desc');
     offset.value        = parseInt(String(route.query.offset ?? '0'));
-    load();
+    load(true);
 });
 
 onUnmounted(() => {
@@ -104,7 +104,7 @@ function onSearchRequest(value: string) {
                     @click="browserStore.autorefresh = !browserStore.autorefresh; repeater.start(browserStore.autorefresh)">
                 <i class="bi" :class="{'bi-play-fill': !browserStore.autorefresh, 'bi-pause-fill': browserStore.autorefresh}"></i>
             </button>
-            <button class="btn btn-dark ms-1 me-1" type="button" aria-label="Refresh" title="Refresh" @click="load">
+            <button class="btn btn-dark ms-1 me-1" type="button" aria-label="Refresh" title="Refresh" @click="load(true)">
                 <i class="bi bi-arrow-clockwise"></i>
             </button>
         </div>
