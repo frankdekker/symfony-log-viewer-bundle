@@ -13,8 +13,8 @@ export const useLogRecordStore = defineStore('log_records', () => {
     const loading = ref(false);
     const records = ref<LogRecords>(defaultData);
 
-    async function fetch(params: ParameterBag) {
-        loading.value = true;
+    async function fetch(params: ParameterBag, loadingIndicator: boolean) {
+        loading.value = loadingIndicator && true;
         try {
             const response = await axios.get<LogRecords>('/api/logs', {params: params.all()});
             records.value  = response.data;
