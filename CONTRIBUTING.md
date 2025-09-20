@@ -38,6 +38,8 @@ After the containers are up and running, the project is available at http://loca
 
 > **_NOTE:_**  see `./start.sh --help` for additional options
 
+> **_NOTE:_**  Use `./stop.sh` to stop all the containers
+
 ## Running tests and code style checks
 
 ``` bash
