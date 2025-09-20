@@ -4,6 +4,7 @@ import PerformanceDetails from '@/components/PerformanceDetails.vue';
 import SearchForm from '@/components/SearchForm.vue';
 import ParameterBag from '@/models/ParameterBag';
 import Repeater from '@/services/Repeater.ts';
+import {useBrowserStore} from '@/stores/browser.ts';
 import {useHostsStore} from '@/stores/hosts';
 import {useLogRecordStore} from '@/stores/log_records';
 import {useSearchStore} from '@/stores/search';
@@ -15,12 +16,12 @@ const route          = useRoute();
 const logRecordStore = useLogRecordStore();
 const hostsStore     = useHostsStore();
 const searchStore    = useSearchStore();
+const browserStore   = useBrowserStore();
 const repeater       = new Repeater(5000, () => load(false));
 
 const searchRef   = ref<InstanceType<typeof SearchForm>>()
 const offset      = ref(0);
 const badRequest  = ref(false);
-const autorefresh = ref(false);
 
 const navigate = () => {
     const fileOffset = offset.value > 0 && logRecordStore.records.paginator?.direction !== searchStore.sort ? 0 : offset.value;
@@ -62,9 +63,8 @@ const load = (loadingIndicator: boolean = true) => {
             });
 }
 
-watch(autorefresh, value => repeater.start(value));
-
 onMounted(() => {
+    repeater.start(browserStore.autorefresh);
     hostsStore.selected = String(route.query.host ?? 'localhost');
     searchStore.files   = String(route.query.file).split(',');
     searchStore.query   = String(route.query.query ?? '');
@@ -101,8 +101,8 @@ function onSearchRequest(value: string) {
                     type="button"
                     aria-label="Auto refresh every 5 seconds"
                     title="Auto refresh every 5 seconds"
-                    @click="autorefresh = !autorefresh">
-                <i class="bi" :class="{'bi-play-fill': !autorefresh, 'bi-pause-fill': autorefresh}"></i>
+                    @click="browserStore.autorefresh = !browserStore.autorefresh; repeater.start(browserStore.autorefresh)">
+                <i class="bi" :class="{'bi-play-fill': !browserStore.autorefresh, 'bi-pause-fill': browserStore.autorefresh}"></i>
             </button>
             <button class="btn btn-dark ms-1 me-1" type="button" aria-label="Refresh" title="Refresh" @click="load">
                 <i class="bi bi-arrow-clockwise"></i>
