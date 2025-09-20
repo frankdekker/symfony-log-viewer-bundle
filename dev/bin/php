@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+
+CURRENT_DIR=$PWD
+DOCKER_DIR=$(dirname $(realpath "$0"))
+
+cd ${DOCKER_DIR}
+
+docker exec -ti log-viewer-php "/usr/local/bin/php" "$@"
+
+cd ${CURRENT_DIR}

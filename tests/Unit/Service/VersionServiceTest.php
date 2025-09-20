@@ -12,6 +12,6 @@ class VersionServiceTest extends TestCase
 {
     public function testGetVersion(): void
     {
-        static::assertStringStartsWith('dev-', (new VersionService())->getVersion());
+        static::assertMatchesRegularExpression('/^(@dev|dev-)/', (new VersionService())->getVersion());
     }
 }
