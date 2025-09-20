@@ -8,7 +8,7 @@ import {useBrowserStore} from '@/stores/browser.ts';
 import {useHostsStore} from '@/stores/hosts';
 import {useLogRecordStore} from '@/stores/log_records';
 import {useSearchStore} from '@/stores/search';
-import {onMounted, onUnmounted, ref, watch} from 'vue';
+import {onMounted, onUnmounted, ref} from 'vue';
 import {type LocationQueryValueRaw, useRoute, useRouter} from 'vue-router';
 
 const router         = useRouter();
@@ -97,7 +97,7 @@ function onSearchRequest(value: string) {
                          v-model:perPage="searchStore.perPage"
                          @navigate="navigate"></search-form>
 
-            <button class="btn btn-dark ms-1 me-1"
+            <button class="btn btn-dark ms-1"
                     type="button"
                     aria-label="Auto refresh every 5 seconds"
                     title="Auto refresh every 5 seconds"
