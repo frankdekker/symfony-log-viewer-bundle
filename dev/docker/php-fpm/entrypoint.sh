@@ -3,12 +3,12 @@ set -e
 
 rm -rf /app/dev/var
 
-cd ../.
 composer install
-cd dev
 
+cd dev
 php bin/console cache:clear
 php bin/console assets:install --symlink
+cd ..
 
 mkdir -p /app/dev/var/cache/dev
 mkdir -p /app/dev/var/log
