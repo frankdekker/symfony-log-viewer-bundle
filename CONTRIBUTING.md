@@ -41,7 +41,18 @@ After the containers are up and running, the project is available at http://loca
 ## Running tests and code style checks
 
 ``` bash
-composer run check
-composer run test
+dev/bin/php vendor/bin/phpunit
+```
+
+```bash
+# Run phpstan
+dev/bin/php vendor/bin/phpstan analyse
+# run phpcs
+dev/bin/php vendor/bin/phpcs
+# run phpmd
+dev/bin/php vendor/bin/phpmd src,tests text phpmd.xml.dist
+```
+```bash
+# run eslint
 cd frontend && npm run lint
 ```

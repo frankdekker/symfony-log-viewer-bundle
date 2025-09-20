@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
-<ruleset name="Coding Standard">
+<ruleset name="Code standard"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
     <description>Coding standard</description>
+    <file>src</file>
+    <file>tests</file>
+
     <arg name="report" value="full"/>
     <arg value="sp"/>
+
     <rule ref="PSR2"/>
     <rule ref="PSR12">
         <exclude name="PSR12.Files.FileHeader" />
@@ -17,4 +23,5 @@
     </rule>
 
     <exclude-pattern>*/src/Resources/*</exclude-pattern>
+    <exclude-pattern>*/tests/.kernel/*</exclude-pattern>
 </ruleset>
