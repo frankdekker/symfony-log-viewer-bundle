@@ -92,7 +92,7 @@ jobs:
       - name: Use Node.js 22.x
         uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 22.x || 24.x
 
       - name: Install dependencies
         run: cd frontend && npm install
@@ -118,7 +118,7 @@ jobs:
       - name: Use Node.js 22.x
         uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 22.x || 24.x
 
       - name: Install dependencies
         run: cd frontend && npm install
