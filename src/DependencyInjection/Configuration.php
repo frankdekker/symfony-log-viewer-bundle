@@ -24,6 +24,31 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
             ->scalarNode('home_route')->info("The name of the route to redirect to when clicking the back button")->end()
+            ->arrayNode('open_file')
+                ->info(
+                    "Which file to open by default. Each open_file entry must be a string of the pattern: `modifier: pattern` " .
+                    "where modifier is one of 'first', 'last', 'file', or 'last_modified'. The opened file will be the first entry " .
+                    "that matches the pattern."
+                )
+                ->defaultValue([])
+                ->prototype('variable')
+                    ->beforeNormalization()
+                        ->always(static function ($value) {
+                            if (is_string($value) && preg_match('/^(first|last|file|last_modified):(.+)$/', $value, $matches) === 1) {
+                                return ['modifier' => $matches[1], 'pattern' => trim($matches[2])];
+                            }
+                            return $value;
+                        })
+                    ->end()
+                    ->validate()
+                        ->ifTrue(static fn($value) => is_array($value) === false || isset($value['modifier'], $value['pattern']) === false)
+                        ->thenInvalid(
+                            "Each open_file entry must be a string of the pattern: `modifier: pattern` " .
+                            "where modifier is one of 'first', 'last', 'file', or 'last_modified'"
+                        )
+                    ->end()
+                ->end()
+            ->end()
             ->append($this->configureLogFiles())
             ->append($this->configureHosts());
 

@@ -72,6 +72,9 @@ class TestKernel extends BaseKernel implements CompilerPassInterface
             $container->loadFromExtension(
                 'fd_log_viewer',
                 [
+                    'open_file' => [
+                        'file: */test',
+                    ],
                     'log_files' => [
                         'monolog' => [
                             'downloadable' => true,
