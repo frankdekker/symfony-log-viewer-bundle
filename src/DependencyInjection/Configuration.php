@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FD\LogViewer\DependencyInjection;
 
 use Closure;
+use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -58,8 +59,8 @@ final class Configuration implements ConfigurationInterface
                         ],
                         'downloadable'          => false,
                         'deletable'             => false,
-                        'start_of_line_pattern' => null,
-                        'log_message_pattern'   => null,
+                        'start_of_line_pattern' => MonologLineParser::START_OF_MESSAGE_PATTERN,
+                        'log_message_pattern'   => MonologLineParser::LOG_LINE_PATTERN,
                         'date_format'           => null,
                     ]
                 ]
