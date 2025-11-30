@@ -163,11 +163,13 @@ final class Configuration implements ConfigurationInterface
             return $config;
         }
 
-        $config['monolog']['type']            ??= 'monolog';
-        $config['monolog']['name']            ??= 'Monolog';
-        $config['monolog']['finder']['in']    ??= '%kernel.logs_dir%';
-        $config['monolog']['finder']['name']  ??= '*.log';
-        $config['monolog']['finder']['depth'] ??= '== 0';
+        $config['monolog']['type']                  ??= 'monolog';
+        $config['monolog']['name']                  ??= 'Monolog';
+        $config['monolog']['finder']['in']          ??= '%kernel.logs_dir%';
+        $config['monolog']['finder']['name']        ??= '*.log';
+        $config['monolog']['finder']['depth']       ??= '== 0';
+        $config['monolog']['start_of_line_pattern'] ??= MonologLineParser::START_OF_MESSAGE_PATTERN;
+        $config['monolog']['log_message_pattern']   ??= MonologLineParser::LOG_LINE_PATTERN;
 
         return $config;
     }
