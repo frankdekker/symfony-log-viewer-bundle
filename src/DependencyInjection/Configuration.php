@@ -7,7 +7,6 @@ namespace FD\LogViewer\DependencyInjection;
 use Closure;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -16,10 +15,12 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 final class Configuration implements ConfigurationInterface
 {
+    /**
+     * @return TreeBuilder<'array'>
+     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $tree = new TreeBuilder('fd_log_viewer');
-        /** @var ArrayNodeDefinition $rootNode */
+        $tree     = new TreeBuilder('fd_log_viewer');
         $rootNode = $tree->getRootNode();
 
         $rootNode
@@ -31,10 +32,12 @@ final class Configuration implements ConfigurationInterface
         return $tree;
     }
 
-    private function configureLogFiles(): NodeDefinition
+    /**
+     * @return ArrayNodeDefinition<null>
+     */
+    private function configureLogFiles(): ArrayNodeDefinition
     {
-        $tree = new TreeBuilder('log_files');
-        /** @var ArrayNodeDefinition $rootNode */
+        $tree     = new TreeBuilder('log_files');
         $rootNode = $tree->getRootNode();
 
         return $rootNode
@@ -113,10 +116,12 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    private function configureHosts(): NodeDefinition
+    /**
+     * @return ArrayNodeDefinition<null>
+     */
+    private function configureHosts(): ArrayNodeDefinition
     {
-        $tree = new TreeBuilder('hosts');
-        /** @var ArrayNodeDefinition $rootNode */
+        $tree     = new TreeBuilder('hosts');
         $rootNode = $tree->getRootNode();
 
         return $rootNode
