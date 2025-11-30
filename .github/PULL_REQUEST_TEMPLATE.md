@@ -1,6 +1,8 @@
-Type: (bugfix / feature / refactoring / documentation update)
-Issue: Resolves #.. the corresponding issue for this PR (if exist)
-Breaking change: yes/no (if yes explain why)
+| Q               | A
+|-----------------| ---
+| Type            | (bugfix / feature / refactoring / documentation update)
+| Issue           | Resolves #.. the corresponding issue for this PR (if exist)
+| Breaking change | yes/no (if yes explain why below)
 
 <!--
 Explain what the PR does and also why. If you have parts you are not sure about, please explain.
