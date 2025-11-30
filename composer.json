@@ -58,7 +58,7 @@
         "symfony/css-selector": "^6.0||^7.0",
         "symfony/http-client": "^6.0||^7.0",
         "symfony/monolog-bridge": "^6.0||^7.0",
-        "symfony/monolog-bundle": "^3.10",
+        "symfony/monolog-bundle": "^3.10||^4.0",
         "symfony/phpunit-bridge": "^6.4||^7.0",
         "symfony/runtime": "^6.0||^7.0",
         "symfony/templating": "^6.0||^7.0",
