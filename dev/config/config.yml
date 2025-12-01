@@ -54,6 +54,7 @@ monolog:
     error:
       type: stream
       path: "%kernel.logs_dir%/error.log"
+      include_stacktraces: true
       level: error
       channels: [ "!event", "!deprecation" ]
     deprecation:

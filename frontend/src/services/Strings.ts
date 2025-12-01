@@ -10,4 +10,15 @@ export default class Strings {
 
         return str;
     }
+
+    public static nl2br(str: string): string {
+        return str.replace(/\n/g, '<br/>');
+    }
+
+    public static escapeHtml(str: string): string {
+        return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+    }
 }
