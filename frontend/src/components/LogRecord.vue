@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import JsonData from '@/components/json/JsonData.vue';
-import Strings from '@/services/Strings.ts';
+import {nl2br, escapeHtml} from '@/services/Strings.ts';
 import type LogRecord from '@/models/LogRecord';
 import {isEmptyJson, prettyFormatJson} from '@/services/JsonFormatter';
 import {ref} from 'vue';
@@ -27,7 +27,7 @@ function click(value: string) {
 
             <!-- log message -->
             <span v-if="!expanded" v-text="logRecord.text.substring(0, 500)"></span>
-            <span v-if="expanded" v-html="Strings.nl2br(Strings.escapeHtml(logRecord.text))"></span>
+            <span v-if="expanded" v-html="nl2br(escapeHtml(logRecord.text))"></span>
         </div>
         <div class="border-top pt-2 ps-2 mb-2 position-relative" v-bind:class="{'d-block': expanded, 'd-none': !expanded}" v-if="expanded">
             <button class="btn btn-outline-secondary slv-btn-raw" @click="styled = !styled">{{ styled ? 'raw' : 'styled' }}</button>
