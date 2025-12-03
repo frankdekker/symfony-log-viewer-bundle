@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace FD\LogViewer\DependencyInjection;
 
 use Closure;
+use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -15,10 +15,12 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 final class Configuration implements ConfigurationInterface
 {
+    /**
+     * @return TreeBuilder<'array'>
+     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $tree = new TreeBuilder('fd_log_viewer');
-        /** @var ArrayNodeDefinition $rootNode */
+        $tree     = new TreeBuilder('fd_log_viewer');
         $rootNode = $tree->getRootNode();
 
         $rootNode
@@ -55,10 +57,12 @@ final class Configuration implements ConfigurationInterface
         return $tree;
     }
 
-    private function configureLogFiles(): NodeDefinition
+    /**
+     * @return ArrayNodeDefinition<null>
+     */
+    private function configureLogFiles(): ArrayNodeDefinition
     {
-        $tree = new TreeBuilder('log_files');
-        /** @var ArrayNodeDefinition $rootNode */
+        $tree     = new TreeBuilder('log_files');
         $rootNode = $tree->getRootNode();
 
         return $rootNode
@@ -83,8 +87,8 @@ final class Configuration implements ConfigurationInterface
                         ],
                         'downloadable'          => false,
                         'deletable'             => false,
-                        'start_of_line_pattern' => null,
-                        'log_message_pattern'   => null,
+                        'start_of_line_pattern' => MonologLineParser::START_OF_MESSAGE_PATTERN,
+                        'log_message_pattern'   => MonologLineParser::LOG_LINE_PATTERN,
                         'date_format'           => null,
                     ]
                 ]
@@ -137,10 +141,12 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    private function configureHosts(): NodeDefinition
+    /**
+     * @return ArrayNodeDefinition<null>
+     */
+    private function configureHosts(): ArrayNodeDefinition
     {
-        $tree = new TreeBuilder('hosts');
-        /** @var ArrayNodeDefinition $rootNode */
+        $tree     = new TreeBuilder('hosts');
         $rootNode = $tree->getRootNode();
 
         return $rootNode
@@ -182,11 +188,13 @@ final class Configuration implements ConfigurationInterface
             return $config;
         }
 
-        $config['monolog']['type']            ??= 'monolog';
-        $config['monolog']['name']            ??= 'Monolog';
-        $config['monolog']['finder']['in']    ??= '%kernel.logs_dir%';
-        $config['monolog']['finder']['name']  ??= '*.log';
-        $config['monolog']['finder']['depth'] ??= '== 0';
+        $config['monolog']['type']                  ??= 'monolog';
+        $config['monolog']['name']                  ??= 'Monolog';
+        $config['monolog']['finder']['in']          ??= '%kernel.logs_dir%';
+        $config['monolog']['finder']['name']        ??= '*.log';
+        $config['monolog']['finder']['depth']       ??= '== 0';
+        $config['monolog']['start_of_line_pattern'] ??= MonologLineParser::START_OF_MESSAGE_PATTERN;
+        $config['monolog']['log_message_pattern']   ??= MonologLineParser::LOG_LINE_PATTERN;
 
         return $config;
     }

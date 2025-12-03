@@ -12,7 +12,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -69,9 +68,8 @@ class DeleteFileControllerTest extends AbstractControllerTestCase
         $this->filesystem->expects(self::once())->method('remove')->with('path');
         $this->fileService->expects(self::once())->method('findFileByIdentifier')->with('identifier')->willReturn($logFile);
 
-        $expected = new JsonResponse(['success' => true]);
         $response = ($this->controller)('identifier');
-        static::assertEquals($expected, $response);
+        static::assertEquals('{"success":true}', $response->getContent());
     }
 
     public function getController(): AbstractController

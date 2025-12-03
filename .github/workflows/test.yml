@@ -15,13 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [ '8.1', '8.2', '8.3', '8.4' ]
+        php-version: [ '8.1', '8.2', '8.3', '8.4', '8.5' ]
         composer-flags: [ '', '--prefer-lowest' ]
         exclude:
           - php-version: '8.4'
             composer-flags: '--prefer-lowest'
+          - php-version: '8.5'
+            composer-flags: '--prefer-lowest'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -39,15 +41,15 @@ jobs:
         run: composer test
 
   coverage:
-    name: PHP 8.4 - Test with coverage
+    name: PHP 8.5 - Test with coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.4
+          php-version: 8.5
           coverage: pcov
 
       - name: Install dependencies
@@ -69,12 +71,12 @@ jobs:
     name: PHP quality checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.1
+          php-version: 8.5
           coverage: none
 
       - name: Install dependencies
@@ -87,7 +89,7 @@ jobs:
     name: Typescript quality checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Use Node.js 22.x
         uses: actions/setup-node@v6
@@ -111,7 +113,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
 
