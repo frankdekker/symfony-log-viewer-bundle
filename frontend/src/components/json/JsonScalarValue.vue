@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import Numbers from '@/services/Numbers.ts';
-import Strings from '@/services/Strings.ts';
+import {trim} from '@/services/Strings.ts';
 
 const props = defineProps<{ path: string, data: unknown }>();
 const emit  = defineEmits(['click']);
 
 function click(value: unknown) {
-    emit('click', `${Strings.trim(props.path, '.')}="${value}"`);
+    emit('click', `${trim(props.path, '.')}="${value}"`);
 }
 </script>
 
