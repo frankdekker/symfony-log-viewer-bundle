@@ -1,6 +1,7 @@
 {
     "fd_log_viewer": {
         "home_route": "home",
+        "show_performance_details": true,
         "log_files": {
             "monolog": {
                 "type": "monolog",

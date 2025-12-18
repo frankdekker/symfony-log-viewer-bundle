@@ -16,6 +16,7 @@
             "date_format": null
         }
     },
+    "show_performance_details": true,
     "hosts": {
         "localhost": {
             "name": "Local",
