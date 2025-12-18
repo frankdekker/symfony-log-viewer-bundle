@@ -7,6 +7,7 @@ Out of the box, [Log viewer](../README.md) will have the following configuration
 ```yaml
 fd_log_viewer:
     home_route: null
+    show_performance_details: true
 
     log_files:
         monolog:
@@ -37,6 +38,12 @@ fd_log_viewer:
 **type**: `string|null`. Default: `null`
 
 The name of the route that will be used as url for the back button. If null the back button will redirect to `https://your-domain/`.
+<br><br>
+
+### show_performance_details
+type: `boolean`. Default: `true`
+
+Show the performance details (memory, duration and package version) in the footer or not.
 <br><br>
 
 ### log_files

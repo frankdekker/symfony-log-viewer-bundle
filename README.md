@@ -86,6 +86,7 @@ Default configuration: [(Configuration reference)](https://github.com/frankdekke
 ```yaml
 fd_log_viewer:
     home_route: null
+    show_performance_details: true
 
     log_files:
         monolog:
