@@ -7,6 +7,7 @@ use FD\LogViewer\Entity\Config\FinderConfig;
 use FD\LogViewer\Entity\Config\HostAuthenticationConfig;
 use FD\LogViewer\Entity\Config\HostConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Service\File\LogRecordsOutputProvider;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
@@ -32,6 +33,10 @@ final class Extension extends BaseExtension
         $mergedConfigs = $this->processConfiguration(new Configuration(), $configs);
 
         $container->setParameter('fd.symfony.log.viewer.log_files_config.home_route', $mergedConfigs['home_route'] ?? null);
+
+        if ($mergedConfigs['show_performance_details'] === false) {
+            $container->getDefinition(LogRecordsOutputProvider::class)->setArgument('$performanceService', null);
+        }
 
         foreach ($mergedConfigs['log_files'] as $key => $config) {
             $container->register('fd.symfony.log.viewer.log_files_config.finder.' . $key, FinderConfig::class)

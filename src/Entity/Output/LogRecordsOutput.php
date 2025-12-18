@@ -15,7 +15,7 @@ class LogRecordsOutput implements JsonSerializable
     public function __construct(
         private readonly array $records,
         private readonly ?Paginator $paginator,
-        private readonly PerformanceStats $performance
+        private readonly ?PerformanceStats $performance
     ) {
     }
 

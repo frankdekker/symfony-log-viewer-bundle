@@ -19,7 +19,7 @@ class LogRecordsOutputProvider
     public function __construct(
         private readonly LogFileParserProvider $logParserProvider,
         private readonly LogRecordsNormalizer $logRecordsNormalizer,
-        private readonly PerformanceService $performanceService,
+        private readonly ?PerformanceService $performanceService,
     ) {
     }
 
@@ -44,7 +44,7 @@ class LogRecordsOutputProvider
         return new LogRecordsOutput(
             $this->logRecordsNormalizer->normalize($logRecordCollection->getRecords(), $logQuery->timeZone),
             $logRecordCollection->getPaginator(),
-            $this->performanceService->getPerformanceStats()
+            $this->performanceService?->getPerformanceStats()
         );
     }
 
@@ -56,7 +56,7 @@ class LogRecordsOutputProvider
         return new LogRecordsOutput(
             $this->logRecordsNormalizer->normalize($logRecordCollection->getRecords(), $logQuery->timeZone),
             $logRecordCollection->getPaginator(),
-            $this->performanceService->getPerformanceStats()
+            $this->performanceService?->getPerformanceStats()
         );
     }
 }
