@@ -26,6 +26,10 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
             ->scalarNode('home_route')->info("The name of the route to redirect to when clicking the back button")->end()
+            ->scalarNode('show_performance_details')
+                ->defaultTrue()
+                ->info("Will toggle if the performance information and version will be shown. Default true")
+            ->end()
             ->append($this->configureLogFiles())
             ->append($this->configureHosts());
 
