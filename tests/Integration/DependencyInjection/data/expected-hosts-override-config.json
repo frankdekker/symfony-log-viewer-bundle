@@ -11,6 +11,7 @@
             }
         }
     },
+    "show_performance_details": true,
     "log_files": {
         "monolog": {
             "type": "monolog",
