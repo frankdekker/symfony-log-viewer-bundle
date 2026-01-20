@@ -4,9 +4,22 @@ import bus from '@/services/EventBus';
 import {useFolderStore} from '@/stores/folders';
 import {useHostsStore} from '@/stores/hosts';
 import {watch} from 'vue';
+import {useRouter} from 'vue-router';
 
 const folderStore = useFolderStore();
 const hostsStore  = useHostsStore();
+const router      = useRouter();
+
+if (window.location.pathname.endsWith('/log') === false && window.location.search.includes('file=') === false) {
+    for (const folder of folderStore.folders) {
+        for (const file of folder.files) {
+            if (file.open) {
+                router.push('/log?file=' + encodeURI(file.identifier));
+                break;
+            }
+        }
+    }
+}
 
 watch(() => hostsStore.selected, () => folderStore.update());
 
