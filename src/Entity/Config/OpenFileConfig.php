@@ -17,4 +17,12 @@ class OpenFileConfig
     public function __construct(public readonly string $pattern, public readonly string $order)
     {
     }
+
+    public function matches(string $filepath): bool
+    {
+        $pattern = preg_quote($this->pattern, '/');
+        $pattern = str_replace('\*', '.*', $pattern);
+
+        return preg_match('/' . $pattern . '$/', $filepath) === 1;
+    }
 }

@@ -64,7 +64,7 @@ final class Extension extends BaseExtension
                 ->setArgument('$type', $config['type'])
                 ->setArgument('$name', $config['name'])
                 ->setArgument('$finderConfig', new Reference('fd.symfony.log.viewer.log_files_config.finder.' . $key))
-                ->setArgument('$open', $openFileConfigReference)
+                ->setArgument('$openFileConfig', $openFileConfigReference)
                 ->setArgument('$downloadable', $config['downloadable'])
                 ->setArgument('$deletable', $config['deletable'])
                 ->setArgument('$startOfLinePattern', $config['start_of_line_pattern'])
