@@ -13,6 +13,7 @@ class LogFilesConfig
         public readonly string $type,
         public readonly ?string $name,
         public readonly FinderConfig $finderConfig,
+        public readonly ?OpenFileConfig $open,
         public readonly bool $downloadable,
         public readonly bool $deletable,
         public readonly ?string $startOfLinePattern,

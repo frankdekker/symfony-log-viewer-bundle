@@ -69,6 +69,9 @@ fd_log_viewer:
       type: monolog
       downloadable: true
       deletable: true
+      open:
+          pattern: '*.log'
+          order: newest
     monolog-json:
       type: monolog.json
       name: Json monolog

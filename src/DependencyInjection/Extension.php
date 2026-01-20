@@ -7,6 +7,7 @@ use FD\LogViewer\Entity\Config\FinderConfig;
 use FD\LogViewer\Entity\Config\HostAuthenticationConfig;
 use FD\LogViewer\Entity\Config\HostConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\Config\OpenFileConfig;
 use FD\LogViewer\Service\File\LogRecordsOutputProvider;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -47,6 +48,15 @@ final class Extension extends BaseExtension
                 ->setArgument('$ignoreUnreadableDirs', $config['finder']['ignoreUnreadableDirs'])
                 ->setArgument('$followLinks', $config['finder']['followLinks']);
 
+            $openFileConfigReference = null;
+            if (isset($config['open'])) {
+                $container->register('fd.symfony.log.viewer.log_files_config.open.' . $key, OpenFileConfig::class)
+                    ->setPublic(false)
+                    ->setArgument('$pattern', $config['open']['pattern'])
+                    ->setArgument('$order', $config['open']['order']);
+                $openFileConfigReference = new Reference('fd.symfony.log.viewer.log_files_config.open.' . $key);
+            }
+
             $container->register('fd.symfony.log.viewer.log_files_config.config.' . $key, LogFilesConfig::class)
                 ->addTag('fd.symfony.log.viewer.log_files_config')
                 ->setPublic(false)
@@ -54,6 +64,7 @@ final class Extension extends BaseExtension
                 ->setArgument('$type', $config['type'])
                 ->setArgument('$name', $config['name'])
                 ->setArgument('$finderConfig', new Reference('fd.symfony.log.viewer.log_files_config.finder.' . $key))
+                ->setArgument('$open', $openFileConfigReference)
                 ->setArgument('$downloadable', $config['downloadable'])
                 ->setArgument('$deletable', $config['deletable'])
                 ->setArgument('$startOfLinePattern', $config['start_of_line_pattern'])
