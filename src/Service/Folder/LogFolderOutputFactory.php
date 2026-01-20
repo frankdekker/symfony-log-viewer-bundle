@@ -20,12 +20,9 @@ class LogFolderOutputFactory
      */
     public function createFromFolders(LogFolderCollection $folders): array
     {
-        $result = [];
-        $config = $folders->config;
-        $openFile = null;
-        if ($config->openFileConfig !== null) {
-            $openFile = $this->openFileDecider->decide($config->openFileConfig, $folders->toArray());
-        }
+        $result   = [];
+        $config   = $folders->config;
+        $openFile = $config->openFileConfig === null ? null : $this->openFileDecider->decide($config->openFileConfig, $folders->toArray());
 
         foreach ($folders->toArray() as $folder) {
             $path = $folder->relativePath;
@@ -42,8 +39,6 @@ class LogFolderOutputFactory
                 ),
             );
         }
-
-
 
         return $result;
     }

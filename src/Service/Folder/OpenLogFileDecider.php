@@ -20,7 +20,7 @@ class OpenLogFileDecider
         // gather all files that match the pattern
         foreach ($folders as $folder) {
             foreach ($folder->getFiles() as $file) {
-                if ($config->matches($file->relativePath)) {
+                if ($config->matches($file->path)) {
                     $matches[] = $file;
                 }
             }
