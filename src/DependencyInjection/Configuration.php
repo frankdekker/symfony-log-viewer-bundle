@@ -15,9 +15,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 final class Configuration implements ConfigurationInterface
 {
-    /**
-     * @return TreeBuilder<'array'>
-     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $tree     = new TreeBuilder('fd_log_viewer');
@@ -36,9 +33,6 @@ final class Configuration implements ConfigurationInterface
         return $tree;
     }
 
-    /**
-     * @return ArrayNodeDefinition<null>
-     */
     private function configureLogFiles(): ArrayNodeDefinition
     {
         $tree     = new TreeBuilder('log_files');
@@ -133,9 +127,6 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @return ArrayNodeDefinition<null>
-     */
     private function configureHosts(): ArrayNodeDefinition
     {
         $tree     = new TreeBuilder('hosts');
