@@ -5,6 +5,7 @@ namespace FD\LogViewer\Tests\Utility;
 
 use FD\LogViewer\Entity\Config\FinderConfig;
 use FD\LogViewer\Entity\Config\LogFilesConfig;
+use FD\LogViewer\Entity\Config\OpenFileConfig;
 use FD\LogViewer\Entity\LogFile;
 use FD\LogViewer\Entity\LogFolder;
 use FD\LogViewer\Entity\LogFolderCollection;
@@ -17,6 +18,7 @@ trait TestEntityTrait
      *     type?: string,
      *     name?: string,
      *     finderConfig?: FinderConfig,
+     *     openFileConfig?: OpenFileConfig|null,
      *     downloadable?: bool,
      *     deletable?: bool,
      *     startOfLinePattern?: string|null,
@@ -39,6 +41,7 @@ trait TestEntityTrait
         ];
 
         $arguments['finderConfig'] ??= new FinderConfig('directory', 'file', null, true, true);
+        $arguments['openFileConfig'] ??= null;
 
         return new LogFilesConfig(...$arguments);
     }
