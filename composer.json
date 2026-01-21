@@ -87,6 +87,7 @@
     },
     "scripts": {
         "baseline:phpstan": "@php vendor/bin/phpstan --generate-baseline",
+        "baseline:phpmd": "phpmd src,tests xml phpmd.xml.dist --generate-baseline",
         "check": ["@check:phpstan", "@check:phpmd", "@check:phpcs"],
         "check:phpstan": "phpstan analyse",
         "check:phpmd": "phpmd src,tests text phpmd.xml.dist",

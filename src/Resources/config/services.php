@@ -28,6 +28,7 @@ use FD\LogViewer\Service\Folder\LogFolderFactory;
 use FD\LogViewer\Service\Folder\LogFolderOutputFactory;
 use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use FD\LogViewer\Service\Folder\LogFolderOutputSorter;
+use FD\LogViewer\Service\Folder\OpenLogFileDecider;
 use FD\LogViewer\Service\Folder\ZipArchiveFactory;
 use FD\LogViewer\Service\Host\HostInvokeService;
 use FD\LogViewer\Service\Host\HostProvider;
@@ -112,6 +113,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LogFolderOutputFactory::class);
     $services->set(LogFolderOutputProvider::class);
     $services->set(LogFolderOutputSorter::class);
+    $services->set(OpenLogFileDecider::class);
     $services->set(LogRecordsOutputProvider::class);
     $services->set(LogRecordsNormalizer::class);
     $services->set(LogParser::class)->arg('$clock', inline_service(Clock::class));

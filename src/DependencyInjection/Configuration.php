@@ -15,9 +15,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 final class Configuration implements ConfigurationInterface
 {
-    /**
-     * @return TreeBuilder<'array'>
-     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $tree     = new TreeBuilder('fd_log_viewer');
@@ -36,9 +33,6 @@ final class Configuration implements ConfigurationInterface
         return $tree;
     }
 
-    /**
-     * @return ArrayNodeDefinition<null>
-     */
     private function configureLogFiles(): ArrayNodeDefinition
     {
         $tree     = new TreeBuilder('log_files');
@@ -102,6 +96,19 @@ final class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                     ->end()
+                    ->arrayNode('open')
+                        ->children()
+                            ->scalarNode('pattern')->isRequired()->info('A pattern to match a log file. Use * as wildcard. Example: dev-*.log')->end()
+                            ->scalarNode('order')
+                                ->info('Either "newest" or "oldest". Defaults to "newest"')
+                                ->defaultValue('newest')
+                                ->validate()
+                                    ->ifNotInArray(['newest', 'oldest'])
+                                    ->thenInvalid('The order must either be `newest` or `oldest.`')
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
                     ->scalarNode('downloadable')->info("Whether or not to allow downloading of the log file")->defaultFalse()->end()
                     ->scalarNode('deletable')->info("Whether or not to allow deletion of the log file")->defaultFalse()->end()
                     ->scalarNode('start_of_line_pattern')
@@ -120,9 +127,6 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @return ArrayNodeDefinition<null>
-     */
     private function configureHosts(): ArrayNodeDefinition
     {
         $tree     = new TreeBuilder('hosts');

@@ -13,7 +13,7 @@ class LogFolderOutputTest extends TestCase
 {
     public function testJsonSerialize(): void
     {
-        $file   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 0, true, true);
+        $file   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 0, false, true, true);
         $output = new LogFolderOutput('identifier', 'path', true, true, 111111, [$file]);
 
         static::assertSame(

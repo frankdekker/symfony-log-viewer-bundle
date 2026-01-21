@@ -19,6 +19,7 @@ fd_log_viewer:
                 depth: '== 0'
                 ignoreUnreadableDirs: true
                 followLinks: false
+            open:
             downloadable: false
             deletable: false
             start_of_line_pattern: '/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/'
@@ -135,6 +136,28 @@ Should unreadable directories by ignored.
 **type**: `boolean`. Default: `false`
 
 Should symbolic links be followed.
+<br><br>
+
+### log_files.open
+To trigger the opening of a log file when the log-viewer is open add the following to your configuration:
+
+```yaml
+log_files:
+  my_log_file:
+    open:
+      pattern: 'error-*.log'
+      order: 'newest'
+
+```
+### log_files.open.pattern
+**type**: `string`. Default: `absent`
+
+The pattern to match the log file name that should be opened when the log-viewer is opened. `*` can be used as wildcard.
+The pattern will be matched against the end of the log file path.
+
+### log_files.open.order
+**type**: `'newest'|'oldest'`. Default: `newest`
+If multiple log files match the pattern, take either the newest or oldest file.
 <br><br>
 
 ### log_files.downloadable

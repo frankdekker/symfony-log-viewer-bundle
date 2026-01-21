@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import FileTree from '@/components/FileTree.vue'
+import afterRouteOnce from '@/services/AfterRouteOnce.ts';
+import handleOpenFile from '@/services/OpenFileHandler.ts';
 import {useRoute} from 'vue-router';
 
 const route   = useRoute();
 const homeUri = document.head.querySelector<HTMLMetaElement>('[name=home-uri]')!.content;
+
+// on the first route load, trigger opening a default log file
+afterRouteOnce(() => handleOpenFile());
+
 </script>
 
 <template>

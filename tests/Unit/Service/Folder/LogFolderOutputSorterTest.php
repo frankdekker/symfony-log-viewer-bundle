@@ -25,10 +25,10 @@ class LogFolderOutputSorterTest extends TestCase
     {
         parent::setUp();
 
-        $this->fileA   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 333333, true, true);
-        $this->fileB   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 444444, true, true);
-        $this->fileC   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 666666, true, true);
-        $this->fileD   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 555555, true, true);
+        $this->fileA   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 333333, false, true, true);
+        $this->fileB   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 444444, false, true, true);
+        $this->fileC   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 666666, false, true, true);
+        $this->fileD   = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 555555, false, true, true);
         $this->folderA = new LogFolderOutput('identifier', 'path', true, true, 222222, [$this->fileA, $this->fileB]);
         $this->folderB = new LogFolderOutput('identifier', 'path', true, true, 111111, [$this->fileC, $this->fileD]);
 
