@@ -98,6 +98,7 @@ fd_log_viewer:
                 depth: '== 0'
                 ignoreUnreadableDirs: true
                 followLinks: false
+            open:
             downloadable: false
             deletable: false
             start_of_line_pattern: '/^\[\d{4}-\d{2}-\d{2}[^]]*]\s+\S+\.\S+:/'
