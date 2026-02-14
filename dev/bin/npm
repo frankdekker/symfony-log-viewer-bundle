@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+CURRENT_DIR=$PWD
+DOCKER_DIR=$(dirname $(realpath "$0"))
+
+cd ${DOCKER_DIR}
+
+if ! docker ps --format '{{.Names}}' | grep -q '^log-viewer-nodejs$'; then
+  echo -e "The docker dev environment isn't running. Please use \033[1;33mstart.sh\033[0m to start the dev environment."
+  echo ""
+  cd ${CURRENT_DIR}
+  exit 1
+fi
+
+docker exec -ti log-viewer-nodejs "npm" "$@"
+
+cd ${CURRENT_DIR}

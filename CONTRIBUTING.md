@@ -47,19 +47,23 @@ Any changes to the frontend assets will be automatically compiled.
 
 ## Running tests and code style checks
 
+Run tests
 ``` bash
 dev/bin/php vendor/bin/phpunit
 ```
-
+Run phpstan
 ```bash
-# Run phpstan
 dev/bin/php vendor/bin/phpstan analyse
-# run phpcs
+```
+Run phpcs
+```bash
 dev/bin/php vendor/bin/phpcs
-# run phpmd
+```
+run phpmd
+```bash
 dev/bin/php vendor/bin/phpmd src,tests text phpmd.xml.dist
 ```
+run eslint
 ```bash
-# run eslint
-cd frontend && npm run lint
+dev/bin/npm run lint
 ```
