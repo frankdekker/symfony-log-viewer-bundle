@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   test:
-    name: PHP ${{ matrix.php-version }} - Test ${{ matrix.composer-flags }}
+    name: PHP ${{ matrix.php-version }} - Test with ${{ matrix.composer-flags || 'no' }} flags
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -106,7 +106,7 @@ jobs:
         run: cd frontend && npm run test:unit
 
   build-assets-check:
-    name: Verify assets build
+    name: Build assets
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

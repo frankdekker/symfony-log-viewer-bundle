@@ -9,6 +9,7 @@ use FD\LogViewer\Service\Folder\LogFolderOutputProvider;
 use FD\LogViewer\Service\Host\HostProvider;
 use FD\LogViewer\Service\JsonManifestAssetLoader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -26,8 +27,11 @@ class IndexController extends AbstractController
     /**
      * @throws Throwable
      */
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
+        // retrieve project base path
+        $basePath = $request->getBasePath();
+
         // retrieve base uri from route
         $baseUri = $this->routeService->getBaseUri();
 
@@ -37,13 +41,13 @@ class IndexController extends AbstractController
         return $this->render(
             '@FDLogViewer/index.html.twig',
             [
-                'base_uri'   => $baseUri,
+                'base_uri'   => $basePath . $baseUri,
                 'home_route' => $this->homeRoute,
                 'folders'    => $folders,
                 'hosts'      => $this->hostListProvider->getHosts(),
                 'assets'     => [
-                    'style' => $this->assetLoader->getUrl('style.css'),
-                    'js'    => $this->assetLoader->getUrl('src/main.ts')
+                    'style' => $basePath . $this->assetLoader->getUrl('style.css'),
+                    'js'    => $basePath . $this->assetLoader->getUrl('src/main.ts')
                 ],
             ]
         );

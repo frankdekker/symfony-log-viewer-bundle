@@ -14,6 +14,7 @@ use FD\LogViewer\Service\JsonManifestAssetLoader;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
 use function DR\PHPUnitExtensions\Mock\consecutive;
@@ -43,28 +44,30 @@ class IndexControllerTest extends AbstractControllerTestCase
      */
     public function testInvoke(): void
     {
+        $request = self::createStub(Request::class);
+        $request->method('getBasePath')->willReturn('/base-path');
         $folder = new LogFolderOutput('identifier', 'path', true, false, 123456, []);
 
-        $this->routeService->expects(self::once())->method('getBaseUri')->willReturn('baseUri');
+        $this->routeService->expects(self::once())->method('getBaseUri')->willReturn('/base-uri');
         $this->folderOutputProvider->expects(self::once())->method('provide')->with(DirectionEnum::Desc)->willReturn([$folder]);
         $this->hostProvider->expects(self::once())->method('getHosts')->willReturn(['host' => 'host']);
         $this->assetLoader->expects(self::exactly(2))
             ->method('getUrl')
             ->with(...consecutive(['style.css'], ['src/main.ts']))
-            ->willReturn('url1', 'url2');
+            ->willReturn('/url1', '/url2');
 
         $this->expectRender(
             '@FDLogViewer/index.html.twig',
             [
-                'base_uri'   => 'baseUri',
+                'base_uri'   => '/base-path/base-uri',
                 'home_route' => 'home',
                 'folders'    => [$folder],
-                'assets'     => ['style' => 'url1', 'js' => 'url2'],
+                'assets'     => ['style' => '/base-path/url1', 'js' => '/base-path/url2'],
                 'hosts'      => ['host' => 'host']
             ]
         );
 
-        ($this->controller)();
+        ($this->controller)($request);
     }
 
     public function getController(): AbstractController
