@@ -34,27 +34,36 @@ A minimal Symfony project has been setup under `/dev/`. To start development, in
 
 After the containers are up and running, the project is available at http://localhost:8888.
 
-> **_NOTE:_**  the nodejs container will automatically rebuild the frontend assets and deploy them in the `/public/` directory
-
 > **_NOTE:_**  see `./start.sh --help` for additional options
 
 > **_NOTE:_**  Use `./stop.sh` to stop all the containers
 
+### Building Frontend Assets
+
+The frontend assets are automatically compiled from the `frontend/` directory to `src/Resources/public/` in the nodejs container.
+Any changes to the frontend assets will be automatically compiled.
+
+> **_NOTE:_** Compiled assets are not committed to the repository. They are automatically built and included when creating a GitHub release.
+
 ## Running tests and code style checks
 
+Run tests
 ``` bash
 dev/bin/php vendor/bin/phpunit
 ```
-
+Run phpstan
 ```bash
-# Run phpstan
 dev/bin/php vendor/bin/phpstan analyse
-# run phpcs
+```
+Run phpcs
+```bash
 dev/bin/php vendor/bin/phpcs
-# run phpmd
+```
+run phpmd
+```bash
 dev/bin/php vendor/bin/phpmd src,tests text phpmd.xml.dist
 ```
+run eslint
 ```bash
-# run eslint
-cd frontend && npm run lint
+dev/bin/npm run lint
 ```
