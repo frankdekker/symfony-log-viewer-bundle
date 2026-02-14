@@ -1,0 +1,67 @@
+name: Build and Tag Release
+
+# Only run this workflow when a release is created or a tag is pushed with test- prefix.
+#
+# To test this workflow create a tag with the prefix 'test-'.
+# <code>
+#   git tag -a test-build-assets -m "Test release"
+#   git push origin test-build-assets
+# </code>
+# Then see: https://github.com/frankdekker/symfony-log-viewer-bundle/actions
+#
+on:
+  release:
+    types: [created]
+  push:
+    tags:
+      - 'test-*'  # Keep test tag trigger for testing purposes
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-retag:
+    name: Build assets and update tag
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.release.tag_name || github.ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+
+      - name: Install frontend dependencies
+        run: cd frontend && npm install
+
+      - name: Build frontend assets
+        run: cd frontend && npm run build
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit built assets
+        id: commit
+        run: |
+          git add -f src/Resources/public/assets/
+          git add -f src/Resources/public/.vite/
+          git commit -m "Build assets for ${{ github.event.release.tag_name || github.ref_name }}"
+          # Capture the SHA of the commit we just created
+          COMMIT_SHA=$(git rev-parse HEAD)
+          echo "sha=$COMMIT_SHA" >> $GITHUB_OUTPUT
+          echo "Created commit: $COMMIT_SHA"
+
+      - name: Move tag to new commit and force push
+        run: |
+          TAG_NAME="${{ github.event.release.tag_name || github.ref_name }}"
+          # Move tag to the exact commit we just created
+          git tag -f "$TAG_NAME" ${{ steps.commit.outputs.sha }}
+          git push origin "$TAG_NAME" --force
