@@ -1,8 +1,9 @@
 /.idea
 /.phpunit.result.cache
 /composer.lock
+/phpunit.xml
 /dev/public/bundles
 /dev/var
-/phpunit.xml
+/src/Resources/public/
 /tests/.kernel
 /vendor
