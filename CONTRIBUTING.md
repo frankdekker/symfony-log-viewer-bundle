@@ -40,7 +40,7 @@ After the containers are up and running, the project is available at http://loca
 
 ### Building Frontend Assets
 
-The frontend assets are automatically compiled from the `frontend/` directory to `src/Resources/public/` during in de nodejs container.
+The frontend assets are automatically compiled from the `frontend/` directory to `src/Resources/public/` in the nodejs container.
 Any changes to the frontend assets will be automatically compiled.
 
 > **_NOTE:_** Compiled assets are not committed to the repository. They are automatically built and included when creating a GitHub release.
