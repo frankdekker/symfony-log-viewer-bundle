@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   test:
-    name: PHP ${{ matrix.php-version }} - Test with flags "${{ matrix.composer-flags }}".
+    name: PHP ${{ matrix.php-version }} - Test with ${{ matrix.composer-flags || 'no' }} flags
     runs-on: ubuntu-latest
     strategy:
       matrix:
