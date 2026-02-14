@@ -23,6 +23,11 @@
             "rangeStrategy": "widen"
         },
         {
+            "matchManagers": ["npm"],
+            "rangeStrategy": "bump",
+            "automerge": true
+        },
+        {
             "matchDepTypes": ["devDependencies", "peerDependencies", "require-dev"],
             "rangeStrategy": "auto",
             "automerge": true
