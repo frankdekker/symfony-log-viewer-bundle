@@ -1,6 +1,5 @@
 name: checks
 
-#Test
 on:
   push:
     branches: [ master ]
@@ -107,7 +106,7 @@ jobs:
         run: cd frontend && npm run test:unit
 
   build-assets-check:
-    name: Verify assets build
+    name: Build assets
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
