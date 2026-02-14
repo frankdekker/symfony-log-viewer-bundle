@@ -1,5 +1,6 @@
 name: checks
 
+#Test
 on:
   push:
     branches: [ master ]
