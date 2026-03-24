@@ -38,6 +38,8 @@ After the containers are up and running, the project is available at http://loca
 
 > **_NOTE:_**  Use `./stop.sh` to stop all the containers
 
+> **_NOTE:_**  Use `./dev/compress-logs.sh` to compressed log files in `dev/var/log/` into `.gz` archives.
+
 ### Building Frontend Assets
 
 The frontend assets are automatically compiled from the `frontend/` directory to `src/Resources/public/` in the nodejs container.

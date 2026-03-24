@@ -21,6 +21,7 @@ read logs from any directory.
 
 - 📂 View all the **Monolog logs** in the `%kernel.logs_dir%` directory,
 - 📂 **View other types of logs** - Apache, Nginx, or custom logs,
+- 📂 **Read compressed log files** - only `.gz` files supported,
 - 🔍 **Search** the logs,
 - 🔍 **Filter** by log level (error, info, debug, etc.), by channel, date range or log content inclusion or exclusion,
 - 🔍 Show **context lines** before and/or after the log entry matches,
@@ -37,6 +38,7 @@ read logs from any directory.
 
 - **PHP 8.1+**
 - **Symfony 6.0+, 7.0+ or 8.0+**
+- **ext-zlib** (optional, required to read `.gz` compressed log files)
 
 ### Installation
 
@@ -119,6 +121,8 @@ Read more:
 - [Adding apache logs](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-apache-logs.md)
 - [Adding nginx logs](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-nginx-logs.md)
 - [Adding php error_log](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-php-error-log.md)
+- [Reading compressed log files](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/reading-compressed-log-files.md)
 - [Adding remote hosts](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/adding-remote-hosts.md)
 - [Configuring the back home url](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/configuring-the-back-home-route.md)
 - [Advanced search queries](https://github.com/frankdekker/symfony-log-viewer-bundle/blob/master/docs/advanced-search-queries.md)
+

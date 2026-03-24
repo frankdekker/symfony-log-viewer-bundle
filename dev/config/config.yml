@@ -69,6 +69,8 @@ fd_log_viewer:
       type: monolog
       downloadable: true
       deletable: true
+      finder:
+        name: ["*.log", "*.log.gz"]
       open:
           pattern: '*.log'
           order: newest

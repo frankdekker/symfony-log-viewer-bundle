@@ -83,6 +83,7 @@
     },
     "suggest": {
         "ext-zip": "To use the zip download feature",
+        "ext-zlib": "Required to read .gz compressed log files",
         "symfony/http-client": "Required for the remote hosts feature"
     },
     "scripts": {

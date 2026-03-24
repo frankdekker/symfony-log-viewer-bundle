@@ -6,10 +6,10 @@ import bus from '@/services/EventBus';
 import {useHostsStore} from '@/stores/hosts';
 import {useSearchStore} from '@/stores/search';
 import axios from 'axios';
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 import {useRouter} from 'vue-router';
 
-defineProps<{
+const props = defineProps<{
     file: LogFile
 }>();
 
@@ -31,7 +31,12 @@ const deleteFile = (identifier: string) => {
         });
 }
 
+const selectDisabled = computed(() => props.file.is_compressed && searchStore.sort === 'desc')
+
 const navigate = (identifier: string, multiSelect: boolean) => {
+    if (selectDisabled.value) {
+        return;
+    }
     if (multiSelect) {
         searchStore.toggleFile(identifier);
     } else {
@@ -49,14 +54,16 @@ const navigate = (identifier: string, multiSelect: boolean) => {
     <!-- LogFile -->
     <button-group ref="toggleRef" alignment="right" :split="true" class="mb-1" :hide-on-selected="true">
         <template v-slot:btn_left>
-            <a @click="(event) => {event.preventDefault(); navigate(file.identifier, event.ctrlKey || event.metaKey)}"
-               href="javascript:"
-               class="btn btn-file text-start btn-outline-primary w-100"
-               v-bind:class="{'btn-outline-primary-active': searchStore.files.includes(file.identifier) }"
-               :title="file.name">
-                <span class="d-block text-nowrap overflow-hidden">{{ file.name }}</span>
-                <span class="d-block file-size text-secondary text-nowrap overflow-hidden">{{ file.size_formatted }}</span>
-            </a>
+            <span :title="selectDisabled ? 'Compressed files are not supported by Newest First sort direction' : null" class="d-block w-100">
+                <a @click="(event) => {event.preventDefault(); navigate(file.identifier, event.ctrlKey || event.metaKey)}"
+                   href="javascript:"
+                   class="btn btn-file text-start btn-outline-primary w-100"
+                   v-bind:class="{'btn-outline-primary-active': searchStore.files.includes(file.identifier), 'disabled': selectDisabled}"
+                   :title="selectDisabled ? null : file.name">
+                    <span class="d-block text-nowrap overflow-hidden">{{ file.name }}</span>
+                    <span class="d-block file-size text-secondary text-nowrap overflow-hidden">{{ file.size_formatted }}</span>
+                </a>
+            </span>
         </template>
         <template v-slot:btn_right>
             <button type="button"
@@ -67,8 +74,11 @@ const navigate = (identifier: string, multiSelect: boolean) => {
             </button>
         </template>
         <template v-slot:dropdown>
-            <li>
-                <a class="dropdown-item" href="javascript:" @click="navigate(file.identifier, true)">
+            <li :title="selectDisabled ? 'Compressed files are not supported by Newest First sort direction' : null">
+                <a class="dropdown-item"
+                   :class="{'disabled': selectDisabled}"
+                   href="javascript:"
+                   @click="navigate(file.identifier, true)">
                     <i class="bi bi-check2-circle me-3"></i>{{ searchStore.files.includes(file.identifier) ? 'Deselect' : 'Select' }}
                     <code>(ctrl+click)</code>
                 </a>

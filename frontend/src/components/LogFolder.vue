@@ -8,7 +8,7 @@ import bus from '@/services/EventBus';
 import {useHostsStore} from '@/stores/hosts';
 import {useSearchStore} from '@/stores/search';
 import axios from 'axios';
-import {onMounted, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {useRouter} from 'vue-router';
 
 const toggleRef   = ref();
@@ -37,6 +37,10 @@ const selectAll = (files: LogFileModel[]) => {
     router.push('/log?' + searchStore.toQueryString());
 }
 
+const selectAllDisabled = computed(() =>
+    searchStore.sort === 'desc' && props.folder.files.some(file => file.is_compressed)
+);
+
 onMounted(() => expanded.value = props.expand);
 </script>
 
@@ -56,8 +60,11 @@ onMounted(() => expanded.value = props.expand);
                 </button>
             </template>
             <template v-slot:dropdown>
-                <li>
-                    <a class="dropdown-item" href="javascript:" @click="selectAll(folder.files)">
+                <li :title="selectAllDisabled ? 'This folder contains compressed files that are not compatible with Newest First sort direction' : null">
+                    <a class="dropdown-item"
+                       :class="{'disabled': selectAllDisabled}"
+                       href="javascript:"
+                       @click="!selectAllDisabled && selectAll(folder.files)">
                         <i class="bi bi-check2-circle me-3"></i>Select all
                     </a>
                 </li>

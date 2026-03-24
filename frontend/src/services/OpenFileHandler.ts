@@ -12,7 +12,8 @@ export default function handleOpenFile() {
     for (const folder of folderStore.folders) {
         for (const file of folder.files) {
             if (file.open) {
-                router.push('/log?file=' + encodeURI(file.identifier));
+                const sort = file.is_compressed ? '&sort=asc' : '';
+                router.push('/log?file=' + encodeURI(file.identifier) + sort);
                 break;
             }
         }
