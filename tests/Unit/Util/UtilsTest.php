@@ -11,6 +11,13 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Utils::class)]
 class UtilsTest extends TestCase
 {
+    #[TestWith(['foo.gz', true])]
+    #[TestWith(['goo.txt', false])]
+    public function testIsCompressed(string $path, bool $expected): void
+    {
+        static::assertSame($expected, Utils::isCompressed($path));
+    }
+
     public function testShortMd5(): void
     {
         static::assertSame('3a610852', Utils::shortMd5('foobar foobar foobar foobar'));

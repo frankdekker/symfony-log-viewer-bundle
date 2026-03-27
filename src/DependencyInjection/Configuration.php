@@ -83,7 +83,10 @@ final class Configuration implements ConfigurationInterface
                                 ->defaultNull()
                                 ->beforeNormalization()
                                     ->ifArray()
-                                    ->then(static fn(array $v) => implode(',', $v))
+                                    ->then(static function (array $patterns): string {
+                                        /** @var string[] $patterns */
+                                        return implode(',', $patterns);
+                                    })
                                 ->end()
                             ->end()
                             ->scalarNode('depth')

@@ -11,3 +11,5 @@ use Symfony\Component\Filesystem\Filesystem;
 // PHPUnit 11 keeps track of which error handler are added and removed. Until this is fixed, we need to register the error handler
 // before PHPUnit registration.
 ErrorHandler::register(null, false);
+
+require_once __DIR__ . '/Utility/functions.php';

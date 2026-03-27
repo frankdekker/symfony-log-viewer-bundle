@@ -54,12 +54,12 @@ const navigate = (identifier: string, multiSelect: boolean) => {
     <!-- LogFile -->
     <button-group ref="toggleRef" alignment="right" :split="true" class="mb-1" :hide-on-selected="true">
         <template v-slot:btn_left>
-            <span :title="selectDisabled ? 'Compressed files are not supported by Newest First sort direction' : null" class="d-block w-100">
+            <span :title="selectDisabled ? 'Compressed files are not supported by Newest First sort direction' : undefined" class="d-block w-100">
                 <a @click="(event) => {event.preventDefault(); navigate(file.identifier, event.ctrlKey || event.metaKey)}"
                    href="javascript:"
                    class="btn btn-file text-start btn-outline-primary w-100"
                    v-bind:class="{'btn-outline-primary-active': searchStore.files.includes(file.identifier), 'disabled': selectDisabled}"
-                   :title="selectDisabled ? null : file.name">
+                   :title="selectDisabled ? undefined : file.name">
                     <span class="d-block text-nowrap overflow-hidden">{{ file.name }}</span>
                     <span class="d-block file-size text-secondary text-nowrap overflow-hidden">{{ file.size_formatted }}</span>
                 </a>
@@ -74,7 +74,7 @@ const navigate = (identifier: string, multiSelect: boolean) => {
             </button>
         </template>
         <template v-slot:dropdown>
-            <li :title="selectDisabled ? 'Compressed files are not supported by Newest First sort direction' : null">
+            <li :title="selectDisabled ? 'Compressed files are not supported by Newest First sort direction' : undefined">
                 <a class="dropdown-item"
                    :class="{'disabled': selectDisabled}"
                    href="javascript:"

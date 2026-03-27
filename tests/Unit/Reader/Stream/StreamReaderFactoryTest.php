@@ -6,6 +6,7 @@ namespace FD\LogViewer\Tests\Unit\Reader\Stream;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Reader\Stream\ForwardStreamReader;
 use FD\LogViewer\Reader\Stream\StreamReaderFactory;
+use FD\LogViewer\Tests\Utility\ExtensionMock;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -36,6 +37,7 @@ class StreamReaderFactoryTest extends TestCase
     {
         parent::tearDown();
         unlink($this->gzPath);
+        ExtensionMock::$zlibLoaded = true;
     }
 
     public function testCreateForFileForwardDirection(): void
@@ -69,5 +71,20 @@ class StreamReaderFactoryTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Reading .gz compressed log files in descending order is not supported.');
         $this->streamReaderFactory->createForFile(new SplFileInfo($this->gzPath), DirectionEnum::Desc, null);
+    }
+
+    public function testCreateForGzFileInvalidFile(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Could not open file "foobar.gz"');
+        $this->streamReaderFactory->createForFile(new SplFileInfo('foobar.gz'), DirectionEnum::Asc, null);
+    }
+
+    public function testCreateForGzFileWithoutZlibExtension(): void
+    {
+        ExtensionMock::$zlibLoaded = false;
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('The "zlib" PHP extension is required to read .gz compressed log files.');
+        $this->streamReaderFactory->createForFile(new SplFileInfo($this->gzPath), DirectionEnum::Asc, null);
     }
 }

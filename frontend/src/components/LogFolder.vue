@@ -60,7 +60,7 @@ onMounted(() => expanded.value = props.expand);
                 </button>
             </template>
             <template v-slot:dropdown>
-                <li :title="selectAllDisabled ? 'This folder contains compressed files that are not compatible with Newest First sort direction' : null">
+                <li :title="selectAllDisabled ? 'This folder contains compressed files that are not compatible with Newest First sort direction' : undefined">
                     <a class="dropdown-item"
                        :class="{'disabled': selectAllDisabled}"
                        href="javascript:"
