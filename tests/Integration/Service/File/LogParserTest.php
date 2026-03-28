@@ -17,6 +17,7 @@ use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
 use FD\LogViewer\Tests\Integration\AbstractIntegrationTestCase;
 use FD\LogViewer\Tests\Utility\TestEntityTrait;
+use FD\LogViewer\Util\ExtensionChecker;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Clock\ClockInterface;
@@ -41,7 +42,7 @@ class LogParserTest extends AbstractIntegrationTestCase
         $this->parser           = new LogParser(
             $this->createMock(ClockInterface::class),
             $this->logRecordMatcher,
-            new StreamReaderFactory(new CompressedStreamReaderFactory()),
+            new StreamReaderFactory(new CompressedStreamReaderFactory(new ExtensionChecker())),
         );
     }
 

@@ -3,11 +3,16 @@ declare(strict_types=1);
 
 namespace FD\LogViewer\Reader\Stream;
 
+use FD\LogViewer\Util\ExtensionChecker;
 use RuntimeException;
 use SplFileInfo;
 
 class CompressedStreamReaderFactory
 {
+    public function __construct(private readonly ExtensionChecker $extensionChecker)
+    {
+    }
+
     public function createForFile(SplFileInfo $file, ?int $offset): ForwardStreamReader
     {
         return match ($file->getExtension()) {
@@ -18,7 +23,7 @@ class CompressedStreamReaderFactory
 
     private function createForGzFile(SplFileInfo $file, int $offset): ForwardStreamReader
     {
-        if (extension_loaded('zlib') === false) {
+        if ($this->extensionChecker->isLoaded('zlib') === false) {
             throw new RuntimeException('The "zlib" PHP extension is required to read .gz compressed log files.');
         }
 

@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Reader\Stream;
 
 use FD\LogViewer\Reader\Stream\CompressedStreamReaderFactory;
-use FD\LogViewer\Reader\Stream\ForwardStreamReader;
-use FD\LogViewer\Tests\Utility\ExtensionMock;
+use FD\LogViewer\Util\ExtensionChecker;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use SplFileInfo;
@@ -15,6 +15,7 @@ use SplFileInfo;
 class CompressedStreamReaderFactoryTest extends TestCase
 {
     private string $gzPath;
+    private ExtensionChecker&MockObject $extensionChecker;
     private CompressedStreamReaderFactory $factory;
 
     protected function setUp(): void
@@ -26,14 +27,17 @@ class CompressedStreamReaderFactoryTest extends TestCase
 
         gzwrite($handle, "line1\nline2\nline3\nline4\nline5\n");
         gzclose($handle);
-        $this->factory = new CompressedStreamReaderFactory();
+
+        $this->extensionChecker = $this->createMock(ExtensionChecker::class);
+        $this->extensionChecker->method('isLoaded')->with('zlib')->willReturn(true);
+
+        $this->factory = new CompressedStreamReaderFactory($this->extensionChecker);
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
         unlink($this->gzPath);
-        ExtensionMock::$zlibLoaded = true;
     }
 
     public function testCreateForGzFile(): void
@@ -51,10 +55,14 @@ class CompressedStreamReaderFactoryTest extends TestCase
 
     public function testCreateForGzFileWithoutZlibExtension(): void
     {
-        ExtensionMock::$zlibLoaded = false;
+        $extensionChecker = $this->createMock(ExtensionChecker::class);
+        $extensionChecker->method('isLoaded')->with('zlib')->willReturn(false);
+
+        $factory = new CompressedStreamReaderFactory($extensionChecker);
+
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('The "zlib" PHP extension is required to read .gz compressed log files.');
-        $this->factory->createForFile(new SplFileInfo($this->gzPath), null);
+        $factory->createForFile(new SplFileInfo($this->gzPath), null);
     }
 
     public function testCreateForUnsupportedExtension(): void
