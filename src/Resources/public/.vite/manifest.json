@@ -1,0 +1,12 @@
+{
+  "src/main.ts": {
+    "file": "assets/main-CSdCX1DL.js",
+    "name": "main",
+    "src": "src/main.ts",
+    "isEntry": true
+  },
+  "style.css": {
+    "file": "assets/style-C-5eBpvP.css",
+    "src": "style.css"
+  }
+}
