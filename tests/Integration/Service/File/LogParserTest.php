@@ -10,12 +10,14 @@ use FD\LogViewer\Entity\Index\LogRecord;
 use FD\LogViewer\Entity\Output\DirectionEnum;
 use FD\LogViewer\Entity\Request\LogQueryDto;
 use FD\LogViewer\Entity\Request\SearchQuery;
+use FD\LogViewer\Reader\Stream\CompressedStreamReaderFactory;
 use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use FD\LogViewer\Service\File\LogParser;
 use FD\LogViewer\Service\File\Monolog\MonologLineParser;
 use FD\LogViewer\Service\Matcher\LogRecordMatcher;
 use FD\LogViewer\Tests\Integration\AbstractIntegrationTestCase;
 use FD\LogViewer\Tests\Utility\TestEntityTrait;
+use FD\LogViewer\Util\ExtensionChecker;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Clock\ClockInterface;
@@ -37,7 +39,11 @@ class LogParserTest extends AbstractIntegrationTestCase
         $this->config           = $this->createLogFileConfig(['dateFormat' => null]);
         $this->lineParser       = new MonologLineParser(MonologLineParser::START_OF_MESSAGE_PATTERN, MonologLineParser::LOG_LINE_PATTERN);
         $this->logRecordMatcher = $this->createMock(LogRecordMatcher::class);
-        $this->parser           = new LogParser($this->createMock(ClockInterface::class), $this->logRecordMatcher, new StreamReaderFactory());
+        $this->parser           = new LogParser(
+            $this->createMock(ClockInterface::class),
+            $this->logRecordMatcher,
+            new StreamReaderFactory(new CompressedStreamReaderFactory(new ExtensionChecker())),
+        );
     }
 
     public function testParseWithPaginator(): void

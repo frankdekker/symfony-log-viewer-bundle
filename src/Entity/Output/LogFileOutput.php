@@ -15,7 +15,8 @@ class LogFileOutput implements JsonSerializable
         public readonly int $latestTimestamp,
         public readonly bool $open,
         public readonly bool $canDownload,
-        public readonly bool $canDelete
+        public readonly bool $canDelete,
+        public readonly bool $isCompressed
     ) {
     }
 
@@ -30,7 +31,8 @@ class LogFileOutput implements JsonSerializable
             'size_formatted' => $this->sizeFormatted,
             'open'           => $this->open,
             'can_download'   => $this->canDownload,
-            'can_delete'     => $this->canDelete
+            'can_delete'     => $this->canDelete,
+            'is_compressed'  => $this->isCompressed,
         ];
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace FD\LogViewer\Tests\Unit\Reader\Stream;
 
 use FD\LogViewer\Entity\Output\DirectionEnum;
+use FD\LogViewer\Reader\Stream\CompressedStreamReaderFactory;
+use FD\LogViewer\Reader\Stream\ForwardStreamReader;
 use FD\LogViewer\Reader\Stream\StreamReaderFactory;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -21,7 +23,7 @@ class StreamReaderFactoryTest extends TestCase
     {
         parent::setUp();
         $this->path                = vfsStream::setup('root', 777, ['test.log' => "line1\nline2\n"])->url() . '/test.log';
-        $this->streamReaderFactory = new StreamReaderFactory();
+        $this->streamReaderFactory = new StreamReaderFactory($this->createMock(CompressedStreamReaderFactory::class));
     }
 
     public function testCreateForFileForwardDirection(): void
@@ -41,5 +43,23 @@ class StreamReaderFactoryTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Could not open file "foobar"');
         $this->streamReaderFactory->createForFile(new SplFileInfo('foobar'), DirectionEnum::Asc, null);
+    }
+
+    public function testCreateForCompressedFileDelegatesToCompressedFactory(): void
+    {
+        $mockReader  = $this->createMock(ForwardStreamReader::class);
+        $mockFactory = $this->createMock(CompressedStreamReaderFactory::class);
+        $mockFactory->expects(static::once())->method('createForFile')->willReturn($mockReader);
+
+        $factory = new StreamReaderFactory($mockFactory);
+        $result  = $factory->createForFile(new SplFileInfo('fake.gz'), DirectionEnum::Asc, null);
+        static::assertSame($mockReader, $result);
+    }
+
+    public function testCreateForCompressedFileWithDescDirectionThrows(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Reading compressed log files in descending order is not supported.');
+        $this->streamReaderFactory->createForFile(new SplFileInfo('fake.gz'), DirectionEnum::Desc, null);
     }
 }

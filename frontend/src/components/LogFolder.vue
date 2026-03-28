@@ -33,9 +33,12 @@ const deleteFile = (identifier: string) => {
 }
 
 const selectAll = (files: LogFileModel[]) => {
+    if (files.some(file => file.is_compressed) && searchStore.sort === 'desc') {
+        searchStore.sort = 'asc';
+    }
     files.forEach(file => searchStore.addFile(file.identifier));
     router.push('/log?' + searchStore.toQueryString());
-}
+};
 
 onMounted(() => expanded.value = props.expand);
 </script>

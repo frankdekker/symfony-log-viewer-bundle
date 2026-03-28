@@ -91,6 +91,7 @@ function onSearchRequest(value: string) {
             <search-form class="flex-grow-1"
                          ref="searchRef"
                          :bad-request="badRequest"
+                         :has-compressed-file="searchStore.hasCompressedFileSelected"
                          v-model:query="searchStore.query"
                          v-model:between="searchStore.between"
                          v-model:sort="searchStore.sort"

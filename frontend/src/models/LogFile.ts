@@ -5,4 +5,5 @@ export default interface LogFile {
     open: boolean;
     can_download: boolean;
     can_delete: boolean;
+    is_compressed: boolean;
 }

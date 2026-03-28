@@ -10,7 +10,10 @@ const between   = defineModel<string>('between', {default: ''});
 const sort      = defineModel<string>('sort');
 const perPage   = defineModel<string>('perPage');
 const emit      = defineEmits(['navigate']);
-defineProps<{ badRequest: boolean }>();
+defineProps<{
+    badRequest: boolean,
+    hasCompressedFile: boolean
+}>();
 const focus = (): void => searchRef.value?.focus()
 defineExpose({focus});
 </script>
@@ -23,8 +26,9 @@ defineExpose({focus});
 
         <select class="slv-menu-sort-direction form-control"
                 aria-label="Sort direction"
-                title="Sort direction"
+                :title="hasCompressedFile ? 'Sort direction is not supported with compressed log files' : 'Sort direction'"
                 v-model="sort"
+                :disabled="hasCompressedFile"
                 @change="emit('navigate')">
             <option value="desc">Newest First</option>
             <option value="asc">Oldest First</option>

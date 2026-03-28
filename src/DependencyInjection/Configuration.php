@@ -79,8 +79,15 @@ final class Configuration implements ConfigurationInterface
                                 ->info("The symfony/finder pattern to iterate through directories. Example: %kernel.logs_dir%")
                             ->end()
                             ->scalarNode('name')
-                                ->info("The symfony/finder pattern to filter files. Example: *.log")
+                                ->info("The symfony/finder pattern to filter files. Example: *.log or [*.log, *.log.gz]")
                                 ->defaultNull()
+                                ->beforeNormalization()
+                                    ->ifArray()
+                                    ->then(static function (array $patterns): string {
+                                        /** @var string[] $patterns */
+                                        return implode(',', $patterns);
+                                    })
+                                ->end()
                             ->end()
                             ->scalarNode('depth')
                                 ->info("The symfony/finder directory depth to search files for. Example: '> 0'")

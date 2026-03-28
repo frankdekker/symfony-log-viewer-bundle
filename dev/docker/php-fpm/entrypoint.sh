@@ -13,6 +13,7 @@ cd ..
 mkdir -p /app/dev/var/cache/dev
 mkdir -p /app/dev/var/log
 mkdir -p /app/dev/var/log/php_error
+/run/generate-fake-gz-logs.sh
 chmod -R a+rw /app/dev/var
 chown www-data:www-data -R /app/dev/var
 

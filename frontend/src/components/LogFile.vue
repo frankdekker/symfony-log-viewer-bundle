@@ -9,7 +9,7 @@ import axios from 'axios';
 import {ref} from 'vue';
 import {useRouter} from 'vue-router';
 
-defineProps<{
+const props = defineProps<{
     file: LogFile
 }>();
 
@@ -32,6 +32,9 @@ const deleteFile = (identifier: string) => {
 }
 
 const navigate = (identifier: string, multiSelect: boolean) => {
+    if (props.file.is_compressed && searchStore.sort === 'desc') {
+        searchStore.sort = 'asc';
+    }
     if (multiSelect) {
         searchStore.toggleFile(identifier);
     } else {

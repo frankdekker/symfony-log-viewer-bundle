@@ -53,7 +53,8 @@ class LogFolderOutputFactory
             $file->updateTimestamp,
             $open,
             $downloadable,
-            $deletable
+            $deletable,
+            Utils::isCompressed($file->path),
         );
     }
 }

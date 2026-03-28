@@ -9,6 +9,14 @@ class Utils
     private const MEGABYTE = 1024 * 1024;
     private const KILOBYTE = 1024;
 
+    /** @var string[] */
+    private const SUPPORTED_COMPRESSED_EXTENSIONS = ['gz'];
+
+    public static function isCompressed(string $path): bool
+    {
+        return in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), self::SUPPORTED_COMPRESSED_EXTENSIONS, true);
+    }
+
     public static function shortMd5(string $content): string
     {
         return substr(md5($content), -8);

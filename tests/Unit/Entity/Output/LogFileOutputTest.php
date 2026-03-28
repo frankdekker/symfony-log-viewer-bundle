@@ -12,7 +12,7 @@ class LogFileOutputTest extends TestCase
 {
     public function testJsonSerialize(): void
     {
-        $output = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 0, true, true, true);
+        $output = new LogFileOutput('identifier', 'name', 'sizeFormatted', 0, 0, true, true, true, false);
 
         static::assertSame(
             [
@@ -21,7 +21,8 @@ class LogFileOutputTest extends TestCase
                 'size_formatted' => 'sizeFormatted',
                 'open'           => true,
                 'can_download'   => true,
-                'can_delete'     => true
+                'can_delete'     => true,
+                'is_compressed'  => false
             ],
             $output->jsonSerialize()
         );

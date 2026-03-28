@@ -43,7 +43,7 @@ class LogFolderOutputFactoryTest extends TestCase
 
         $this->openFileDecider->expects(self::once())->method('decide')->with($openFileConfig)->willReturn($logFile);
 
-        $expectedFile   = new LogFileOutput('fileId', 'path', '10.85 kB', 22222, 33333, true, false, false);
+        $expectedFile   = new LogFileOutput('fileId', 'path', '10.85 kB', 22222, 33333, true, false, false, false);
         $expectedFolder = new LogFolderOutput('folderId', 'name/relative', false, false, 22222, [$expectedFile]);
 
         $result = $this->factory->createFromFolders($collection);
