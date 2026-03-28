@@ -24,5 +24,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 
 COPY ./docker/php-fpm/entrypoint.sh /run/entrypoint.sh
-RUN chmod +x /run/entrypoint.sh
+COPY ./docker/php-fpm/generate-fake-gz-logs.sh /run/generate-fake-gz-logs.sh
+
+RUN chmod +x /run/entrypoint.sh /run/generate-fake-gz-logs.sh
+
 ENTRYPOINT ["/run/entrypoint.sh"]
