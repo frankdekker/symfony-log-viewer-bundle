@@ -61,7 +61,8 @@ class ConfigurationTest extends TestCase
         $configs = self::getJson(__DIR__ . '/data/full-config.json');
         $result  = $this->processor->processConfiguration($this->configuration, $configs);
 
-        static::assertSame($configs['fd_log_viewer'], $result);
+        $expected = self::getJson(__DIR__ . '/data/expected-full-config.json');
+        static::assertSame($expected, $result);
     }
 
     /**

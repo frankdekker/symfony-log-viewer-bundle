@@ -8,7 +8,7 @@
                 "name": "TestMonolog",
                 "finder": {
                     "in": "in-directory",
-                    "name": "*.error.log",
+                    "name": ["*.error.log", "*.error.log.gz"],
                     "depth": ">= 1",
                     "ignoreUnreadableDirs": false,
                     "followLinks": true
