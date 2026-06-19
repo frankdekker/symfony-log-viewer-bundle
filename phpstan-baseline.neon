@@ -19,12 +19,6 @@ parameters:
 			path: src/DependencyInjection/Extension.php
 
 		-
-			message: '#^Offset 0 on array\<mixed, mixed\>&callable\(\)\: mixed in isset\(\) always exists and is not nullable\.$#'
-			identifier: isset.offset
-			count: 1
-			path: src/EventSubscriber/RemoteHostProxySubscriber.php
-
-		-
 			message: '#^Property FD\\LogViewer\\Reader\\Stream\\AbstractStreamReader\:\:\$autoClose in isset\(\) is not nullable nor uninitialized\.$#'
 			identifier: isset.initializedProperty
 			count: 1
@@ -53,6 +47,12 @@ parameters:
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
 			path: src/Service/JsonManifestAssetLoader.php
+
+		-
+			message: '#^If condition is always true\.$#'
+			identifier: if.alwaysTrue
+			count: 1
+			path: src/Service/Parser/QuotedStringParser.php
 
 		-
 			message: '#^Cannot access offset ''Authorization'' on mixed\.$#'

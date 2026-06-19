@@ -51,6 +51,7 @@ jobs:
         with:
           php-version: 8.5
           coverage: pcov
+          ini-values: zend.assertions=1
 
       - name: Install dependencies
         run: composer update --prefer-dist --no-progress --prefer-stable
@@ -63,6 +64,13 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./.coverage/coverage.xml
+
+      - name: Upload coverage.xml artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-xml
+          path: ./.coverage/coverage.xml
 
       - name: Check coverage
         run: test ! -f ./.coverage/coverage.xml || php vendor/bin/phpfci inspect ./.coverage/coverage.xml --exit-code-on-failure --reportText
