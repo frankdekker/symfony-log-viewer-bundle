@@ -61,7 +61,7 @@ class RemoteHostProxySubscriber
     {
         $callable = $this->controllerResolver->getController($request);
 
-        return is_array($callable) && isset($callable[0]) && $callable[0] instanceof RemoteHostProxyInterface;
+        return is_array($callable) && $callable[0] instanceof RemoteHostProxyInterface;
     }
 
     /**
