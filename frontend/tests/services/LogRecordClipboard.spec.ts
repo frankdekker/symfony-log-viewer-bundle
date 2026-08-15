@@ -35,9 +35,22 @@ Extra:
 }`)
     })
 
-    test('omits empty and whitespace-only context and extra', () => {
-        expect(formatLogRecordForClipboard(record({ context: ' \n ', extra: ' {} ' }))).toBe(
+    test('omits exact empty context and extra values', () => {
+        expect(formatLogRecordForClipboard(record({ context: '', extra: '{}' }))).toBe(
             '[2026-08-09 14:30:00] app.Error: Request failed'
+        )
+    })
+
+    test('preserves whitespace and non-exact empty values', () => {
+        expect(formatLogRecordForClipboard(record({ context: ' \n ', extra: ' {} ' }))).toBe(
+            `[2026-08-09 14:30:00] app.Error: Request failed
+
+Context:
+ 
+ 
+
+Extra:
+{}`
         )
     })
 
