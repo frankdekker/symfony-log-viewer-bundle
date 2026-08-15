@@ -6,6 +6,8 @@ import { onUnmounted, ref } from 'vue'
 const props = defineProps<{ logRecord: LogRecord }>()
 const copyState = ref<'idle' | 'copied' | 'error'>('idle')
 const copyPending = ref(false)
+const clipboardAvailable =
+    typeof window !== 'undefined' && window.isSecureContext && navigator.clipboard !== undefined
 let copyResetTimer: ReturnType<typeof setTimeout> | undefined
 
 function clearCopyResetTimer(): void {
@@ -26,7 +28,7 @@ function scheduleCopyReset(): void {
 }
 
 async function copyLogRecord(): Promise<void> {
-    if (copyPending.value) {
+    if (copyPending.value || !clipboardAvailable) {
         return
     }
 
@@ -34,14 +36,9 @@ async function copyLogRecord(): Promise<void> {
     copyPending.value = true
 
     try {
-        if (typeof navigator === 'undefined' || navigator.clipboard === undefined) {
-            throw new Error('Clipboard API unavailable')
-        }
-
         await navigator.clipboard.writeText(formatLogRecordForClipboard(props.logRecord))
         copyState.value = 'copied'
     } catch {
-        alert('Copy to clipboard API unavailable');
         copyState.value = 'error'
     } finally {
         copyPending.value = false
@@ -66,6 +63,7 @@ onUnmounted(clearCopyResetTimer)
 
 <template>
     <button
+        v-if="clipboardAvailable"
         class="btn btn-sm btn-outline-secondary border-0 flex-shrink-0 slv-btn-copy"
         type="button"
         :aria-label="copyButtonLabel()"

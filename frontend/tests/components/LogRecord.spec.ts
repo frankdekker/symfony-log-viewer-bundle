@@ -25,6 +25,10 @@ describe('LogRecord', () => {
         vi.useFakeTimers()
         writeText.mockReset()
         writeText.mockResolvedValue(undefined)
+        Object.defineProperty(window, 'isSecureContext', {
+            configurable: true,
+            value: true
+        })
         Object.defineProperty(navigator, 'clipboard', {
             configurable: true,
             value: { writeText }

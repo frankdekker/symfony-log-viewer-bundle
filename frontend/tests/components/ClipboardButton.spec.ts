@@ -25,6 +25,10 @@ describe('ClipboardButton', () => {
     beforeEach(() => {
         vi.useFakeTimers()
         writeText.mockReset()
+        Object.defineProperty(window, 'isSecureContext', {
+            configurable: true,
+            value: true
+        })
         Object.defineProperty(navigator, 'clipboard', {
             configurable: true,
             value: { writeText }
@@ -33,6 +37,16 @@ describe('ClipboardButton', () => {
 
     afterEach(() => {
         vi.useRealTimers()
+    })
+
+    test('hides the copy button outside a secure context', () => {
+        Object.defineProperty(window, 'isSecureContext', {
+            configurable: true,
+            value: false
+        })
+        const wrapper = mountButton()
+
+        expect(wrapper.find('button').exists()).toBe(false)
     })
 
     test('copies the formatted log record and shows success feedback', async () => {
