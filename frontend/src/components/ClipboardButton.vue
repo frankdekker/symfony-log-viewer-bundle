@@ -40,8 +40,8 @@ async function copyLogRecord(): Promise<void> {
 
         await navigator.clipboard.writeText(formatLogRecordForClipboard(props.logRecord))
         copyState.value = 'copied'
-    } catch(e) {
-        console.error(e);
+    } catch {
+        alert('Copy to clipboard API unavailable');
         copyState.value = 'error'
     } finally {
         copyPending.value = false
