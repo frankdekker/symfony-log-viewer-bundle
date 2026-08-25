@@ -1,0 +1,12 @@
+{
+  "src/main.ts": {
+    "file": "assets/main-KObo9EAP.js",
+    "name": "main",
+    "src": "src/main.ts",
+    "isEntry": true
+  },
+  "style.css": {
+    "file": "assets/style-D5NvxEDY.css",
+    "src": "style.css"
+  }
+}
