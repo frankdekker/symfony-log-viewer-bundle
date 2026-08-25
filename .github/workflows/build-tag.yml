@@ -1,8 +1,18 @@
 name: Build and Tag Release
 
-# Only run this workflow when a release is created or a tag is pushed with test- prefix.
+# Cuts a release by building frontend assets and committing them BEFORE the
+# release tag is ever pushed. Packagist enforces immutable versions: once a
+# tag is published, the commit it points to can never change. So we cannot
+# create the tag/release first and move it afterwards (the previous approach)
+# - the tag must be created exactly once, already pointing at the commit that
+# contains the built assets.
 #
-# To test this workflow create a tag with the prefix 'test-'.
+# To cut a real release:
+#   Actions tab -> "Build and Tag Release" -> Run workflow -> enter version
+#   e.g. v2.10.2
+#
+# To test the build step without touching Packagist, push a tag prefixed
+# with 'test-':
 # <code>
 #   git tag -a test-build-assets -m "Test release"
 #   git push origin test-build-assets
@@ -10,8 +20,11 @@ name: Build and Tag Release
 # Then see: https://github.com/frankdekker/symfony-log-viewer-bundle/actions
 #
 on:
-  release:
-    types: [created]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release, e.g. v2.10.2'
+        required: true
   push:
     tags:
       - 'test-*'  # Keep test tag trigger for testing purposes
@@ -20,15 +33,15 @@ permissions:
   contents: write
 
 jobs:
-  build-and-retag:
-    name: Build assets and update tag
+  build-and-tag:
+    name: Build assets and create tag
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.event.release.tag_name || github.ref }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.ref }}
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -51,17 +64,35 @@ jobs:
       - name: Commit built assets
         id: commit
         run: |
+          VERSION="${{ github.event.inputs.version || github.ref_name }}"
           git add -f src/Resources/public/assets/
           git add -f src/Resources/public/.vite/
-          git commit -m "Build assets for ${{ github.event.release.tag_name || github.ref_name }}"
-          # Capture the SHA of the commit we just created
+          git commit -m "Build assets for $VERSION"
           COMMIT_SHA=$(git rev-parse HEAD)
           echo "sha=$COMMIT_SHA" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Created commit: $COMMIT_SHA"
 
-      - name: Move tag to new commit and force push
+      - name: Create and push release tag
+        if: github.event_name == 'workflow_dispatch'
         run: |
-          TAG_NAME="${{ github.event.release.tag_name || github.ref_name }}"
-          # Move tag to the exact commit we just created
+          # First and only push of this tag - it already points at the build
+          # commit, so it never needs to move afterwards.
+          git tag -a "${{ steps.commit.outputs.version }}" -m "Release ${{ steps.commit.outputs.version }}" "${{ steps.commit.outputs.sha }}"
+          git push origin "${{ steps.commit.outputs.version }}"
+
+      - name: Create GitHub release
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.commit.outputs.version }}" \
+            --title "${{ steps.commit.outputs.version }}" \
+            --generate-notes
+
+      - name: Move test tag and force push
+        if: github.event_name == 'push'
+        run: |
+          TAG_NAME="${{ github.ref_name }}"
           git tag -f "$TAG_NAME" ${{ steps.commit.outputs.sha }}
           git push origin "$TAG_NAME" --force
