@@ -17,7 +17,7 @@
         "mitt": "^3.0.1",
         "pinia": "^4.0.2",
         "vue": "^3.5.28",
-        "vue-router": "^5.2.0"
+        "vue-router": "^5.3.0"
     },
     "devDependencies": {
         "@tsconfig/node24": "^24.0.4",
