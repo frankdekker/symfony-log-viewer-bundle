@@ -19,7 +19,7 @@ class ForwardStreamReader extends AbstractStreamReader
     }
 
     /**
-     * @return Generator<string>
+     * @return Generator<int, string>
      */
     public function getIterator(): Generator
     {
