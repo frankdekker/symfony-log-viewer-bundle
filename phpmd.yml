@@ -1,0 +1,34 @@
+# PHPMD configuration, see https://phpmd.org/documentation/creating-a-ruleset.html
+name: 'Code Size Rules'
+description: 'The Code Size Ruleset contains a collection of rules that find code size related problems.'
+rules:
+  - ref: rulesets/controversial.xml
+  - ref: rulesets/design.xml
+    exclude:
+      - CouplingBetweenObjects
+  - ref: rulesets/design.xml/CouplingBetweenObjects
+    properties:
+      maximum: 21
+  - ref: rulesets/unusedcode.xml
+  - ref: rulesets/naming.xml
+    exclude:
+      - ShortVariable
+      - LongVariable
+      - LongClassName
+  - ref: rulesets/naming.xml/ShortVariable
+    properties:
+      exceptions: 'id,e,i,x,y,z'
+  - ref: rulesets/naming.xml/LongVariable
+    properties:
+      maximum: 25
+      subtract-suffixes: 'Repository,Controller,Service,Hydrator,Provider,Factory,Builder,Manager,Handler,View,ViewModel,Repositories,Controllers,Services,Hydrators,Providers,Factories,Builders,Managers,Handlers,Views,ViewModels'
+  - ref: rulesets/codesize.xml
+    exclude:
+      - TooManyMethods
+      - TooManyPublicMethods
+  - ref: rulesets/codesize.xml/TooManyMethods
+    properties:
+      ignorepattern: (^(set|get|test))
+  - ref: rulesets/codesize.xml/TooManyPublicMethods
+    properties:
+      ignorepattern: (^(set|get|test))
