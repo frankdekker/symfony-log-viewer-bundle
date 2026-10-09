@@ -88,10 +88,10 @@
     },
     "scripts": {
         "baseline:phpstan": "@php vendor/bin/phpstan --generate-baseline",
-        "baseline:phpmd": "phpmd src,tests xml phpmd.xml.dist --generate-baseline",
+        "baseline:phpmd": "phpmd analyze src tests --format xml --generate-baseline",
         "check": ["@check:phpstan", "@check:phpmd", "@check:phpcs"],
         "check:phpstan": "phpstan analyse",
-        "check:phpmd": "phpmd src,tests text phpmd.xml.dist",
+        "check:phpmd": "phpmd analyze src tests --suffixes php",
         "check:phpcs": "phpcs",
         "fix": "@fix:phpcbf",
         "fix:phpcbf": "phpcbf",

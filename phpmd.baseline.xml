@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <phpmd-baseline>
-  <violation rule="PHPMD\Rule\Design\LongMethod" file="src/DependencyInjection/Configuration.php" method="configureLogFiles"/>
-  <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="src/DependencyInjection/Configuration.php" method="normalizeConfig"/>
-  <violation rule="PHPMD\Rule\Design\LongParameterList" file="src/Entity/Config/LogFilesConfig.php" method="__construct"/>
   <violation rule="PHPMD\Rule\CyclomaticComplexity" file="src/Service/Parser/TermParser.php" method="parse"/>
-  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="src/Service/Parser/TermParser.php" method="parse"/>
+  <violation rule="PHPMD\Rule\Design\NPathComplexity" file="src/Service/Parser/TermParser.php" method="parse"/>
+  <violation rule="PHPMD\Rule\Naming\LongMethodName" file="tests/Unit/Iterator/LogRecordFilterIteratorTest.php" method="testGetIteratorShouldFilterWithBeforeLines"/>
+  <violation rule="PHPMD\Rule\Naming\LongMethodName" file="tests/Unit/Iterator/LogRecordFilterIteratorTest.php" method="testGetIteratorShouldFilterWithAfterLines"/>
+  <violation rule="PHPMD\Rule\Naming\LongMethodName" file="tests/Unit/Iterator/LogRecordIteratorTest.php" method="testGetIteratorShouldYieldErrorFromParser"/>
+  <violation rule="PHPMD\Rule\Naming\LongMethodName" file="tests/Unit/Reader/Stream/StreamReaderFactoryTest.php" method="testCreateForCompressedFileDelegatesToCompressedFactory"/>
+  <violation rule="PHPMD\Rule\Naming\LongMethodName" file="tests/Unit/Reader/Stream/StreamReaderFactoryTest.php" method="testCreateForCompressedFileWithDescDirectionThrows"/>
+  <violation rule="PHPMD\Rule\Controversial\CamelCaseNamespace" file="tests/resources/Unit/MockAuthenticator.php"/>
 </phpmd-baseline>
