@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF)](https://php.net/)
 [![Minimum Symfony Version](https://img.shields.io/badge/symfony-%3E%3D%206.0-brightgreen)](https://symfony.com/releases)
 [![Vuejs](https://img.shields.io/badge/vuejs-3.5-brightgreen)](https://vuejs.org/)
 [![codecov](https://codecov.io/gh/frankdekker/symfony-log-viewer-bundle/branch/master/graph/badge.svg)](https://app.codecov.io/gh/frankdekker/symfony-log-viewer-bundle)
@@ -36,7 +36,7 @@ read logs from any directory.
 
 ### Requirements
 
-- **PHP 8.1+**
+- **PHP 8.2+**
 - **Symfony 6.0+, 7.0+ or 8.0+**
 - **ext-zlib** (optional, required to read `.gz` compressed log files)
 
